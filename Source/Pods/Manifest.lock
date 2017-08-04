@@ -1,0 +1,12 @@
+PODS:
+  - ResplendentUtilities (0.5.2)
+
+DEPENDENCIES:
+  - ResplendentUtilities (= 0.5.2)
+
+SPEC CHECKSUMS:
+  ResplendentUtilities: 76f87cca03bda3e246c31bba7bd74fe34ceb16ea
+
+PODFILE CHECKSUM: cfa905709184680b8fb37754e14ab9ba6676d096
+
+COCOAPODS: 1.2.1

@@ -1,0 +1,1 @@
+../../../ResplendentUtilities/Pod/Classes/Objects/NavigationControllerDelegate_navbarColorSetter/RUNavigationControllerDelegate_navbarColorSetter.h

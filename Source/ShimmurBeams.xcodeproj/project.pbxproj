@@ -1,0 +1,533 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 46;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		C6F92B5CF1E1E584411CC937 /* libPods-ShimmurBeams.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 49C70CE907920FDEC9F64616 /* libPods-ShimmurBeams.a */; };
+		D7DAF3A31F33D66400233C39 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = D7DAF3A21F33D66400233C39 /* main.m */; };
+		D7DAF3C41F33D7B400233C39 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = D7DAF3BC1F33D7B400233C39 /* Assets.xcassets */; };
+		D7DAF3E71F33E68300233C39 /* SMBAppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = D7DAF3DE1F33E68300233C39 /* SMBAppDelegate.m */; };
+		D7DAF3E91F33E68300233C39 /* SMBViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = D7DAF3E61F33E68300233C39 /* SMBViewController.m */; };
+		D7DAF3F11F33E6E100233C39 /* SMBGameLevel.m in Sources */ = {isa = PBXBuildFile; fileRef = D7DAF3F01F33E6E100233C39 /* SMBGameLevel.m */; };
+		D7DAF3F51F33E95600233C39 /* SMBGameBoardTile.m in Sources */ = {isa = PBXBuildFile; fileRef = D7DAF3F41F33E95600233C39 /* SMBGameBoardTile.m */; };
+		D7DAF3F91F33E98900233C39 /* SMBGameBoard.m in Sources */ = {isa = PBXBuildFile; fileRef = D7DAF3F81F33E98900233C39 /* SMBGameBoard.m */; };
+		D7DAF3FD1F33EBC400233C39 /* SMBGameLevelView.m in Sources */ = {isa = PBXBuildFile; fileRef = D7DAF3FC1F33EBC400233C39 /* SMBGameLevelView.m */; };
+		D7DAF4011F33F0AF00233C39 /* SMBGameBoardTilePosition.m in Sources */ = {isa = PBXBuildFile; fileRef = D7DAF4001F33F0AF00233C39 /* SMBGameBoardTilePosition.m */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXFileReference section */
+		28F24E90A6068064B725E130 /* Pods-ShimmurBeams.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-ShimmurBeams.debug.xcconfig"; path = "Pods/Target Support Files/Pods-ShimmurBeams/Pods-ShimmurBeams.debug.xcconfig"; sourceTree = "<group>"; };
+		49C70CE907920FDEC9F64616 /* libPods-ShimmurBeams.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-ShimmurBeams.a"; sourceTree = BUILT_PRODUCTS_DIR; };
+		D7DAF39E1F33D66400233C39 /* ShimmurBeams.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = ShimmurBeams.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		D7DAF3A21F33D66400233C39 /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
+		D7DAF3BA1F33D7B400233C39 /* ShimmurBeans-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "ShimmurBeans-Info.plist"; sourceTree = "<group>"; };
+		D7DAF3BC1F33D7B400233C39 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
+		D7DAF3DD1F33E68300233C39 /* SMBAppDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SMBAppDelegate.h; sourceTree = "<group>"; };
+		D7DAF3DE1F33E68300233C39 /* SMBAppDelegate.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SMBAppDelegate.m; sourceTree = "<group>"; };
+		D7DAF3E51F33E68300233C39 /* SMBViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SMBViewController.h; sourceTree = "<group>"; };
+		D7DAF3E61F33E68300233C39 /* SMBViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SMBViewController.m; sourceTree = "<group>"; };
+		D7DAF3EF1F33E6E100233C39 /* SMBGameLevel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SMBGameLevel.h; sourceTree = "<group>"; };
+		D7DAF3F01F33E6E100233C39 /* SMBGameLevel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SMBGameLevel.m; sourceTree = "<group>"; };
+		D7DAF3F31F33E95600233C39 /* SMBGameBoardTile.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SMBGameBoardTile.h; sourceTree = "<group>"; };
+		D7DAF3F41F33E95600233C39 /* SMBGameBoardTile.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SMBGameBoardTile.m; sourceTree = "<group>"; };
+		D7DAF3F71F33E98900233C39 /* SMBGameBoard.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SMBGameBoard.h; sourceTree = "<group>"; };
+		D7DAF3F81F33E98900233C39 /* SMBGameBoard.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SMBGameBoard.m; sourceTree = "<group>"; };
+		D7DAF3FB1F33EBC400233C39 /* SMBGameLevelView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SMBGameLevelView.h; sourceTree = "<group>"; };
+		D7DAF3FC1F33EBC400233C39 /* SMBGameLevelView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SMBGameLevelView.m; sourceTree = "<group>"; };
+		D7DAF3FF1F33F0AF00233C39 /* SMBGameBoardTilePosition.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SMBGameBoardTilePosition.h; sourceTree = "<group>"; };
+		D7DAF4001F33F0AF00233C39 /* SMBGameBoardTilePosition.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SMBGameBoardTilePosition.m; sourceTree = "<group>"; };
+		E8333239A81E9BC86B8B9223 /* Pods-ShimmurBeams.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-ShimmurBeams.release.xcconfig"; path = "Pods/Target Support Files/Pods-ShimmurBeams/Pods-ShimmurBeams.release.xcconfig"; sourceTree = "<group>"; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		D7DAF39B1F33D66400233C39 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				C6F92B5CF1E1E584411CC937 /* libPods-ShimmurBeams.a in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		1304938C940F4972A84F3191 /* Pods */ = {
+			isa = PBXGroup;
+			children = (
+				28F24E90A6068064B725E130 /* Pods-ShimmurBeams.debug.xcconfig */,
+				E8333239A81E9BC86B8B9223 /* Pods-ShimmurBeams.release.xcconfig */,
+			);
+			name = Pods;
+			sourceTree = "<group>";
+		};
+		608D5E40A93A2F8B6C4A333F /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				49C70CE907920FDEC9F64616 /* libPods-ShimmurBeams.a */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		D7DAF3951F33D66400233C39 = {
+			isa = PBXGroup;
+			children = (
+				D7DAF3A01F33D66400233C39 /* ShimmurBeams */,
+				D7DAF39F1F33D66400233C39 /* Products */,
+				1304938C940F4972A84F3191 /* Pods */,
+				608D5E40A93A2F8B6C4A333F /* Frameworks */,
+			);
+			sourceTree = "<group>";
+		};
+		D7DAF39F1F33D66400233C39 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				D7DAF39E1F33D66400233C39 /* ShimmurBeams.app */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		D7DAF3A01F33D66400233C39 /* ShimmurBeams */ = {
+			isa = PBXGroup;
+			children = (
+				D7DAF3B81F33D7B400233C39 /* Assets */,
+				D7DAF3BD1F33D7B400233C39 /* Code */,
+				D7DAF3A11F33D66400233C39 /* Supporting Files */,
+			);
+			path = ShimmurBeams;
+			sourceTree = "<group>";
+		};
+		D7DAF3A11F33D66400233C39 /* Supporting Files */ = {
+			isa = PBXGroup;
+			children = (
+				D7DAF3A21F33D66400233C39 /* main.m */,
+			);
+			name = "Supporting Files";
+			sourceTree = "<group>";
+		};
+		D7DAF3B81F33D7B400233C39 /* Assets */ = {
+			isa = PBXGroup;
+			children = (
+				D7DAF3B91F33D7B400233C39 /* Configuration */,
+				D7DAF3BB1F33D7B400233C39 /* Images */,
+			);
+			path = Assets;
+			sourceTree = "<group>";
+		};
+		D7DAF3B91F33D7B400233C39 /* Configuration */ = {
+			isa = PBXGroup;
+			children = (
+				D7DAF3BA1F33D7B400233C39 /* ShimmurBeans-Info.plist */,
+			);
+			path = Configuration;
+			sourceTree = "<group>";
+		};
+		D7DAF3BB1F33D7B400233C39 /* Images */ = {
+			isa = PBXGroup;
+			children = (
+				D7DAF3BC1F33D7B400233C39 /* Assets.xcassets */,
+			);
+			path = Images;
+			sourceTree = "<group>";
+		};
+		D7DAF3BD1F33D7B400233C39 /* Code */ = {
+			isa = PBXGroup;
+			children = (
+				D7DAF3D91F33E66700233C39 /* Model */,
+				D7DAF3DA1F33E68300233C39 /* User Interface */,
+			);
+			path = Code;
+			sourceTree = "<group>";
+		};
+		D7DAF3D91F33E66700233C39 /* Model */ = {
+			isa = PBXGroup;
+			children = (
+				D7DAF3F61F33E97700233C39 /* SMBGameBoard */,
+				D7DAF3F21F33E94D00233C39 /* SMBGameBoardTile */,
+				D7DAF3FE1F33F0A400233C39 /* SMBGameBoardTilePosition */,
+				D7DAF3EE1F33E6E100233C39 /* SMBGameLevel */,
+			);
+			path = Model;
+			sourceTree = "<group>";
+		};
+		D7DAF3DA1F33E68300233C39 /* User Interface */ = {
+			isa = PBXGroup;
+			children = (
+				D7DAF3DB1F33E68300233C39 /* UIApplicationDelegate */,
+				D7DAF3DF1F33E68300233C39 /* UIView */,
+				D7DAF3E31F33E68300233C39 /* UIViewController */,
+			);
+			path = "User Interface";
+			sourceTree = "<group>";
+		};
+		D7DAF3DB1F33E68300233C39 /* UIApplicationDelegate */ = {
+			isa = PBXGroup;
+			children = (
+				D7DAF3DC1F33E68300233C39 /* SMBAppDelegate */,
+			);
+			path = UIApplicationDelegate;
+			sourceTree = "<group>";
+		};
+		D7DAF3DC1F33E68300233C39 /* SMBAppDelegate */ = {
+			isa = PBXGroup;
+			children = (
+				D7DAF3DD1F33E68300233C39 /* SMBAppDelegate.h */,
+				D7DAF3DE1F33E68300233C39 /* SMBAppDelegate.m */,
+			);
+			path = SMBAppDelegate;
+			sourceTree = "<group>";
+		};
+		D7DAF3DF1F33E68300233C39 /* UIView */ = {
+			isa = PBXGroup;
+			children = (
+				D7DAF3FA1F33EBC400233C39 /* SMBGameLevelView */,
+			);
+			path = UIView;
+			sourceTree = "<group>";
+		};
+		D7DAF3E31F33E68300233C39 /* UIViewController */ = {
+			isa = PBXGroup;
+			children = (
+				D7DAF3E41F33E68300233C39 /* SMBViewController */,
+			);
+			path = UIViewController;
+			sourceTree = "<group>";
+		};
+		D7DAF3E41F33E68300233C39 /* SMBViewController */ = {
+			isa = PBXGroup;
+			children = (
+				D7DAF3E51F33E68300233C39 /* SMBViewController.h */,
+				D7DAF3E61F33E68300233C39 /* SMBViewController.m */,
+			);
+			path = SMBViewController;
+			sourceTree = "<group>";
+		};
+		D7DAF3EE1F33E6E100233C39 /* SMBGameLevel */ = {
+			isa = PBXGroup;
+			children = (
+				D7DAF3EF1F33E6E100233C39 /* SMBGameLevel.h */,
+				D7DAF3F01F33E6E100233C39 /* SMBGameLevel.m */,
+			);
+			path = SMBGameLevel;
+			sourceTree = "<group>";
+		};
+		D7DAF3F21F33E94D00233C39 /* SMBGameBoardTile */ = {
+			isa = PBXGroup;
+			children = (
+				D7DAF3F31F33E95600233C39 /* SMBGameBoardTile.h */,
+				D7DAF3F41F33E95600233C39 /* SMBGameBoardTile.m */,
+			);
+			path = SMBGameBoardTile;
+			sourceTree = "<group>";
+		};
+		D7DAF3F61F33E97700233C39 /* SMBGameBoard */ = {
+			isa = PBXGroup;
+			children = (
+				D7DAF3F71F33E98900233C39 /* SMBGameBoard.h */,
+				D7DAF3F81F33E98900233C39 /* SMBGameBoard.m */,
+			);
+			path = SMBGameBoard;
+			sourceTree = "<group>";
+		};
+		D7DAF3FA1F33EBC400233C39 /* SMBGameLevelView */ = {
+			isa = PBXGroup;
+			children = (
+				D7DAF3FB1F33EBC400233C39 /* SMBGameLevelView.h */,
+				D7DAF3FC1F33EBC400233C39 /* SMBGameLevelView.m */,
+			);
+			path = SMBGameLevelView;
+			sourceTree = "<group>";
+		};
+		D7DAF3FE1F33F0A400233C39 /* SMBGameBoardTilePosition */ = {
+			isa = PBXGroup;
+			children = (
+				D7DAF3FF1F33F0AF00233C39 /* SMBGameBoardTilePosition.h */,
+				D7DAF4001F33F0AF00233C39 /* SMBGameBoardTilePosition.m */,
+			);
+			path = SMBGameBoardTilePosition;
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXNativeTarget section */
+		D7DAF39D1F33D66400233C39 /* ShimmurBeams */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = D7DAF3B51F33D66400233C39 /* Build configuration list for PBXNativeTarget "ShimmurBeams" */;
+			buildPhases = (
+				7C2061DE88076ECA4AFB04B4 /* [CP] Check Pods Manifest.lock */,
+				D7DAF39A1F33D66400233C39 /* Sources */,
+				D7DAF39B1F33D66400233C39 /* Frameworks */,
+				D7DAF39C1F33D66400233C39 /* Resources */,
+				112818E4E925F6BF72757BAF /* [CP] Embed Pods Frameworks */,
+				3A9823162BB0AF6530BCD2B0 /* [CP] Copy Pods Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = ShimmurBeams;
+			productName = ShimmurBeams;
+			productReference = D7DAF39E1F33D66400233C39 /* ShimmurBeams.app */;
+			productType = "com.apple.product-type.application";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		D7DAF3961F33D66400233C39 /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				CLASSPREFIX = SMB;
+				LastUpgradeCheck = 0830;
+				ORGANIZATIONNAME = Shimmur;
+				TargetAttributes = {
+					D7DAF39D1F33D66400233C39 = {
+						CreatedOnToolsVersion = 8.3.3;
+						DevelopmentTeam = 2SHNRBFMKJ;
+						ProvisioningStyle = Automatic;
+					};
+				};
+			};
+			buildConfigurationList = D7DAF3991F33D66400233C39 /* Build configuration list for PBXProject "ShimmurBeams" */;
+			compatibilityVersion = "Xcode 3.2";
+			developmentRegion = English;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				en,
+				Base,
+			);
+			mainGroup = D7DAF3951F33D66400233C39;
+			productRefGroup = D7DAF39F1F33D66400233C39 /* Products */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				D7DAF39D1F33D66400233C39 /* ShimmurBeams */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXResourcesBuildPhase section */
+		D7DAF39C1F33D66400233C39 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				D7DAF3C41F33D7B400233C39 /* Assets.xcassets in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
+
+/* Begin PBXShellScriptBuildPhase section */
+		112818E4E925F6BF72757BAF /* [CP] Embed Pods Frameworks */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "[CP] Embed Pods Frameworks";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-ShimmurBeams/Pods-ShimmurBeams-frameworks.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+		3A9823162BB0AF6530BCD2B0 /* [CP] Copy Pods Resources */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "[CP] Copy Pods Resources";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-ShimmurBeams/Pods-ShimmurBeams-resources.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+		7C2061DE88076ECA4AFB04B4 /* [CP] Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "[CP] Check Pods Manifest.lock";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n";
+			showEnvVarsInLog = 0;
+		};
+/* End PBXShellScriptBuildPhase section */
+
+/* Begin PBXSourcesBuildPhase section */
+		D7DAF39A1F33D66400233C39 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				D7DAF3F91F33E98900233C39 /* SMBGameBoard.m in Sources */,
+				D7DAF3A31F33D66400233C39 /* main.m in Sources */,
+				D7DAF3FD1F33EBC400233C39 /* SMBGameLevelView.m in Sources */,
+				D7DAF3F11F33E6E100233C39 /* SMBGameLevel.m in Sources */,
+				D7DAF4011F33F0AF00233C39 /* SMBGameBoardTilePosition.m in Sources */,
+				D7DAF3F51F33E95600233C39 /* SMBGameBoardTile.m in Sources */,
+				D7DAF3E71F33E68300233C39 /* SMBAppDelegate.m in Sources */,
+				D7DAF3E91F33E68300233C39 /* SMBViewController.m in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin XCBuildConfiguration section */
+		D7DAF3B31F33D66400233C39 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = dwarf;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_TESTABILITY = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
+				MTL_ENABLE_DEBUG_INFO = YES;
+				ONLY_ACTIVE_ARCH = YES;
+				SDKROOT = iphoneos;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Debug;
+		};
+		D7DAF3B41F33D66400233C39 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				ENABLE_NS_ASSERTIONS = NO;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
+				MTL_ENABLE_DEBUG_INFO = NO;
+				SDKROOT = iphoneos;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				VALIDATE_PRODUCT = YES;
+			};
+			name = Release;
+		};
+		D7DAF3B61F33D66400233C39 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = 28F24E90A6068064B725E130 /* Pods-ShimmurBeams.debug.xcconfig */;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
+				DEVELOPMENT_TEAM = 2SHNRBFMKJ;
+				INFOPLIST_FILE = "ShimmurBeams/Assets/Configuration/ShimmurBeans-Info.plist";
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = Shimmur.ShimmurBeams;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+			};
+			name = Debug;
+		};
+		D7DAF3B71F33D66400233C39 /* Release */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = E8333239A81E9BC86B8B9223 /* Pods-ShimmurBeams.release.xcconfig */;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
+				DEVELOPMENT_TEAM = 2SHNRBFMKJ;
+				INFOPLIST_FILE = "ShimmurBeams/Assets/Configuration/ShimmurBeans-Info.plist";
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = Shimmur.ShimmurBeams;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		D7DAF3991F33D66400233C39 /* Build configuration list for PBXProject "ShimmurBeams" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				D7DAF3B31F33D66400233C39 /* Debug */,
+				D7DAF3B41F33D66400233C39 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		D7DAF3B51F33D66400233C39 /* Build configuration list for PBXNativeTarget "ShimmurBeams" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				D7DAF3B61F33D66400233C39 /* Debug */,
+				D7DAF3B71F33D66400233C39 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+/* End XCConfigurationList section */
+	};
+	rootObject = D7DAF3961F33D66400233C39 /* Project object */;
+}
