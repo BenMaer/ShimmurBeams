@@ -9,7 +9,7 @@
 #import "SMBGameBoard.h"
 #import "SMBGameBoardTile.h"
 #import "SMBGameBoardTilePosition.h"
-#import "SMBGameBoardEntity.h"
+#import "SMBGameBoardTileEntity.h"
 
 #import <ResplendentUtilities/RUConditionalReturn.h>
 #import <ResplendentUtilities/RUClassOrNilUtil.h>
@@ -42,10 +42,10 @@ static void* kSMBGameBoard__KVOContext = &kSMBGameBoard__KVOContext;
 
 -(BOOL)gameBoardTiles_contains_gameBoardTile:(nonnull SMBGameBoardTile*)gameBoardTile;
 
-#pragma mark - gameBoardEntities
-@property (nonatomic, copy, nullable) NSArray<SMBGameBoardEntity*>* gameBoardEntities;
--(void)gameBoardEntity_add:(nonnull SMBGameBoardEntity*)gameBoardEntity;
--(void)gameBoardEntity_remove:(nonnull SMBGameBoardEntity*)gameBoardEntity;
+#pragma mark - gameBoardTileEntities
+@property (nonatomic, copy, nullable) NSArray<SMBGameBoardTileEntity*>* gameBoardTileEntities;
+-(void)gameBoardEntity_add:(nonnull SMBGameBoardTileEntity*)gameBoardEntity;
+-(void)gameBoardEntity_remove:(nonnull SMBGameBoardTileEntity*)gameBoardEntity;
 
 @end
 
@@ -228,46 +228,46 @@ static void* kSMBGameBoard__KVOContext = &kSMBGameBoard__KVOContext;
 	return [self gameBoardTiles_column_at_column:0].count;
 }
 
-#pragma mark - gameBoardEntities
--(void)gameBoardEntity_add:(nonnull SMBGameBoardEntity*)gameBoardEntity
+#pragma mark - gameBoardTileEntities
+-(void)gameBoardEntity_add:(nonnull SMBGameBoardTileEntity*)gameBoardEntity
 {
 	kRUConditionalReturn(gameBoardEntity == nil, YES);
 
-	NSArray<SMBGameBoardEntity*>* const gameBoardEntities_old = self.gameBoardEntities;
-	kRUConditionalReturn([gameBoardEntities_old containsObject:gameBoardEntity], YES);
+	NSArray<SMBGameBoardTileEntity*>* const gameBoardTileEntities_old = self.gameBoardTileEntities;
+	kRUConditionalReturn([gameBoardTileEntities_old containsObject:gameBoardEntity], YES);
 
-	NSMutableArray<SMBGameBoardEntity*>* const gameBoardEntities_new = [NSMutableArray<SMBGameBoardEntity*> array];
+	NSMutableArray<SMBGameBoardTileEntity*>* const gameBoardTileEntities_new = [NSMutableArray<SMBGameBoardTileEntity*> array];
 
-	if (gameBoardEntities_old)
+	if (gameBoardTileEntities_old)
 	{
-		[gameBoardEntities_new addObjectsFromArray:gameBoardEntities_old];
+		[gameBoardTileEntities_new addObjectsFromArray:gameBoardTileEntities_old];
 	}
 
-	[gameBoardEntities_new addObject:gameBoardEntity];
+	[gameBoardTileEntities_new addObject:gameBoardEntity];
 
-	[self setGameBoardEntities:[NSArray<SMBGameBoardEntity*> arrayWithArray:gameBoardEntities_new]];
+	[self setGameBoardTileEntities:[NSArray<SMBGameBoardTileEntity*> arrayWithArray:gameBoardTileEntities_new]];
 }
 
--(void)gameBoardEntity_remove:(nonnull SMBGameBoardEntity*)gameBoardEntity
+-(void)gameBoardEntity_remove:(nonnull SMBGameBoardTileEntity*)gameBoardEntity
 {
 	kRUConditionalReturn(gameBoardEntity == nil, YES);
 
-	NSArray<SMBGameBoardEntity*>* const gameBoardEntities_old = self.gameBoardEntities;
-	kRUConditionalReturn(gameBoardEntities_old == nil, YES);
+	NSArray<SMBGameBoardTileEntity*>* const gameBoardTileEntities_old = self.gameBoardTileEntities;
+	kRUConditionalReturn(gameBoardTileEntities_old == nil, YES);
 
-	NSInteger const gameBoardEntity_index = [gameBoardEntities_old indexOfObject:gameBoardEntity];
+	NSInteger const gameBoardEntity_index = [gameBoardTileEntities_old indexOfObject:gameBoardEntity];
 	kRUConditionalReturn(gameBoardEntity_index == NSNotFound, YES);
 
-	NSMutableArray<SMBGameBoardEntity*>* const gameBoardEntities_new = [NSMutableArray<SMBGameBoardEntity*> array];
-	[gameBoardEntities_new addObjectsFromArray:gameBoardEntities_old];
-	[gameBoardEntities_new removeObjectAtIndex:gameBoardEntity_index];
+	NSMutableArray<SMBGameBoardTileEntity*>* const gameBoardTileEntities_new = [NSMutableArray<SMBGameBoardTileEntity*> array];
+	[gameBoardTileEntities_new addObjectsFromArray:gameBoardTileEntities_old];
+	[gameBoardTileEntities_new removeObjectAtIndex:gameBoardEntity_index];
 
-	[self setGameBoardEntities:[NSArray<SMBGameBoardEntity*> arrayWithArray:gameBoardEntities_new]];
+	[self setGameBoardTileEntities:[NSArray<SMBGameBoardTileEntity*> arrayWithArray:gameBoardTileEntities_new]];
 }
 
--(void)gameBoardEntities_setupActions
+-(void)gameBoardTileEntities_setupActions
 {
-	[self.gameBoardEntities enumerateObjectsUsingBlock:^(SMBGameBoardEntity * _Nonnull gameBoardEntity, NSUInteger idx, BOOL * _Nonnull stop) {
+	[self.gameBoardTileEntities enumerateObjectsUsingBlock:^(SMBGameBoardTileEntity * _Nonnull gameBoardEntity, NSUInteger idx, BOOL * _Nonnull stop) {
 		[gameBoardEntity entityAction_setup];
 	}];
 }
@@ -284,13 +284,13 @@ static void* kSMBGameBoard__KVOContext = &kSMBGameBoard__KVOContext;
 				SMBGameBoardTile* const gameBoardTile = kRUClassOrNil(object, SMBGameBoardTile);
 				kRUConditionalReturn(gameBoardTile == nil, YES);
 
-				SMBGameBoardEntity* const gameBoardEntity_old = kRUClassOrNil([change objectForKey:NSKeyValueChangeOldKey], SMBGameBoardEntity);
+				SMBGameBoardTileEntity* const gameBoardEntity_old = kRUClassOrNil([change objectForKey:NSKeyValueChangeOldKey], SMBGameBoardTileEntity);
 				if (gameBoardEntity_old)
 				{
 					[self gameBoardEntity_remove:gameBoardEntity_old];
 				}
 
-				SMBGameBoardEntity* const gameBoardEntity = gameBoardTile.gameBoardEntity;
+				SMBGameBoardTileEntity* const gameBoardEntity = gameBoardTile.gameBoardEntity;
 				if (gameBoardEntity)
 				{
 					[self gameBoardEntity_add:gameBoardEntity];
@@ -320,6 +320,6 @@ static void* kSMBGameBoard__KVOContext = &kSMBGameBoard__KVOContext;
 
 @implementation SMBGameBoard_PropertiesForKVO
 
-+(nonnull NSString*)gameBoardEntities{return NSStringFromSelector(_cmd);}
++(nonnull NSString*)gameBoardTileEntities{return NSStringFromSelector(_cmd);}
 
 @end

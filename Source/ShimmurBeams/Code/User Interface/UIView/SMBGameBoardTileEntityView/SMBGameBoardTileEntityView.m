@@ -1,13 +1,13 @@
 //
-//  SMBGameBoardEntityView.m
+//  SMBGameBoardTileEntityView.m
 //  ShimmurBeams
 //
 //  Created by Benjamin Maer on 8/4/17.
 //  Copyright © 2017 Shimmur. All rights reserved.
 //
 
-#import "SMBGameBoardEntityView.h"
-#import "SMBGameBoardEntity.h"
+#import "SMBGameBoardTileEntityView.h"
+#import "SMBGameBoardTileEntity.h"
 
 #import <ResplendentUtilities/RUConditionalReturn.h>
 
@@ -15,13 +15,13 @@
 
 
 
-static void* kSMBGameBoardEntityView__KVOContext = &kSMBGameBoardEntityView__KVOContext;
+static void* kSMBGameBoardTileEntityView__KVOContext = &kSMBGameBoardTileEntityView__KVOContext;
 
 
 
 
 
-@interface SMBGameBoardEntityView ()
+@interface SMBGameBoardTileEntityView ()
 
 #pragma mark - gameBoardEntity
 -(void)gameBoardEntity_setKVORegistered:(BOOL)registered;
@@ -32,7 +32,7 @@ static void* kSMBGameBoardEntityView__KVOContext = &kSMBGameBoardEntityView__KVO
 
 
 
-@implementation SMBGameBoardEntityView
+@implementation SMBGameBoardTileEntityView
 
 #pragma mark - NSObject
 -(void)dealloc
@@ -66,7 +66,7 @@ static void* kSMBGameBoardEntityView__KVOContext = &kSMBGameBoardEntityView__KVO
 }
 
 #pragma mark - init
--(nullable instancetype)init_with_gameBoardEntity:(nonnull SMBGameBoardEntity*)gameBoardEntity
+-(nullable instancetype)init_with_gameBoardEntity:(nonnull SMBGameBoardTileEntity*)gameBoardEntity
 {
 	kRUConditionalReturn_ReturnValueNil(gameBoardEntity == nil, YES);
 
@@ -86,7 +86,7 @@ static void* kSMBGameBoardEntityView__KVOContext = &kSMBGameBoardEntityView__KVO
 {
 	[super drawRect:rect];
 
-	SMBGameBoardEntity* const gameBoardEntity = self.gameBoardEntity;
+	SMBGameBoardTileEntity* const gameBoardEntity = self.gameBoardEntity;
 	kRUConditionalReturn(gameBoardEntity == nil, YES);
 
 	[gameBoardEntity draw_in_rect:rect];
@@ -99,7 +99,7 @@ static void* kSMBGameBoardEntityView__KVOContext = &kSMBGameBoardEntityView__KVO
 	kRUConditionalReturn(gameBoardEntity == nil, YES);
 
 	NSMutableArray<NSString*>* const propertiesToObserve = [NSMutableArray<NSString*> array];
-	[propertiesToObserve addObject:[SMBGameBoardEntity_PropertiesForKVO needsRedraw]];
+	[propertiesToObserve addObject:[SMBGameBoardTileEntity_PropertiesForKVO needsRedraw]];
 
 	[propertiesToObserve enumerateObjectsUsingBlock:^(NSString * _Nonnull propertyToObserve, NSUInteger idx, BOOL * _Nonnull stop) {
 		if (registered)
@@ -107,13 +107,13 @@ static void* kSMBGameBoardEntityView__KVOContext = &kSMBGameBoardEntityView__KVO
 			[gameBoardEntity addObserver:self
 							  forKeyPath:propertyToObserve
 								 options:(NSKeyValueObservingOptionInitial)
-								 context:&kSMBGameBoardEntityView__KVOContext];
+								 context:&kSMBGameBoardTileEntityView__KVOContext];
 		}
 		else
 		{
 			[gameBoardEntity removeObserver:self
 								 forKeyPath:propertyToObserve
-									context:&kSMBGameBoardEntityView__KVOContext];
+									context:&kSMBGameBoardTileEntityView__KVOContext];
 		}
 	}];
 }
@@ -121,11 +121,11 @@ static void* kSMBGameBoardEntityView__KVOContext = &kSMBGameBoardEntityView__KVO
 #pragma mark - KVO
 -(void)observeValueForKeyPath:(nullable NSString*)keyPath ofObject:(nullable id)object change:(nullable NSDictionary*)change context:(nullable void*)context
 {
-	if (context == kSMBGameBoardEntityView__KVOContext)
+	if (context == kSMBGameBoardTileEntityView__KVOContext)
 	{
 		if (object == self.gameBoardEntity)
 		{
-			if ([keyPath isEqualToString:[SMBGameBoardEntity_PropertiesForKVO needsRedraw]])
+			if ([keyPath isEqualToString:[SMBGameBoardTileEntity_PropertiesForKVO needsRedraw]])
 			{
 				[self setNeedsDisplay];
 			}

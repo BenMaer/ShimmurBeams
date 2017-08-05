@@ -14,7 +14,7 @@
 
 @class SMBGameBoardTile;
 @class SMBGameBoardTilePosition;
-@class SMBGameBoardEntity;
+@class SMBGameBoardTileEntity;
 
 
 
@@ -45,9 +45,9 @@
 -(NSUInteger)gameBoardTiles_numberOfColumns;
 -(NSUInteger)gameBoardTiles_numberOfRows;
 
-#pragma mark - gameBoardEntities
-@property (nonatomic, readonly, copy, nullable) NSArray<SMBGameBoardEntity*>* gameBoardEntities;
--(void)gameBoardEntities_setupActions;
+#pragma mark - gameBoardTileEntities
+@property (nonatomic, readonly, copy, nullable) NSArray<SMBGameBoardTileEntity*>* gameBoardTileEntities;
+-(void)gameBoardTileEntities_setupActions;
 
 @end
 
@@ -57,6 +57,6 @@
 
 @interface SMBGameBoard_PropertiesForKVO : NSObject
 
-+(nonnull NSString*)gameBoardEntities;
++(nonnull NSString*)gameBoardTileEntities;
 
 @end

@@ -12,7 +12,7 @@
 
 
 
-@class SMBGameBoardEntity;
+@class SMBGameBoardTileEntity;
 
 
 
@@ -20,7 +20,7 @@
 
 @interface SMBGameBoard (SMBAddEntity)
 
--(void)gameBoardEntity_add:(nonnull SMBGameBoardEntity*)gameBoardEntity
+-(void)gameBoardEntity_add:(nonnull SMBGameBoardTileEntity*)gameBoardEntity
 				 to_column:(NSUInteger)column
 					   row:(NSUInteger)row;
 

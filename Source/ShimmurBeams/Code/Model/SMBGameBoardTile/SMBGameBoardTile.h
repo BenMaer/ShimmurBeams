@@ -14,7 +14,7 @@
 
 @class SMBGameBoardTilePosition;
 @class SMBGameBoard;
-@class SMBGameBoardEntity;
+@class SMBGameBoardTileEntity;
 
 
 
@@ -29,7 +29,7 @@
 @property (nonatomic, readonly, assign, nullable) SMBGameBoard* gameBoard;
 
 #pragma mark - gameBoardEntity
-@property (nonatomic, strong, nullable) SMBGameBoardEntity* gameBoardEntity;
+@property (nonatomic, strong, nullable) SMBGameBoardTileEntity* gameBoardEntity;
 
 #pragma mark - init
 -(nullable instancetype)init_with_gameBoardTilePosition:(nonnull SMBGameBoardTilePosition*)gameBoardTilePosition

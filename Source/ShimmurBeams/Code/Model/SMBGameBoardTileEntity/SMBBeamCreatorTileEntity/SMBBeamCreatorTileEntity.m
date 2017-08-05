@@ -1,12 +1,12 @@
 //
-//  SMBBeamCreatorEntity.m
+//  SMBBeamCreatorTileEntity.m
 //  ShimmurBeams
 //
 //  Created by Benjamin Maer on 8/4/17.
 //  Copyright © 2017 Shimmur. All rights reserved.
 //
 
-#import "SMBBeamCreatorEntity.h"
+#import "SMBBeamCreatorTileEntity.h"
 
 #import <UIKit/UIKit.h>
 #import <CoreGraphics/CoreGraphics.h>
@@ -15,7 +15,7 @@
 
 
 
-@implementation SMBBeamCreatorEntity
+@implementation SMBBeamCreatorTileEntity
 
 #pragma mark - draw
 -(void)draw_in_rect:(CGRect)rect

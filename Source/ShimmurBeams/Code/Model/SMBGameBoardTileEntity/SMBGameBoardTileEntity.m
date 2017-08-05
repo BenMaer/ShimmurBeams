@@ -1,12 +1,12 @@
 //
-//  SMBGameBoardEntity.m
+//  SMBGameBoardTileEntity.m
 //  ShimmurBeams
 //
 //  Created by Benjamin Maer on 8/4/17.
 //  Copyright © 2017 Shimmur. All rights reserved.
 //
 
-#import "SMBGameBoardEntity.h"
+#import "SMBGameBoardTileEntity.h"
 #import "SMBGameBoardTile.h"
 
 #import <ResplendentUtilities/RUConditionalReturn.h>
@@ -15,7 +15,7 @@
 
 
 
-@interface SMBGameBoardEntity ()
+@interface SMBGameBoardTileEntity ()
 
 #pragma mark - uniqueEntityId
 @property (nonatomic, strong, nullable) NSString* uniqueEntityId;
@@ -33,7 +33,7 @@
 
 
 
-@implementation SMBGameBoardEntity
+@implementation SMBGameBoardTileEntity
 
 #pragma mark - NSObject
 -(instancetype)init
@@ -146,22 +146,22 @@
 
 -(CGFloat)draw_angle_degrees
 {
-	SMBGameBoardEntity__orientation const orientation = self.orientation;
+	SMBGameBoardTileEntity__orientation const orientation = self.orientation;
 	switch (orientation)
 	{
-		case SMBGameBoardEntity__orientation_up:
+		case SMBGameBoardTileEntity__orientation_up:
 			return 0.0f;
 			break;
 		
-		case SMBGameBoardEntity__orientation_right:
+		case SMBGameBoardTileEntity__orientation_right:
 			return 90.0f;
 			break;
 
-		case SMBGameBoardEntity__orientation_down:
+		case SMBGameBoardTileEntity__orientation_down:
 			return 180.0f;
 			break;
 
-		case SMBGameBoardEntity__orientation_left:
+		case SMBGameBoardTileEntity__orientation_left:
 			return -90.0f;
 			break;
 	}
@@ -179,7 +179,7 @@
 
 
 
-@implementation SMBGameBoardEntity_PropertiesForKVO
+@implementation SMBGameBoardTileEntity_PropertiesForKVO
 
 +(nonnull NSString*)gameBoardEntity{return NSStringFromSelector(_cmd);}
 +(nonnull NSString*)needsRedraw{return NSStringFromSelector(_cmd);}

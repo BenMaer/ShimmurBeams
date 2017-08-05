@@ -8,8 +8,8 @@
 
 #import "SMBGameBoardView.h"
 #import "SMBGameBoard.h"
-#import "SMBGameBoardEntityView.h"
-#import "SMBGameBoardEntity.h"
+#import "SMBGameBoardTileEntityView.h"
+#import "SMBGameBoardTileEntity.h"
 #import "SMBGameBoardTile.h"
 #import "SMBGameBoardTilePosition.h"
 
@@ -36,14 +36,14 @@ static void* kSMBGameBoardView__KVOContext = &kSMBGameBoardView__KVOContext;
 -(void)grid_shapeLayer_path_update;
 
 #pragma mark - gameBoardEntityId_to_view_mapping
-@property (nonatomic, copy, nullable) NSDictionary<NSString*,SMBGameBoardEntityView*>* gameBoardEntityId_to_view_mapping;
+@property (nonatomic, copy, nullable) NSDictionary<NSString*,SMBGameBoardTileEntityView*>* gameBoardEntityId_to_view_mapping;
 -(void)gameBoardEntityId_to_view_mapping_update;
 
 #pragma mark - gameBoardEntityViews
 -(void)gameBoardEntityViews_layout;
 
--(void)gameBoardEntityView_layout:(nonnull SMBGameBoardEntityView*)gameBoardEntityView;
--(CGRect)gameBoardEntityView_frame:(nonnull SMBGameBoardEntityView*)gameBoardEntityView;
+-(void)gameBoardEntityView_layout:(nonnull SMBGameBoardTileEntityView*)gameBoardEntityView;
+-(CGRect)gameBoardEntityView_frame:(nonnull SMBGameBoardTileEntityView*)gameBoardEntityView;
 
 -(CGFloat)gameBoardEntityView_width;
 -(CGFloat)gameBoardEntityView_height;
@@ -120,7 +120,7 @@ static void* kSMBGameBoardView__KVOContext = &kSMBGameBoardView__KVOContext;
 	kRUConditionalReturn(gameBoard == nil, NO);
 	
 	NSMutableArray<NSString*>* const propertiesToObserve = [NSMutableArray<NSString*> array];
-	[propertiesToObserve addObject:[SMBGameBoard_PropertiesForKVO gameBoardEntities]];
+	[propertiesToObserve addObject:[SMBGameBoard_PropertiesForKVO gameBoardTileEntities]];
 	
 	[propertiesToObserve enumerateObjectsUsingBlock:^(NSString * _Nonnull propertyToObserve, NSUInteger idx, BOOL * _Nonnull stop) {
 		if (registered)
@@ -206,7 +206,7 @@ static void* kSMBGameBoardView__KVOContext = &kSMBGameBoardView__KVOContext;
 	{
 		if (object == self.gameBoard)
 		{
-			if ([keyPath isEqualToString:[SMBGameBoard_PropertiesForKVO gameBoardEntities]])
+			if ([keyPath isEqualToString:[SMBGameBoard_PropertiesForKVO gameBoardTileEntities]])
 			{
 				[self gameBoardEntityId_to_view_mapping_update];
 			}
@@ -227,7 +227,7 @@ static void* kSMBGameBoardView__KVOContext = &kSMBGameBoardView__KVOContext;
 }
 
 #pragma mark - gameBoardEntityId_to_view_mapping
--(void)setGameBoardEntityId_to_view_mapping:(NSDictionary<NSString*,SMBGameBoardEntityView*>*)gameBoardEntityId_to_view_mapping
+-(void)setGameBoardEntityId_to_view_mapping:(NSDictionary<NSString*,SMBGameBoardTileEntityView*>*)gameBoardEntityId_to_view_mapping
 {
 	kRUConditionalReturn((self.gameBoardEntityId_to_view_mapping == gameBoardEntityId_to_view_mapping)
 						 ||
@@ -237,8 +237,8 @@ static void* kSMBGameBoardView__KVOContext = &kSMBGameBoardView__KVOContext;
 		&&
 		(self.gameBoardEntityId_to_view_mapping.count > 0))
 	{
-		NSArray<SMBGameBoardEntityView*>* const gameBoardEntityId_to_view_mapping_allValues = gameBoardEntityId_to_view_mapping.allValues;
-		[self.gameBoardEntityId_to_view_mapping.allValues enumerateObjectsUsingBlock:^(SMBGameBoardEntityView * _Nonnull gameBoardEntityView, NSUInteger idx, BOOL * _Nonnull stop) {
+		NSArray<SMBGameBoardTileEntityView*>* const gameBoardEntityId_to_view_mapping_allValues = gameBoardEntityId_to_view_mapping.allValues;
+		[self.gameBoardEntityId_to_view_mapping.allValues enumerateObjectsUsingBlock:^(SMBGameBoardTileEntityView * _Nonnull gameBoardEntityView, NSUInteger idx, BOOL * _Nonnull stop) {
 			if ([gameBoardEntityId_to_view_mapping_allValues containsObject:gameBoardEntityView] == false)
 			{
 				NSAssert(gameBoardEntityView.superview == self, @"Should be self");
@@ -248,13 +248,13 @@ static void* kSMBGameBoardView__KVOContext = &kSMBGameBoardView__KVOContext;
 		}];
 	}
 
-	_gameBoardEntityId_to_view_mapping = (gameBoardEntityId_to_view_mapping ? [NSDictionary<NSString*,SMBGameBoardEntityView*> dictionaryWithDictionary:gameBoardEntityId_to_view_mapping] : nil);
+	_gameBoardEntityId_to_view_mapping = (gameBoardEntityId_to_view_mapping ? [NSDictionary<NSString*,SMBGameBoardTileEntityView*> dictionaryWithDictionary:gameBoardEntityId_to_view_mapping] : nil);
 
 	if ((self.gameBoardEntityId_to_view_mapping != nil)
 		&&
 		(self.gameBoardEntityId_to_view_mapping.count > 0))
 	{
-		[self.gameBoardEntityId_to_view_mapping.allValues enumerateObjectsUsingBlock:^(SMBGameBoardEntityView * _Nonnull gameBoardEntityView, NSUInteger idx, BOOL * _Nonnull stop) {
+		[self.gameBoardEntityId_to_view_mapping.allValues enumerateObjectsUsingBlock:^(SMBGameBoardTileEntityView * _Nonnull gameBoardEntityView, NSUInteger idx, BOOL * _Nonnull stop) {
 			if (gameBoardEntityView.superview != self)
 			{
 				[self addSubview:gameBoardEntityView];
@@ -265,41 +265,41 @@ static void* kSMBGameBoardView__KVOContext = &kSMBGameBoardView__KVOContext;
 
 -(void)gameBoardEntityId_to_view_mapping_update
 {
-	NSMutableDictionary<NSString*,SMBGameBoardEntityView*>* const gameBoardEntityId_to_view_mapping_new = [NSMutableDictionary<NSString*,SMBGameBoardEntityView*> dictionary];
+	NSMutableDictionary<NSString*,SMBGameBoardTileEntityView*>* const gameBoardEntityId_to_view_mapping_new = [NSMutableDictionary<NSString*,SMBGameBoardTileEntityView*> dictionary];
 
-	NSDictionary<NSString*,SMBGameBoardEntityView*>* const gameBoardEntityId_to_view_mapping_old = self.gameBoardEntityId_to_view_mapping;
+	NSDictionary<NSString*,SMBGameBoardTileEntityView*>* const gameBoardEntityId_to_view_mapping_old = self.gameBoardEntityId_to_view_mapping;
 
-	[self.gameBoard.gameBoardEntities enumerateObjectsUsingBlock:^(SMBGameBoardEntity * _Nonnull gameBoardEntity, NSUInteger idx, BOOL * _Nonnull stop) {
+	[self.gameBoard.gameBoardTileEntities enumerateObjectsUsingBlock:^(SMBGameBoardTileEntity * _Nonnull gameBoardEntity, NSUInteger idx, BOOL * _Nonnull stop) {
 		NSString* const uniqueEntityId = gameBoardEntity.uniqueEntityId;
 
-		SMBGameBoardEntityView* const gameBoardEntityView =
+		SMBGameBoardTileEntityView* const gameBoardEntityView =
 		([gameBoardEntityId_to_view_mapping_old objectForKey:uniqueEntityId]
 		 ?:
-		[[SMBGameBoardEntityView alloc] init_with_gameBoardEntity:gameBoardEntity]
+		[[SMBGameBoardTileEntityView alloc] init_with_gameBoardEntity:gameBoardEntity]
 		);
 
 		[gameBoardEntityId_to_view_mapping_new setObject:gameBoardEntityView forKey:uniqueEntityId];
 	}];
 
-	[self setGameBoardEntityId_to_view_mapping:[NSDictionary<NSString*,SMBGameBoardEntityView*> dictionaryWithDictionary:gameBoardEntityId_to_view_mapping_new]];
+	[self setGameBoardEntityId_to_view_mapping:[NSDictionary<NSString*,SMBGameBoardTileEntityView*> dictionaryWithDictionary:gameBoardEntityId_to_view_mapping_new]];
 }
 
 #pragma mark - gameBoardEntityViews
 -(void)gameBoardEntityViews_layout
 {
-	[self.gameBoardEntityId_to_view_mapping.allValues enumerateObjectsUsingBlock:^(SMBGameBoardEntityView * _Nonnull gameBoardEntityView, NSUInteger idx, BOOL * _Nonnull stop) {
+	[self.gameBoardEntityId_to_view_mapping.allValues enumerateObjectsUsingBlock:^(SMBGameBoardTileEntityView * _Nonnull gameBoardEntityView, NSUInteger idx, BOOL * _Nonnull stop) {
 		[self gameBoardEntityView_layout:gameBoardEntityView];
 	}];
 }
 
--(void)gameBoardEntityView_layout:(nonnull SMBGameBoardEntityView*)gameBoardEntityView
+-(void)gameBoardEntityView_layout:(nonnull SMBGameBoardTileEntityView*)gameBoardEntityView
 {
 	kRUConditionalReturn(gameBoardEntityView == nil, YES);
 
 	[gameBoardEntityView setFrame:[self gameBoardEntityView_frame:gameBoardEntityView]];
 }
 
--(CGRect)gameBoardEntityView_frame:(nonnull SMBGameBoardEntityView*)gameBoardEntityView
+-(CGRect)gameBoardEntityView_frame:(nonnull SMBGameBoardTileEntityView*)gameBoardEntityView
 {
 	kRUConditionalReturn_ReturnValue(gameBoardEntityView == nil, YES, CGRectZero);
 	
