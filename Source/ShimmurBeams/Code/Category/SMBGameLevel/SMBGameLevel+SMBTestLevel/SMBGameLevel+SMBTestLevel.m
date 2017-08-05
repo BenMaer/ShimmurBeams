@@ -21,14 +21,14 @@
 #pragma mark - testLevel
 +(nonnull instancetype)smb_testLevel
 {
-	SMBGameBoard* const gameBoard = [[SMBGameBoard alloc] init_with_numberOfColumns:3
+	SMBGameBoard* const gameBoard = [[SMBGameBoard alloc] init_with_numberOfColumns:5
 																	   numberOfRows:5];
 
 	SMBGameBoardTile* const gameBoardTile =
 	[gameBoard gameBoardTile_at_position:[[SMBGameBoardTilePosition alloc] init_with_column:1 row:2]];
 
 	SMBBeamCreatorEntity* const beamCreatorEntity = [SMBBeamCreatorEntity new];
-	[beamCreatorEntity setOrientation:SMBGameBoardEntity__orientation_up];
+	[beamCreatorEntity setOrientation:SMBGameBoardEntity__orientation_right];
 
 	[gameBoardTile setGameBoardEntity:beamCreatorEntity];
 

@@ -47,6 +47,7 @@
 
 #pragma mark - gameBoardEntities
 @property (nonatomic, readonly, copy, nullable) NSArray<SMBGameBoardEntity*>* gameBoardEntities;
+-(void)gameBoardEntities_setupActions;
 
 @end
 

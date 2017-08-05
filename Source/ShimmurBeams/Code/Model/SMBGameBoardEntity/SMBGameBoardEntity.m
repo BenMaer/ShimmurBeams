@@ -122,6 +122,35 @@
 #pragma mark - draw
 -(void)drawRect:(CGRect)rect{}
 
+#pragma mark - imageOrientation
++(UIImageOrientation)imageOrientation_for_orientation:(SMBGameBoardEntity__orientation)orientation
+{
+	switch (orientation)
+	{
+		case SMBGameBoardEntity__orientation_up:
+			return UIImageOrientationUp;
+			break;
+
+		case SMBGameBoardEntity__orientation_right:
+			return UIImageOrientationRight;
+			break;
+
+		case SMBGameBoardEntity__orientation_down:
+			return UIImageOrientationDown;
+			break;
+
+		case SMBGameBoardEntity__orientation_left:
+			return UIImageOrientationLeft;
+			break;
+	}
+
+	NSAssert(false, @"unhandled orientation %li",(long)orientation);
+	return UIImageOrientationUp;
+}
+
+#pragma mark - entityAction
+-(void)entityAction_setup{}
+
 @end
 
 

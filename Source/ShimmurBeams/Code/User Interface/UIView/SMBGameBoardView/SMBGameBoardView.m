@@ -30,10 +30,10 @@ static void* kSMBGameBoardView__KVOContext = &kSMBGameBoardView__KVOContext;
 #pragma mark - gameBoard
 -(void)gameBoard_setKVORegistered:(BOOL)registered;
 
-#pragma mark - shapeLayer
-@property (nonatomic, readonly, strong, nullable) CAShapeLayer* shapeLayer;
--(CGRect)shapeLayer_frame;
--(void)shapeLayer_path_update;
+#pragma mark - grid_shapeLayer
+@property (nonatomic, readonly, strong, nullable) CAShapeLayer* grid_shapeLayer;
+-(CGRect)grid_shapeLayer_frame;
+-(void)grid_shapeLayer_path_update;
 
 #pragma mark - gameBoardEntityId_to_view_mapping
 @property (nonatomic, copy, nullable) NSDictionary<NSString*,SMBGameBoardEntityView*>* gameBoardEntityId_to_view_mapping;
@@ -78,12 +78,13 @@ static void* kSMBGameBoardView__KVOContext = &kSMBGameBoardView__KVOContext;
 		[self.layer setBorderWidth:1.0f];
 		[self.layer setBorderColor:[UIColor blackColor].CGColor];
 
-		_shapeLayer = [CAShapeLayer layer];
-		[self.shapeLayer setFillColor:nil];
-		[self.shapeLayer setLineWidth:1.0f / [UIScreen mainScreen].scale];
-		[self.shapeLayer setStrokeColor:[UIColor colorWithWhite:0.5f alpha:0.5f].CGColor];
+		_grid_shapeLayer = [CAShapeLayer layer];
+		[self.grid_shapeLayer setFillColor:nil];
+		[self.grid_shapeLayer setLineWidth:1.0f / [UIScreen mainScreen].scale];
+		[self.grid_shapeLayer setStrokeColor:[UIColor colorWithWhite:0.5f alpha:0.5f].CGColor];
+		[self.layer addSublayer:self.grid_shapeLayer];
 
-		[self.layer addSublayer:self.shapeLayer];
+		
 	}
 
 	return self;
@@ -93,8 +94,8 @@ static void* kSMBGameBoardView__KVOContext = &kSMBGameBoardView__KVOContext;
 {
 	[super layoutSubviews];
 
-	[self shapeLayer_path_update];
-	[self.shapeLayer setFrame:[self shapeLayer_frame]];
+	[self grid_shapeLayer_path_update];
+	[self.grid_shapeLayer setFrame:[self grid_shapeLayer_frame]];
 
 	[self gameBoardEntityViews_layout];
 }
@@ -110,7 +111,7 @@ static void* kSMBGameBoardView__KVOContext = &kSMBGameBoardView__KVOContext;
 
 	[self gameBoard_setKVORegistered:YES];
 
-	[self shapeLayer_path_update];
+	[self grid_shapeLayer_path_update];
 }
 
 -(void)gameBoard_setKVORegistered:(BOOL)registered
@@ -138,13 +139,13 @@ static void* kSMBGameBoardView__KVOContext = &kSMBGameBoardView__KVOContext;
 	}];
 }
 
-#pragma mark - shapeLayer
--(CGRect)shapeLayer_frame
+#pragma mark - grid_shapeLayer
+-(CGRect)grid_shapeLayer_frame
 {
 	return self.bounds;
 }
 
--(void)shapeLayer_path_update
+-(void)grid_shapeLayer_path_update
 {
 	UIBezierPath* const bezierPath = [UIBezierPath bezierPath];
 
@@ -195,7 +196,7 @@ static void* kSMBGameBoardView__KVOContext = &kSMBGameBoardView__KVOContext;
 		}
 	}
 
-	[self.shapeLayer setPath:bezierPath.CGPath];
+	[self.grid_shapeLayer setPath:bezierPath.CGPath];
 }
 
 #pragma mark - KVO

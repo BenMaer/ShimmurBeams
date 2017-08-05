@@ -10,6 +10,7 @@
 
 #import <Foundation/Foundation.h>
 #import <CoreGraphics/CoreGraphics.h>
+#import <UIKit/UIKit.h>
 
 
 
@@ -34,6 +35,12 @@
 
 #pragma mark - draw
 -(void)drawRect:(CGRect)rect;
+
+#pragma mark - imageOrientation
++(UIImageOrientation)imageOrientation_for_orientation:(SMBGameBoardEntity__orientation)orientation;
+
+#pragma mark - entityAction
+-(void)entityAction_setup;
 
 @end
 

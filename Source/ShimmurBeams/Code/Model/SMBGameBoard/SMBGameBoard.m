@@ -265,6 +265,13 @@ static void* kSMBGameBoard__KVOContext = &kSMBGameBoard__KVOContext;
 	[self setGameBoardEntities:[NSArray<SMBGameBoardEntity*> arrayWithArray:gameBoardEntities_new]];
 }
 
+-(void)gameBoardEntities_setupActions
+{
+	[self.gameBoardEntities enumerateObjectsUsingBlock:^(SMBGameBoardEntity * _Nonnull gameBoardEntity, NSUInteger idx, BOOL * _Nonnull stop) {
+		[gameBoardEntity entityAction_setup];
+	}];
+}
+
 #pragma mark - KVO
 -(void)observeValueForKeyPath:(nullable NSString*)keyPath ofObject:(nullable id)object change:(nullable NSDictionary*)change context:(nullable void*)context
 {
