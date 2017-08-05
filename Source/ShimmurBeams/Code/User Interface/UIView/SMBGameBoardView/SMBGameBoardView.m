@@ -17,9 +17,10 @@
 
 @interface SMBGameBoardView ()
 
-#pragma mark - draw
--(void)draw_grid_in_rect:(CGRect)rect;
--(void)draw_edges_in_rect:(CGRect)rect;
+#pragma mark - shapeLayer
+@property (nonatomic, readonly, strong, nullable) CAShapeLayer* shapeLayer;
+-(CGRect)shapeLayer_frame;
+-(void)shapeLayer_path_update;
 
 @end
 
@@ -34,20 +35,31 @@
 {
 	if (self = [super initWithFrame:frame])
 	{
-		[self setBackgroundColor:[UIColor clearColor]];
+		[self setBackgroundColor:[UIColor cyanColor]];
+
+		[self.layer setCornerRadius:10.0f];
+		[self.layer setMasksToBounds:YES];
+
+		[self.layer setBorderWidth:1.0f];
+		[self.layer setBorderColor:[UIColor blackColor].CGColor];
+
+		_shapeLayer = [CAShapeLayer layer];
+		[self.shapeLayer setFillColor:nil];
+		[self.shapeLayer setLineWidth:1.0f / [UIScreen mainScreen].scale];
+		[self.shapeLayer setStrokeColor:[UIColor colorWithWhite:0.5f alpha:0.5f].CGColor];
+
+		[self.layer addSublayer:self.shapeLayer];
 	}
-	
+
 	return self;
 }
 
--(void)drawRect:(CGRect)rect
+-(void)layoutSubviews
 {
-	[super drawRect:rect];
+	[super layoutSubviews];
 
-	CGContextClearRect(UIGraphicsGetCurrentContext(), rect);
-
-	[self draw_grid_in_rect:rect];
-	[self draw_edges_in_rect:rect];
+	[self shapeLayer_path_update];
+	[self.shapeLayer setFrame:[self shapeLayer_frame]];
 }
 
 #pragma mark - gameBoard
@@ -57,12 +69,19 @@
 
 	_gameBoard = gameBoard;
 
-	[self setNeedsDisplay];
+	[self shapeLayer_path_update];
 }
 
-#pragma mark - draw
--(void)draw_grid_in_rect:(CGRect)rect
+#pragma mark - shapeLayer
+-(CGRect)shapeLayer_frame
 {
+	return self.bounds;
+}
+
+-(void)shapeLayer_path_update
+{
+	UIBezierPath* const bezierPath = [UIBezierPath bezierPath];
+
 	SMBGameBoard* const gameBoard = self.gameBoard;
 	kRUConditionalReturn(gameBoard == nil, NO);
 
@@ -72,55 +91,45 @@
 	NSUInteger const numberOfRows = [gameBoard gameBoardTiles_numberOfRows];
 	kRUConditionalReturn(numberOfRows <= 0, YES);
 
-	CGContextRef const context = UIGraphicsGetCurrentContext();
-
-	CGContextSetStrokeColorWithColor(context, [UIColor colorWithWhite:0.5f alpha:0.5f].CGColor);
-	CGContextSetLineWidth(context, 1.0f / [UIScreen mainScreen].scale);
-
 	if (numberOfColumns > 1)
 	{
-		CGFloat const horizontal_increment = CGRectGetWidth(rect) / (CGFloat)numberOfColumns;
+		CGFloat const horizontal_increment = CGRectGetWidth(self.bounds) / (CGFloat)numberOfColumns;
 		for (NSUInteger columnToDraw = 1;
 			 columnToDraw < numberOfColumns;
 			 columnToDraw++)
 		{
-			CGFloat const xCoord = CGRectGetMinX(rect) + (horizontal_increment * (CGFloat)columnToDraw);
-			CGContextMoveToPoint(context, xCoord, CGRectGetMinY(rect));
-			CGContextAddLineToPoint(context, xCoord, CGRectGetMaxY(rect));
+			CGFloat const xCoord = (horizontal_increment * (CGFloat)columnToDraw);
+			[bezierPath moveToPoint:(CGPoint){
+				.x	= xCoord,
+				.y	= 0.0f,
+			}];
+			[bezierPath addLineToPoint:(CGPoint){
+				.x	= xCoord,
+				.y	= CGRectGetHeight(self.bounds),
+			}];
 		}
 	}
 
 	if (numberOfRows > 1)
 	{
-		CGFloat const vertical_increment = CGRectGetWidth(rect) / (CGFloat)numberOfRows;
+		CGFloat const vertical_increment = CGRectGetWidth(self.bounds) / (CGFloat)numberOfRows;
 		for (NSUInteger rowToDraw = 1;
 			 rowToDraw < numberOfRows;
 			 rowToDraw++)
 		{
-			CGFloat const yCoord = CGRectGetMinY(rect) + (vertical_increment * (CGFloat)rowToDraw);
-			CGContextMoveToPoint(context, CGRectGetMinX(rect), yCoord);
-			CGContextAddLineToPoint(context, CGRectGetMaxX(rect), yCoord);
+			CGFloat const yCoord = (vertical_increment * (CGFloat)rowToDraw);
+			[bezierPath moveToPoint:(CGPoint){
+				.x	= 0.0f,
+				.y	= yCoord,
+			}];
+			[bezierPath addLineToPoint:(CGPoint){
+				.x	= CGRectGetWidth(self.bounds),
+				.y	= yCoord,
+			}];
 		}
 	}
 
-	CGContextStrokePath(context);
-}
-
--(void)draw_edges_in_rect:(CGRect)rect
-{
-	CGContextRef const context = UIGraphicsGetCurrentContext();
-
-	CGContextSetStrokeColorWithColor(context, [UIColor blackColor].CGColor);
-	CGContextSetLineWidth(context, 1.0f);
-
-	CGContextMoveToPoint(context, CGRectGetMinX(rect), CGRectGetMinY(rect));	/* Top left */
-	CGContextAddLineToPoint(context, CGRectGetMaxX(rect), CGRectGetMinY(rect));	/* Top right */
-	CGContextAddLineToPoint(context, CGRectGetMaxX(rect), CGRectGetMaxY(rect));	/* Bottom right */
-	CGContextAddLineToPoint(context, CGRectGetMinX(rect), CGRectGetMaxY(rect));	/* Bottom left */
-
-	CGContextClosePath(context);
-
-	CGContextStrokePath(context);
+	[self.shapeLayer setPath:bezierPath.CGPath];
 }
 
 @end

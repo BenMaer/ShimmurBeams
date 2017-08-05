@@ -35,7 +35,7 @@
 {
 	if (self = [super initWithFrame:frame])
 	{
-		[self setBackgroundColor:[UIColor cyanColor]];
+		[self setBackgroundColor:[UIColor clearColor]];
 
 		_gameBoardView = [SMBGameBoardView new];
 		[self addSubview:self.gameBoardView];
