@@ -13,6 +13,8 @@
 
 
 @class SMBGameBoardTilePosition;
+@class SMBGameBoard;
+@class SMBGameBoardEntity;
 
 
 
@@ -23,7 +25,24 @@
 #pragma mark - gameBoardTilePosition
 @property (nonatomic, readonly, strong, nullable) SMBGameBoardTilePosition* gameBoardTilePosition;
 
+#pragma mark - gameBoard
+@property (nonatomic, readonly, assign, nullable) SMBGameBoard* gameBoard;
+
+#pragma mark - gameBoardEntity
+@property (nonatomic, strong, nullable) SMBGameBoardEntity* gameBoardEntity;
+
 #pragma mark - init
--(nullable instancetype)init_with_gameBoardTilePosition:(nonnull SMBGameBoardTilePosition*)gameBoardTilePosition NS_DESIGNATED_INITIALIZER;
+-(nullable instancetype)init_with_gameBoardTilePosition:(nonnull SMBGameBoardTilePosition*)gameBoardTilePosition
+											  gameBoard:(nonnull SMBGameBoard*)gameBoard NS_DESIGNATED_INITIALIZER;
+
+@end
+
+
+
+
+
+@interface SMBGameBoardTile_PropertiesForKVO : NSObject
+
++(nonnull NSString*)gameBoardEntity;
 
 @end

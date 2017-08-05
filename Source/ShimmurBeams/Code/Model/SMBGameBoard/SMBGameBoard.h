@@ -14,6 +14,7 @@
 
 @class SMBGameBoardTile;
 @class SMBGameBoardTilePosition;
+@class SMBGameBoardEntity;
 
 
 
@@ -35,10 +36,15 @@
 #pragma mark - gameBoardTiles
 /**
  Returns an instance of `SMBGameBoardTile` at the location given, if one is available at the given location.
-
+ 
  @param position (required) The position to return the tile at.
  @return an instance of `SMBGameBoardTile` at the location given, if one is available at the given location. Otherwise returns nil.
  */
 -(nullable SMBGameBoardTile*)gameBoardTile_at_position:(nonnull SMBGameBoardTilePosition*)position;
+
+#pragma mark - gameBoardEntities
+@property (nonatomic, readonly, copy, nullable) NSArray<SMBGameBoardEntity*>* gameBoardEntities;
+-(NSUInteger)gameBoardTiles_numberOfColumns;
+-(NSUInteger)gameBoardTiles_numberOfRows;
 
 @end

@@ -8,6 +8,7 @@
 
 #import "SMBViewController.h"
 #import "SMBGameLevelView.h"
+#import "SMBGameLevel+SMBTestLevel.h"
 
 #import <ResplendentUtilities/UIView+RUUtility.h>
 
@@ -34,9 +35,11 @@
 {
 	[super viewDidLoad];
 	
-	[self.view setBackgroundColor:[UIColor yellowColor]];
+	[self.view setBackgroundColor:[UIColor whiteColor]];
 
 	_gameLevelView = [SMBGameLevelView new];
+	[self.gameLevelView setGameLevel:[SMBGameLevel smb_testLevel]];
+	NSAssert(self.gameLevelView.gameLevel != nil, @"Unable to load level");
 	[self.view addSubview:self.gameLevelView];
 }
 
@@ -50,7 +53,9 @@
 #pragma mark - gameLevelView
 -(CGRect)gameLevelView_frame
 {
-	CGFloat const dimension_length = CGRectGetWidth(self.view.bounds);
+	CGFloat const inset = 10.0f;
+	CGFloat const dimension_length = CGRectGetWidth(self.view.bounds) - (inset * 2.0f);
+
 	return CGRectCeilOrigin((CGRect){
 		.origin.x		= CGRectGetHorizontallyAlignedXCoordForWidthOnWidth(dimension_length, CGRectGetWidth(self.view.bounds)),
 		.origin.y		= CGRectGetVerticallyAlignedYCoordForHeightOnHeight(dimension_length, CGRectGetHeight(self.view.bounds)),
