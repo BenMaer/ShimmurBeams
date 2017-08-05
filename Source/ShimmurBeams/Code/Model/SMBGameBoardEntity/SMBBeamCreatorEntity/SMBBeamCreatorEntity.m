@@ -27,7 +27,7 @@
 	CGContextSetStrokeColorWithColor(context_inside, [UIColor redColor].CGColor);
 	CGContextSetLineWidth(context_inside, 1.0f);
 
-	CGFloat const inset = CGRectGetWidth(rect) / 2.0f;
+	CGFloat const inset = CGRectGetWidth(rect) / 4.0f;
 
 	CGContextMoveToPoint(context_inside, 0.0f, CGRectGetMaxY(rect)); /* Bottom left */
 	CGContextAddLineToPoint(context_inside, inset, CGRectGetMaxY(rect)); /* Bottom left of machine */
@@ -35,6 +35,8 @@
 	CGContextAddLineToPoint(context_inside, CGRectGetMaxX(rect) - inset, CGRectGetMidY(rect)); /* Top right of machine */
 	CGContextAddLineToPoint(context_inside, CGRectGetMaxX(rect) - inset, CGRectGetMaxY(rect)); /* Bottom right of machine */
 	CGContextAddLineToPoint(context_inside, CGRectGetMaxX(rect), CGRectGetMaxY(rect)); /* Bottom right */
+
+	CGContextStrokePath(context_inside);
 
 	UIImage* const image_inside = UIGraphicsGetImageFromCurrentImageContext();
 

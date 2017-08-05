@@ -8,6 +8,10 @@
 
 #import "SMBGameBoardView.h"
 #import "SMBGameBoard.h"
+#import "SMBGameBoardEntityView.h"
+#import "SMBGameBoardEntity.h"
+#import "SMBGameBoardTile.h"
+#import "SMBGameBoardTilePosition.h"
 
 #import <ResplendentUtilities/RUConditionalReturn.h>
 
@@ -15,12 +19,37 @@
 
 
 
+static void* kSMBGameBoardView__KVOContext = &kSMBGameBoardView__KVOContext;
+
+
+
+
+
 @interface SMBGameBoardView ()
+
+#pragma mark - gameBoard
+-(void)gameBoard_setKVORegistered:(BOOL)registered;
 
 #pragma mark - shapeLayer
 @property (nonatomic, readonly, strong, nullable) CAShapeLayer* shapeLayer;
 -(CGRect)shapeLayer_frame;
 -(void)shapeLayer_path_update;
+
+#pragma mark - gameBoardEntityId_to_view_mapping
+@property (nonatomic, copy, nullable) NSDictionary<NSString*,SMBGameBoardEntityView*>* gameBoardEntityId_to_view_mapping;
+-(void)gameBoardEntityId_to_view_mapping_update;
+
+#pragma mark - gameBoardEntityViews
+-(void)gameBoardEntityViews_layout;
+
+-(void)gameBoardEntityView_layout:(nonnull SMBGameBoardEntityView*)gameBoardEntityView;
+-(CGRect)gameBoardEntityView_frame:(nonnull SMBGameBoardEntityView*)gameBoardEntityView;
+
+-(CGFloat)gameBoardEntityView_width;
+-(CGFloat)gameBoardEntityView_height;
+
+#pragma mark - gameBoardTilePosition
+-(CGRect)gameBoardTilePosition_frame:(nonnull SMBGameBoardTilePosition*)gameBoardTilePosition;
 
 @end
 
@@ -29,6 +58,12 @@
 
 
 @implementation SMBGameBoardView
+
+#pragma mark - NSObject
+-(void)dealloc
+{
+	[self gameBoard_setKVORegistered:NO];
+}
 
 #pragma mark - UIView
 -(instancetype)initWithFrame:(CGRect)frame
@@ -60,6 +95,8 @@
 
 	[self shapeLayer_path_update];
 	[self.shapeLayer setFrame:[self shapeLayer_frame]];
+
+	[self gameBoardEntityViews_layout];
 }
 
 #pragma mark - gameBoard
@@ -67,9 +104,38 @@
 {
 	kRUConditionalReturn(self.gameBoard == gameBoard, NO);
 
+	[self gameBoard_setKVORegistered:NO];
+
 	_gameBoard = gameBoard;
 
+	[self gameBoard_setKVORegistered:YES];
+
 	[self shapeLayer_path_update];
+}
+
+-(void)gameBoard_setKVORegistered:(BOOL)registered
+{
+	typeof(self.gameBoard) const gameBoard = self.gameBoard;
+	kRUConditionalReturn(gameBoard == nil, NO);
+	
+	NSMutableArray<NSString*>* const propertiesToObserve = [NSMutableArray<NSString*> array];
+	[propertiesToObserve addObject:[SMBGameBoard_PropertiesForKVO gameBoardEntities]];
+	
+	[propertiesToObserve enumerateObjectsUsingBlock:^(NSString * _Nonnull propertyToObserve, NSUInteger idx, BOOL * _Nonnull stop) {
+		if (registered)
+		{
+			[gameBoard addObserver:self
+						forKeyPath:propertyToObserve
+						   options:(NSKeyValueObservingOptionInitial)
+						   context:&kSMBGameBoardView__KVOContext];
+		}
+		else
+		{
+			[gameBoard removeObserver:self
+						   forKeyPath:propertyToObserve
+							  context:&kSMBGameBoardView__KVOContext];
+		}
+	}];
 }
 
 #pragma mark - shapeLayer
@@ -93,7 +159,7 @@
 
 	if (numberOfColumns > 1)
 	{
-		CGFloat const horizontal_increment = CGRectGetWidth(self.bounds) / (CGFloat)numberOfColumns;
+		CGFloat const horizontal_increment = [self gameBoardEntityView_width];
 		for (NSUInteger columnToDraw = 1;
 			 columnToDraw < numberOfColumns;
 			 columnToDraw++)
@@ -130,6 +196,152 @@
 	}
 
 	[self.shapeLayer setPath:bezierPath.CGPath];
+}
+
+#pragma mark - KVO
+-(void)observeValueForKeyPath:(nullable NSString*)keyPath ofObject:(nullable id)object change:(nullable NSDictionary*)change context:(nullable void*)context
+{
+	if (context == kSMBGameBoardView__KVOContext)
+	{
+		if (object == self.gameBoard)
+		{
+			if ([keyPath isEqualToString:[SMBGameBoard_PropertiesForKVO gameBoardEntities]])
+			{
+				[self gameBoardEntityId_to_view_mapping_update];
+			}
+			else
+			{
+				NSAssert(false, @"unhandled keyPath %@",keyPath);
+			}
+		}
+		else
+		{
+			NSAssert(false, @"unhandled object %@",object);
+		}
+	}
+	else
+	{
+		[super observeValueForKeyPath:keyPath ofObject:object change:change context:context];
+	}
+}
+
+#pragma mark - gameBoardEntityId_to_view_mapping
+-(void)setGameBoardEntityId_to_view_mapping:(NSDictionary<NSString*,SMBGameBoardEntityView*>*)gameBoardEntityId_to_view_mapping
+{
+	kRUConditionalReturn((self.gameBoardEntityId_to_view_mapping == gameBoardEntityId_to_view_mapping)
+						 ||
+						 [self.gameBoardEntityId_to_view_mapping isEqual:gameBoardEntityId_to_view_mapping], NO);
+
+	if ((self.gameBoardEntityId_to_view_mapping != nil)
+		&&
+		(self.gameBoardEntityId_to_view_mapping.count > 0))
+	{
+		NSArray<SMBGameBoardEntityView*>* const gameBoardEntityId_to_view_mapping_allValues = gameBoardEntityId_to_view_mapping.allValues;
+		[self.gameBoardEntityId_to_view_mapping.allValues enumerateObjectsUsingBlock:^(SMBGameBoardEntityView * _Nonnull gameBoardEntityView, NSUInteger idx, BOOL * _Nonnull stop) {
+			if ([gameBoardEntityId_to_view_mapping_allValues containsObject:gameBoardEntityView] == false)
+			{
+				NSAssert(gameBoardEntityView.superview == self, @"Should be self");
+
+				[gameBoardEntityView removeFromSuperview];
+			}
+		}];
+	}
+
+	_gameBoardEntityId_to_view_mapping = (gameBoardEntityId_to_view_mapping ? [NSDictionary<NSString*,SMBGameBoardEntityView*> dictionaryWithDictionary:gameBoardEntityId_to_view_mapping] : nil);
+
+	if ((self.gameBoardEntityId_to_view_mapping != nil)
+		&&
+		(self.gameBoardEntityId_to_view_mapping.count > 0))
+	{
+		[self.gameBoardEntityId_to_view_mapping.allValues enumerateObjectsUsingBlock:^(SMBGameBoardEntityView * _Nonnull gameBoardEntityView, NSUInteger idx, BOOL * _Nonnull stop) {
+			if (gameBoardEntityView.superview != self)
+			{
+				[self addSubview:gameBoardEntityView];
+			}
+		}];
+	}
+}
+
+-(void)gameBoardEntityId_to_view_mapping_update
+{
+	NSMutableDictionary<NSString*,SMBGameBoardEntityView*>* const gameBoardEntityId_to_view_mapping_new = [NSMutableDictionary<NSString*,SMBGameBoardEntityView*> dictionary];
+
+	NSDictionary<NSString*,SMBGameBoardEntityView*>* const gameBoardEntityId_to_view_mapping_old = self.gameBoardEntityId_to_view_mapping;
+
+	[self.gameBoard.gameBoardEntities enumerateObjectsUsingBlock:^(SMBGameBoardEntity * _Nonnull gameBoardEntity, NSUInteger idx, BOOL * _Nonnull stop) {
+		NSString* const uniqueEntityId = gameBoardEntity.uniqueEntityId;
+
+		SMBGameBoardEntityView* const gameBoardEntityView =
+		([gameBoardEntityId_to_view_mapping_old objectForKey:uniqueEntityId]
+		 ?:
+		[[SMBGameBoardEntityView alloc] init_with_gameBoardEntity:gameBoardEntity]
+		);
+
+		[gameBoardEntityId_to_view_mapping_new setObject:gameBoardEntityView forKey:uniqueEntityId];
+	}];
+
+	[self setGameBoardEntityId_to_view_mapping:[NSDictionary<NSString*,SMBGameBoardEntityView*> dictionaryWithDictionary:gameBoardEntityId_to_view_mapping_new]];
+}
+
+#pragma mark - gameBoardEntityViews
+-(void)gameBoardEntityViews_layout
+{
+	[self.gameBoardEntityId_to_view_mapping.allValues enumerateObjectsUsingBlock:^(SMBGameBoardEntityView * _Nonnull gameBoardEntityView, NSUInteger idx, BOOL * _Nonnull stop) {
+		[self gameBoardEntityView_layout:gameBoardEntityView];
+	}];
+}
+
+-(void)gameBoardEntityView_layout:(nonnull SMBGameBoardEntityView*)gameBoardEntityView
+{
+	kRUConditionalReturn(gameBoardEntityView == nil, YES);
+
+	[gameBoardEntityView setFrame:[self gameBoardEntityView_frame:gameBoardEntityView]];
+}
+
+-(CGRect)gameBoardEntityView_frame:(nonnull SMBGameBoardEntityView*)gameBoardEntityView
+{
+	kRUConditionalReturn_ReturnValue(gameBoardEntityView == nil, YES, CGRectZero);
+	
+	SMBGameBoardTilePosition* const gameBoardTilePosition = gameBoardEntityView.gameBoardEntity.gameBoardTile.gameBoardTilePosition;
+	return [self gameBoardTilePosition_frame:gameBoardTilePosition];
+}
+
+-(CGFloat)gameBoardEntityView_width
+{
+	SMBGameBoard* const gameBoard = self.gameBoard;
+	kRUConditionalReturn_ReturnValue(gameBoard == nil, YES, 0.0f);
+
+	NSUInteger const numberOfColumns = [gameBoard gameBoardTiles_numberOfColumns];
+	kRUConditionalReturn_ReturnValue(numberOfColumns <= 0, YES, 0.0f);
+
+	return CGRectGetWidth(self.bounds) / numberOfColumns;
+}
+
+-(CGFloat)gameBoardEntityView_height
+{
+	SMBGameBoard* const gameBoard = self.gameBoard;
+	kRUConditionalReturn_ReturnValue(gameBoard == nil, YES, 0.0f);
+	
+	NSUInteger const numberOfRows = [gameBoard gameBoardTiles_numberOfRows];
+	kRUConditionalReturn_ReturnValue(numberOfRows <= 0, YES, 0.0f);
+
+	return CGRectGetHeight(self.bounds) / numberOfRows;
+}
+
+#pragma mark - gameBoardTilePosition
+-(CGRect)gameBoardTilePosition_frame:(nonnull SMBGameBoardTilePosition*)gameBoardTilePosition
+{
+	kRUConditionalReturn_ReturnValue(gameBoardTilePosition == nil, YES, CGRectZero);
+	
+	CGFloat const gameBoardEntityView_width = [self gameBoardEntityView_width];
+	CGFloat const gameBoardEntityView_height = [self gameBoardEntityView_height];
+	
+	return (CGRect){
+		.origin.x		= gameBoardEntityView_width * gameBoardTilePosition.column,
+		.origin.y		= gameBoardEntityView_height * gameBoardTilePosition.row,
+		.size.width		= gameBoardEntityView_width,
+		.size.height	= gameBoardEntityView_height,
+	};
 }
 
 @end

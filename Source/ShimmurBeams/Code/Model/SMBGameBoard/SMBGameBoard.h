@@ -42,9 +42,20 @@
  */
 -(nullable SMBGameBoardTile*)gameBoardTile_at_position:(nonnull SMBGameBoardTilePosition*)position;
 
-#pragma mark - gameBoardEntities
-@property (nonatomic, readonly, copy, nullable) NSArray<SMBGameBoardEntity*>* gameBoardEntities;
 -(NSUInteger)gameBoardTiles_numberOfColumns;
 -(NSUInteger)gameBoardTiles_numberOfRows;
+
+#pragma mark - gameBoardEntities
+@property (nonatomic, readonly, copy, nullable) NSArray<SMBGameBoardEntity*>* gameBoardEntities;
+
+@end
+
+
+
+
+
+@interface SMBGameBoard_PropertiesForKVO : NSObject
+
++(nonnull NSString*)gameBoardEntities;
 
 @end

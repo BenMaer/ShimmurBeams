@@ -7,6 +7,7 @@
 //
 
 #import "SMBGameBoardTile.h"
+#import "SMBGameBoardEntity.h"
 
 #import <ResplendentUtilities/RUConditionalReturn.h>
 
@@ -43,6 +44,22 @@
 	}
 
 	return self;
+}
+
+#pragma mark - gameBoardEntity
+-(void)setGameBoardEntity:(nullable SMBGameBoardEntity*)gameBoardEntity
+{
+	kRUConditionalReturn(self.gameBoardEntity == gameBoardEntity, NO);
+
+	_gameBoardEntity = gameBoardEntity;
+
+	if (self.gameBoardEntity)
+	{
+		if (self.gameBoardEntity.gameBoardTile != self)
+		{
+			[self.gameBoardEntity setGameBoardTile:self];
+		}
+	}
 }
 
 @end

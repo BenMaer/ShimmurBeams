@@ -283,7 +283,7 @@ static void* kSMBGameBoard__KVOContext = &kSMBGameBoard__KVOContext;
 					[self gameBoardEntity_remove:gameBoardEntity_old];
 				}
 
-				SMBGameBoardEntity* const gameBoardEntity = kRUClassOrNil(object, SMBGameBoardEntity);
+				SMBGameBoardEntity* const gameBoardEntity = gameBoardTile.gameBoardEntity;
 				if (gameBoardEntity)
 				{
 					[self gameBoardEntity_add:gameBoardEntity];
@@ -304,5 +304,15 @@ static void* kSMBGameBoard__KVOContext = &kSMBGameBoard__KVOContext;
 		[super observeValueForKeyPath:keyPath ofObject:object change:change context:context];
 	}
 }
+
+@end
+
+
+
+
+
+@implementation SMBGameBoard_PropertiesForKVO
+
++(nonnull NSString*)gameBoardEntities{return NSStringFromSelector(_cmd);}
 
 @end
