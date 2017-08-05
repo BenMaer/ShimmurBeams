@@ -65,7 +65,7 @@
 	SMBGameBoardEntity* const gameBoardEntity = self.gameBoardEntity;
 	kRUConditionalReturn(gameBoardEntity == nil, YES);
 
-	[gameBoardEntity drawRect:rect];
+	[gameBoardEntity draw_in_rect:rect];
 }
 
 @end

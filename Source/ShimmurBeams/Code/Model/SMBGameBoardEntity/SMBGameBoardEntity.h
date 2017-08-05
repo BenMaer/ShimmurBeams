@@ -34,10 +34,7 @@
 @property (nonatomic, assign, nullable) SMBGameBoardTile* gameBoardTile;
 
 #pragma mark - draw
--(void)drawRect:(CGRect)rect;
-
-#pragma mark - imageOrientation
-+(UIImageOrientation)imageOrientation_for_orientation:(SMBGameBoardEntity__orientation)orientation;
+-(void)draw_in_rect:(CGRect)rect;
 
 #pragma mark - entityAction
 -(void)entityAction_setup;

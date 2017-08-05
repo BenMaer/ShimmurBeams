@@ -9,8 +9,7 @@
 #import "SMBGameLevel+SMBTestLevel.h"
 #import "SMBGameBoard.h"
 #import "SMBBeamCreatorEntity.h"
-#import "SMBGameBoardTilePosition.h"
-#import "SMBGameBoardTile.h"
+#import "SMBGameBoard+SMBAddEntity.h"
 
 
 
@@ -24,13 +23,29 @@
 	SMBGameBoard* const gameBoard = [[SMBGameBoard alloc] init_with_numberOfColumns:5
 																	   numberOfRows:5];
 
-	SMBGameBoardTile* const gameBoardTile =
-	[gameBoard gameBoardTile_at_position:[[SMBGameBoardTilePosition alloc] init_with_column:1 row:2]];
+	SMBBeamCreatorEntity* const beamCreatorEntity_top = [SMBBeamCreatorEntity new];
+	[beamCreatorEntity_top setOrientation:SMBGameBoardEntity__orientation_up];
+	[gameBoard gameBoardEntity_add:beamCreatorEntity_top
+						 to_column:2
+							   row:1];
 
-	SMBBeamCreatorEntity* const beamCreatorEntity = [SMBBeamCreatorEntity new];
-	[beamCreatorEntity setOrientation:SMBGameBoardEntity__orientation_right];
+	SMBBeamCreatorEntity* const beamCreatorEntity_right = [SMBBeamCreatorEntity new];
+	[beamCreatorEntity_right setOrientation:SMBGameBoardEntity__orientation_right];
+	[gameBoard gameBoardEntity_add:beamCreatorEntity_right
+						 to_column:3
+							   row:2];
 
-	[gameBoardTile setGameBoardEntity:beamCreatorEntity];
+	SMBBeamCreatorEntity* const beamCreatorEntity_down = [SMBBeamCreatorEntity new];
+	[beamCreatorEntity_down setOrientation:SMBGameBoardEntity__orientation_down];
+	[gameBoard gameBoardEntity_add:beamCreatorEntity_down
+						 to_column:2
+							   row:3];
+
+	SMBBeamCreatorEntity* const beamCreatorEntity_left = [SMBBeamCreatorEntity new];
+	[beamCreatorEntity_left setOrientation:SMBGameBoardEntity__orientation_left];
+	[gameBoard gameBoardEntity_add:beamCreatorEntity_left
+						 to_column:1
+							   row:2];
 
 	SMBGameLevel* const gameLevel = [[self alloc] init_with_gameBoard:gameBoard];
 

@@ -23,6 +23,10 @@
 -(nonnull NSString*)uniqueEntityId_generate_initial;
 -(nullable NSString*)uniqueEntityId_generate_next:(nonnull NSString*)currentId;
 
+#pragma mark - draw
+-(CGFloat)draw_angle_radians;
+-(CGFloat)draw_angle_degrees;
+
 @end
 
 
@@ -120,32 +124,46 @@
 }
 
 #pragma mark - draw
--(void)drawRect:(CGRect)rect{}
-
-#pragma mark - imageOrientation
-+(UIImageOrientation)imageOrientation_for_orientation:(SMBGameBoardEntity__orientation)orientation
+-(void)draw_in_rect:(CGRect)rect
 {
+	CGContextRef const context = UIGraphicsGetCurrentContext();
+
+	CGContextTranslateCTM(context, CGRectGetMidX(rect), CGRectGetMidY(rect));
+	CGContextRotateCTM(context, [self draw_angle_radians]);
+	CGContextTranslateCTM(context, -CGRectGetWidth(rect) / 2.0f, -CGRectGetHeight(rect) / 2.0f);
+}
+
+-(CGFloat)draw_angle_radians
+{
+	return ([self draw_angle_degrees] / 180.0f) * M_PI;
+}
+
+-(CGFloat)draw_angle_degrees
+{
+	SMBGameBoardEntity__orientation const orientation = self.orientation;
 	switch (orientation)
 	{
 		case SMBGameBoardEntity__orientation_up:
-			return UIImageOrientationUp;
+			return 0.0f;
 			break;
-
+		
 		case SMBGameBoardEntity__orientation_right:
-			return UIImageOrientationRight;
+//			return 9.0f;
+			return 90.0f;
 			break;
 
 		case SMBGameBoardEntity__orientation_down:
-			return UIImageOrientationDown;
+			return 180.0f;
 			break;
 
 		case SMBGameBoardEntity__orientation_left:
-			return UIImageOrientationLeft;
+//			return -9.0f;
+			return -90.0f;
 			break;
 	}
 
 	NSAssert(false, @"unhandled orientation %li",(long)orientation);
-	return UIImageOrientationUp;
+	return 0.0f;
 }
 
 #pragma mark - entityAction
