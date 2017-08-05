@@ -23,9 +23,9 @@
 
 #pragma clang diagnostic push
 #pragma clang diagnostic ignored "-Wno-nullability-completeness"
-	
+
 	return [self init_with_gameBoard:nil];
-	
+
 #pragma clang diagnostic pop
 }
 

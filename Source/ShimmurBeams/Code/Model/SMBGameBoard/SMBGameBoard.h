@@ -36,7 +36,7 @@
 #pragma mark - gameBoardTiles
 /**
  Returns an instance of `SMBGameBoardTile` at the location given, if one is available at the given location.
- 
+
  @param position (required) The position to return the tile at.
  @return an instance of `SMBGameBoardTile` at the location given, if one is available at the given location. Otherwise returns nil.
  */

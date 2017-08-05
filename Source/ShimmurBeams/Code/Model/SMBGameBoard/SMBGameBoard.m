@@ -177,7 +177,7 @@ static void* kSMBGameBoard__KVOContext = &kSMBGameBoard__KVOContext;
 
 	NSMutableDictionary<NSNumber*,NSMutableArray<NSString*>*>* const KVOOptions_to_propertiesToObserve_mapping = [NSMutableDictionary<NSNumber*,NSMutableArray<NSString*>*> dictionary];
 	[KVOOptions_to_propertiesToObserve_mapping setObject:propertiesToObserve_observe_old_and_initial forKey:@(NSKeyValueObservingOptionInitial | NSKeyValueObservingOptionOld)];
-	
+
 	[KVOOptions_to_propertiesToObserve_mapping enumerateKeysAndObjectsUsingBlock:^(NSNumber * _Nonnull KVOOptions_number, NSMutableArray<NSString *> * _Nonnull propertiesToObserve, BOOL * _Nonnull stop) {
 		[propertiesToObserve enumerateObjectsUsingBlock:^(NSString * _Nonnull propertyToObserve, NSUInteger idx, BOOL * _Nonnull stop) {
 			if (registered)
@@ -232,19 +232,19 @@ static void* kSMBGameBoard__KVOContext = &kSMBGameBoard__KVOContext;
 -(void)gameBoardEntity_add:(nonnull SMBGameBoardEntity*)gameBoardEntity
 {
 	kRUConditionalReturn(gameBoardEntity == nil, YES);
-	
+
 	NSArray<SMBGameBoardEntity*>* const gameBoardEntities_old = self.gameBoardEntities;
 	kRUConditionalReturn([gameBoardEntities_old containsObject:gameBoardEntity], YES);
-	
+
 	NSMutableArray<SMBGameBoardEntity*>* const gameBoardEntities_new = [NSMutableArray<SMBGameBoardEntity*> array];
-	
+
 	if (gameBoardEntities_old)
 	{
 		[gameBoardEntities_new addObjectsFromArray:gameBoardEntities_old];
 	}
-	
+
 	[gameBoardEntities_new addObject:gameBoardEntity];
-	
+
 	[self setGameBoardEntities:[NSArray<SMBGameBoardEntity*> arrayWithArray:gameBoardEntities_new]];
 }
 

@@ -20,13 +20,13 @@
 -(instancetype)init
 {
 	kRUConditionalReturn_ReturnValueNil(YES, YES);
-	
+
 #pragma clang diagnostic push
 #pragma clang diagnostic ignored "-Wno-nullability-completeness"
-	
+
 	return [self init_with_gameBoardTilePosition:nil
 									   gameBoard:nil];
-	
+
 #pragma clang diagnostic pop
 }
 
@@ -41,7 +41,7 @@
 		_gameBoardTilePosition = gameBoardTilePosition;
 		_gameBoard = gameBoard;
 	}
-	
+
 	return self;
 }
 

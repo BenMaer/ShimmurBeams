@@ -34,7 +34,7 @@
 -(void)viewDidLoad
 {
 	[super viewDidLoad];
-	
+
 	[self.view setBackgroundColor:[UIColor whiteColor]];
 
 	_gameLevelView = [SMBGameLevelView new];
@@ -46,7 +46,7 @@
 -(void)viewWillLayoutSubviews
 {
 	[super viewWillLayoutSubviews];
-	
+
 	[self.gameLevelView setFrame:[self gameLevelView_frame]];
 }
 

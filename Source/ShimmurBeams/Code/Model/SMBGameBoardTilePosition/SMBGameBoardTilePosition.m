@@ -21,7 +21,7 @@
 -(instancetype)init
 {
 	kRUConditionalReturn_ReturnValueNil(YES, YES);
-	
+
 	return [self init_with_column:0
 							  row:0];
 }
@@ -35,7 +35,7 @@
 		_column = column;
 		_row = row;
 	}
-	
+
 	return self;
 }
 
