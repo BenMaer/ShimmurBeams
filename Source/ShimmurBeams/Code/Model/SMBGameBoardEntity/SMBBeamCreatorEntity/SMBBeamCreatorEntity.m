@@ -43,4 +43,10 @@
 	CGContextRestoreGState(context);
 }
 
+#pragma mark - entityAction
+-(void)entityAction_setup
+{
+	
+}
+
 @end

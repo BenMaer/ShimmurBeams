@@ -34,6 +34,7 @@
 @property (nonatomic, assign, nullable) SMBGameBoardTile* gameBoardTile;
 
 #pragma mark - draw
+@property (nonatomic, assign) BOOL needsRedraw;
 -(void)draw_in_rect:(CGRect)rect;
 
 #pragma mark - entityAction
@@ -48,5 +49,6 @@
 @interface SMBGameBoardEntity_PropertiesForKVO : NSObject
 
 +(nonnull NSString*)gameBoardEntity;
++(nonnull NSString*)needsRedraw;
 
 @end

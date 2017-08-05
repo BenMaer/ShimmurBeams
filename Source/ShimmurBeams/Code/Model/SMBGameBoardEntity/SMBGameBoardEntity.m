@@ -43,6 +43,8 @@
 		[self uniqueEntityId_generate];
 		kRUConditionalReturn_ReturnValueNil(self.uniqueEntityId == nil, YES);
 		kRUConditionalReturn_ReturnValueNil(self.uniqueEntityId.length == 0, YES);
+
+		[self setNeedsRedraw:YES];
 	}
 
 	return self;
@@ -126,6 +128,10 @@
 #pragma mark - draw
 -(void)draw_in_rect:(CGRect)rect
 {
+	kRUConditionalReturn(self.needsRedraw == NO, NO);
+
+	[self setNeedsRedraw:NO];
+
 	CGContextRef const context = UIGraphicsGetCurrentContext();
 
 	CGContextTranslateCTM(context, CGRectGetMidX(rect), CGRectGetMidY(rect));
@@ -148,7 +154,6 @@
 			break;
 		
 		case SMBGameBoardEntity__orientation_right:
-//			return 9.0f;
 			return 90.0f;
 			break;
 
@@ -157,7 +162,6 @@
 			break;
 
 		case SMBGameBoardEntity__orientation_left:
-//			return -9.0f;
 			return -90.0f;
 			break;
 	}
@@ -178,5 +182,6 @@
 @implementation SMBGameBoardEntity_PropertiesForKVO
 
 +(nonnull NSString*)gameBoardEntity{return NSStringFromSelector(_cmd);}
++(nonnull NSString*)needsRedraw{return NSStringFromSelector(_cmd);}
 
 @end
