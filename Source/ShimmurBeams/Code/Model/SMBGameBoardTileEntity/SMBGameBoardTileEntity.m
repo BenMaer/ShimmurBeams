@@ -8,7 +8,6 @@
 
 #import "SMBGameBoardTileEntity.h"
 #import "SMBGameBoardTile.h"
-#import "SMBUniqueStringGenerator.h"
 
 #import <ResplendentUtilities/RUConditionalReturn.h>
 
@@ -17,10 +16,6 @@
 
 
 @interface SMBGameBoardTileEntity ()
-
-#pragma mark - uniqueTileEntityId
-@property (nonatomic, strong, nullable) NSString* uniqueTileEntityId;
--(void)uniqueTileEntityId_generate;
 
 #pragma mark - draw
 -(CGFloat)draw_angle_radians;
@@ -39,26 +34,10 @@
 {
 	if (self = [super init])
 	{
-		[self uniqueTileEntityId_generate];
-		kRUConditionalReturn_ReturnValueNil(self.uniqueTileEntityId == nil, YES);
-		kRUConditionalReturn_ReturnValueNil(self.uniqueTileEntityId.length == 0, YES);
-
 		[self setNeedsRedraw:YES];
 	}
 
 	return self;
-}
-
-#pragma mark - uniqueTileEntityId
--(void)uniqueTileEntityId_generate
-{
-	static SMBUniqueStringGenerator* uniqueStringGenerator = nil;
-	if (uniqueStringGenerator == nil)
-	{
-		uniqueStringGenerator = [SMBUniqueStringGenerator new];
-	}
-
-	[self setUniqueTileEntityId:[uniqueStringGenerator uniqueId_next]];
 }
 
 #pragma mark - gameBoardTile
@@ -79,9 +58,7 @@
 #pragma mark - draw
 -(void)draw_in_rect:(CGRect)rect
 {
-	kRUConditionalReturn(self.needsRedraw == NO, YES);
-
-	[self setNeedsRedraw:NO];
+	[super draw_in_rect:rect];
 
 	CGContextRef const context = UIGraphicsGetCurrentContext();
 
@@ -126,12 +103,6 @@
 
 #pragma mark - entityAction
 -(void)entityAction_setup{}
-
-#pragma mark - SMBMappedDataCollection_MappableObject
--(nonnull NSString*)smb_uniqueKey
-{
-	return self.uniqueTileEntityId;
-}
 
 @end
 

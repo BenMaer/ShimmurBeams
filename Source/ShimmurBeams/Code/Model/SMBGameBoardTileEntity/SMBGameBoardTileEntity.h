@@ -6,7 +6,7 @@
 //  Copyright © 2017 Shimmur. All rights reserved.
 //
 
-#import "SMBMappedDataCollection_MappableObject.h"
+#import "SMBGameBoardEntity.h"
 
 #import "SMBGameBoardTileEntity__orientations.h"
 
@@ -24,20 +24,13 @@
 
 
 
-@interface SMBGameBoardTileEntity : NSObject <SMBMappedDataCollection_MappableObject>
-
-#pragma mark - uniqueTileEntityId
-@property (nonatomic, readonly, strong, nullable) NSString* uniqueTileEntityId;
+@interface SMBGameBoardTileEntity : SMBGameBoardEntity
 
 #pragma mark - orientation
 @property (nonatomic, assign) SMBGameBoardTileEntity__orientation orientation;
 
 #pragma mark - gameBoardTile
 @property (nonatomic, assign, nullable) SMBGameBoardTile* gameBoardTile;
-
-#pragma mark - draw
-@property (nonatomic, assign) BOOL needsRedraw;
--(void)draw_in_rect:(CGRect)rect;
 
 #pragma mark - entityAction
 -(void)entityAction_setup;

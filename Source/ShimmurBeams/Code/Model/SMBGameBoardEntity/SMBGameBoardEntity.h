@@ -6,6 +6,8 @@
 //  Copyright © 2017 Shimmur. All rights reserved.
 //
 
+#import "SMBMappedDataCollection_MappableObject.h"
+
 #import <Foundation/Foundation.h>
 #import <UIKit/UIKit.h>
 
@@ -13,10 +15,10 @@
 
 
 
-@interface SMBGameBoardEntity : NSObject
+@interface SMBGameBoardEntity : NSObject <SMBMappedDataCollection_MappableObject>
 
-#pragma mark - uniqueTileId
-@property (nonatomic, readonly, strong, nullable) NSString* uniqueTileId;
+#pragma mark - uniqueId
+@property (nonatomic, readonly, strong, nullable) NSString* uniqueId;
 
 #pragma mark - draw
 @property (nonatomic, assign) BOOL needsRedraw;

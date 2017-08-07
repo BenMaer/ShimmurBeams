@@ -17,9 +17,9 @@
 
 @interface SMBGameBoardEntity ()
 
-#pragma mark - uniqueTileId
-@property (nonatomic, strong, nullable) NSString* uniqueTileId;
--(void)uniqueTileId_generate;
+#pragma mark - uniqueId
+@property (nonatomic, strong, nullable) NSString* uniqueId;
+-(void)uniqueId_generate;
 
 @end
 
@@ -34,9 +34,9 @@
 {
 	if (self = [super init])
 	{
-		[self uniqueTileId_generate];
-		kRUConditionalReturn_ReturnValueNil(self.uniqueTileId == nil, YES);
-		kRUConditionalReturn_ReturnValueNil(self.uniqueTileId.length == 0, YES);
+		[self uniqueId_generate];
+		kRUConditionalReturn_ReturnValueNil(self.uniqueId == nil, YES);
+		kRUConditionalReturn_ReturnValueNil(self.uniqueId.length == 0, YES);
 		
 		[self setNeedsRedraw:YES];
 	}
@@ -44,8 +44,8 @@
 	return self;
 }
 
-#pragma mark - uniqueTileId
--(void)uniqueTileId_generate
+#pragma mark - uniqueId
+-(void)uniqueId_generate
 {
 	static SMBUniqueStringGenerator* uniqueStringGenerator = nil;
 	if (uniqueStringGenerator == nil)
@@ -53,15 +53,22 @@
 		uniqueStringGenerator = [SMBUniqueStringGenerator new];
 	}
 	
-	[self setUniqueTileId:[uniqueStringGenerator uniqueId_next]];
+	[self setUniqueId:[uniqueStringGenerator uniqueId_next]];
 }
 
 #pragma mark - draw
 -(void)draw_in_rect:(CGRect)rect
 {
-	kRUConditionalReturn(self.needsRedraw == NO, NO);
-	
+	/* Since we can't prevent subclasses from getting this call using a boolean, we need to make sure the caller uses this rule. Hence, at this point, if this boolean is set improperly, there's a run-time issue at play. */
+	kRUConditionalReturn(self.needsRedraw == NO, YES);
+
 	[self setNeedsRedraw:NO];
+}
+
+#pragma mark - SMBMappedDataCollection_MappableObject
+-(nonnull NSString*)smb_uniqueKey
+{
+	return self.uniqueId;
 }
 
 @end
