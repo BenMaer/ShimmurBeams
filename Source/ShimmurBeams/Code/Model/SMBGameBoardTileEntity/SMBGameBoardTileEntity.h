@@ -6,7 +6,7 @@
 //  Copyright © 2017 Shimmur. All rights reserved.
 //
 
-#import "SMBGameBoardEntity.h"
+#import "SMBGameBoardGeneralEntity.h"
 
 #import "SMBGameBoardTileEntity__orientations.h"
 
@@ -24,7 +24,7 @@
 
 
 
-@interface SMBGameBoardTileEntity : SMBGameBoardEntity
+@interface SMBGameBoardTileEntity : SMBGameBoardGeneralEntity
 
 #pragma mark - orientation
 @property (nonatomic, assign) SMBGameBoardTileEntity__orientation orientation;
