@@ -1,0 +1,53 @@
+//
+//  SMBMappedDataCollection.h
+//  ShimmurBeams
+//
+//  Created by Benjamin Maer on 8/7/17.
+//  Copyright © 2017 Shimmur. All rights reserved.
+//
+
+#import "SMBMappedDataCollection_MappableObject.h"
+
+#import <Foundation/Foundation.h>
+
+
+
+
+
+@class SMBMutableMappedDataCollection<ObjectType>;
+
+
+
+
+
+@interface SMBMappedDataCollection
+<ObjectType>
+: NSObject
+
+#pragma mark - uniqueKey_to_mappableObject_mapping
+@property (nonatomic, readonly, copy, nullable) NSDictionary<NSString*,id<SMBMappedDataCollection_MappableObject>>* uniqueKey_to_mappableObject_mapping;
+
+#pragma mark - mappableObjects
+-(nullable NSArray<ObjectType>*)mappableObjects;
+-(nullable ObjectType)mappableObject_for_uniqueKey:(nonnull NSString*)uniqueKey;
+-(BOOL)mappableObject_exists:(nonnull id<SMBMappedDataCollection_MappableObject>)mappableObject;
+-(nullable NSString*)mappableObject_uniqueKey:(nonnull id<SMBMappedDataCollection_MappableObject>)mappableObject;
+
+#pragma mark - init
+-(nonnull instancetype)init_with_uniqueKey_to_mappableObject_mapping:(nullable NSDictionary<NSString*,id<SMBMappedDataCollection_MappableObject>>*)uniqueKey_to_mappableObject_mapping;
+-(nonnull instancetype)init_with_mappedDataCollection:(nullable SMBMappedDataCollection<ObjectType>*)mappedDataCollection;
+
+#pragma mark - copy
+-(nonnull SMBMappedDataCollection<ObjectType>*)copy;
+-(nonnull SMBMutableMappedDataCollection<ObjectType>*)mutableCopy;
+
+#pragma mark - isEqual
+-(BOOL)isEqual_to_mappedDataCollection:(nullable SMBMappedDataCollection<ObjectType>*)mappedDataCollection;
+
+#pragma mark - changes
++(void)changes_from_mappedDataCollection:(nullable SMBMappedDataCollection<ObjectType>*)from_mappedDataCollection
+				 to_mappedDataCollection:(nullable SMBMappedDataCollection<ObjectType>*)to_mappedDataCollection
+						  removedObjects:(NSArray<ObjectType>*_Nullable * _Nonnull)removedObjects
+							  newObjects:(NSArray<ObjectType>*_Nullable * _Nonnull)newObjects;
+
+@end

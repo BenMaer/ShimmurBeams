@@ -6,13 +6,15 @@
 //  Copyright © 2017 Shimmur. All rights reserved.
 //
 
+#import "SMBMappedDataCollection_MappableObject.h"
+
 #import <Foundation/Foundation.h>
 
 
 
 
 
-@interface SMBGameBoardTilePosition : NSObject
+@interface SMBGameBoardTilePosition : NSObject <SMBMappedDataCollection_MappableObject>
 
 #pragma mark - column
 @property (nonatomic, readonly, assign) NSUInteger column;

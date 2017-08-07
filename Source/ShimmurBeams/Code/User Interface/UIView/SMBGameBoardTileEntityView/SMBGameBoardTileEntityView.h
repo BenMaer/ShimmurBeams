@@ -6,6 +6,8 @@
 //  Copyright © 2017 Shimmur. All rights reserved.
 //
 
+#import "SMBMappedDataCollection_MappableObject.h"
+
 #import <UIKit/UIKit.h>
 
 
@@ -18,7 +20,7 @@
 
 
 
-@interface SMBGameBoardTileEntityView : UIView
+@interface SMBGameBoardTileEntityView : UIView <SMBMappedDataCollection_MappableObject>
 
 #pragma mark - gameBoardEntity
 @property (nonatomic, readonly, strong, nullable) SMBGameBoardTileEntity* gameBoardEntity;

@@ -7,9 +7,21 @@
 //
 
 #import "SMBBeamCreatorTileEntity.h"
+#import "SMBBeamEntity.h"
 
 #import <UIKit/UIKit.h>
 #import <CoreGraphics/CoreGraphics.h>
+
+
+
+
+
+@interface SMBBeamCreatorTileEntity ()
+
+#pragma mark - beamEntity
+@property (nonatomic, readonly, strong, nullable) SMBBeamEntity* beamEntity;
+
+@end
 
 
 
@@ -46,7 +58,10 @@
 #pragma mark - entityAction
 -(void)entityAction_setup
 {
-	
+	_beamEntity =
+	[[SMBBeamEntity alloc] init_with_gameBoardTile:self.gameBoardTile];
+
+	NSAssert(self.beamEntity != nil, @"Shouldn't be nil");
 }
 
 @end

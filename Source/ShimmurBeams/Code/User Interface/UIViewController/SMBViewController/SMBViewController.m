@@ -42,6 +42,8 @@
 	[self.gameLevelView setGameLevel:[SMBGameLevel smb_testLevel]];
 	NSAssert(self.gameLevelView.gameLevel != nil, @"Unable to load level");
 	[self.view addSubview:self.gameLevelView];
+
+	[self.gameLevelView.gameLevel.gameBoard gameBoardTileEntities_setupActions];
 }
 
 -(void)viewWillLayoutSubviews

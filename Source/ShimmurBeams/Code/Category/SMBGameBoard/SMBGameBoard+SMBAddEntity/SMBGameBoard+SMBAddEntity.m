@@ -26,8 +26,8 @@
 
 	SMBGameBoardTile* const gameBoardTile =
 	[self gameBoardTile_at_position:[[SMBGameBoardTilePosition alloc] init_with_column:column row:row]];
-	
-	[gameBoardTile setGameBoardEntity:gameBoardEntity];
+
+	[gameBoardTile setGameBoardTileEntity:gameBoardEntity];
 }
 
 @end

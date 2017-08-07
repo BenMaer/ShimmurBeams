@@ -28,8 +28,8 @@
 #pragma mark - gameBoard
 @property (nonatomic, readonly, assign, nullable) SMBGameBoard* gameBoard;
 
-#pragma mark - gameBoardEntity
-@property (nonatomic, strong, nullable) SMBGameBoardTileEntity* gameBoardEntity;
+#pragma mark - gameBoardTileEntity
+@property (nonatomic, strong, nullable) SMBGameBoardTileEntity* gameBoardTileEntity;
 
 #pragma mark - init
 -(nullable instancetype)init_with_gameBoardTilePosition:(nonnull SMBGameBoardTilePosition*)gameBoardTilePosition
@@ -43,6 +43,6 @@
 
 @interface SMBGameBoardTile_PropertiesForKVO : NSObject
 
-+(nonnull NSString*)gameBoardEntity;
++(nonnull NSString*)gameBoardTileEntity;
 
 @end

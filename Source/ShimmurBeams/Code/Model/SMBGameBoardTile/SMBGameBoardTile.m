@@ -46,18 +46,18 @@
 	return self;
 }
 
-#pragma mark - gameBoardEntity
--(void)setGameBoardEntity:(nullable SMBGameBoardTileEntity*)gameBoardEntity
+#pragma mark - gameBoardTileEntity
+-(void)setGameBoardTileEntity:(nullable SMBGameBoardTileEntity*)gameBoardTileEntity
 {
-	kRUConditionalReturn(self.gameBoardEntity == gameBoardEntity, NO);
+	kRUConditionalReturn(self.gameBoardTileEntity == gameBoardTileEntity, NO);
 
-	_gameBoardEntity = gameBoardEntity;
+	_gameBoardTileEntity = gameBoardTileEntity;
 
-	if (self.gameBoardEntity)
+	if (self.gameBoardTileEntity)
 	{
-		if (self.gameBoardEntity.gameBoardTile != self)
+		if (self.gameBoardTileEntity.gameBoardTile != self)
 		{
-			[self.gameBoardEntity setGameBoardTile:self];
+			[self.gameBoardTileEntity setGameBoardTile:self];
 		}
 	}
 }
@@ -70,6 +70,6 @@
 
 @implementation SMBGameBoardTile_PropertiesForKVO
 
-+(nonnull NSString*)gameBoardEntity{return NSStringFromSelector(_cmd);}
++(nonnull NSString*)gameBoardTileEntity{return NSStringFromSelector(_cmd);}
 
 @end

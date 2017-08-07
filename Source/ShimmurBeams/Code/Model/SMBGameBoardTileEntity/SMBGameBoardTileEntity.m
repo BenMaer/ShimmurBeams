@@ -8,6 +8,7 @@
 
 #import "SMBGameBoardTileEntity.h"
 #import "SMBGameBoardTile.h"
+#import "SMBUniqueStringGenerator.h"
 
 #import <ResplendentUtilities/RUConditionalReturn.h>
 
@@ -17,11 +18,9 @@
 
 @interface SMBGameBoardTileEntity ()
 
-#pragma mark - uniqueEntityId
-@property (nonatomic, strong, nullable) NSString* uniqueEntityId;
--(void)uniqueEntityId_generate;
--(nonnull NSString*)uniqueEntityId_generate_initial;
--(nullable NSString*)uniqueEntityId_generate_next:(nonnull NSString*)currentId;
+#pragma mark - uniqueTileEntityId
+@property (nonatomic, strong, nullable) NSString* uniqueTileEntityId;
+-(void)uniqueTileEntityId_generate;
 
 #pragma mark - draw
 -(CGFloat)draw_angle_radians;
@@ -40,9 +39,9 @@
 {
 	if (self = [super init])
 	{
-		[self uniqueEntityId_generate];
-		kRUConditionalReturn_ReturnValueNil(self.uniqueEntityId == nil, YES);
-		kRUConditionalReturn_ReturnValueNil(self.uniqueEntityId.length == 0, YES);
+		[self uniqueTileEntityId_generate];
+		kRUConditionalReturn_ReturnValueNil(self.uniqueTileEntityId == nil, YES);
+		kRUConditionalReturn_ReturnValueNil(self.uniqueTileEntityId.length == 0, YES);
 
 		[self setNeedsRedraw:YES];
 	}
@@ -50,64 +49,16 @@
 	return self;
 }
 
-#pragma mark - uniqueEntityId
--(void)uniqueEntityId_generate
+#pragma mark - uniqueTileEntityId
+-(void)uniqueTileEntityId_generate
 {
-	static NSString* uniqueEntityId_last = nil;
-
-	NSString* const uniqueEntityId_new =
-	(uniqueEntityId_last
-	 ?
-	 [self uniqueEntityId_generate_next:uniqueEntityId_last]
-	 :
-	 [self uniqueEntityId_generate_initial]
-	);
-
-	kRUConditionalReturn(uniqueEntityId_new == nil, YES);
-
-	uniqueEntityId_last = uniqueEntityId_new;
-
-	[self setUniqueEntityId:uniqueEntityId_new];
-}
-
--(nonnull NSString*)uniqueEntityId_generate_initial
-{
-	unichar const character = 32;
-	return [NSString stringWithCharacters:&character length:1];
-}
-
--(nullable NSString*)uniqueEntityId_generate_next:(nonnull NSString*)currentId
-{
-	kRUConditionalReturn_ReturnValueNil(currentId == nil, YES);
-	kRUConditionalReturn_ReturnValueNil(currentId.length <= 0, YES);
-
-	unichar const character_last = [currentId characterAtIndex:currentId.length - 1];
-	unichar const character_next = character_last + 1;
-
-	NSString* const string_suffix =
-	(character_next == 0
-	 ?
-	 [self uniqueEntityId_generate_initial]
-	 :
-	 [NSString stringWithCharacters:&character_next length:1]
-	 );
-
-	NSMutableString* const entityId_next = [NSMutableString stringWithString:currentId];
-
-	if (character_next == 0)
+	static SMBUniqueStringGenerator* uniqueStringGenerator = nil;
+	if (uniqueStringGenerator == nil)
 	{
-		[entityId_next appendString:string_suffix];
-	}
-	else
-	{
-		[entityId_next replaceCharactersInRange:(NSRange){
-			.location	= entityId_next.length - 1,
-			.length		= 1,
-		}
-									 withString:string_suffix];
+		uniqueStringGenerator = [SMBUniqueStringGenerator new];
 	}
 
-	return [NSString stringWithString:entityId_next];
+	[self setUniqueTileEntityId:[uniqueStringGenerator uniqueId_next]];
 }
 
 #pragma mark - gameBoardTile
@@ -119,16 +70,16 @@
 
 	if ((self.gameBoardTile != nil)
 		&&
-		(self.gameBoardTile.gameBoardEntity != self))
+		(self.gameBoardTile.gameBoardTileEntity != self))
 	{
-		[self.gameBoardTile setGameBoardEntity:self];
+		[self.gameBoardTile setGameBoardTileEntity:self];
 	}
 }
 
 #pragma mark - draw
 -(void)draw_in_rect:(CGRect)rect
 {
-	kRUConditionalReturn(self.needsRedraw == NO, NO);
+	kRUConditionalReturn(self.needsRedraw == NO, YES);
 
 	[self setNeedsRedraw:NO];
 
@@ -164,6 +115,9 @@
 		case SMBGameBoardTileEntity__orientation_left:
 			return -90.0f;
 			break;
+
+		case SMBGameBoardTileEntity__orientation_unknown:
+			break;
 	}
 
 	NSAssert(false, @"unhandled orientation %li",(long)orientation);
@@ -172,6 +126,12 @@
 
 #pragma mark - entityAction
 -(void)entityAction_setup{}
+
+#pragma mark - SMBMappedDataCollection_MappableObject
+-(nonnull NSString*)smb_uniqueKey
+{
+	return self.uniqueTileEntityId;
+}
 
 @end
 

@@ -10,6 +10,7 @@
 
 #import <ResplendentUtilities/RUConditionalReturn.h>
 #import <ResplendentUtilities/RUClassOrNilUtil.h>
+#import <ResplendentUtilities/RUConstants.h>
 
 
 
@@ -51,6 +52,16 @@
 	kRUConditionalReturn_ReturnValueFalse(self.row != gameBoardTilePosition.row, NO);
 
 	return YES;
+}
+
+#pragma mark - SMBMappedDataCollection_MappableObject
+-(nonnull NSString*)smb_uniqueKey
+{
+	NSMutableArray<NSString*>* const strings = [NSMutableArray<NSString*> array];
+	[strings addObject:RUStringWithFormat(@"%lu",(unsigned long)self.column)];
+	[strings addObject:RUStringWithFormat(@"%lu",(unsigned long)self.row)];
+
+	return [strings componentsJoinedByString:@"x"];
 }
 
 @end

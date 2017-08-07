@@ -10,6 +10,7 @@
 #import "SMBGameBoardTile.h"
 #import "SMBGameBoardTilePosition.h"
 #import "SMBGameBoardTileEntity.h"
+#import "SMBGameBoardEntity.h"
 
 #import <ResplendentUtilities/RUConditionalReturn.h>
 #import <ResplendentUtilities/RUClassOrNilUtil.h>
@@ -44,8 +45,11 @@ static void* kSMBGameBoard__KVOContext = &kSMBGameBoard__KVOContext;
 
 #pragma mark - gameBoardTileEntities
 @property (nonatomic, copy, nullable) NSArray<SMBGameBoardTileEntity*>* gameBoardTileEntities;
--(void)gameBoardEntity_add:(nonnull SMBGameBoardTileEntity*)gameBoardEntity;
--(void)gameBoardEntity_remove:(nonnull SMBGameBoardTileEntity*)gameBoardEntity;
+-(void)gameBoardTileEntity_add:(nonnull SMBGameBoardTileEntity*)gameBoardTileEntity;
+-(void)gameBoardTileEntity_remove:(nonnull SMBGameBoardTileEntity*)gameBoardTileEntity;
+
+#pragma mark - gameBoardEntities
+@property (nonatomic, copy, nullable) NSArray<SMBGameBoardEntity*>* gameBoardEntities;
 
 @end
 
@@ -137,7 +141,7 @@ static void* kSMBGameBoard__KVOContext = &kSMBGameBoard__KVOContext;
 {
 	NSArray<NSArray<SMBGameBoardTile*>*>* const gameBoardTiles = self.gameBoardTiles;
 	kRUConditionalReturn_ReturnValueNil(gameBoardTiles == nil, YES);
-	kRUConditionalReturn_ReturnValueNil(column >= gameBoardTiles.count, YES);
+	kRUConditionalReturn_ReturnValueNil(column >= gameBoardTiles.count, NO);
 
 	return [gameBoardTiles objectAtIndex:column];
 }
@@ -147,10 +151,10 @@ static void* kSMBGameBoard__KVOContext = &kSMBGameBoard__KVOContext;
 	kRUConditionalReturn_ReturnValueNil(position == nil, YES);
 
 	NSArray<SMBGameBoardTile*>* const gameBoardTiles_column = [self gameBoardTiles_column_at_column:position.column];
-	kRUConditionalReturn_ReturnValueNil(gameBoardTiles_column == nil, YES);
+	kRUConditionalReturn_ReturnValueNil(gameBoardTiles_column == nil, NO);
 
 	NSUInteger const row = position.row;
-	kRUConditionalReturn_ReturnValueNil(row >= gameBoardTiles_column.count, YES);
+	kRUConditionalReturn_ReturnValueNil(row >= gameBoardTiles_column.count, NO);
 
 	SMBGameBoardTile* const gameBoardTile = [gameBoardTiles_column objectAtIndex:row];
 	kRUConditionalReturn_ReturnValueNil([gameBoardTile.gameBoardTilePosition isEqual_to_gameBoardTilePosition:position] == false, YES);
@@ -173,7 +177,7 @@ static void* kSMBGameBoard__KVOContext = &kSMBGameBoard__KVOContext;
 	kRUConditionalReturn(gameBoardTile == nil, YES);
 
 	NSMutableArray<NSString*>* const propertiesToObserve_observe_old_and_initial = [NSMutableArray<NSString*> array];
-	[propertiesToObserve_observe_old_and_initial addObject:[SMBGameBoardTile_PropertiesForKVO gameBoardEntity]];
+	[propertiesToObserve_observe_old_and_initial addObject:[SMBGameBoardTile_PropertiesForKVO gameBoardTileEntity]];
 
 	NSMutableDictionary<NSNumber*,NSMutableArray<NSString*>*>* const KVOOptions_to_propertiesToObserve_mapping = [NSMutableDictionary<NSNumber*,NSMutableArray<NSString*>*> dictionary];
 	[KVOOptions_to_propertiesToObserve_mapping setObject:propertiesToObserve_observe_old_and_initial forKey:@(NSKeyValueObservingOptionInitial | NSKeyValueObservingOptionOld)];
@@ -228,13 +232,66 @@ static void* kSMBGameBoard__KVOContext = &kSMBGameBoard__KVOContext;
 	return [self gameBoardTiles_column_at_column:0].count;
 }
 
-#pragma mark - gameBoardTileEntities
--(void)gameBoardEntity_add:(nonnull SMBGameBoardTileEntity*)gameBoardEntity
+-(UIOffset)gameBoardTile_next_offset_for_orientation:(SMBGameBoardTileEntity__orientation)orientation
 {
-	kRUConditionalReturn(gameBoardEntity == nil, YES);
+	switch (orientation)
+	{
+		case SMBGameBoardTileEntity__orientation_up:
+			return (UIOffset){
+				.vertical = -1,
+			};
+			break;
+
+		case SMBGameBoardTileEntity__orientation_right:
+			return (UIOffset){
+				.horizontal = 1,
+			};
+			break;
+
+		case SMBGameBoardTileEntity__orientation_down:
+			return (UIOffset){
+				.vertical = 1,
+			};
+			break;
+
+		case SMBGameBoardTileEntity__orientation_left:
+			return (UIOffset){
+				.horizontal = -1,
+			};
+			break;
+
+		case SMBGameBoardTileEntity__orientation_unknown:
+			break;
+	}
+
+	NSAssert(false, @"unhandled orientation %li",(long)orientation);
+	return UIOffsetZero;
+}
+
+-(nullable SMBGameBoardTile*)gameBoardTile_next_from_gameBoardTile:(nonnull SMBGameBoardTile*)gameBoardTile
+													   orientation:(SMBGameBoardTileEntity__orientation)orientation
+{
+	kRUConditionalReturn_ReturnValueNil(gameBoardTile == nil, YES);
+
+	SMBGameBoardTilePosition* const gameBoardTilePosition = gameBoardTile.gameBoardTilePosition;
+	kRUConditionalReturn_ReturnValueNil(gameBoardTilePosition == nil, YES);
+
+	UIOffset const offset = [self gameBoardTile_next_offset_for_orientation:orientation];
+	SMBGameBoardTilePosition* const gameBoardTilePosition_next =
+	[[SMBGameBoardTilePosition alloc] init_with_column:gameBoardTilePosition.column + offset.horizontal
+												   row:gameBoardTilePosition.row + offset.vertical];
+	kRUConditionalReturn_ReturnValueNil(gameBoardTilePosition_next == nil, YES);
+
+	return [self gameBoardTile_at_position:gameBoardTilePosition_next];
+}
+
+#pragma mark - gameBoardTileEntities
+-(void)gameBoardTileEntity_add:(nonnull SMBGameBoardTileEntity*)gameBoardTileEntity
+{
+	kRUConditionalReturn(gameBoardTileEntity == nil, YES);
 
 	NSArray<SMBGameBoardTileEntity*>* const gameBoardTileEntities_old = self.gameBoardTileEntities;
-	kRUConditionalReturn([gameBoardTileEntities_old containsObject:gameBoardEntity], YES);
+	kRUConditionalReturn([gameBoardTileEntities_old containsObject:gameBoardTileEntity], YES);
 
 	NSMutableArray<SMBGameBoardTileEntity*>* const gameBoardTileEntities_new = [NSMutableArray<SMBGameBoardTileEntity*> array];
 
@@ -243,32 +300,32 @@ static void* kSMBGameBoard__KVOContext = &kSMBGameBoard__KVOContext;
 		[gameBoardTileEntities_new addObjectsFromArray:gameBoardTileEntities_old];
 	}
 
-	[gameBoardTileEntities_new addObject:gameBoardEntity];
+	[gameBoardTileEntities_new addObject:gameBoardTileEntity];
 
 	[self setGameBoardTileEntities:[NSArray<SMBGameBoardTileEntity*> arrayWithArray:gameBoardTileEntities_new]];
 }
 
--(void)gameBoardEntity_remove:(nonnull SMBGameBoardTileEntity*)gameBoardEntity
+-(void)gameBoardTileEntity_remove:(nonnull SMBGameBoardTileEntity*)gameBoardTileEntity
 {
-	kRUConditionalReturn(gameBoardEntity == nil, YES);
+	kRUConditionalReturn(gameBoardTileEntity == nil, YES);
 
 	NSArray<SMBGameBoardTileEntity*>* const gameBoardTileEntities_old = self.gameBoardTileEntities;
 	kRUConditionalReturn(gameBoardTileEntities_old == nil, YES);
 
-	NSInteger const gameBoardEntity_index = [gameBoardTileEntities_old indexOfObject:gameBoardEntity];
-	kRUConditionalReturn(gameBoardEntity_index == NSNotFound, YES);
+	NSInteger const gameBoardTileEntity_index = [gameBoardTileEntities_old indexOfObject:gameBoardTileEntity];
+	kRUConditionalReturn(gameBoardTileEntity_index == NSNotFound, YES);
 
 	NSMutableArray<SMBGameBoardTileEntity*>* const gameBoardTileEntities_new = [NSMutableArray<SMBGameBoardTileEntity*> array];
 	[gameBoardTileEntities_new addObjectsFromArray:gameBoardTileEntities_old];
-	[gameBoardTileEntities_new removeObjectAtIndex:gameBoardEntity_index];
+	[gameBoardTileEntities_new removeObjectAtIndex:gameBoardTileEntity_index];
 
 	[self setGameBoardTileEntities:[NSArray<SMBGameBoardTileEntity*> arrayWithArray:gameBoardTileEntities_new]];
 }
 
 -(void)gameBoardTileEntities_setupActions
 {
-	[self.gameBoardTileEntities enumerateObjectsUsingBlock:^(SMBGameBoardTileEntity * _Nonnull gameBoardEntity, NSUInteger idx, BOOL * _Nonnull stop) {
-		[gameBoardEntity entityAction_setup];
+	[self.gameBoardTileEntities enumerateObjectsUsingBlock:^(SMBGameBoardTileEntity * _Nonnull gameBoardTileEntity, NSUInteger idx, BOOL * _Nonnull stop) {
+		[gameBoardTileEntity entityAction_setup];
 	}];
 }
 
@@ -279,21 +336,21 @@ static void* kSMBGameBoard__KVOContext = &kSMBGameBoard__KVOContext;
 	{
 		if ([self gameBoardTiles_contains_gameBoardTile:kRUClassOrNil(object, SMBGameBoardTile)])
 		{
-			if ([keyPath isEqualToString:[SMBGameBoardTile_PropertiesForKVO gameBoardEntity]])
+			if ([keyPath isEqualToString:[SMBGameBoardTile_PropertiesForKVO gameBoardTileEntity]])
 			{
 				SMBGameBoardTile* const gameBoardTile = kRUClassOrNil(object, SMBGameBoardTile);
 				kRUConditionalReturn(gameBoardTile == nil, YES);
 
-				SMBGameBoardTileEntity* const gameBoardEntity_old = kRUClassOrNil([change objectForKey:NSKeyValueChangeOldKey], SMBGameBoardTileEntity);
-				if (gameBoardEntity_old)
+				SMBGameBoardTileEntity* const gameBoardTileEntity_old = kRUClassOrNil([change objectForKey:NSKeyValueChangeOldKey], SMBGameBoardTileEntity);
+				if (gameBoardTileEntity_old)
 				{
-					[self gameBoardEntity_remove:gameBoardEntity_old];
+					[self gameBoardTileEntity_remove:gameBoardTileEntity_old];
 				}
 
-				SMBGameBoardTileEntity* const gameBoardEntity = gameBoardTile.gameBoardEntity;
-				if (gameBoardEntity)
+				SMBGameBoardTileEntity* const gameBoardTileEntity = gameBoardTile.gameBoardTileEntity;
+				if (gameBoardTileEntity)
 				{
-					[self gameBoardEntity_add:gameBoardEntity];
+					[self gameBoardTileEntity_add:gameBoardTileEntity];
 				}
 			}
 			else
@@ -312,6 +369,43 @@ static void* kSMBGameBoard__KVOContext = &kSMBGameBoard__KVOContext;
 	}
 }
 
+#pragma mark - gameBoardEntities
+-(void)gameBoardEntity_add:(nonnull SMBGameBoardEntity*)gameBoardEntity
+{
+	kRUConditionalReturn(gameBoardEntity == nil, YES);
+
+	NSArray<SMBGameBoardEntity*>* const gameBoardEntities_old = self.gameBoardEntities;
+	kRUConditionalReturn([gameBoardEntities_old containsObject:gameBoardEntity], YES);
+
+	NSMutableArray<SMBGameBoardEntity*>* const gameBoardEntities_new = [NSMutableArray<SMBGameBoardEntity*> array];
+
+	if (gameBoardEntities_old)
+	{
+		[gameBoardEntities_new addObjectsFromArray:gameBoardEntities_old];
+	}
+
+	[gameBoardEntities_new addObject:gameBoardEntity];
+
+	[self setGameBoardEntities:[NSArray<SMBGameBoardEntity*> arrayWithArray:gameBoardEntities_new]];
+}
+
+-(void)gameBoardEntity_remove:(nonnull SMBGameBoardEntity*)gameBoardEntity
+{
+	kRUConditionalReturn(gameBoardEntity == nil, YES);
+
+	NSArray<SMBGameBoardEntity*>* const gameBoardEntities_old = self.gameBoardEntities;
+	kRUConditionalReturn(gameBoardEntities_old == nil, YES);
+
+	NSInteger const gameBoardEntity_index = [gameBoardEntities_old indexOfObject:gameBoardEntity];
+	kRUConditionalReturn(gameBoardEntity_index == NSNotFound, YES);
+
+	NSMutableArray<SMBGameBoardEntity*>* const gameBoardEntities_new = [NSMutableArray<SMBGameBoardEntity*> array];
+	[gameBoardEntities_new addObjectsFromArray:gameBoardEntities_old];
+	[gameBoardEntities_new removeObjectAtIndex:gameBoardEntity_index];
+
+	[self setGameBoardEntities:[NSArray<SMBGameBoardEntity*> arrayWithArray:gameBoardEntities_new]];
+}
+
 @end
 
 
@@ -321,5 +415,6 @@ static void* kSMBGameBoard__KVOContext = &kSMBGameBoard__KVOContext;
 @implementation SMBGameBoard_PropertiesForKVO
 
 +(nonnull NSString*)gameBoardTileEntities{return NSStringFromSelector(_cmd);}
++(nonnull NSString*)gameBoardEntities{return NSStringFromSelector(_cmd);}
 
 @end

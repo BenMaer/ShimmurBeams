@@ -89,7 +89,10 @@ static void* kSMBGameBoardTileEntityView__KVOContext = &kSMBGameBoardTileEntityV
 	SMBGameBoardTileEntity* const gameBoardEntity = self.gameBoardEntity;
 	kRUConditionalReturn(gameBoardEntity == nil, YES);
 
-	[gameBoardEntity draw_in_rect:rect];
+	if (gameBoardEntity.needsRedraw)
+	{
+		[gameBoardEntity draw_in_rect:rect];
+	}
 }
 
 #pragma mark - gameBoardEntity
@@ -143,6 +146,12 @@ static void* kSMBGameBoardTileEntityView__KVOContext = &kSMBGameBoardTileEntityV
 	{
 		[super observeValueForKeyPath:keyPath ofObject:object change:change context:context];
 	}
+}
+
+#pragma mark - SMBMappedDataCollection_MappableObject
+-(nonnull NSString*)smb_uniqueKey
+{
+	return [self.gameBoardEntity smb_uniqueKey];
 }
 
 @end

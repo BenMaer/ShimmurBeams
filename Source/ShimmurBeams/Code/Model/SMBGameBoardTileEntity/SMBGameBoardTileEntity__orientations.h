@@ -21,6 +21,8 @@ typedef NS_ENUM(NSInteger, SMBGameBoardTileEntity__orientation) {
 	SMBGameBoardTileEntity__orientation_down,
 	SMBGameBoardTileEntity__orientation_left,
 
+	SMBGameBoardTileEntity__orientation_unknown,
+
 	SMBGameBoardTileEntity__orientation__first	= SMBGameBoardTileEntity__orientation_up,
 	SMBGameBoardTileEntity__orientation__last	= SMBGameBoardTileEntity__orientation_left,
 };

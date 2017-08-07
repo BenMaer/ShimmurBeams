@@ -6,6 +6,8 @@
 //  Copyright © 2017 Shimmur. All rights reserved.
 //
 
+#import "SMBMappedDataCollection_MappableObject.h"
+
 #import "SMBGameBoardTileEntity__orientations.h"
 
 #import <Foundation/Foundation.h>
@@ -22,10 +24,10 @@
 
 
 
-@interface SMBGameBoardTileEntity : NSObject
+@interface SMBGameBoardTileEntity : NSObject <SMBMappedDataCollection_MappableObject>
 
-#pragma mark - uniqueEntityId
-@property (nonatomic, readonly, strong, nullable) NSString* uniqueEntityId;
+#pragma mark - uniqueTileEntityId
+@property (nonatomic, readonly, strong, nullable) NSString* uniqueTileEntityId;
 
 #pragma mark - orientation
 @property (nonatomic, assign) SMBGameBoardTileEntity__orientation orientation;
