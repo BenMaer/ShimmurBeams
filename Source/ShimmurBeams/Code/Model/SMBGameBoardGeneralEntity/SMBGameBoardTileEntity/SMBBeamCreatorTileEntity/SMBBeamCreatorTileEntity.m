@@ -42,16 +42,29 @@
 
 	CGContextRef const context = UIGraphicsGetCurrentContext();
 
-	CGContextSetStrokeColorWithColor(context, [UIColor redColor].CGColor);
+	CGContextSetStrokeColorWithColor(context, [UIColor blackColor].CGColor);
 	CGContextSetLineWidth(context, 1.0f);
 
-	CGFloat const inset = CGRectGetWidth(rect) / 4.0f;
+	CGFloat const box_inset_from_side = CGRectGetWidth(rect) / 4.0f;
+
+	CGFloat const triangle_inset_from_exit = 2;
+	CGFloat const triangle_width_from_exit = 3;
+	CGFloat const triangle_height_from_exit = 4;
 
 	CGContextMoveToPoint(context, 0.0f, CGRectGetMaxY(rect)); /* Bottom left */
-	CGContextAddLineToPoint(context, inset, CGRectGetMaxY(rect)); /* Bottom left of machine */
-	CGContextAddLineToPoint(context, inset, CGRectGetMidY(rect)); /* Top left of machine */
-	CGContextAddLineToPoint(context, CGRectGetMaxX(rect) - inset, CGRectGetMidY(rect)); /* Top right of machine */
-	CGContextAddLineToPoint(context, CGRectGetMaxX(rect) - inset, CGRectGetMaxY(rect)); /* Bottom right of machine */
+	CGContextAddLineToPoint(context, box_inset_from_side, CGRectGetMaxY(rect)); /* Bottom left of machine */
+	CGContextAddLineToPoint(context, box_inset_from_side, CGRectGetMidY(rect)); /* Top left of machine */
+
+	CGContextAddLineToPoint(context, CGRectGetMidX(rect) - triangle_inset_from_exit - triangle_width_from_exit, CGRectGetMidY(rect)); /* Left barrel triangle, bottom left. */
+	CGContextAddLineToPoint(context, CGRectGetMidX(rect) - triangle_inset_from_exit, CGRectGetMidY(rect) - triangle_height_from_exit); /* Left barrel triangle, top right. */
+	CGContextAddLineToPoint(context, CGRectGetMidX(rect) - triangle_inset_from_exit, CGRectGetMidY(rect)); /* Left barrel triangle, bottom right. */
+
+	CGContextAddLineToPoint(context, CGRectGetMidX(rect) + triangle_inset_from_exit, CGRectGetMidY(rect)); /* Right barrel triangle, bottom left. */
+	CGContextAddLineToPoint(context, CGRectGetMidX(rect) + triangle_inset_from_exit, CGRectGetMidY(rect) - triangle_height_from_exit); /* Right barrel triangle, top right. */
+	CGContextAddLineToPoint(context, CGRectGetMidX(rect) + triangle_inset_from_exit + triangle_width_from_exit, CGRectGetMidY(rect)); /* Right barrel triangle, bottom right. */
+
+	CGContextAddLineToPoint(context, CGRectGetMaxX(rect) - box_inset_from_side, CGRectGetMidY(rect)); /* Top right of machine */
+	CGContextAddLineToPoint(context, CGRectGetMaxX(rect) - box_inset_from_side, CGRectGetMaxY(rect)); /* Bottom right of machine */
 	CGContextAddLineToPoint(context, CGRectGetMaxX(rect), CGRectGetMaxY(rect)); /* Bottom right */
 
 	CGContextStrokePath(context);
