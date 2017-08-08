@@ -10,6 +10,7 @@
 #import "SMBGameBoard.h"
 #import "SMBBeamCreatorTileEntity.h"
 #import "SMBGameBoard+SMBAddEntity.h"
+#import "SMBForcedBeamRedirectTileEntity.h"
 
 
 
@@ -19,6 +20,30 @@
 
 #pragma mark - testLevel
 +(nonnull instancetype)smb_testLevel
+{
+	SMBGameBoard* const gameBoard = [[SMBGameBoard alloc] init_with_numberOfColumns:5
+																	   numberOfRows:5];
+
+	SMBBeamCreatorTileEntity* const beamCreatorEntity = [SMBBeamCreatorTileEntity new];
+	[beamCreatorEntity setOrientation:SMBGameBoardTileEntity__orientation_up];
+	[gameBoard gameBoardEntity_add:beamCreatorEntity
+						 to_column:1
+							   row:[gameBoard gameBoardTiles_numberOfRows] - 1];
+
+	SMBForcedBeamRedirectTileEntity* const forcedBeamRedirectTileEntity = [[SMBForcedBeamRedirectTileEntity alloc] init_with_forcedBeamExitOrientation:SMBBeamEntityTileNode__beamOrientation_right];
+	[gameBoard gameBoardEntity_add:forcedBeamRedirectTileEntity
+						 to_column:1
+							   row:1];
+
+	SMBForcedBeamRedirectTileEntity* const forcedBeamRedirectTileEntity2 = [[SMBForcedBeamRedirectTileEntity alloc] init_with_forcedBeamExitOrientation:SMBBeamEntityTileNode__beamOrientation_down];
+	[gameBoard gameBoardEntity_add:forcedBeamRedirectTileEntity2
+						 to_column:3
+							   row:1];
+
+	return [[self alloc] init_with_gameBoard:gameBoard];
+}
+
++(nonnull instancetype)smb_testLevel_clover
 {
 	SMBGameBoard* const gameBoard = [[SMBGameBoard alloc] init_with_numberOfColumns:5
 																	   numberOfRows:5];

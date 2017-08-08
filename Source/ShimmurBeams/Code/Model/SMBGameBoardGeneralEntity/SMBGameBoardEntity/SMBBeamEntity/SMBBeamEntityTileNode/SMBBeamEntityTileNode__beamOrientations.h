@@ -31,8 +31,4 @@ typedef NS_ENUM(NSInteger, SMBBeamEntityTileNode__beamOrientation) {
 
 static inline RUEnumIsInRangeSynthesization_autoFirstLast(SMBBeamEntityTileNode__beamOrientation)
 
-
-
-
-
 #endif /* SMBBeamEntityTileNode__beamOrientations_h */

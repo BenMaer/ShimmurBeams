@@ -16,5 +16,6 @@
 
 #pragma mark - testLevel
 +(nonnull instancetype)smb_testLevel;
++(nonnull instancetype)smb_testLevel_clover;
 
 @end
