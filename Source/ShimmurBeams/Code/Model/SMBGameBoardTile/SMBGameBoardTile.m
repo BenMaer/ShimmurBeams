@@ -24,10 +24,8 @@
 
 #pragma clang diagnostic push
 #pragma clang diagnostic ignored "-Wno-nullability-completeness"
-
 	return [self init_with_gameBoardTilePosition:nil
 									   gameBoard:nil];
-
 #pragma clang diagnostic pop
 }
 
@@ -36,6 +34,7 @@
 											  gameBoard:(nonnull SMBGameBoard*)gameBoard
 {
 	kRUConditionalReturn_ReturnValueNil(gameBoardTilePosition == nil, YES);
+	kRUConditionalReturn_ReturnValueNil(gameBoard == nil, YES);
 
 	if (self = [super init])
 	{

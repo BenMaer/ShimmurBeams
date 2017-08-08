@@ -9,6 +9,8 @@
 #import "SMBBeamEntity.h"
 #import "SMBBeamEntityTileNode.h"
 #import "SMBMutableMappedDataCollection.h"
+#import "SMBGameBoardTile.h"
+#import "SMBGameBoardView.h"
 
 #import <ResplendentUtilities/RUConditionalReturn.h>
 
@@ -17,6 +19,18 @@
 
 
 static void* kSMBBeamEntity__KVOContext = &kSMBBeamEntity__KVOContext;
+
+
+
+
+
+typedef NS_ENUM(NSInteger, SMBBeamEntity__drawingPiece) {
+	SMBBeamEntity__drawingPiece_enter,
+	SMBBeamEntity__drawingPiece_leave,
+
+	SMBBeamEntity__drawingPiece__first	= SMBBeamEntity__drawingPiece_enter,
+	SMBBeamEntity__drawingPiece__last	= SMBBeamEntity__drawingPiece_leave,
+};
 
 
 
@@ -31,6 +45,21 @@ static void* kSMBBeamEntity__KVOContext = &kSMBBeamEntity__KVOContext;
 		 setKVORegistered:(BOOL)registered;
 -(void)beamEntityTileNode_mappedDataCollection_update;
 -(nullable SMBMappedDataCollection<SMBBeamEntityTileNode*>*)beamEntityTileNode_mappedDataCollection_generate;
+
+#pragma mark - draw
+-(void)draw_gameBoardTilePosition:(nonnull SMBGameBoardTilePosition*)gameBoardTilePosition
+				 in_gameBoardView:(nonnull SMBGameBoardView*)gameBoardView
+							 rect:(CGRect)rect
+				  beamOrientation:(SMBBeamEntityTileNode__beamOrientation)beamOrientation;
+
+-(CGPoint)draw_point_center_with_gameBoardTilePosition_frame_local:(CGRect)gameBoardTilePosition_frame_local;
+
+-(CGPoint)draw_point_edgeMiddle_with_gameBoardTilePosition_frame_local:(CGRect)gameBoardTilePosition_frame_local
+													   beamOrientation:(SMBBeamEntityTileNode__beamOrientation)beamOrientation;
+-(CGFloat)draw_point_edgeMiddle_xCoord_with_gameBoardTilePosition_frame_local:(CGRect)gameBoardTilePosition_frame_local
+															  beamOrientation:(SMBBeamEntityTileNode__beamOrientation)beamOrientation;
+-(CGFloat)draw_point_edgeMiddle_yCoord_with_gameBoardTilePosition_frame_local:(CGRect)gameBoardTilePosition_frame_local
+															  beamOrientation:(SMBBeamEntityTileNode__beamOrientation)beamOrientation;
 
 @end
 
@@ -49,7 +78,7 @@ static void* kSMBBeamEntity__KVOContext = &kSMBBeamEntity__KVOContext;
 -(instancetype)init
 {
 	kRUConditionalReturn_ReturnValueNil(YES, YES);
-	
+
 #pragma clang diagnostic push
 #pragma clang diagnostic ignored "-Wno-nullability-completeness"
 	return [self init_with_gameBoardTile:nil];
@@ -103,10 +132,10 @@ static void* kSMBBeamEntity__KVOContext = &kSMBBeamEntity__KVOContext;
 		 setKVORegistered:(BOOL)registered
 {
 	kRUConditionalReturn(beamEntityTileNode == nil, NO);
-	
+
 	NSMutableArray<NSString*>* const propertiesToObserve = [NSMutableArray<NSString*> array];
 	[propertiesToObserve addObject:[SMBBeamEntityTileNode_PropertiesForKVO node_next]];
-	
+
 	[propertiesToObserve enumerateObjectsUsingBlock:^(NSString * _Nonnull propertyToObserve, NSUInteger idx, BOOL * _Nonnull stop) {
 		if (registered)
 		{
@@ -171,6 +200,133 @@ static void* kSMBBeamEntity__KVOContext = &kSMBBeamEntity__KVOContext;
 	{
 		[super observeValueForKeyPath:keyPath ofObject:object change:change context:context];
 	}
+}
+
+#pragma mark - SMBGameBoardGeneralEntity: draw
+-(void)draw_in_gameBoardView:(nonnull SMBGameBoardView*)gameBoardView
+						rect:(CGRect)rect
+{
+	[super draw_in_gameBoardView:gameBoardView
+							rect:rect];
+
+	CGContextRef const context = UIGraphicsGetCurrentContext();
+
+	CGContextSetStrokeColorWithColor(context, [UIColor redColor].CGColor);
+	CGContextSetLineWidth(context, 1.0f);
+
+	[[self.beamEntityTileNode_mappedDataCollection mappableObjects] enumerateObjectsUsingBlock:^(SMBBeamEntityTileNode * _Nonnull beamEntityTileNode, NSUInteger idx, BOOL * _Nonnull stop) {
+		SMBGameBoardTilePosition* const gameBoardTilePosition = beamEntityTileNode.gameBoardTile.gameBoardTilePosition;
+		if (beamEntityTileNode.node_previous != nil)
+		{
+			[self draw_gameBoardTilePosition:gameBoardTilePosition
+							in_gameBoardView:gameBoardView
+										rect:rect
+							 beamOrientation:beamEntityTileNode.beamEnterOrientation];
+		}
+
+		[self draw_gameBoardTilePosition:gameBoardTilePosition
+						in_gameBoardView:gameBoardView
+									rect:rect
+						 beamOrientation:beamEntityTileNode.beamExitOrientation];
+	}];
+
+	CGContextStrokePath(context);
+}
+
+#pragma mark - draw
+-(void)draw_gameBoardTilePosition:(nonnull SMBGameBoardTilePosition*)gameBoardTilePosition
+				 in_gameBoardView:(nonnull SMBGameBoardView*)gameBoardView
+							 rect:(CGRect)rect
+				  beamOrientation:(SMBBeamEntityTileNode__beamOrientation)beamOrientation
+{
+	kRUConditionalReturn(gameBoardTilePosition == nil, YES);
+	kRUConditionalReturn(gameBoardView == nil, YES);
+	kRUConditionalReturn(SMBBeamEntityTileNode__beamOrientation__isInRange(beamOrientation) == false, YES);
+
+	CGContextRef const context = UIGraphicsGetCurrentContext();
+
+	CGRect const gameBoardTilePosition_frame = [gameBoardView gameBoardTilePosition_frame:gameBoardTilePosition];
+
+	CGRect const gameBoardTilePosition_frame_local = (CGRect){
+		.origin.x	= CGRectGetMinX(rect) + CGRectGetMinX(gameBoardTilePosition_frame),
+		.origin.y	= CGRectGetMinY(rect) + CGRectGetMinY(gameBoardTilePosition_frame),
+		.size		= gameBoardTilePosition_frame.size,
+	};
+
+	CGPoint const point_center = [self draw_point_center_with_gameBoardTilePosition_frame_local:gameBoardTilePosition_frame_local];
+	CGPoint const point_edge = [self draw_point_edgeMiddle_with_gameBoardTilePosition_frame_local:gameBoardTilePosition_frame_local beamOrientation:beamOrientation];
+
+	CGContextMoveToPoint(context, point_center.x, point_center.y);
+	CGContextAddLineToPoint(context, point_edge.x, point_edge.y);
+}
+
+-(CGPoint)draw_point_center_with_gameBoardTilePosition_frame_local:(CGRect)gameBoardTilePosition_frame_local
+{
+	return (CGPoint){
+		.x	= CGRectGetMidX(gameBoardTilePosition_frame_local),
+		.y	= CGRectGetMidY(gameBoardTilePosition_frame_local),
+	};
+}
+
+-(CGPoint)draw_point_edgeMiddle_with_gameBoardTilePosition_frame_local:(CGRect)gameBoardTilePosition_frame_local
+													   beamOrientation:(SMBBeamEntityTileNode__beamOrientation)beamOrientation
+{
+	return (CGPoint){
+		.x	= [self draw_point_edgeMiddle_xCoord_with_gameBoardTilePosition_frame_local:gameBoardTilePosition_frame_local beamOrientation:beamOrientation],
+		.y	= [self draw_point_edgeMiddle_yCoord_with_gameBoardTilePosition_frame_local:gameBoardTilePosition_frame_local beamOrientation:beamOrientation],
+	};
+}
+
+-(CGFloat)draw_point_edgeMiddle_xCoord_with_gameBoardTilePosition_frame_local:(CGRect)gameBoardTilePosition_frame_local
+															  beamOrientation:(SMBBeamEntityTileNode__beamOrientation)beamOrientation
+{
+	switch (beamOrientation)
+	{
+		case SMBBeamEntityTileNode__beamOrientation_none:
+			break;
+
+		case SMBBeamEntityTileNode__beamOrientation_up:
+		case SMBBeamEntityTileNode__beamOrientation_down:
+			return CGRectGetMidX(gameBoardTilePosition_frame_local);
+			break;
+
+		case SMBBeamEntityTileNode__beamOrientation_right:
+			return CGRectGetMaxX(gameBoardTilePosition_frame_local);
+			break;
+
+		case SMBBeamEntityTileNode__beamOrientation_left:
+			return CGRectGetMinX(gameBoardTilePosition_frame_local);
+			break;
+	}
+
+	NSAssert(false, @"unhandled beamOrientation %li",(long)beamOrientation);
+	return 0.0f;
+}
+
+-(CGFloat)draw_point_edgeMiddle_yCoord_with_gameBoardTilePosition_frame_local:(CGRect)gameBoardTilePosition_frame_local
+															  beamOrientation:(SMBBeamEntityTileNode__beamOrientation)beamOrientation
+{
+	switch (beamOrientation)
+	{
+		case SMBBeamEntityTileNode__beamOrientation_none:
+			break;
+
+		case SMBBeamEntityTileNode__beamOrientation_up:
+			return CGRectGetMinY(gameBoardTilePosition_frame_local);
+			break;
+
+		case SMBBeamEntityTileNode__beamOrientation_right:
+		case SMBBeamEntityTileNode__beamOrientation_left:
+			return CGRectGetMidY(gameBoardTilePosition_frame_local);
+			break;
+
+		case SMBBeamEntityTileNode__beamOrientation_down:
+			return CGRectGetMaxY(gameBoardTilePosition_frame_local);
+			break;
+	}
+
+	NSAssert(false, @"unhandled beamOrientation %li",(long)beamOrientation);
+	return 0.0f;
 }
 
 @end

@@ -57,8 +57,11 @@
 }
 
 #pragma mark - draw
--(void)draw_in_rect:(CGRect)rect
+-(void)draw_in_gameBoardView:(nonnull SMBGameBoardView*)gameBoardView
+						rect:(CGRect)rect
 {
+	kRUConditionalReturn(gameBoardView == nil, YES);
+
 	/* Since we can't prevent subclasses from getting this call using a boolean, we need to make sure the caller uses this rule. Hence, at this point, if this boolean is set improperly, there's a run-time issue at play. */
 	kRUConditionalReturn(self.needsRedraw == NO, YES);
 	
@@ -70,5 +73,15 @@
 {
 	return self.uniqueId;
 }
+
+@end
+
+
+
+
+
+@implementation SMBGameBoardGeneralEntity_PropertiesForKVO
+
++(nonnull NSString*)needsRedraw{return NSStringFromSelector(_cmd);}
 
 @end

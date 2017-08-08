@@ -13,6 +13,7 @@
 
 
 @class SMBGameBoard;
+@class SMBGameBoardTilePosition;
 
 
 
@@ -22,5 +23,8 @@
 
 #pragma mark - gameBoard
 @property (nonatomic, strong, nullable) SMBGameBoard* gameBoard;
+
+#pragma mark - gameBoardTilePosition
+-(CGRect)gameBoardTilePosition_frame:(nonnull SMBGameBoardTilePosition*)gameBoardTilePosition;
 
 @end

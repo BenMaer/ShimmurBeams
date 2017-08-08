@@ -8,13 +8,15 @@
 
 #import "SMBGameBoardView.h"
 #import "SMBGameBoard.h"
-#import "SMBGameBoardTileEntityView.h"
+#import "SMBGameBoardGeneralEntityView.h"
 #import "SMBGameBoardTileEntity.h"
 #import "SMBGameBoardTile.h"
 #import "SMBGameBoardTilePosition.h"
 #import "SMBMutableMappedDataCollection.h"
+#import "SMBGameBoardEntity.h"
 
 #import <ResplendentUtilities/RUConditionalReturn.h>
+#import <ResplendentUtilities/RUClassOrNilUtil.h>
 
 
 
@@ -37,20 +39,22 @@ static void* kSMBGameBoardView__KVOContext = &kSMBGameBoardView__KVOContext;
 -(void)grid_shapeLayer_path_update;
 
 #pragma mark - gameBoardTileEntityView_mappedDataCollection
-@property (nonatomic, copy, nullable) SMBMappedDataCollection<SMBGameBoardTileEntityView*>* gameBoardTileEntityView_mappedDataCollection;
+@property (nonatomic, copy, nullable) SMBMappedDataCollection<SMBGameBoardGeneralEntityView*>* gameBoardTileEntityView_mappedDataCollection;
 -(void)gameBoardTileEntityView_mappedDataCollection_update;
 
-#pragma mark - gameBoardEntityViews
--(void)gameBoardEntityViews_layout;
+-(void)gameBoardTileEntityViews_layout;
 
--(void)gameBoardEntityView_layout:(nonnull SMBGameBoardTileEntityView*)gameBoardEntityView;
--(CGRect)gameBoardEntityView_frame:(nonnull SMBGameBoardTileEntityView*)gameBoardEntityView;
+-(void)gameBoardTileEntityView_layout:(nonnull SMBGameBoardGeneralEntityView*)gameBoardGeneralEntityView;
+-(CGRect)gameBoardTileEntityView_frame_with_gameBoardTileEntity:(nonnull SMBGameBoardTileEntity*)gameBoardTileEntity;
 
--(CGFloat)gameBoardEntityView_width;
--(CGFloat)gameBoardEntityView_height;
+-(CGFloat)gameBoardTileEntityView_width;
+-(CGFloat)gameBoardTileEntityView_height;
 
-#pragma mark - gameBoardTilePosition
--(CGRect)gameBoardTilePosition_frame:(nonnull SMBGameBoardTilePosition*)gameBoardTilePosition;
+#pragma mark - gameBoardEntityView_mappedDataCollection
+@property (nonatomic, copy, nullable) SMBMappedDataCollection<SMBGameBoardGeneralEntityView*>* gameBoardEntityView_mappedDataCollection;
+-(void)gameBoardEntityView_mappedDataCollection_update;
+
+-(void)gameBoardEntityView_mappedDataCollection_layout;
 
 @end
 
@@ -84,8 +88,6 @@ static void* kSMBGameBoardView__KVOContext = &kSMBGameBoardView__KVOContext;
 		[self.grid_shapeLayer setLineWidth:1.0f / [UIScreen mainScreen].scale];
 		[self.grid_shapeLayer setStrokeColor:[UIColor colorWithWhite:0.5f alpha:0.5f].CGColor];
 		[self.layer addSublayer:self.grid_shapeLayer];
-
-
 	}
 
 	return self;
@@ -98,7 +100,9 @@ static void* kSMBGameBoardView__KVOContext = &kSMBGameBoardView__KVOContext;
 	[self grid_shapeLayer_path_update];
 	[self.grid_shapeLayer setFrame:[self grid_shapeLayer_frame]];
 
-	[self gameBoardEntityViews_layout];
+	[self gameBoardTileEntityViews_layout];
+
+	[self gameBoardEntityView_mappedDataCollection_layout];
 }
 
 #pragma mark - gameBoard
@@ -122,6 +126,7 @@ static void* kSMBGameBoardView__KVOContext = &kSMBGameBoardView__KVOContext;
 
 	NSMutableArray<NSString*>* const propertiesToObserve = [NSMutableArray<NSString*> array];
 	[propertiesToObserve addObject:[SMBGameBoard_PropertiesForKVO gameBoardTileEntities]];
+	[propertiesToObserve addObject:[SMBGameBoard_PropertiesForKVO gameBoardEntities]];
 
 	[propertiesToObserve enumerateObjectsUsingBlock:^(NSString * _Nonnull propertyToObserve, NSUInteger idx, BOOL * _Nonnull stop) {
 		if (registered)
@@ -161,7 +166,7 @@ static void* kSMBGameBoardView__KVOContext = &kSMBGameBoardView__KVOContext;
 
 	if (numberOfColumns > 1)
 	{
-		CGFloat const horizontal_increment = [self gameBoardEntityView_width];
+		CGFloat const horizontal_increment = [self gameBoardTileEntityView_width];
 		for (NSUInteger columnToDraw = 1;
 			 columnToDraw < numberOfColumns;
 			 columnToDraw++)
@@ -211,6 +216,10 @@ static void* kSMBGameBoardView__KVOContext = &kSMBGameBoardView__KVOContext;
 			{
 				[self gameBoardTileEntityView_mappedDataCollection_update];
 			}
+			else if ([keyPath isEqualToString:[SMBGameBoard_PropertiesForKVO gameBoardEntities]])
+			{
+				[self gameBoardEntityView_mappedDataCollection_update];
+			}
 			else
 			{
 				NSAssert(false, @"unhandled keyPath %@",keyPath);
@@ -228,31 +237,31 @@ static void* kSMBGameBoardView__KVOContext = &kSMBGameBoardView__KVOContext;
 }
 
 #pragma mark - gameBoardTileEntityView_mappedDataCollection
--(void)setGameBoardTileEntityView_mappedDataCollection:(nullable SMBMappedDataCollection<SMBGameBoardTileEntityView*>*)gameBoardTileEntityView_mappedDataCollection
+-(void)setGameBoardTileEntityView_mappedDataCollection:(nullable SMBMappedDataCollection<SMBGameBoardGeneralEntityView*>*)gameBoardTileEntityView_mappedDataCollection
 {
 	kRUConditionalReturn((self.gameBoardTileEntityView_mappedDataCollection == gameBoardTileEntityView_mappedDataCollection)
 						 ||
 						 [self.gameBoardTileEntityView_mappedDataCollection isEqual:gameBoardTileEntityView_mappedDataCollection], NO);
 
-	SMBMappedDataCollection<SMBGameBoardTileEntityView*>* const gameBoardTileEntityView_mappedDataCollection_old = self.gameBoardTileEntityView_mappedDataCollection;
+	SMBMappedDataCollection<SMBGameBoardGeneralEntityView*>* const gameBoardTileEntityView_mappedDataCollection_old = self.gameBoardTileEntityView_mappedDataCollection;
 	_gameBoardTileEntityView_mappedDataCollection = (gameBoardTileEntityView_mappedDataCollection ? [gameBoardTileEntityView_mappedDataCollection copy] : nil);
 
-	NSArray<SMBGameBoardTileEntityView*>* removedObjects = nil;
-	NSArray<SMBGameBoardTileEntityView*>* newObjects = nil;
-	[SMBMappedDataCollection<SMBGameBoardTileEntityView*> changes_from_mappedDataCollection:gameBoardTileEntityView_mappedDataCollection_old
+	NSArray<SMBGameBoardGeneralEntityView*>* removedObjects = nil;
+	NSArray<SMBGameBoardGeneralEntityView*>* newObjects = nil;
+	[SMBMappedDataCollection<SMBGameBoardGeneralEntityView*> changes_from_mappedDataCollection:gameBoardTileEntityView_mappedDataCollection_old
 																	to_mappedDataCollection:self.gameBoardTileEntityView_mappedDataCollection
 																			 removedObjects:&removedObjects
 																				 newObjects:&newObjects];
 
-	[removedObjects enumerateObjectsUsingBlock:^(SMBGameBoardTileEntityView * _Nonnull gameBoardEntityView, NSUInteger idx, BOOL * _Nonnull stop) {
+	[removedObjects enumerateObjectsUsingBlock:^(SMBGameBoardGeneralEntityView * _Nonnull gameBoardEntityView, NSUInteger idx, BOOL * _Nonnull stop) {
 		NSAssert(gameBoardEntityView.superview == self, @"Should be self");
 		NSAssert([gameBoardTileEntityView_mappedDataCollection_old mappableObject_exists:gameBoardEntityView], @"Should be removed.");
 		NSAssert([self.gameBoardTileEntityView_mappedDataCollection mappableObject_exists:gameBoardEntityView] == false, @"Should be removed.");
-		
+
 		[gameBoardEntityView removeFromSuperview];
 	}];
 
-	[[self.gameBoardTileEntityView_mappedDataCollection mappableObjects] enumerateObjectsUsingBlock:^(SMBGameBoardTileEntityView * _Nonnull gameBoardEntityView, NSUInteger idx, BOOL * _Nonnull stop) {
+	[newObjects enumerateObjectsUsingBlock:^(SMBGameBoardGeneralEntityView * _Nonnull gameBoardEntityView, NSUInteger idx, BOOL * _Nonnull stop) {
 		NSAssert(gameBoardEntityView.superview == nil, @"Should have no superview");
 		NSAssert([gameBoardTileEntityView_mappedDataCollection_old mappableObject_exists:gameBoardEntityView] == false, @"Should be new.");
 		NSAssert([self.gameBoardTileEntityView_mappedDataCollection mappableObject_exists:gameBoardEntityView], @"Should be new.");
@@ -263,44 +272,42 @@ static void* kSMBGameBoardView__KVOContext = &kSMBGameBoardView__KVOContext;
 
 -(void)gameBoardTileEntityView_mappedDataCollection_update
 {
-	SMBMutableMappedDataCollection<SMBGameBoardTileEntityView*>* const gameBoardTileEntityView_mappedDataCollection_new = [[SMBMutableMappedDataCollection<SMBGameBoardTileEntityView*> alloc] init];
+	SMBMutableMappedDataCollection<SMBGameBoardGeneralEntityView*>* const gameBoardTileEntityView_mappedDataCollection_new = [[SMBMutableMappedDataCollection<SMBGameBoardGeneralEntityView*> alloc] init_with_mappedDataCollection:self.gameBoardTileEntityView_mappedDataCollection];
 
-	[self.gameBoard.gameBoardTileEntities enumerateObjectsUsingBlock:^(SMBGameBoardTileEntity * _Nonnull gameBoardEntity, NSUInteger idx, BOOL * _Nonnull stop) {
-		NSString* const uniqueKey = [gameBoardEntity smb_uniqueKey];
-
+	[self.gameBoard.gameBoardTileEntities enumerateObjectsUsingBlock:^(SMBGameBoardTileEntity * _Nonnull gameBoardTileEntity, NSUInteger idx, BOOL * _Nonnull stop) {
+		NSString* const uniqueKey = [gameBoardTileEntity smb_uniqueKey];
+		
 		if ([gameBoardTileEntityView_mappedDataCollection_new mappableObject_for_uniqueKey:uniqueKey] == nil)
 		{
-			[gameBoardTileEntityView_mappedDataCollection_new mappableObject_add:[[SMBGameBoardTileEntityView alloc] init_with_gameBoardEntity:gameBoardEntity]];
+			[gameBoardTileEntityView_mappedDataCollection_new mappableObject_add:[[SMBGameBoardGeneralEntityView alloc] init_with_gameBoardView:self
+																														 gameBoardGeneralEntity:gameBoardTileEntity]];
 		}
 	}];
 
 	[self setGameBoardTileEntityView_mappedDataCollection:[gameBoardTileEntityView_mappedDataCollection_new copy]];
 }
 
-#pragma mark - gameBoardEntityViews
--(void)gameBoardEntityViews_layout
+-(void)gameBoardTileEntityViews_layout
 {
-	[[self.gameBoardTileEntityView_mappedDataCollection mappableObjects] enumerateObjectsUsingBlock:^(SMBGameBoardTileEntityView * _Nonnull gameBoardEntityView, NSUInteger idx, BOOL * _Nonnull stop) {
-		[self gameBoardEntityView_layout:gameBoardEntityView];
+	[[self.gameBoardTileEntityView_mappedDataCollection mappableObjects] enumerateObjectsUsingBlock:^(SMBGameBoardGeneralEntityView * _Nonnull gameBoardTileEntityView, NSUInteger idx, BOOL * _Nonnull stop) {
+		[self gameBoardTileEntityView_layout:gameBoardTileEntityView];
 	}];
 }
 
--(void)gameBoardEntityView_layout:(nonnull SMBGameBoardTileEntityView*)gameBoardEntityView
+-(void)gameBoardTileEntityView_layout:(nonnull SMBGameBoardGeneralEntityView*)gameBoardGeneralEntityView
 {
-	kRUConditionalReturn(gameBoardEntityView == nil, YES);
-
-	[gameBoardEntityView setFrame:[self gameBoardEntityView_frame:gameBoardEntityView]];
+	[gameBoardGeneralEntityView setFrame:[self gameBoardTileEntityView_frame_with_gameBoardTileEntity:kRUClassOrNil(gameBoardGeneralEntityView.gameBoardGeneralEntity, SMBGameBoardTileEntity)]];
 }
 
--(CGRect)gameBoardEntityView_frame:(nonnull SMBGameBoardTileEntityView*)gameBoardEntityView
+-(CGRect)gameBoardTileEntityView_frame_with_gameBoardTileEntity:(nonnull SMBGameBoardTileEntity*)gameBoardTileEntity
 {
-	kRUConditionalReturn_ReturnValue(gameBoardEntityView == nil, YES, CGRectZero);
+	kRUConditionalReturn_ReturnValue(gameBoardTileEntity == nil, YES, CGRectZero);
 
-	SMBGameBoardTilePosition* const gameBoardTilePosition = gameBoardEntityView.gameBoardEntity.gameBoardTile.gameBoardTilePosition;
+	SMBGameBoardTilePosition* const gameBoardTilePosition = gameBoardTileEntity.gameBoardTile.gameBoardTilePosition;
 	return [self gameBoardTilePosition_frame:gameBoardTilePosition];
 }
 
--(CGFloat)gameBoardEntityView_width
+-(CGFloat)gameBoardTileEntityView_width
 {
 	SMBGameBoard* const gameBoard = self.gameBoard;
 	kRUConditionalReturn_ReturnValue(gameBoard == nil, YES, 0.0f);
@@ -311,7 +318,7 @@ static void* kSMBGameBoardView__KVOContext = &kSMBGameBoardView__KVOContext;
 	return CGRectGetWidth(self.bounds) / numberOfColumns;
 }
 
--(CGFloat)gameBoardEntityView_height
+-(CGFloat)gameBoardTileEntityView_height
 {
 	SMBGameBoard* const gameBoard = self.gameBoard;
 	kRUConditionalReturn_ReturnValue(gameBoard == nil, YES, 0.0f);
@@ -322,13 +329,72 @@ static void* kSMBGameBoardView__KVOContext = &kSMBGameBoardView__KVOContext;
 	return CGRectGetHeight(self.bounds) / numberOfRows;
 }
 
+#pragma mark - gameBoardEntityView_mappedDataCollection
+-(void)setGameBoardEntityView_mappedDataCollection:(nullable SMBMappedDataCollection<SMBGameBoardGeneralEntityView*>*)gameBoardEntityView_mappedDataCollection
+{
+	kRUConditionalReturn((self.gameBoardEntityView_mappedDataCollection == gameBoardEntityView_mappedDataCollection)
+						 ||
+						 [self.gameBoardEntityView_mappedDataCollection isEqual:gameBoardEntityView_mappedDataCollection], NO);
+
+	SMBMappedDataCollection<SMBGameBoardGeneralEntityView*>* const gameBoardEntityView_mappedDataCollection_old = self.gameBoardEntityView_mappedDataCollection;
+	_gameBoardEntityView_mappedDataCollection = [gameBoardEntityView_mappedDataCollection copy];
+
+	NSArray<SMBGameBoardGeneralEntityView*>* removedObjects = nil;
+	NSArray<SMBGameBoardGeneralEntityView*>* newObjects = nil;
+	[SMBMappedDataCollection<SMBGameBoardGeneralEntityView*> changes_from_mappedDataCollection:gameBoardEntityView_mappedDataCollection_old
+																	to_mappedDataCollection:self.gameBoardEntityView_mappedDataCollection
+																			 removedObjects:&removedObjects
+																				 newObjects:&newObjects];
+
+	[removedObjects enumerateObjectsUsingBlock:^(SMBGameBoardGeneralEntityView * _Nonnull gameBoardEntityView, NSUInteger idx, BOOL * _Nonnull stop) {
+		NSAssert(gameBoardEntityView.superview == self, @"Should be self");
+		NSAssert([gameBoardEntityView_mappedDataCollection_old mappableObject_exists:gameBoardEntityView], @"Should be removed.");
+		NSAssert([self.gameBoardEntityView_mappedDataCollection mappableObject_exists:gameBoardEntityView] == false, @"Should be removed.");
+
+		[gameBoardEntityView removeFromSuperview];
+	}];
+
+	[newObjects enumerateObjectsUsingBlock:^(SMBGameBoardGeneralEntityView * _Nonnull gameBoardEntityView, NSUInteger idx, BOOL * _Nonnull stop) {
+		NSAssert(gameBoardEntityView.superview == nil, @"Should have no superview");
+		NSAssert([gameBoardEntityView_mappedDataCollection_old mappableObject_exists:gameBoardEntityView] == false, @"Should be new.");
+		NSAssert([self.gameBoardEntityView_mappedDataCollection mappableObject_exists:gameBoardEntityView], @"Should be new.");
+
+		[self addSubview:gameBoardEntityView];
+	}];
+}
+
+-(void)gameBoardEntityView_mappedDataCollection_update
+{
+	SMBMutableMappedDataCollection<SMBGameBoardGeneralEntityView*>* const gameBoardEntityView_mappedDataCollection_new = [[SMBMutableMappedDataCollection<SMBGameBoardGeneralEntityView*> alloc] init_with_mappedDataCollection:self.gameBoardEntityView_mappedDataCollection];
+
+	[self.gameBoard.gameBoardEntities enumerateObjectsUsingBlock:^(SMBGameBoardEntity * _Nonnull gameBoardEntity, NSUInteger idx, BOOL * _Nonnull stop) {
+		NSString* const uniqueKey = [gameBoardEntity smb_uniqueKey];
+
+		if ([gameBoardEntityView_mappedDataCollection_new mappableObject_for_uniqueKey:uniqueKey] == nil)
+		{
+			[gameBoardEntityView_mappedDataCollection_new mappableObject_add:[[SMBGameBoardGeneralEntityView alloc] init_with_gameBoardView:self
+																													 gameBoardGeneralEntity:gameBoardEntity]];
+		}
+	}];
+
+	[self setGameBoardEntityView_mappedDataCollection:[gameBoardEntityView_mappedDataCollection_new copy]];
+}
+
+-(void)gameBoardEntityView_mappedDataCollection_layout
+{
+	[[self.gameBoardEntityView_mappedDataCollection mappableObjects] enumerateObjectsUsingBlock:^(SMBGameBoardGeneralEntityView* _Nonnull gameBoardGeneralEntityView, NSUInteger idx, BOOL * _Nonnull stop) {
+		NSAssert(gameBoardGeneralEntityView.superview == self, @"Should be by now.");
+		[gameBoardGeneralEntityView setFrame:self.bounds];
+	}];
+}
+
 #pragma mark - gameBoardTilePosition
 -(CGRect)gameBoardTilePosition_frame:(nonnull SMBGameBoardTilePosition*)gameBoardTilePosition
 {
 	kRUConditionalReturn_ReturnValue(gameBoardTilePosition == nil, YES, CGRectZero);
 
-	CGFloat const gameBoardEntityView_width = [self gameBoardEntityView_width];
-	CGFloat const gameBoardEntityView_height = [self gameBoardEntityView_height];
+	CGFloat const gameBoardEntityView_width = [self gameBoardTileEntityView_width];
+	CGFloat const gameBoardEntityView_height = [self gameBoardTileEntityView_height];
 
 	return (CGRect){
 		.origin.x		= gameBoardEntityView_width * gameBoardTilePosition.column,

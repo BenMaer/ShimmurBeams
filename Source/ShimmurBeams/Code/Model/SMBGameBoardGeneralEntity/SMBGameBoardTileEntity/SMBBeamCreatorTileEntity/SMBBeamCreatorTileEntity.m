@@ -8,10 +8,13 @@
 
 #import "SMBBeamCreatorTileEntity.h"
 #import "SMBBeamEntity.h"
+#import "SMBGameBoardTile.h"
+#import "SMBGameBoard.h"
 
 #import <UIKit/UIKit.h>
 #import <CoreGraphics/CoreGraphics.h>
 
+#import <ResplendentUtilities/RUConditionalReturn.h>
 
 
 
@@ -19,7 +22,8 @@
 @interface SMBBeamCreatorTileEntity ()
 
 #pragma mark - beamEntity
-@property (nonatomic, readonly, strong, nullable) SMBBeamEntity* beamEntity;
+@property (nonatomic, strong, nullable) SMBBeamEntity* beamEntity;
+-(void)beamEntity_update;
 
 @end
 
@@ -30,13 +34,13 @@
 @implementation SMBBeamCreatorTileEntity
 
 #pragma mark - draw
--(void)draw_in_rect:(CGRect)rect
+-(void)draw_in_gameBoardView:(nonnull SMBGameBoardView*)gameBoardView
+						rect:(CGRect)rect
 {
+	[super draw_in_gameBoardView:gameBoardView
+							rect:rect];
+
 	CGContextRef const context = UIGraphicsGetCurrentContext();
-
-	CGContextSaveGState(context);
-
-	[super draw_in_rect:rect];
 
 	CGContextSetStrokeColorWithColor(context, [UIColor redColor].CGColor);
 	CGContextSetLineWidth(context, 1.0f);
@@ -51,17 +55,37 @@
 	CGContextAddLineToPoint(context, CGRectGetMaxX(rect), CGRectGetMaxY(rect)); /* Bottom right */
 
 	CGContextStrokePath(context);
-
-	CGContextRestoreGState(context);
 }
 
 #pragma mark - entityAction
 -(void)entityAction_setup
 {
-	_beamEntity =
-	[[SMBBeamEntity alloc] init_with_gameBoardTile:self.gameBoardTile];
+	[self beamEntity_update];
 
 	NSAssert(self.beamEntity != nil, @"Shouldn't be nil");
+}
+
+#pragma mark - beamEntity
+-(void)setBeamEntity:(nullable SMBBeamEntity*)beamEntity
+{
+	kRUConditionalReturn(self.beamEntity == beamEntity, NO);
+
+	if (self.beamEntity)
+	{
+		[self.gameBoardTile.gameBoard gameBoardEntity_remove:self.beamEntity];
+	}
+
+	_beamEntity = beamEntity;
+
+	if (self.beamEntity)
+	{
+		[self.gameBoardTile.gameBoard gameBoardEntity_add:self.beamEntity];
+	}
+}
+
+-(void)beamEntity_update
+{
+	[self setBeamEntity:[[SMBBeamEntity alloc] init_with_gameBoardTile:self.gameBoardTile]];
 }
 
 @end

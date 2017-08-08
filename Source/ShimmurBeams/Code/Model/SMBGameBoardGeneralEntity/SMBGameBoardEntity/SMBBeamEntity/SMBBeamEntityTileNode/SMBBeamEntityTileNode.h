@@ -39,6 +39,10 @@
 #pragma mark - beamExitOrientation
 @property (nonatomic, readonly, assign) SMBBeamEntityTileNode__beamOrientation beamExitOrientation;
 
+#pragma mark - beamEnterOrientation
+-(SMBBeamEntityTileNode__beamOrientation)beamEnterOrientation;
+
+
 #pragma mark - init
 -(nullable instancetype)init_with_gameBoardTile:(nonnull SMBGameBoardTile*)gameBoardTile
 									 beamEntity:(nonnull SMBBeamEntity*)beamEntity

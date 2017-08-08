@@ -15,6 +15,12 @@
 
 
 
+@class SMBGameBoardView;
+
+
+
+
+
 @interface SMBGameBoardGeneralEntity : NSObject <SMBMappedDataCollection_MappableObject>
 
 #pragma mark - uniqueId
@@ -22,6 +28,17 @@
 
 #pragma mark - draw
 @property (nonatomic, assign) BOOL needsRedraw;
--(void)draw_in_rect:(CGRect)rect;
+-(void)draw_in_gameBoardView:(nonnull SMBGameBoardView*)gameBoardView
+						rect:(CGRect)rect;
+
+@end
+
+
+
+
+
+@interface SMBGameBoardGeneralEntity_PropertiesForKVO : NSObject
+
++(nonnull NSString*)needsRedraw;
 
 @end

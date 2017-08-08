@@ -18,7 +18,7 @@
 
 
 typedef NS_ENUM(NSInteger, SMBBeamEntityTileNode__beamOrientation) {
-	SMBBeamEntityTileNode__beamOrientation_unknown,
+	SMBBeamEntityTileNode__beamOrientation_none,
 
 	SMBBeamEntityTileNode__beamOrientation_up,
 	SMBBeamEntityTileNode__beamOrientation_right,

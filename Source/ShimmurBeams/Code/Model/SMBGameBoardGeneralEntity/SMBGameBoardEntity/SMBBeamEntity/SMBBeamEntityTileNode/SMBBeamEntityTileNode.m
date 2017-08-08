@@ -86,7 +86,7 @@ static void* kSMBBeamEntityTileNode__KVOContext = &kSMBBeamEntityTileNode__KVOCo
 		_node_previous = node_previous;
 
 		[self beamExitOrientation_update];
-		kRUConditionalReturn_ReturnValueNil(self.beamExitOrientation == SMBBeamEntityTileNode__beamOrientation_unknown, YES);
+		kRUConditionalReturn_ReturnValueNil(self.beamExitOrientation == SMBBeamEntityTileNode__beamOrientation_none, YES);
 	}
 
 	return self;
@@ -131,12 +131,12 @@ static void* kSMBBeamEntityTileNode__KVOContext = &kSMBBeamEntityTileNode__KVOCo
 -(void)beamExitOrientation_update
 {
 	[self setBeamExitOrientation:[self beamExitOrientation_generate]];
-	kRUConditionalReturn(self.beamExitOrientation == SMBBeamEntityTileNode__beamOrientation_unknown, YES);
+	kRUConditionalReturn(self.beamExitOrientation == SMBBeamEntityTileNode__beamOrientation_none, YES);
 }
 
 -(SMBBeamEntityTileNode__beamOrientation)beamExitOrientation_generate
 {
-	SMBBeamEntityTileNode__beamOrientation const beamOrientation_error = SMBBeamEntityTileNode__beamOrientation_unknown;
+	SMBBeamEntityTileNode__beamOrientation const beamOrientation_error = SMBBeamEntityTileNode__beamOrientation_none;
 
 	SMBGameBoardTile* const gameBoardTile = self.gameBoardTile;
 	kRUConditionalReturn_ReturnValue(gameBoardTile == nil, YES, beamOrientation_error);
@@ -246,13 +246,13 @@ static void* kSMBBeamEntityTileNode__KVOContext = &kSMBBeamEntityTileNode__KVOCo
 +(SMBBeamEntityTileNode__beamOrientation)beamOrientation_for_gameBoardTileEntity__orientation:(SMBGameBoardTileEntity__orientation)gameBoardTileEntity__orientation
 {
 	NSDictionary<NSNumber*,NSNumber*>* const gameBoardTileEntity__orientation_to_beamOrientation_mapping = [self gameBoardTileEntity__orientation_to_beamOrientation_mapping];
-	kRUConditionalReturn_ReturnValue(gameBoardTileEntity__orientation_to_beamOrientation_mapping == nil, YES, SMBBeamEntityTileNode__beamOrientation_unknown);
+	kRUConditionalReturn_ReturnValue(gameBoardTileEntity__orientation_to_beamOrientation_mapping == nil, YES, SMBBeamEntityTileNode__beamOrientation_none);
 
 	NSNumber* const beamOrientation_number = [gameBoardTileEntity__orientation_to_beamOrientation_mapping objectForKey:@(gameBoardTileEntity__orientation)];
-	kRUConditionalReturn_ReturnValue(beamOrientation_number == nil, YES, SMBBeamEntityTileNode__beamOrientation_unknown);
+	kRUConditionalReturn_ReturnValue(beamOrientation_number == nil, YES, SMBBeamEntityTileNode__beamOrientation_none);
 
 	SMBBeamEntityTileNode__beamOrientation const beamOrientation = beamOrientation_number.integerValue;
-	kRUConditionalReturn_ReturnValue(SMBBeamEntityTileNode__beamOrientation__isInRange(beamOrientation) == false, YES, SMBBeamEntityTileNode__beamOrientation_unknown);
+	kRUConditionalReturn_ReturnValue(SMBBeamEntityTileNode__beamOrientation__isInRange(beamOrientation) == false, YES, SMBBeamEntityTileNode__beamOrientation_none);
 
 	return beamOrientation;
 }
@@ -261,6 +261,39 @@ static void* kSMBBeamEntityTileNode__KVOContext = &kSMBBeamEntityTileNode__KVOCo
 -(nonnull NSString*)smb_uniqueKey
 {
 	return [self.gameBoardTile.gameBoardTilePosition smb_uniqueKey];
+}
+
+#pragma mark - beamEnterOrientation
+-(SMBBeamEntityTileNode__beamOrientation)beamEnterOrientation
+{
+	SMBBeamEntityTileNode* const node_previous = self.node_previous;
+	kRUConditionalReturn_ReturnValue(node_previous == nil, YES, SMBBeamEntityTileNode__beamOrientation_none);
+
+	SMBBeamEntityTileNode__beamOrientation const beamExitOrientation = node_previous.beamExitOrientation;
+	switch (beamExitOrientation)
+	{
+		case SMBBeamEntityTileNode__beamOrientation_none:
+			break;
+
+		case SMBBeamEntityTileNode__beamOrientation_up:
+			return SMBBeamEntityTileNode__beamOrientation_down;
+			break;
+
+		case SMBBeamEntityTileNode__beamOrientation_right:
+			return SMBBeamEntityTileNode__beamOrientation_left;
+			break;
+
+		case SMBBeamEntityTileNode__beamOrientation_down:
+			return SMBBeamEntityTileNode__beamOrientation_up;
+			break;
+
+		case SMBBeamEntityTileNode__beamOrientation_left:
+			return SMBBeamEntityTileNode__beamOrientation_right;
+			break;
+	}
+
+	NSAssert(false, @"unhandled beamExitOrientation %li",(long)beamExitOrientation);
+	return SMBBeamEntityTileNode__beamOrientation_none;
 }
 
 @end

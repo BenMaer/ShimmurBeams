@@ -29,17 +29,6 @@
 
 @implementation SMBGameBoardTileEntity
 
-#pragma mark - NSObject
--(instancetype)init
-{
-	if (self = [super init])
-	{
-		[self setNeedsRedraw:YES];
-	}
-
-	return self;
-}
-
 #pragma mark - gameBoardTile
 -(void)setGameBoardTile:(nullable SMBGameBoardTile*)gameBoardTile
 {
@@ -55,10 +44,12 @@
 	}
 }
 
-#pragma mark - draw
--(void)draw_in_rect:(CGRect)rect
+#pragma mark - SMBGameBoardGeneralEntity: draw
+-(void)draw_in_gameBoardView:(nonnull SMBGameBoardView*)gameBoardView
+						rect:(CGRect)rect
 {
-	[super draw_in_rect:rect];
+	[super draw_in_gameBoardView:gameBoardView
+							rect:rect];
 
 	CGContextRef const context = UIGraphicsGetCurrentContext();
 
