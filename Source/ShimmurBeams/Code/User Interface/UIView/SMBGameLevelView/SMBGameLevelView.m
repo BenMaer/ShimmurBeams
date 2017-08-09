@@ -20,7 +20,7 @@
 
 
 
-@interface SMBGameLevelView ()
+@interface SMBGameLevelView () <SMBGameBoardTileEntityPickerView__selectedGameBoardTileEntityDelegate>
 
 #pragma mark - content_inset
 -(CGFloat)content_inset;
@@ -34,6 +34,9 @@
 @property (nonatomic, readonly, strong, nullable) SMBGameBoardTileEntityPickerView* gameBoardTileEntityPickerView;
 -(CGRect)gameBoardTileEntityPickerView_frame;
 -(CGRect)gameBoardTileEntityPickerView_frame_with_boundingSize:(CGSize)boundingSize;
+
+#pragma mark - gameBoardTileEntity_toMove
+@property (nonatomic, strong, nullable) SMBGameBoardTileEntity* gameBoardTileEntity_toMove;
 
 @end
 
@@ -51,6 +54,7 @@
 		[self setBackgroundColor:[UIColor clearColor]];
 
 		_gameBoardTileEntityPickerView = [SMBGameBoardTileEntityPickerView new];
+		[self.gameBoardTileEntityPickerView setSelectedGameBoardTileEntityDelegate:self];
 		[self addSubview:self.gameBoardTileEntityPickerView];
 
 		_gameBoardView = [SMBGameBoardView new];
@@ -161,6 +165,18 @@
 		.width		= dimension_length,
 		.height		= dimension_length,
 	};
+}
+
+#pragma mark - SMBGameBoardTileEntityPickerView__selectedGameBoardTileEntityDelegate
+-(void)gameBoardTileEntityPickerView:(nonnull SMBGameBoardTileEntityPickerView*)gameBoardTileEntityPickerView
+	  did_select_gameBoardTileEntity:(nonnull SMBGameBoardTileEntity*)selectedGameBoardTileEntity
+{
+	[self setGameBoardTileEntity_toMove:selectedGameBoardTileEntity];
+}
+
+-(void)gameBoardTileEntityPickerView_did_deselect:(nonnull SMBGameBoardTileEntityPickerView*)gameBoardTileEntityPickerView
+{
+	[self setGameBoardTileEntity_toMove:nil];
 }
 
 @end

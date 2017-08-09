@@ -163,9 +163,18 @@ kRUDefineNSStringConstant(SMBGameBoardTileEntityPickerView__cellIdentifier_SMBGa
 	SMBGameBoardTileEntity* const gameBoardTileEntity = [self gameBoardTileEntity_at_index:[self gameBoardTileEntity_index_for_indexPathRow:indexPath.row]];
 	kRUConditionalReturn(gameBoardTileEntity == nil, YES);
 
-	[self setSelectedGameBoardTileEntity:gameBoardTileEntity];
+	[self setSelectedGameBoardTileEntity:((self.selectedGameBoardTileEntity == gameBoardTileEntity) ? nil : gameBoardTileEntity)];
 
-	[self.selectedGameBoardTileEntityDelegate gameBoardTileEntityPickerView:self did_select_gameBoardTileEntity:gameBoardTileEntity];
+	SMBGameBoardTileEntity* const selectedGameBoardTileEntity = self.selectedGameBoardTileEntity;
+	if (selectedGameBoardTileEntity)
+	{
+		[self.selectedGameBoardTileEntityDelegate gameBoardTileEntityPickerView:self did_select_gameBoardTileEntity:selectedGameBoardTileEntity];
+	}
+	else
+	{
+		[self.selectedGameBoardTileEntityDelegate gameBoardTileEntityPickerView_did_deselect:self];
+	}
+
 	[collectionView deselectItemAtIndexPath:indexPath animated:NO];
 }
 

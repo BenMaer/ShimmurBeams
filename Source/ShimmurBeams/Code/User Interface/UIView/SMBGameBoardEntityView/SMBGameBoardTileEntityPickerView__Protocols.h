@@ -24,4 +24,6 @@
 -(void)gameBoardTileEntityPickerView:(nonnull SMBGameBoardTileEntityPickerView*)gameBoardTileEntityPickerView
 	  did_select_gameBoardTileEntity:(nonnull SMBGameBoardTileEntity*)selectedGameBoardTileEntity;
 
+-(void)gameBoardTileEntityPickerView_did_deselect:(nonnull SMBGameBoardTileEntityPickerView*)gameBoardTileEntityPickerView;
+
 @end

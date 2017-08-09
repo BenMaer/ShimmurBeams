@@ -23,9 +23,6 @@
 
 @interface SMBGameBoardGeneralEntityView : UIView <SMBMappedDataCollection_MappableObject>
 
-//#pragma mark - gameBoardView
-//@property (nonatomic, readonly, assign, nullable) SMBGameBoardView* gameBoardView;
-
 #pragma mark - gameBoardGeneralEntity
 @property (nonatomic, readonly, strong, nullable) SMBGameBoardGeneralEntity* gameBoardGeneralEntity;
 
