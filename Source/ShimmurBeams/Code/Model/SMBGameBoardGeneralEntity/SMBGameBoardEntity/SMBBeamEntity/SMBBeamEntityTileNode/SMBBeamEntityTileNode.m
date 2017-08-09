@@ -141,7 +141,7 @@ static void* kSMBBeamEntityTileNode__KVOContext = &kSMBBeamEntityTileNode__KVOCo
 		else
 		{
 			[beamEntity removeObserver:self
-				   forKeyPath:propertyToObserve
+							forKeyPath:propertyToObserve
 							   context:&kSMBBeamEntityTileNode__KVOContext];
 		}
 	}];
