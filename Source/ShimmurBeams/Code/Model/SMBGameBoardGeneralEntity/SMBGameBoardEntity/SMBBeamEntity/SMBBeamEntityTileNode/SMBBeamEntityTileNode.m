@@ -33,6 +33,7 @@ static void* kSMBBeamEntityTileNode__KVOContext = &kSMBBeamEntityTileNode__KVOCo
 -(void)beamEntity_setKVORegistered:(BOOL)registered;
 
 #pragma mark - node_previous
+@property (nonatomic, assign) BOOL node_previous_isKVORegistered;
 -(void)node_previous_setKVORegistered:(BOOL)registered;
 
 #pragma mark - gameBoardTile
@@ -82,8 +83,8 @@ static void* kSMBBeamEntityTileNode__KVOContext = &kSMBBeamEntityTileNode__KVOCo
 #pragma mark - NSObject
 -(void)dealloc
 {
-	[self beamEntity_setKVORegistered:NO];
 	[self node_previous_setKVORegistered:NO];
+	[self beamEntity_setKVORegistered:NO];
 	[self gameBoardTile_setKVORegistered:NO];
 }
 
@@ -150,9 +151,12 @@ static void* kSMBBeamEntityTileNode__KVOContext = &kSMBBeamEntityTileNode__KVOCo
 #pragma mark - node_previous
 -(void)node_previous_setKVORegistered:(BOOL)registered
 {
+	kRUConditionalReturn(self.node_previous_isKVORegistered == registered, NO);
+	[self setNode_previous_isKVORegistered:registered];
+
 	typeof(self.node_previous) const node_previous = self.node_previous;
 	kRUConditionalReturn(node_previous == nil, NO);
-	
+
 	NSMutableArray<NSString*>* const propertiesToObserve = [NSMutableArray<NSString*> array];
 	[propertiesToObserve addObject:[SMBBeamEntityTileNode_PropertiesForKVO node_next]];
 	
@@ -190,6 +194,14 @@ static void* kSMBBeamEntityTileNode__KVOContext = &kSMBBeamEntityTileNode__KVOCo
 	kRUConditionalReturn(gameBoardTile == gameBoardTile_old, NO);
 
 	[self node_next_generationEnabled_update];
+
+	/**
+	 We do this to avoid a memory issue that would otherwise happen, where tile A would die before tile B, but tile B is still registered to tile A.
+	 */
+	if (self.gameBoardTile == nil)
+	{
+		[self node_previous_setKVORegistered:NO];
+	}
 }
 
 -(void)gameBoardTile_update
