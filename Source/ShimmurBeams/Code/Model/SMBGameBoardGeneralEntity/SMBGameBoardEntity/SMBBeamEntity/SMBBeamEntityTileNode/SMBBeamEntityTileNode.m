@@ -243,6 +243,7 @@ static void* kSMBBeamEntityTileNode__KVOContext = &kSMBBeamEntityTileNode__KVOCo
 	_beamExitDirection = beamExitDirection;
 
 	[self node_next_update];
+	[self setNeedsRedraw:YES];
 }
 
 -(void)beamExitDirection_update

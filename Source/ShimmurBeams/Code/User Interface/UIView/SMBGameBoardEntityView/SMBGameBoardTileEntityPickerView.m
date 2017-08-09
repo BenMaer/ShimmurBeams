@@ -29,9 +29,6 @@ kRUDefineNSStringConstant(SMBGameBoardTileEntityPickerView__cellIdentifier_SMBGa
 -(nullable SMBGameBoardTileEntity*)gameBoardTileEntity_at_index:(NSUInteger)gameBoardTileEntity_index;
 -(NSUInteger)gameBoardTileEntity_index_for_indexPathRow:(NSInteger)indexPathRow;
 
-#pragma mark - selectedGameBoardTileEntity
-@property (nonatomic, strong, nullable) SMBGameBoardTileEntity* selectedGameBoardTileEntity;
-
 #pragma mark - collectionView
 @property (nonatomic, readonly, strong, nullable) UICollectionViewFlowLayout* collectionViewFlowLayout;
 -(CGSize)collectionViewFlowLayout_itemSize;
@@ -165,16 +162,6 @@ kRUDefineNSStringConstant(SMBGameBoardTileEntityPickerView__cellIdentifier_SMBGa
 
 	[self setSelectedGameBoardTileEntity:((self.selectedGameBoardTileEntity == gameBoardTileEntity) ? nil : gameBoardTileEntity)];
 
-	SMBGameBoardTileEntity* const selectedGameBoardTileEntity = self.selectedGameBoardTileEntity;
-	if (selectedGameBoardTileEntity)
-	{
-		[self.selectedGameBoardTileEntityDelegate gameBoardTileEntityPickerView:self did_select_gameBoardTileEntity:selectedGameBoardTileEntity];
-	}
-	else
-	{
-		[self.selectedGameBoardTileEntityDelegate gameBoardTileEntityPickerView_did_deselect:self];
-	}
-
 	[collectionView deselectItemAtIndexPath:indexPath animated:NO];
 }
 
@@ -188,5 +175,14 @@ kRUDefineNSStringConstant(SMBGameBoardTileEntityPickerView__cellIdentifier_SMBGa
 	[self collectionView_visibleCells_gameBoardTileEntityPickerViewCollectionViewCell_gameBoardTileEntity_isSelected_update];
 }
 
+@end
+
+
+
+
+
+@implementation SMBGameBoardTileEntityPickerView_PropertiesForKVO
+
++(nonnull NSString*)selectedGameBoardTileEntity{return NSStringFromSelector(_cmd);}
 
 @end

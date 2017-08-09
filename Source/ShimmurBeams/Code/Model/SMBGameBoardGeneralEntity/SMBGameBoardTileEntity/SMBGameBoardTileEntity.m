@@ -10,6 +10,8 @@
 #import "SMBGameBoardTile.h"
 
 #import <ResplendentUtilities/RUConditionalReturn.h>
+#import <ResplendentUtilities/NSMutableArray+RUAddObjectIfNotNil.h>
+#import <ResplendentUtilities/RUConstants.h>
 
 
 
@@ -27,6 +29,16 @@
 
 
 @implementation SMBGameBoardTileEntity
+
+#pragma mark - NSObject
+-(nonnull NSString*)description
+{
+	NSMutableArray<NSString*>* const description_lines = [NSMutableArray<NSString*> array];
+	[description_lines ru_addObjectIfNotNil:[super description]];
+	[description_lines ru_addObjectIfNotNil:RUStringWithFormat(@"gameBoardTile: %@",self.gameBoardTile)];
+	
+	return [description_lines componentsJoinedByString:@"\n"];
+}
 
 #pragma mark - gameBoardTile
 -(void)setGameBoardTile:(nullable SMBGameBoardTile*)gameBoardTile

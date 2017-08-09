@@ -37,6 +37,9 @@
 									 numberOfRows:(NSUInteger)numberOfRows NS_DESIGNATED_INITIALIZER;
 
 #pragma mark - gameBoardTiles
+@property (nonatomic, readonly, copy, nullable) NSArray<NSArray<SMBGameBoardTile*>*>* gameBoardTiles;
+-(void)gameBoardTiles_enumerate:(void (^_Nonnull)(SMBGameBoardTile * _Nonnull gameBoardTile, NSUInteger column, NSUInteger row, BOOL * _Nonnull stop))block;
+
 /**
  Returns an instance of `SMBGameBoardTile` at the location given, if one is available at the given location.
 
@@ -68,6 +71,7 @@
 
 @interface SMBGameBoard_PropertiesForKVO : NSObject
 
++(nonnull NSString*)gameBoardTiles;
 +(nonnull NSString*)gameBoardTileEntities;
 +(nonnull NSString*)gameBoardEntities;
 

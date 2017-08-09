@@ -70,9 +70,6 @@
 #pragma mark - draw
 -(void)draw_in_rect:(CGRect)rect
 {
-	/* Since we can't prevent subclasses from getting this call using a boolean, we need to make sure the caller uses this rule. Hence, at this point, if this boolean is set improperly, there's a run-time issue at play. */
-	kRUConditionalReturn(self.needsRedraw == NO, YES);
-	
 	[self setNeedsRedraw:NO];
 }
 

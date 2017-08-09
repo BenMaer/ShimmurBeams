@@ -105,6 +105,22 @@ static void* kSMBGameBoard__KVOContext = &kSMBGameBoard__KVOContext;
 	[self gameBoardTiles_setKVORegistered:YES];
 }
 
+-(void)gameBoardTiles_enumerate:(void (^_Nonnull)(SMBGameBoardTile * _Nonnull gameBoardTile, NSUInteger column, NSUInteger row, BOOL * _Nonnull stop))block
+{
+	kRUConditionalReturn(block == nil, YES);
+
+	[self.gameBoardTiles enumerateObjectsUsingBlock:^(NSArray<SMBGameBoardTile *> * _Nonnull gameBoardTiles_column, NSUInteger column, BOOL * _Nonnull stop_column) {
+		[gameBoardTiles_column enumerateObjectsUsingBlock:^(SMBGameBoardTile * _Nonnull gameBoardTile, NSUInteger row, BOOL * _Nonnull stop_row) {
+			BOOL stop = false;
+			
+			block(gameBoardTile, column, row, &stop);
+
+			*stop_column = stop;
+			*stop_row = stop;
+		}];
+	}];
+}
+
 -(nullable NSArray<NSArray<SMBGameBoardTile*>*>*)gameBoardTiles_generate_with_numberOfRows:(NSUInteger)numberOfRows
 																		   numberOfColumns:(NSUInteger)numberOfColumns
 {
@@ -166,10 +182,8 @@ static void* kSMBGameBoard__KVOContext = &kSMBGameBoard__KVOContext;
 
 -(void)gameBoardTiles_setKVORegistered:(BOOL)registered
 {
-	[self.gameBoardTiles enumerateObjectsUsingBlock:^(NSArray<SMBGameBoardTile *> * _Nonnull gameBoardTiles_column, NSUInteger idx, BOOL * _Nonnull stop) {
-		[gameBoardTiles_column enumerateObjectsUsingBlock:^(SMBGameBoardTile * _Nonnull gameBoardTile, NSUInteger idx, BOOL * _Nonnull stop) {
-			[self gameBoardTile:gameBoardTile setKVORegistered:registered];
-		}];
+	[self gameBoardTiles_enumerate:^(SMBGameBoardTile * _Nonnull gameBoardTile, NSUInteger column, NSUInteger row, BOOL * _Nonnull stop) {
+		[self gameBoardTile:gameBoardTile setKVORegistered:registered];
 	}];
 }
 
@@ -209,15 +223,12 @@ static void* kSMBGameBoard__KVOContext = &kSMBGameBoard__KVOContext;
 	kRUConditionalReturn_ReturnValueFalse(gameBoardTile == nil, YES);
 
 	__block BOOL contains = NO;
-	[self.gameBoardTiles enumerateObjectsUsingBlock:^(NSArray<SMBGameBoardTile *> * _Nonnull gameBoardTiles_column, NSUInteger idx, BOOL * _Nonnull gameBoardTiles_column_stop) {
-		[gameBoardTiles_column enumerateObjectsUsingBlock:^(SMBGameBoardTile * _Nonnull gameBoardTile_loop, NSUInteger idx, BOOL * _Nonnull gameBoardTile_stop) {
-			if (gameBoardTile == gameBoardTile_loop)
-			{
-				contains = YES;
-				*gameBoardTiles_column_stop = YES;
-				*gameBoardTile_stop = YES;
-			}
-		}];
+	[self gameBoardTiles_enumerate:^(SMBGameBoardTile * _Nonnull gameBoardTile_loop, NSUInteger column, NSUInteger row, BOOL * _Nonnull stop) {
+		if (gameBoardTile == gameBoardTile_loop)
+		{
+			contains = YES;
+			*stop = YES;
+		}
 	}];
 
 	return contains;
@@ -439,6 +450,7 @@ static void* kSMBGameBoard__KVOContext = &kSMBGameBoard__KVOContext;
 
 @implementation SMBGameBoard_PropertiesForKVO
 
++(nonnull NSString*)gameBoardTiles{return NSStringFromSelector(_cmd);}
 +(nonnull NSString*)gameBoardTileEntities{return NSStringFromSelector(_cmd);}
 +(nonnull NSString*)gameBoardEntities{return NSStringFromSelector(_cmd);}
 

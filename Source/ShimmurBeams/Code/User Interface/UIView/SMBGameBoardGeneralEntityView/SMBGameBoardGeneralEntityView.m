@@ -10,6 +10,8 @@
 #import "SMBGameBoardGeneralEntity.h"
 
 #import <ResplendentUtilities/RUConditionalReturn.h>
+#import <ResplendentUtilities/NSMutableArray+RUAddObjectIfNotNil.h>
+#import <ResplendentUtilities/RUConstants.h>
 
 
 
@@ -24,6 +26,7 @@ static void* kSMBGameBoardGeneralEntityView__KVOContext = &kSMBGameBoardGeneralE
 @interface SMBGameBoardGeneralEntityView ()
 
 #pragma mark - gameBoardGeneralEntity
+@property (nonatomic, assign) BOOL gameBoardGeneralEntity_hasRedrawn;
 -(void)gameBoardGeneralEntity_setKVORegistered:(BOOL)registered;
 
 @end
@@ -50,6 +53,15 @@ static void* kSMBGameBoardGeneralEntityView__KVOContext = &kSMBGameBoardGeneralE
 #pragma clang diagnostic pop
 }
 
+-(nonnull NSString*)description
+{
+	NSMutableArray<NSString*>* const description_lines = [NSMutableArray<NSString*> array];
+	[description_lines ru_addObjectIfNotNil:[super description]];
+	[description_lines ru_addObjectIfNotNil:RUStringWithFormat(@"gameBoardGeneralEntity: %@",self.gameBoardGeneralEntity)];
+	
+	return [description_lines componentsJoinedByString:@"\n"];
+}
+
 #pragma mark - NSCoding
 -(instancetype)initWithCoder:(NSCoder *)aDecoder
 {
@@ -64,14 +76,11 @@ static void* kSMBGameBoardGeneralEntityView__KVOContext = &kSMBGameBoardGeneralE
 #pragma mark - init
 -(nullable instancetype)init_with_gameBoardGeneralEntity:(nonnull SMBGameBoardGeneralEntity*)gameBoardGeneralEntity
 {
-//	kRUConditionalReturn_ReturnValueNil(gameBoardView == nil, YES);
 	kRUConditionalReturn_ReturnValueNil(gameBoardGeneralEntity == nil, YES);
 
 	if (self = [super initWithFrame:CGRectZero])
 	{
 		[self setBackgroundColor:[UIColor clearColor]];
-
-//		_gameBoardView = gameBoardView;
 
 		_gameBoardGeneralEntity = gameBoardGeneralEntity;
 		[self gameBoardGeneralEntity_setKVORegistered:YES];
@@ -88,8 +97,12 @@ static void* kSMBGameBoardGeneralEntityView__KVOContext = &kSMBGameBoardGeneralE
 	SMBGameBoardGeneralEntity* const gameBoardGeneralEntity = self.gameBoardGeneralEntity;
 	kRUConditionalReturn(gameBoardGeneralEntity == nil, YES);
 
-	if (gameBoardGeneralEntity.needsRedraw)
+	if ((self.gameBoardGeneralEntity_hasRedrawn == false)
+		||
+		gameBoardGeneralEntity.needsRedraw)
 	{
+		[self setGameBoardGeneralEntity_hasRedrawn:YES];
+
 		CGContextRef const context = UIGraphicsGetCurrentContext();
 		
 		CGContextSaveGState(context);

@@ -10,8 +10,10 @@
 #import "SMBGameBoardView.h"
 #import "SMBGameLevel.h"
 #import "SMBGameBoardTileEntityPickerView.h"
-#import "SMBGameLevel.h"
 #import "SMBGameBoard.h"
+#import "SMBGameBoardTile.h"
+#import "SMBGameBoardTileEntity.h"
+#import "SMBGameBoard+SMBAddEntity.h"
 
 #import <ResplendentUtilities/RUConditionalReturn.h>
 #import <ResplendentUtilities/UIView+RUUtility.h>
@@ -20,7 +22,13 @@
 
 
 
-@interface SMBGameLevelView () <SMBGameBoardTileEntityPickerView__selectedGameBoardTileEntityDelegate>
+static void* kSMBGameLevelView__KVOContext = &kSMBGameLevelView__KVOContext;
+
+
+
+
+
+@interface SMBGameLevelView () <SMBGameBoardView_tileTapDelegate>
 
 #pragma mark - content_inset
 -(CGFloat)content_inset;
@@ -36,7 +44,7 @@
 -(CGRect)gameBoardTileEntityPickerView_frame_with_boundingSize:(CGSize)boundingSize;
 
 #pragma mark - gameBoardTileEntity_toMove
-@property (nonatomic, strong, nullable) SMBGameBoardTileEntity* gameBoardTileEntity_toMove;
+-(void)gameBoardTileEntityPickerView_selectedGameBoardTileEntity_move_to_tile:(nonnull SMBGameBoardTile*)gameBoardTile;
 
 @end
 
@@ -54,10 +62,10 @@
 		[self setBackgroundColor:[UIColor clearColor]];
 
 		_gameBoardTileEntityPickerView = [SMBGameBoardTileEntityPickerView new];
-		[self.gameBoardTileEntityPickerView setSelectedGameBoardTileEntityDelegate:self];
 		[self addSubview:self.gameBoardTileEntityPickerView];
 
 		_gameBoardView = [SMBGameBoardView new];
+		[self.gameBoardView setTileTapDelegate:self];
 		[self addSubview:self.gameBoardView];
 	}
 
@@ -118,6 +126,17 @@
 	});
 }
 
+-(void)gameBoardTileEntityPickerView_selectedGameBoardTileEntity_move_to_tile:(nonnull SMBGameBoardTile*)gameBoardTile
+{
+	kRUConditionalReturn(gameBoardTile == nil, YES);
+	
+	SMBGameBoardTileEntity* const selectedGameBoardTileEntity = self.gameBoardTileEntityPickerView.selectedGameBoardTileEntity;
+	kRUConditionalReturn(selectedGameBoardTileEntity == nil, NO);
+
+	[gameBoardTile setGameBoardTileEntity_for_beamInteractions:selectedGameBoardTileEntity];
+	[self.gameBoardTileEntityPickerView setSelectedGameBoardTileEntity:nil];
+}
+
 #pragma mark - gameBoardView
 -(CGRect)gameBoardView_frame
 {
@@ -167,16 +186,11 @@
 	};
 }
 
-#pragma mark - SMBGameBoardTileEntityPickerView__selectedGameBoardTileEntityDelegate
--(void)gameBoardTileEntityPickerView:(nonnull SMBGameBoardTileEntityPickerView*)gameBoardTileEntityPickerView
-	  did_select_gameBoardTileEntity:(nonnull SMBGameBoardTileEntity*)selectedGameBoardTileEntity
+#pragma mark - SMBGameBoardView_tileTapDelegate
+-(void)gameBoardView:(nonnull SMBGameBoardView*)gameBoardView
+	  tile_wasTapped:(nonnull SMBGameBoardTile*)gameBoardTile
 {
-	[self setGameBoardTileEntity_toMove:selectedGameBoardTileEntity];
-}
-
--(void)gameBoardTileEntityPickerView_did_deselect:(nonnull SMBGameBoardTileEntityPickerView*)gameBoardTileEntityPickerView
-{
-	[self setGameBoardTileEntity_toMove:nil];
+	[self gameBoardTileEntityPickerView_selectedGameBoardTileEntity_move_to_tile:gameBoardTile];
 }
 
 @end

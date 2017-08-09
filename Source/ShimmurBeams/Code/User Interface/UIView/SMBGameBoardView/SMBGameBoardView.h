@@ -6,6 +6,8 @@
 //  Copyright © 2017 Shimmur. All rights reserved.
 //
 
+#import "SMBGameBoardView__Protocols.h"
+
 #import <UIKit/UIKit.h>
 
 
@@ -23,6 +25,9 @@
 
 #pragma mark - gameBoard
 @property (nonatomic, strong, nullable) SMBGameBoard* gameBoard;
+
+#pragma mark - tileTapDelegate
+@property (nonatomic, assign, nullable) id<SMBGameBoardView_tileTapDelegate> tileTapDelegate;
 
 #pragma mark - gameBoardTilePosition
 -(CGRect)gameBoardTilePosition_frame:(nonnull SMBGameBoardTilePosition*)gameBoardTilePosition;
