@@ -11,6 +11,7 @@
 #import "SMBBeamCreatorTileEntity.h"
 #import "SMBGameBoard+SMBAddEntity.h"
 #import "SMBForcedBeamRedirectTileEntity.h"
+#import "SMBLevelExitTileEntity.h"
 
 
 
@@ -29,6 +30,11 @@
 	[gameBoard gameBoardTileEntity_for_beamInteractions_set:beamCreatorEntity
 												  to_column:1
 														row:[gameBoard gameBoardTiles_numberOfRows] - 1];
+
+	SMBLevelExitTileEntity* const levelExitTileEntity = [SMBLevelExitTileEntity new];
+	[gameBoard gameBoardTileEntity_for_beamInteractions_set:levelExitTileEntity
+												  to_column:[gameBoard gameBoardTiles_numberOfColumns] - 2
+														row:[gameBoard gameBoardTiles_numberOfRows] - 2];
 
 	NSMutableArray<SMBGameBoardTileEntity*>* const gameBoardTileEntity = [NSMutableArray<SMBGameBoardTileEntity*> array];
 

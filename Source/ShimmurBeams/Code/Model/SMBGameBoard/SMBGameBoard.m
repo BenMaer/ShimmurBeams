@@ -250,6 +250,9 @@ static void* kSMBGameBoard__KVOContext = &kSMBGameBoard__KVOContext;
 {
 	switch (direction)
 	{
+		case SMBGameBoardTile__direction_unknown:
+			break;
+
 		case SMBGameBoardTile__direction_up:
 			return (UIOffset){
 				.vertical = -1,
@@ -274,7 +277,8 @@ static void* kSMBGameBoard__KVOContext = &kSMBGameBoard__KVOContext;
 			};
 			break;
 
-		case SMBGameBoardTile__direction_unknown:
+		case SMBGameBoardTile__direction_none:
+			return UIOffsetZero;
 			break;
 	}
 

@@ -17,13 +17,42 @@
 
 
 
+@interface SMBForcedBeamRedirectTileEntity ()
+
+#pragma mark - forcedBeamRedirectArrow_drawing
+-(void)forcedBeamRedirectArrow_draw_in_rect:(CGRect)rect;
+
+@end
+
+
+
+
+
 @implementation SMBForcedBeamRedirectTileEntity
 
 #pragma mark - draw
 -(void)draw_in_rect:(CGRect)rect
 {
 	[super draw_in_rect:rect];
-	
+
+	if (self.forcedBeamRedirectArrow_drawing_disable == false)
+	{
+		[self forcedBeamRedirectArrow_draw_in_rect:rect];
+	}
+}
+
+#pragma mark - forcedBeamRedirectArrow_drawing
+-(void)setForcedBeamRedirectArrow_drawing_disable:(BOOL)forcedBeamRedirectArrow_drawing_disable
+{
+	kRUConditionalReturn(self.forcedBeamRedirectArrow_drawing_disable == forcedBeamRedirectArrow_drawing_disable, NO);
+
+	_forcedBeamRedirectArrow_drawing_disable = forcedBeamRedirectArrow_drawing_disable;
+
+	[self setNeedsRedraw:YES];
+}
+
+-(void)forcedBeamRedirectArrow_draw_in_rect:(CGRect)rect
+{
 	CGContextRef const context = UIGraphicsGetCurrentContext();
 
 	CoreGraphics_SMBRotation__rotateCTM(context, rect, CoreGraphics_SMBRotation__orientation_for_direction(self.forcedBeamExitDirection));
