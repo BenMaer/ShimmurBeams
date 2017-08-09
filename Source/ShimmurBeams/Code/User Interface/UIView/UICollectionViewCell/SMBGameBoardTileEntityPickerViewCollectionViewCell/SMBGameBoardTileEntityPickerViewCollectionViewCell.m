@@ -19,6 +19,9 @@
 
 @interface SMBGameBoardTileEntityPickerViewCollectionViewCell ()
 
+#pragma mark - layer
+-(void)layer_borderColor_update;
+
 #pragma mark - gameBoardGeneralEntityView
 @property (nonatomic, strong, nullable) SMBGameBoardGeneralEntityView* gameBoardGeneralEntityView;
 -(CGRect)gameBoardGeneralEntityView_frame;
@@ -40,8 +43,9 @@
 	{
 		[self setBackgroundColor:[UIColor clearColor]];
 
-		[self.layer setBorderColor:[UIColor blackColor].CGColor];
 		[self.layer setBorderWidth:2.0f];
+		[self layer_borderColor_update];
+
 		[self.layer setCornerRadius:[UIView smb_commonFraming_cornerRadius_general]];
 	}
 	
@@ -68,6 +72,12 @@
 	[self gameBoardGeneralEntityView_update];
 }
 
+#pragma mark - layer
+-(void)layer_borderColor_update
+{
+	[self.layer setBorderColor:(self.gameBoardTileEntity_isSelected ? [UIColor greenColor] : [UIColor blackColor]).CGColor];
+}
+
 #pragma mark - gameBoardGeneralEntityView
 -(void)setGameBoardGeneralEntityView:(nullable SMBGameBoardGeneralEntityView*)gameBoardGeneralEntityView
 {
@@ -86,6 +96,15 @@
 		NSAssert(self.gameBoardGeneralEntityView.superview == nil, @"superview should be nil");
 		[self addSubview:self.gameBoardGeneralEntityView];
 	}
+}
+
+-(void)setGameBoardTileEntity_isSelected:(BOOL)gameBoardTileEntity_isSelected
+{
+	kRUConditionalReturn(self.gameBoardTileEntity_isSelected == gameBoardTileEntity_isSelected, NO);
+
+	_gameBoardTileEntity_isSelected = gameBoardTileEntity_isSelected;
+
+	[self layer_borderColor_update];
 }
 
 -(CGRect)gameBoardGeneralEntityView_frame

@@ -6,6 +6,8 @@
 //  Copyright © 2017 Shimmur. All rights reserved.
 //
 
+#import "SMBGameBoardTileEntityPickerView__Protocols.h"
+
 #import <UIKit/UIKit.h>
 
 
@@ -22,5 +24,11 @@
 
 #pragma mark - gameBoardTileEntities
 @property (nonatomic, copy, nullable) NSArray<SMBGameBoardTileEntity*>* gameBoardTileEntities;
+
+#pragma mark - selectedGameBoardTileEntity
+@property (nonatomic, readonly, strong, nullable) SMBGameBoardTileEntity* selectedGameBoardTileEntity;
+
+#pragma mark - selectedGameBoardTileEntityDelegate
+@property (nonatomic, assign, nullable) id<SMBGameBoardTileEntityPickerView__selectedGameBoardTileEntityDelegate> selectedGameBoardTileEntityDelegate;
 
 @end

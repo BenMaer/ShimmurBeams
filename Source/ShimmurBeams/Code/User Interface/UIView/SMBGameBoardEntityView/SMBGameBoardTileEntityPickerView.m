@@ -11,6 +11,7 @@
 
 #import <ResplendentUtilities/RUConditionalReturn.h>
 #import <ResplendentUtilities/NSString+RUMacros.h>
+#import <ResplendentUtilities/RUClassOrNilUtil.h>
 
 
 
@@ -28,6 +29,9 @@ kRUDefineNSStringConstant(SMBGameBoardTileEntityPickerView__cellIdentifier_SMBGa
 -(nullable SMBGameBoardTileEntity*)gameBoardTileEntity_at_index:(NSUInteger)gameBoardTileEntity_index;
 -(NSUInteger)gameBoardTileEntity_index_for_indexPathRow:(NSInteger)indexPathRow;
 
+#pragma mark - selectedGameBoardTileEntity
+@property (nonatomic, strong, nullable) SMBGameBoardTileEntity* selectedGameBoardTileEntity;
+
 #pragma mark - collectionView
 @property (nonatomic, readonly, strong, nullable) UICollectionViewFlowLayout* collectionViewFlowLayout;
 -(CGSize)collectionViewFlowLayout_itemSize;
@@ -35,6 +39,7 @@ kRUDefineNSStringConstant(SMBGameBoardTileEntityPickerView__cellIdentifier_SMBGa
 #pragma mark - collectionView
 @property (nonatomic, strong, nullable) UICollectionView* collectionView;
 -(CGRect)collectionView_frame;
+-(void)collectionView_visibleCells_gameBoardTileEntityPickerViewCollectionViewCell_gameBoardTileEntity_isSelected_update;
 
 @end
 
@@ -120,6 +125,16 @@ kRUDefineNSStringConstant(SMBGameBoardTileEntityPickerView__cellIdentifier_SMBGa
 	return self.bounds;
 }
 
+-(void)collectionView_visibleCells_gameBoardTileEntityPickerViewCollectionViewCell_gameBoardTileEntity_isSelected_update
+{
+	[self.collectionView.visibleCells enumerateObjectsUsingBlock:^(__kindof UICollectionViewCell * _Nonnull collectionViewCell, NSUInteger idx, BOOL * _Nonnull stop) {
+		SMBGameBoardTileEntityPickerViewCollectionViewCell* const gameBoardTileEntityPickerViewCollectionViewCell = kRUClassOrNil(collectionViewCell, SMBGameBoardTileEntityPickerViewCollectionViewCell);
+		kRUConditionalReturn(gameBoardTileEntityPickerViewCollectionViewCell == nil, YES);
+
+		[gameBoardTileEntityPickerViewCollectionViewCell setGameBoardTileEntity_isSelected:(gameBoardTileEntityPickerViewCollectionViewCell.gameBoardTileEntity == self.selectedGameBoardTileEntity)];
+	}];
+}
+
 #pragma marl - UICollectionViewDelegate, UICollectionViewDataSource
 - (NSInteger)collectionView:(nonnull UICollectionView*)collectionView numberOfItemsInSection:(NSInteger)section
 {
@@ -138,12 +153,31 @@ kRUDefineNSStringConstant(SMBGameBoardTileEntityPickerView__cellIdentifier_SMBGa
 
 	SMBGameBoardTileEntity* const gameBoardTileEntity = [self gameBoardTileEntity_at_index:[self gameBoardTileEntity_index_for_indexPathRow:indexPath.row]];
 	[gameBoardTileEntityPickerViewCollectionViewCell setGameBoardTileEntity:gameBoardTileEntity];
+	[gameBoardTileEntityPickerViewCollectionViewCell setGameBoardTileEntity_isSelected:(gameBoardTileEntity == self.selectedGameBoardTileEntity)];
 
 	return gameBoardTileEntityPickerViewCollectionViewCell;
 }
 
 -(void)collectionView:(nonnull UICollectionView*)collectionView didSelectItemAtIndexPath:(nonnull NSIndexPath*)indexPath
 {
+	SMBGameBoardTileEntity* const gameBoardTileEntity = [self gameBoardTileEntity_at_index:[self gameBoardTileEntity_index_for_indexPathRow:indexPath.row]];
+	kRUConditionalReturn(gameBoardTileEntity == nil, YES);
+
+	[self setSelectedGameBoardTileEntity:gameBoardTileEntity];
+
+	[self.selectedGameBoardTileEntityDelegate gameBoardTileEntityPickerView:self did_select_gameBoardTileEntity:gameBoardTileEntity];
+	[collectionView deselectItemAtIndexPath:indexPath animated:NO];
 }
+
+#pragma mark - selectedGameBoardTileEntity
+-(void)setSelectedGameBoardTileEntity:(nullable SMBGameBoardTileEntity*)selectedGameBoardTileEntity
+{
+	kRUConditionalReturn(self.selectedGameBoardTileEntity == selectedGameBoardTileEntity, NO);
+
+	_selectedGameBoardTileEntity = selectedGameBoardTileEntity;
+
+	[self collectionView_visibleCells_gameBoardTileEntityPickerViewCollectionViewCell_gameBoardTileEntity_isSelected_update];
+}
+
 
 @end

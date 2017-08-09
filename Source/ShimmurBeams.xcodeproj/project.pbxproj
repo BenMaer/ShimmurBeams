@@ -99,6 +99,7 @@
 		D7C8C3B81F3B8035006D378E /* SMBGameBoardTileEntityPickerViewCollectionViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SMBGameBoardTileEntityPickerViewCollectionViewCell.m; sourceTree = "<group>"; };
 		D7C8C3C11F3B8A42006D378E /* UIView+SMBCommonFraming.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIView+SMBCommonFraming.h"; sourceTree = "<group>"; };
 		D7C8C3C21F3B8A42006D378E /* UIView+SMBCommonFraming.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIView+SMBCommonFraming.m"; sourceTree = "<group>"; };
+		D7C8C3C41F3B8AF8006D378E /* SMBGameBoardTileEntityPickerView__Protocols.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SMBGameBoardTileEntityPickerView__Protocols.h; sourceTree = "<group>"; };
 		D7DAF39E1F33D66400233C39 /* ShimmurBeams.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = ShimmurBeams.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		D7DAF3A21F33D66400233C39 /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
 		D7DAF3BA1F33D7B400233C39 /* ShimmurBeans-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "ShimmurBeans-Info.plist"; sourceTree = "<group>"; };
@@ -428,6 +429,7 @@
 		D761FE801F3AC2FF0083842A /* SMBGameBoardEntityView */ = {
 			isa = PBXGroup;
 			children = (
+				D7C8C3C41F3B8AF8006D378E /* SMBGameBoardTileEntityPickerView__Protocols.h */,
 				D7C8C3B21F3B7A14006D378E /* SMBGameBoardTileEntityPickerView.h */,
 				D7C8C3B31F3B7A14006D378E /* SMBGameBoardTileEntityPickerView.m */,
 			);

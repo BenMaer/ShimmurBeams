@@ -22,5 +22,6 @@
 
 #pragma mark - gameBoardTileEntity
 @property (nonatomic, strong, nullable) SMBGameBoardTileEntity* gameBoardTileEntity;
+@property (nonatomic, assign) BOOL gameBoardTileEntity_isSelected;
 
 @end
