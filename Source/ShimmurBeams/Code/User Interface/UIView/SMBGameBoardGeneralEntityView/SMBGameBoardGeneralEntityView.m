@@ -148,7 +148,11 @@ static void* kSMBGameBoardGeneralEntityView__KVOContext = &kSMBGameBoardGeneralE
 		{
 			if ([keyPath isEqualToString:[SMBGameBoardGeneralEntity_PropertiesForKVO needsRedraw]])
 			{
-				[self setNeedsDisplay];
+				if (self.gameBoardGeneralEntity.needsRedraw)
+				{
+					[self setGameBoardGeneralEntity_hasRedrawn:NO];
+					[self setNeedsDisplay];
+				}
 			}
 			else
 			{
