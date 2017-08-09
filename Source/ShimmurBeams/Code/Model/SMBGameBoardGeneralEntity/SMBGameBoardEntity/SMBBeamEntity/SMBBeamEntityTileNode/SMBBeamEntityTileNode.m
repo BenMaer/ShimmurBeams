@@ -33,6 +33,7 @@ static void* kSMBBeamEntityTileNode__KVOContext = &kSMBBeamEntityTileNode__KVOCo
 -(void)beamEntity_setKVORegistered:(BOOL)registered;
 
 #pragma mark - node_previous
+@property (nonatomic, assign) BOOL node_previous_isKVORegistered;
 -(void)node_previous_setKVORegistered:(BOOL)registered;
 
 #pragma mark - gameBoardTile
@@ -152,7 +153,10 @@ static void* kSMBBeamEntityTileNode__KVOContext = &kSMBBeamEntityTileNode__KVOCo
 {
 	typeof(self.node_previous) const node_previous = self.node_previous;
 	kRUConditionalReturn(node_previous == nil, NO);
-	
+
+	kRUConditionalReturn(self.node_previous_isKVORegistered == registered, NO);
+	[self setNode_previous_isKVORegistered:registered];
+
 	NSMutableArray<NSString*>* const propertiesToObserve = [NSMutableArray<NSString*> array];
 	[propertiesToObserve addObject:[SMBBeamEntityTileNode_PropertiesForKVO node_next]];
 	
