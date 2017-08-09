@@ -46,8 +46,7 @@ static void* kSMBGameBoardGeneralEntityView__KVOContext = &kSMBGameBoardGeneralE
 
 #pragma clang diagnostic push
 #pragma clang diagnostic ignored "-Wno-nullability-completeness"
-	return [self init_with_gameBoardView:nil
-				  gameBoardGeneralEntity:nil];
+	return [self init_with_gameBoardGeneralEntity:nil];
 #pragma clang diagnostic pop
 }
 
@@ -58,23 +57,21 @@ static void* kSMBGameBoardGeneralEntityView__KVOContext = &kSMBGameBoardGeneralE
 
 #pragma clang diagnostic push
 #pragma clang diagnostic ignored "-Wno-nullability-completeness"
-	return [self init_with_gameBoardView:nil
-				  gameBoardGeneralEntity:nil];
+	return [self init_with_gameBoardGeneralEntity:nil];
 #pragma clang diagnostic pop
 }
 
 #pragma mark - init
--(nullable instancetype)init_with_gameBoardView:(nonnull SMBGameBoardView*)gameBoardView
-						 gameBoardGeneralEntity:(nonnull SMBGameBoardGeneralEntity*)gameBoardGeneralEntity
+-(nullable instancetype)init_with_gameBoardGeneralEntity:(nonnull SMBGameBoardGeneralEntity*)gameBoardGeneralEntity
 {
-	kRUConditionalReturn_ReturnValueNil(gameBoardView == nil, YES);
+//	kRUConditionalReturn_ReturnValueNil(gameBoardView == nil, YES);
 	kRUConditionalReturn_ReturnValueNil(gameBoardGeneralEntity == nil, YES);
 
 	if (self = [super initWithFrame:CGRectZero])
 	{
 		[self setBackgroundColor:[UIColor clearColor]];
 
-		_gameBoardView = gameBoardView;
+//		_gameBoardView = gameBoardView;
 
 		_gameBoardGeneralEntity = gameBoardGeneralEntity;
 		[self gameBoardGeneralEntity_setKVORegistered:YES];

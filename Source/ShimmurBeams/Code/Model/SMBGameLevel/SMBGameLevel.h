@@ -13,6 +13,7 @@
 
 
 @class SMBGameBoard;
+@class SMBGameBoardTileEntity;
 
 
 
@@ -23,7 +24,11 @@
 #pragma mark - gameBoard
 @property (nonatomic, readonly, strong, nullable) SMBGameBoard* gameBoard;
 
+#pragma mark - usableGameBoardTileEntities
+@property (nonatomic, readonly, copy, nullable) NSArray<SMBGameBoardTileEntity*>* usableGameBoardTileEntities;
+
 #pragma mark - init
--(nullable instancetype)init_with_gameBoard:(nonnull SMBGameBoard*)gameBoard NS_DESIGNATED_INITIALIZER;
+-(nullable instancetype)init_with_gameBoard:(nonnull SMBGameBoard*)gameBoard
+				usableGameBoardTileEntities:(nullable NSArray<SMBGameBoardTileEntity*>*)usableGameBoardTileEntities NS_DESIGNATED_INITIALIZER;
 
 @end

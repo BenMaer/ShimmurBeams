@@ -14,6 +14,7 @@
 #import "SMBGameBoardTilePosition.h"
 #import "SMBMutableMappedDataCollection.h"
 #import "SMBGameBoardEntity.h"
+#import "UIView+SMBCommonFraming.h"
 
 #import <ResplendentUtilities/RUConditionalReturn.h>
 #import <ResplendentUtilities/RUClassOrNilUtil.h>
@@ -77,7 +78,7 @@ static void* kSMBGameBoardView__KVOContext = &kSMBGameBoardView__KVOContext;
 	{
 		[self setBackgroundColor:[UIColor cyanColor]];
 
-		[self.layer setCornerRadius:10.0f];
+		[self.layer setCornerRadius:[UIView smb_commonFraming_cornerRadius_general]];
 		[self.layer setMasksToBounds:YES];
 
 		[self.layer setBorderWidth:1.0f];
@@ -279,8 +280,7 @@ static void* kSMBGameBoardView__KVOContext = &kSMBGameBoardView__KVOContext;
 		
 		if ([gameBoardTileEntityView_mappedDataCollection_new mappableObject_for_uniqueKey:uniqueKey] == nil)
 		{
-			[gameBoardTileEntityView_mappedDataCollection_new mappableObject_add:[[SMBGameBoardGeneralEntityView alloc] init_with_gameBoardView:self
-																														 gameBoardGeneralEntity:gameBoardTileEntity]];
+			[gameBoardTileEntityView_mappedDataCollection_new mappableObject_add:[[SMBGameBoardGeneralEntityView alloc] init_with_gameBoardGeneralEntity:gameBoardTileEntity]];
 		}
 	}];
 
@@ -372,8 +372,7 @@ static void* kSMBGameBoardView__KVOContext = &kSMBGameBoardView__KVOContext;
 
 		if ([gameBoardEntityView_mappedDataCollection_new mappableObject_for_uniqueKey:uniqueKey] == nil)
 		{
-			[gameBoardEntityView_mappedDataCollection_new mappableObject_add:[[SMBGameBoardGeneralEntityView alloc] init_with_gameBoardView:self
-																													 gameBoardGeneralEntity:gameBoardEntity]];
+			[gameBoardEntityView_mappedDataCollection_new mappableObject_add:[[SMBGameBoardGeneralEntityView alloc] init_with_gameBoardGeneralEntity:gameBoardEntity]];
 		}
 	}];
 

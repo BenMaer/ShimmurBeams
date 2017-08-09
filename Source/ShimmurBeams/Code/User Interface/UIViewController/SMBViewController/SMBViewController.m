@@ -9,7 +9,6 @@
 #import "SMBViewController.h"
 #import "SMBGameLevelView.h"
 #import "SMBGameLevel+SMBTestLevel.h"
-#import "SMBGameBoard.h"
 
 #import <ResplendentUtilities/UIView+RUUtility.h>
 
@@ -54,24 +53,12 @@
 #pragma mark - gameLevelView
 -(CGRect)gameLevelView_frame
 {
-	CGFloat const inset = 10.0f;
-
-	NSUInteger const numberOfColumns = [self.gameLevelView.gameLevel.gameBoard gameBoardTiles_numberOfColumns];
-	NSUInteger const numberOfRows = [self.gameLevelView.gameLevel.gameBoard gameBoardTiles_numberOfRows];
-
-	CGFloat const width_perItem_bounded = floor((CGRectGetWidth(self.view.bounds) - (inset * 2.0f)) / (CGFloat)numberOfColumns);
-	CGFloat const height_perItem_bounded = floor((CGRectGetHeight(self.view.bounds) - (inset * 2.0f)) / (CGFloat)numberOfRows);
-
-	CGFloat const dimension_length = MIN(width_perItem_bounded, height_perItem_bounded);
-
-	CGFloat const width = dimension_length * (CGFloat)numberOfColumns;
-	CGFloat const height = dimension_length * (CGFloat)numberOfRows;
+	CGSize const size = [self.gameLevelView sizeThatFits:self.view.bounds.size];
 
 	return CGRectCeilOrigin((CGRect){
-		.origin.x		= CGRectGetHorizontallyAlignedXCoordForWidthOnWidth(width, CGRectGetWidth(self.view.bounds)),
-		.origin.y		= CGRectGetVerticallyAlignedYCoordForHeightOnHeight(height, CGRectGetHeight(self.view.bounds)),
-		.size.width		= width,
-		.size.height	= height,
+		.origin.x	= CGRectGetHorizontallyAlignedXCoordForWidthOnWidth(size.width, CGRectGetWidth(self.view.bounds)),
+		.origin.y	= CGRectGetVerticallyAlignedYCoordForHeightOnHeight(size.height, CGRectGetHeight(self.view.bounds)),
+		.size		= size,
 	});
 }
 

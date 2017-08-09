@@ -30,17 +30,24 @@
 												  to_column:1
 														row:[gameBoard gameBoardTiles_numberOfRows] - 1];
 
+	NSMutableArray<SMBGameBoardTileEntity*>* const gameBoardTileEntity = [NSMutableArray<SMBGameBoardTileEntity*> array];
+
 	SMBForcedBeamRedirectTileEntity* const forcedBeamRedirectTileEntity = [[SMBForcedBeamRedirectTileEntity alloc] init_with_forcedBeamExitDirection:SMBGameBoardTile__direction_right];
-	[gameBoard gameBoardTileEntity_for_beamInteractions_set:forcedBeamRedirectTileEntity
-												  to_column:1
-														row:1];
+	[gameBoardTileEntity addObject:forcedBeamRedirectTileEntity];
+//	[gameBoard gameBoardTileEntity_for_beamInteractions_set:forcedBeamRedirectTileEntity
+//												  to_column:1
+//														row:1];
 
 	SMBForcedBeamRedirectTileEntity* const forcedBeamRedirectTileEntity2 = [[SMBForcedBeamRedirectTileEntity alloc] init_with_forcedBeamExitDirection:SMBGameBoardTile__direction_down];
-	[gameBoard gameBoardTileEntity_for_beamInteractions_set:forcedBeamRedirectTileEntity2
-												  to_column:3
-														row:1];
+	[gameBoardTileEntity addObject:forcedBeamRedirectTileEntity2];
+//	[gameBoard gameBoardTileEntity_for_beamInteractions_set:forcedBeamRedirectTileEntity2
+//												  to_column:3
+//														row:1];
 
-	return [[self alloc] init_with_gameBoard:gameBoard];
+
+	return
+	[[self alloc] init_with_gameBoard:gameBoard
+		  usableGameBoardTileEntities:[NSArray<SMBGameBoardTileEntity*> arrayWithArray:gameBoardTileEntity]];
 }
 
 +(nonnull instancetype)smb_testLevel_clover
@@ -72,9 +79,9 @@
 												  to_column:1
 														row:2];
 
-	SMBGameLevel* const gameLevel = [[self alloc] init_with_gameBoard:gameBoard];
-
-	return gameLevel;
+	return
+	[[self alloc] init_with_gameBoard:gameBoard
+		  usableGameBoardTileEntities:nil];
 }
 
 @end
