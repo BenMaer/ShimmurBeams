@@ -27,9 +27,6 @@
 #pragma mark - gameBoardTile
 @property (nonatomic, assign, nullable) SMBGameBoardTile* gameBoardTile;
 
-#pragma mark - entityAction
--(void)entityAction_setup;
-
 @end
 
 

@@ -18,16 +18,29 @@
 
 @implementation SMBGameBoard (SMBAddEntity)
 
--(void)gameBoardEntity_add:(nonnull SMBGameBoardTileEntity*)gameBoardEntity
-				 to_column:(NSUInteger)column
-					   row:(NSUInteger)row
+-(void)gameBoardTileEntity_add:(nonnull SMBGameBoardTileEntity*)gameBoardTileEntity
+					 to_column:(NSUInteger)column
+						   row:(NSUInteger)row
 {
-	kRUConditionalReturn(gameBoardEntity == nil, YES);
+	kRUConditionalReturn(gameBoardTileEntity == nil, YES);
+	
+	SMBGameBoardTile* const gameBoardTile =
+	[self gameBoardTile_at_position:[[SMBGameBoardTilePosition alloc] init_with_column:column row:row]];
+	
+	[gameBoardTile gameBoardTileEntities_add:gameBoardTileEntity];
+}
 
+#pragma mark - gameBoardTileEntity_for_beamInteractions
+-(void)gameBoardTileEntity_for_beamInteractions_set:(nonnull SMBGameBoardTileEntity*)moveableGameBoardTileEntity
+										  to_column:(NSUInteger)column
+												row:(NSUInteger)row
+{
+	kRUConditionalReturn(moveableGameBoardTileEntity == nil, YES);
+	
 	SMBGameBoardTile* const gameBoardTile =
 	[self gameBoardTile_at_position:[[SMBGameBoardTilePosition alloc] init_with_column:column row:row]];
 
-	[gameBoardTile setGameBoardTileEntity:gameBoardEntity];
+	[gameBoardTile setGameBoardTileEntity_for_beamInteractions:moveableGameBoardTileEntity];
 }
 
 @end

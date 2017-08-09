@@ -6,7 +6,7 @@
 //  Copyright © 2017 Shimmur. All rights reserved.
 //
 
-#import "SMBGameBoardGeneralEntity.h"
+#import "SMBGameBoardTileEntity.h"
 #import "SMBGameBoardTile__directions.h"
 #import "SMBMappedDataCollection_MappableObject.h"
 
@@ -23,10 +23,7 @@
 
 
 
-@interface SMBBeamEntityTileNode : SMBGameBoardGeneralEntity <SMBMappedDataCollection_MappableObject>
-
-#pragma mark - gameBoardTile
-@property (nonatomic, readonly, assign, nullable) SMBGameBoardTile* gameBoardTile;
+@interface SMBBeamEntityTileNode : SMBGameBoardTileEntity <SMBMappedDataCollection_MappableObject>
 
 #pragma mark - beamEntity
 @property (nonatomic, readonly, assign, nullable) SMBBeamEntity* beamEntity;

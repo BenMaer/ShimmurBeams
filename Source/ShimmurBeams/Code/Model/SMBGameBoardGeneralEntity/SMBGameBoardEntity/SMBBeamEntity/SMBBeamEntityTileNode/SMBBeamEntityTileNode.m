@@ -12,6 +12,7 @@
 #import "SMBGameBoard.h"
 #import "SMBGameBoardTilePosition.h"
 #import "SMBGeneralBeamExitDirectionRedirectTileEntity.h"
+#import "SMBBeamEntity.h"
 
 #import <ResplendentUtilities/RUConditionalReturn.h>
 #import <ResplendentUtilities/RUClassOrNilUtil.h>
@@ -28,7 +29,18 @@ static void* kSMBBeamEntityTileNode__KVOContext = &kSMBBeamEntityTileNode__KVOCo
 
 @interface SMBBeamEntityTileNode ()
 
+#pragma mark - beamEntity
+-(void)beamEntity_setKVORegistered:(BOOL)registered;
+
+#pragma mark - node_previous
+-(void)node_previous_setKVORegistered:(BOOL)registered;
+
 #pragma mark - gameBoardTile
+@property (nonatomic, readonly, assign, nullable) SMBGameBoardTile* gameBoardTile_toUseForSetting;
+
+-(void)gameBoardTile_update;
+-(BOOL)gameBoardTile_shouldBeSet;
+
 -(void)gameBoardTile_setKVORegistered:(BOOL)registered;
 
 #pragma mark - beamExitDirection
@@ -38,6 +50,11 @@ static void* kSMBBeamEntityTileNode__KVOContext = &kSMBBeamEntityTileNode__KVOCo
 
 #pragma mark - node_next
 @property (nonatomic, strong, nullable) SMBBeamEntityTileNode* node_next;
+
+@property (nonatomic, assign) BOOL node_next_generationEnabled;
+-(void)node_next_generationEnabled_update;
+-(BOOL)node_next_generationEnabled_shouldBe;
+
 -(void)node_next_update;
 -(nullable SMBBeamEntityTileNode*)node_next_generate;
 
@@ -65,6 +82,8 @@ static void* kSMBBeamEntityTileNode__KVOContext = &kSMBBeamEntityTileNode__KVOCo
 #pragma mark - NSObject
 -(void)dealloc
 {
+	[self beamEntity_setKVORegistered:NO];
+	[self node_previous_setKVORegistered:NO];
 	[self gameBoardTile_setKVORegistered:NO];
 }
 
@@ -86,28 +105,118 @@ static void* kSMBBeamEntityTileNode__KVOContext = &kSMBBeamEntityTileNode__KVOCo
 								  node_previous:(nullable SMBBeamEntityTileNode*)node_previous
 {
 	kRUConditionalReturn_ReturnValueNil(gameBoardTile == nil, YES);
+	kRUConditionalReturn_ReturnValueNil(beamEntity == nil, YES);
 
 	if (self = [super init])
 	{
-		_gameBoardTile = gameBoardTile;
-		_beamEntity = beamEntity;
-		_node_previous = node_previous;
+		_gameBoardTile_toUseForSetting = gameBoardTile;
 
-		[self beamExitDirection_update];
-		kRUConditionalReturn_ReturnValueNil(self.beamExitDirection == SMBGameBoardTile__direction_unknown, YES);
+		_beamEntity = beamEntity;
+		[self beamEntity_setKVORegistered:YES];
+
+		_node_previous = node_previous;
+		[self node_previous_setKVORegistered:YES];
 	}
 
 	return self;
 }
 
+#pragma mark - beamEntity
+-(void)beamEntity_setKVORegistered:(BOOL)registered
+{
+	typeof(self.beamEntity) const beamEntity = self.beamEntity;
+	kRUConditionalReturn(beamEntity == nil, NO);
+	
+	NSMutableArray<NSString*>* const propertiesToObserve = [NSMutableArray<NSString*> array];
+	[propertiesToObserve addObject:[SMBBeamEntity_PropertiesForKVO beamEntityTileNode_initial]];
+	
+	[propertiesToObserve enumerateObjectsUsingBlock:^(NSString * _Nonnull propertyToObserve, NSUInteger idx, BOOL * _Nonnull stop) {
+		if (registered)
+		{
+			[beamEntity addObserver:self
+						 forKeyPath:propertyToObserve
+							options:(NSKeyValueObservingOptionInitial)
+							context:&kSMBBeamEntityTileNode__KVOContext];
+		}
+		else
+		{
+			[beamEntity removeObserver:self
+				   forKeyPath:propertyToObserve
+							   context:&kSMBBeamEntityTileNode__KVOContext];
+		}
+	}];
+}
+
+#pragma mark - node_previous
+-(void)node_previous_setKVORegistered:(BOOL)registered
+{
+	typeof(self.node_previous) const node_previous = self.node_previous;
+	kRUConditionalReturn(node_previous == nil, NO);
+	
+	NSMutableArray<NSString*>* const propertiesToObserve = [NSMutableArray<NSString*> array];
+	[propertiesToObserve addObject:[SMBBeamEntityTileNode_PropertiesForKVO node_next]];
+	
+	[propertiesToObserve enumerateObjectsUsingBlock:^(NSString * _Nonnull propertyToObserve, NSUInteger idx, BOOL * _Nonnull stop) {
+		if (registered)
+		{
+			[node_previous addObserver:self
+							forKeyPath:propertyToObserve
+							   options:(NSKeyValueObservingOptionInitial)
+							   context:&kSMBBeamEntityTileNode__KVOContext];
+		}
+		else
+		{
+			[node_previous removeObserver:self
+							   forKeyPath:propertyToObserve
+								  context:&kSMBBeamEntityTileNode__KVOContext];
+		}
+	}];
+}
+
 #pragma mark - gameBoardTile
+-(void)setGameBoardTile:(nullable SMBGameBoardTile*)gameBoardTile
+{
+	kRUConditionalReturn((gameBoardTile != nil)
+						 &&
+						 (self.gameBoardTile != nil), YES) /* Should not be set to a non nil value. */
+
+	[self gameBoardTile_setKVORegistered:NO];
+
+	SMBGameBoardTile* const gameBoardTile_old = self.gameBoardTile;
+	[super setGameBoardTile:gameBoardTile];
+
+	[self gameBoardTile_setKVORegistered:YES];
+
+	kRUConditionalReturn(gameBoardTile == gameBoardTile_old, NO);
+
+	[self node_next_generationEnabled_update];
+}
+
+-(void)gameBoardTile_update
+{
+	[self setGameBoardTile:([self gameBoardTile_shouldBeSet] ? self.gameBoardTile_toUseForSetting : nil)];
+}
+
+-(BOOL)gameBoardTile_shouldBeSet
+{
+	SMBBeamEntity* const beamEntity = self.beamEntity;
+	kRUConditionalReturn_ReturnValueFalse(beamEntity == nil, NO);
+	kRUConditionalReturn_ReturnValueTrue(beamEntity.beamEntityTileNode_initial == self, NO);
+
+	SMBBeamEntityTileNode* const node_previous = self.node_previous;
+	kRUConditionalReturn_ReturnValueFalse(node_previous == nil, NO);
+	kRUConditionalReturn_ReturnValueTrue(node_previous.node_next == self, NO);
+
+	return NO;
+}
+
 -(void)gameBoardTile_setKVORegistered:(BOOL)registered
 {
 	typeof(self.gameBoardTile) const gameBoardTile = self.gameBoardTile;
 	kRUConditionalReturn(gameBoardTile == nil, NO);
 
 	NSMutableArray<NSString*>* const propertiesToObserve = [NSMutableArray<NSString*> array];
-	[propertiesToObserve addObject:[SMBGameBoardTile_PropertiesForKVO gameBoardTileEntity]];
+	[propertiesToObserve addObject:[SMBGameBoardTile_PropertiesForKVO gameBoardTileEntity_for_beamInteractions]];
 
 	[propertiesToObserve enumerateObjectsUsingBlock:^(NSString * _Nonnull propertyToObserve, NSUInteger idx, BOOL * _Nonnull stop) {
 		if (registered)
@@ -149,22 +258,22 @@ static void* kSMBBeamEntityTileNode__KVOContext = &kSMBBeamEntityTileNode__KVOCo
 	SMBGameBoardTile* const gameBoardTile = self.gameBoardTile;
 	kRUConditionalReturn_ReturnValue(gameBoardTile == nil, YES, direction_error);
 
-	SMBGameBoardTileEntity* const gameBoardTileEntity = gameBoardTile.gameBoardTileEntity;
+	SMBGameBoardTileEntity* const gameBoardTileEntity_for_beamInteractions = gameBoardTile.gameBoardTileEntity_for_beamInteractions;
 
 	SMBBeamEntityTileNode* const node_previous = self.node_previous;
 	if (node_previous == nil)
 	{
-		kRUConditionalReturn_ReturnValue(gameBoardTileEntity == nil, YES, direction_error);
+		kRUConditionalReturn_ReturnValue(gameBoardTileEntity_for_beamInteractions == nil, YES, direction_error);
 
-		SMBBeamCreatorTileEntity* const beamCreatorTileEntity = kRUClassOrNil(gameBoardTileEntity, SMBBeamCreatorTileEntity);
+		SMBBeamCreatorTileEntity* const beamCreatorTileEntity = kRUClassOrNil(gameBoardTileEntity_for_beamInteractions, SMBBeamCreatorTileEntity);
 		kRUConditionalReturn_ReturnValue(beamCreatorTileEntity == nil, YES, direction_error);
 
 		return beamCreatorTileEntity.beamDirection;
 	}
 
-	if (gameBoardTileEntity)
+	if (gameBoardTileEntity_for_beamInteractions)
 	{
-		SMBGeneralBeamExitDirectionRedirectTileEntity* const generalBeamExitDirectionRedirectTileEntity = kRUClassOrNil(gameBoardTileEntity, SMBGeneralBeamExitDirectionRedirectTileEntity);
+		SMBGeneralBeamExitDirectionRedirectTileEntity* const generalBeamExitDirectionRedirectTileEntity = kRUClassOrNil(gameBoardTileEntity_for_beamInteractions, SMBGeneralBeamExitDirectionRedirectTileEntity);
 		if (generalBeamExitDirectionRedirectTileEntity)
 		{
 			return [generalBeamExitDirectionRedirectTileEntity beamExitDirection_for_beamEnterDirection:[self beamEnterDirection]];
@@ -181,9 +290,31 @@ static void* kSMBBeamEntityTileNode__KVOContext = &kSMBBeamEntityTileNode__KVOCo
 	{
 		if (object == self.gameBoardTile)
 		{
-			if ([keyPath isEqualToString:[SMBGameBoardTile_PropertiesForKVO gameBoardTileEntity]])
+			if ([keyPath isEqualToString:[SMBGameBoardTile_PropertiesForKVO gameBoardTileEntity_for_beamInteractions]])
 			{
 				[self beamExitDirection_update];
+			}
+			else
+			{
+				NSAssert(false, @"unhandled keyPath %@",keyPath);
+			}
+		}
+		else if (object == self.node_previous)
+		{
+			if ([keyPath isEqualToString:[SMBBeamEntityTileNode_PropertiesForKVO node_next]])
+			{
+				[self gameBoardTile_update];
+			}
+			else
+			{
+				NSAssert(false, @"unhandled keyPath %@",keyPath);
+			}
+		}
+		else if (object == self.beamEntity)
+		{
+			if ([keyPath isEqualToString:[SMBBeamEntity_PropertiesForKVO beamEntityTileNode_initial]])
+			{
+				[self gameBoardTile_update];
 			}
 			else
 			{
@@ -202,6 +333,25 @@ static void* kSMBBeamEntityTileNode__KVOContext = &kSMBBeamEntityTileNode__KVOCo
 }
 
 #pragma mark - node_next
+-(void)setNode_next_generationEnabled:(BOOL)node_next_generationEnabled
+{
+	kRUConditionalReturn(self.node_next_generationEnabled == node_next_generationEnabled, NO);
+
+	_node_next_generationEnabled = node_next_generationEnabled;
+
+	[self node_next_update];
+}
+
+-(void)node_next_generationEnabled_update
+{
+	[self setNode_next_generationEnabled:[self node_next_generationEnabled_shouldBe]];
+}
+
+-(BOOL)node_next_generationEnabled_shouldBe
+{
+	return (self.gameBoardTile != nil);
+}
+
 -(void)node_next_update
 {
 	[self setNode_next:[self node_next_generate]];
@@ -209,6 +359,8 @@ static void* kSMBBeamEntityTileNode__KVOContext = &kSMBBeamEntityTileNode__KVOCo
 
 -(nullable SMBBeamEntityTileNode*)node_next_generate
 {
+	kRUConditionalReturn_ReturnValueNil(self.node_next_generationEnabled == false, NO);
+
 	SMBGameBoardTile* const gameBoardTile = self.gameBoardTile;
 	kRUConditionalReturn_ReturnValueNil(gameBoardTile == nil, YES);
 
@@ -236,7 +388,7 @@ static void* kSMBBeamEntityTileNode__KVOContext = &kSMBBeamEntityTileNode__KVOCo
 #pragma mark - SMBMappedDataCollection_MappableObject
 -(nonnull NSString*)smb_uniqueKey
 {
-	return [self.gameBoardTile.gameBoardTilePosition smb_uniqueKey];
+	return [self.gameBoardTile_toUseForSetting.gameBoardTilePosition smb_uniqueKey];
 }
 
 #pragma mark - beamEnterDirection

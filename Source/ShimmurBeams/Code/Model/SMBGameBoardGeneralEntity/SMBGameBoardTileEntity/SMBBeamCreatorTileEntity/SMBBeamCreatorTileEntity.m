@@ -26,6 +26,7 @@
 #pragma mark - beamEntity
 @property (nonatomic, strong, nullable) SMBBeamEntity* beamEntity;
 -(void)beamEntity_update;
+-(nullable SMBBeamEntity*)beamEntity_create;
 
 @end
 
@@ -72,12 +73,14 @@
 	CGContextStrokePath(context);
 }
 
-#pragma mark - entityAction
--(void)entityAction_setup
+-(void)setGameBoardTile:(nullable SMBGameBoardTile*)gameBoardTile
 {
-	[self beamEntity_update];
+	SMBGameBoardTile* const gameBoardTile_old = self.gameBoardTile;
+	[super setGameBoardTile:gameBoardTile];
 
-	NSAssert(self.beamEntity != nil, @"Shouldn't be nil");
+	kRUConditionalReturn(gameBoardTile_old == self.gameBoardTile, NO);
+
+	[self beamEntity_update];
 }
 
 #pragma mark - beamEntity
@@ -100,7 +103,25 @@
 
 -(void)beamEntity_update
 {
-	[self setBeamEntity:[[SMBBeamEntity alloc] init_with_gameBoardTile:self.gameBoardTile]];
+	[self setBeamEntity:[self beamEntity_create]];
+}
+
+-(nullable SMBBeamEntity*)beamEntity_create
+{
+	SMBGameBoardTile* const gameBoardTile = self.gameBoardTile;
+	kRUConditionalReturn_ReturnValueNil(gameBoardTile == nil, NO);
+
+	return [[SMBBeamEntity alloc] init_with_gameBoardTile:gameBoardTile];
+}
+
+#pragma mark - beamDirection
+-(void)setBeamDirection:(SMBGameBoardTile__direction)beamDirection
+{
+	kRUConditionalReturn(self.beamDirection == beamDirection, NO);
+
+	_beamDirection = beamDirection;
+
+	[self beamEntity_update];
 }
 
 @end

@@ -56,6 +56,17 @@
 	[self setUniqueId:[uniqueStringGenerator uniqueId_next]];
 }
 
+#if DEBUG
+#pragma mark - needsRedraw
+-(void)setNeedsRedraw:(BOOL)needsRedraw
+{
+	NSAssert([NSThread isMainThread], @"should be");
+	kRUConditionalReturn(self.needsRedraw == needsRedraw, NO);
+
+	_needsRedraw = needsRedraw;
+}
+#endif
+
 #pragma mark - draw
 -(void)draw_in_rect:(CGRect)rect
 {

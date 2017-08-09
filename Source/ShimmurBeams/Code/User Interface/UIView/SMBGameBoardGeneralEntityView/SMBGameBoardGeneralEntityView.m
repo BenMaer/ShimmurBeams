@@ -116,15 +116,15 @@ static void* kSMBGameBoardGeneralEntityView__KVOContext = &kSMBGameBoardGeneralE
 		if (registered)
 		{
 			[gameBoardGeneralEntity addObserver:self
-							  forKeyPath:propertyToObserve
-								 options:(NSKeyValueObservingOptionInitial)
-								 context:&kSMBGameBoardGeneralEntityView__KVOContext];
+									 forKeyPath:propertyToObserve
+										options:(NSKeyValueObservingOptionInitial)
+										context:&kSMBGameBoardGeneralEntityView__KVOContext];
 		}
 		else
 		{
 			[gameBoardGeneralEntity removeObserver:self
-								 forKeyPath:propertyToObserve
-									context:&kSMBGameBoardGeneralEntityView__KVOContext];
+										forKeyPath:propertyToObserve
+										   context:&kSMBGameBoardGeneralEntityView__KVOContext];
 		}
 	}];
 }

@@ -13,7 +13,16 @@
 
 
 
+@class SMBBeamEntity;
+
+
+
+
+
 @interface SMBBeamCreatorTileEntity : SMBGameBoardTileEntity
+
+#pragma mark - beamEntity
+@property (nonatomic, readonly, strong, nullable) SMBBeamEntity* beamEntity;
 
 #pragma mark - beamDirection
 @property (nonatomic, assign) SMBGameBoardTile__direction beamDirection;

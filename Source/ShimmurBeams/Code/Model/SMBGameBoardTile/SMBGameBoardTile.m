@@ -11,6 +11,8 @@
 #import "SMBGameBoard.h"
 
 #import <ResplendentUtilities/RUConditionalReturn.h>
+#import <ResplendentUtilities/NSMutableArray+RUAddObjectIfNotNil.h>
+#import <ResplendentUtilities/RUConstants.h>
 
 
 
@@ -18,8 +20,8 @@
 
 @interface SMBGameBoardTile ()
 
-#pragma mark - beamEntityTileNodes
-@property (nonatomic, copy, nullable) NSArray<SMBBeamEntityTileNode*>* beamEntityTileNodes;
+#pragma mark - gameBoardTileEntities
+@property (nonatomic, copy, nullable) NSArray<SMBGameBoardTileEntity*>* gameBoardTileEntities;
 
 @end
 
@@ -41,6 +43,15 @@
 #pragma clang diagnostic pop
 }
 
+-(nonnull NSString*)description
+{
+	NSMutableArray<NSString*>* const description_lines = [NSMutableArray<NSString*> array];
+	[description_lines ru_addObjectIfNotNil:[super description]];
+	[description_lines ru_addObjectIfNotNil:RUStringWithFormat(@"gameBoardTilePosition: %@",self.gameBoardTilePosition)];
+
+	return [description_lines componentsJoinedByString:@"\n"];
+}
+
 #pragma mark - init
 -(nullable instancetype)init_with_gameBoardTilePosition:(nonnull SMBGameBoardTilePosition*)gameBoardTilePosition
 											  gameBoard:(nonnull SMBGameBoard*)gameBoard
@@ -57,56 +68,56 @@
 	return self;
 }
 
-#pragma mark - gameBoardTileEntity
--(void)setGameBoardTileEntity:(nullable SMBGameBoardTileEntity*)gameBoardTileEntity
+#pragma mark - gameBoardTileEntity_for_beamInteractions
+-(void)setGameBoardTileEntity_for_beamInteractions:(nullable SMBGameBoardTileEntity*)gameBoardTileEntity_for_beamInteractions
 {
-	kRUConditionalReturn(self.gameBoardTileEntity == gameBoardTileEntity, NO);
+	kRUConditionalReturn(self.gameBoardTileEntity_for_beamInteractions == gameBoardTileEntity_for_beamInteractions, NO);
 
-	_gameBoardTileEntity = gameBoardTileEntity;
+	_gameBoardTileEntity_for_beamInteractions = gameBoardTileEntity_for_beamInteractions;
 
-	if (self.gameBoardTileEntity)
+	if (self.gameBoardTileEntity_for_beamInteractions)
 	{
-		if (self.gameBoardTileEntity.gameBoardTile != self)
+		if (self.gameBoardTileEntity_for_beamInteractions.gameBoardTile != self)
 		{
-			[self.gameBoardTileEntity setGameBoardTile:self];
+			[self.gameBoardTileEntity_for_beamInteractions setGameBoardTile:self];
 		}
 	}
 }
 
-#pragma mark - beamEntityTileNodes
--(void)beamEntityTileNodes_add:(nonnull SMBBeamEntityTileNode*)beamEntityTileNode
+#pragma mark - gameBoardTileEntities
+-(void)gameBoardTileEntities_add:(nonnull SMBGameBoardTileEntity*)gameBoardTileEntity
 {
-	kRUConditionalReturn(beamEntityTileNode == nil, YES);
+	kRUConditionalReturn(gameBoardTileEntity == nil, YES);
 
-	NSArray<SMBBeamEntityTileNode*>* const beamEntityTileNodes_old = self.beamEntityTileNodes;
-	kRUConditionalReturn([beamEntityTileNodes_old containsObject:beamEntityTileNode], YES);
+	NSArray<SMBGameBoardTileEntity*>* const gameBoardTileEntities_old = self.gameBoardTileEntities;
+	kRUConditionalReturn([gameBoardTileEntities_old containsObject:gameBoardTileEntity], YES);
 
-	NSMutableArray<SMBBeamEntityTileNode*>* const beamEntityTileNodes_new = [NSMutableArray<SMBBeamEntityTileNode*> array];
+	NSMutableArray<SMBGameBoardTileEntity*>* const gameBoardTileEntities_new = [NSMutableArray<SMBGameBoardTileEntity*> array];
 
-	if (beamEntityTileNodes_old)
+	if (gameBoardTileEntities_old)
 	{
-		[beamEntityTileNodes_new addObjectsFromArray:beamEntityTileNodes_old];
+		[gameBoardTileEntities_new addObjectsFromArray:gameBoardTileEntities_old];
 	}
 
-	[beamEntityTileNodes_new addObject:beamEntityTileNode];
+	[gameBoardTileEntities_new addObject:gameBoardTileEntity];
 
-	[self setBeamEntityTileNodes:[NSArray<SMBBeamEntityTileNode*> arrayWithArray:beamEntityTileNodes_new]];
+	[self setGameBoardTileEntities:[NSArray<SMBGameBoardTileEntity*> arrayWithArray:gameBoardTileEntities_new]];
 }
 
--(void)beamEntityTileNodes_remove:(nonnull SMBBeamEntityTileNode*)beamEntityTileNode
+-(void)gameBoardTileEntities_remove:(nonnull SMBGameBoardTileEntity*)gameBoardTileEntity
 {
-	kRUConditionalReturn(beamEntityTileNode == nil, YES);
+	kRUConditionalReturn(gameBoardTileEntity == nil, YES);
 
-	NSArray<SMBBeamEntityTileNode*>* const beamEntityTileNodes_old = self.beamEntityTileNodes;
-	kRUConditionalReturn(beamEntityTileNodes_old == nil, YES);
+	NSArray<SMBGameBoardTileEntity*>* const gameBoardTileEntities_old = self.gameBoardTileEntities;
+	kRUConditionalReturn(gameBoardTileEntities_old == nil, YES);
 
-	NSInteger const beamEntityTileNode_index = [beamEntityTileNodes_old indexOfObject:beamEntityTileNode];
-	kRUConditionalReturn(beamEntityTileNode_index == NSNotFound, YES);
+	NSInteger const gameBoardTileEntity_index = [gameBoardTileEntities_old indexOfObject:gameBoardTileEntity];
+	kRUConditionalReturn(gameBoardTileEntity_index == NSNotFound, YES);
 
-	NSMutableArray<SMBBeamEntityTileNode*>* const beamEntityTileNodes_new = [NSMutableArray<SMBBeamEntityTileNode*> arrayWithArray:beamEntityTileNodes_old];
-	[beamEntityTileNodes_new removeObjectAtIndex:beamEntityTileNode_index];
+	NSMutableArray<SMBGameBoardTileEntity*>* const gameBoardTileEntities_new = [NSMutableArray<SMBGameBoardTileEntity*> arrayWithArray:gameBoardTileEntities_old];
+	[gameBoardTileEntities_new removeObjectAtIndex:gameBoardTileEntity_index];
 
-	[self setBeamEntityTileNodes:[NSArray<SMBBeamEntityTileNode*> arrayWithArray:beamEntityTileNodes_new]];
+	[self setGameBoardTileEntities:[NSArray<SMBGameBoardTileEntity*> arrayWithArray:gameBoardTileEntities_new]];
 }
 
 #pragma mark - gameBoardTile
@@ -127,7 +138,7 @@
 
 @implementation SMBGameBoardTile_PropertiesForKVO
 
-+(nonnull NSString*)gameBoardTileEntity{return NSStringFromSelector(_cmd);}
-+(nonnull NSString*)beamEntityTileNodes{return NSStringFromSelector(_cmd);}
++(nonnull NSString*)gameBoardTileEntity_for_beamInteractions{return NSStringFromSelector(_cmd);}
++(nonnull NSString*)gameBoardTileEntities{return NSStringFromSelector(_cmd);}
 
 @end

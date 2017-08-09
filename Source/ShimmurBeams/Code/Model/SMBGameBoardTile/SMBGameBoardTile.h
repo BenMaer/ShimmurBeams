@@ -17,7 +17,6 @@
 @class SMBGameBoardTilePosition;
 @class SMBGameBoard;
 @class SMBGameBoardTileEntity;
-@class SMBBeamEntityTileNode;
 
 
 
@@ -31,13 +30,13 @@
 #pragma mark - gameBoard
 @property (nonatomic, readonly, assign, nullable) SMBGameBoard* gameBoard;
 
-#pragma mark - gameBoardTileEntity
-@property (nonatomic, strong, nullable) SMBGameBoardTileEntity* gameBoardTileEntity;
+#pragma mark - gameBoardTileEntity_for_beamInteractions
+@property (nonatomic, strong, nullable) SMBGameBoardTileEntity* gameBoardTileEntity_for_beamInteractions;
 
-#pragma mark - beamEntityTileNodes
-@property (nonatomic, readonly, copy, nullable) NSArray<SMBBeamEntityTileNode*>* beamEntityTileNodes;
--(void)beamEntityTileNodes_add:(nonnull SMBBeamEntityTileNode*)beamEntityTileNode;
--(void)beamEntityTileNodes_remove:(nonnull SMBBeamEntityTileNode*)beamEntityTileNode;
+#pragma mark - gameBoardTileEntities
+@property (nonatomic, readonly, copy, nullable) NSArray<SMBGameBoardTileEntity*>* gameBoardTileEntities;
+-(void)gameBoardTileEntities_add:(nonnull SMBGameBoardTileEntity*)gameBoardTileEntity;
+-(void)gameBoardTileEntities_remove:(nonnull SMBGameBoardTileEntity*)gameBoardTileEntity;
 
 #pragma mark - init
 -(nullable instancetype)init_with_gameBoardTilePosition:(nonnull SMBGameBoardTilePosition*)gameBoardTilePosition
@@ -54,7 +53,7 @@
 
 @interface SMBGameBoardTile_PropertiesForKVO : NSObject
 
-+(nonnull NSString*)gameBoardTileEntity;
-+(nonnull NSString*)beamEntityTileNodes;
++(nonnull NSString*)gameBoardTileEntity_for_beamInteractions;
++(nonnull NSString*)gameBoardTileEntities;
 
 @end

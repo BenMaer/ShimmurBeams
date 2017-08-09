@@ -38,6 +38,9 @@ typedef NS_ENUM(NSInteger, SMBBeamEntity__drawingPiece) {
 
 @interface SMBBeamEntity ()
 
+#pragma mark - beamEntityTileNode_initial
+@property (nonatomic, strong, nullable) SMBBeamEntityTileNode* beamEntityTileNode_initial;
+
 #pragma mark - beamEntityTileNode_mappedDataCollection
 @property (nonatomic, copy, nullable) SMBMappedDataCollection<SMBBeamEntityTileNode*>* beamEntityTileNode_mappedDataCollection;
 -(void)beamEntityTileNode_mappedDataCollection_setKVORegistered:(BOOL)registered;
@@ -77,10 +80,10 @@ typedef NS_ENUM(NSInteger, SMBBeamEntity__drawingPiece) {
 
 	if (self = [super init])
 	{
-		_beamEntityTileNode_initial =
-		[[SMBBeamEntityTileNode alloc] init_with_gameBoardTile:gameBoardTile
-													beamEntity:self
-												 node_previous:nil];
+		[self setBeamEntityTileNode_initial:
+		 [[SMBBeamEntityTileNode alloc] init_with_gameBoardTile:gameBoardTile
+													 beamEntity:self
+												  node_previous:nil]];
 
 		[self beamEntityTileNode_mappedDataCollection_update];
 	}
@@ -97,29 +100,7 @@ typedef NS_ENUM(NSInteger, SMBBeamEntity__drawingPiece) {
 
 	[self beamEntityTileNode_mappedDataCollection_setKVORegistered:NO];
 
-	SMBMappedDataCollection<SMBBeamEntityTileNode*>* const beamEntityTileNode_mappedDataCollection_old = self.beamEntityTileNode_mappedDataCollection;
 	_beamEntityTileNode_mappedDataCollection = beamEntityTileNode_mappedDataCollection;
-
-	NSArray<SMBBeamEntityTileNode*>* removedObjects = nil;
-	NSArray<SMBBeamEntityTileNode*>* newObjects = nil;
-	[SMBMappedDataCollection<SMBBeamEntityTileNode*> changes_from_mappedDataCollection:beamEntityTileNode_mappedDataCollection_old
-															   to_mappedDataCollection:self.beamEntityTileNode_mappedDataCollection
-																		removedObjects:&removedObjects
-																			newObjects:&newObjects];
-
-	[removedObjects enumerateObjectsUsingBlock:^(SMBBeamEntityTileNode * _Nonnull beamEntityTileNode, NSUInteger idx, BOOL * _Nonnull stop) {
-		SMBGameBoardTile* const gameBoardTile = beamEntityTileNode.gameBoardTile;
-		kRUConditionalReturn(gameBoardTile == nil, YES);
-
-		[gameBoardTile beamEntityTileNodes_remove:beamEntityTileNode];
-	}];
-
-	[newObjects enumerateObjectsUsingBlock:^(SMBBeamEntityTileNode * _Nonnull beamEntityTileNode, NSUInteger idx, BOOL * _Nonnull stop) {
-		SMBGameBoardTile* const gameBoardTile = beamEntityTileNode.gameBoardTile;
-		kRUConditionalReturn(gameBoardTile == nil, YES);
-
-		[gameBoardTile beamEntityTileNodes_add:beamEntityTileNode];
-	}];
 
 	[self beamEntityTileNode_mappedDataCollection_setKVORegistered:YES];
 }
@@ -208,5 +189,27 @@ typedef NS_ENUM(NSInteger, SMBBeamEntity__drawingPiece) {
 		[super observeValueForKeyPath:keyPath ofObject:object change:change context:context];
 	}
 }
+
+#pragma mark - beamEntityTileNodes
+-(BOOL)beamEntityTileNode_contains:(nonnull SMBBeamEntityTileNode*)beamEntityTileNode
+{
+	kRUConditionalReturn_ReturnValueFalse(beamEntityTileNode == nil, YES);
+
+	kRUConditionalReturn_ReturnValueTrue(beamEntityTileNode == self.beamEntityTileNode_initial, NO);
+	kRUConditionalReturn_ReturnValueTrue([self.beamEntityTileNode_mappedDataCollection mappableObject_exists:beamEntityTileNode], NO);
+
+	return NO;
+}
+
+@end
+
+
+
+
+
+@implementation SMBBeamEntity_PropertiesForKVO
+
++(nonnull NSString*)beamEntityTileNode_initial{return NSStringFromSelector(_cmd);}
++(nonnull NSString*)beamEntityTileNode_mappedDataCollection{return NSStringFromSelector(_cmd);}
 
 @end

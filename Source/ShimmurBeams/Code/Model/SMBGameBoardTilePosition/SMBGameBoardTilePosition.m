@@ -11,6 +11,7 @@
 #import <ResplendentUtilities/RUConditionalReturn.h>
 #import <ResplendentUtilities/RUClassOrNilUtil.h>
 #import <ResplendentUtilities/RUConstants.h>
+#import <ResplendentUtilities/NSMutableArray+RUAddObjectIfNotNil.h>
 
 
 
@@ -25,6 +26,16 @@
 
 	return [self init_with_column:0
 							  row:0];
+}
+
+-(nonnull NSString*)description
+{
+	NSMutableArray<NSString*>* const description_lines = [NSMutableArray<NSString*> array];
+	[description_lines ru_addObjectIfNotNil:[super description]];
+	[description_lines ru_addObjectIfNotNil:RUStringWithFormat(@"column %lu",(unsigned long)self.column)];
+	[description_lines ru_addObjectIfNotNil:RUStringWithFormat(@"row %lu",(unsigned long)self.row)];
+	
+	return [description_lines componentsJoinedByString:@"\n"];
 }
 
 #pragma mark - init

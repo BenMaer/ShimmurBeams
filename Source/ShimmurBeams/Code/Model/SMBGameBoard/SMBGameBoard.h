@@ -54,7 +54,6 @@
 
 #pragma mark - gameBoardTileEntities
 @property (nonatomic, readonly, copy, nullable) NSArray<SMBGameBoardTileEntity*>* gameBoardTileEntities;
--(void)gameBoardTileEntities_setupActions;
 
 #pragma mark - gameBoardEntities
 @property (nonatomic, readonly, copy, nullable) NSArray<SMBGameBoardEntity*>* gameBoardEntities;

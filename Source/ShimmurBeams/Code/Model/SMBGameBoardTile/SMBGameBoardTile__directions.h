@@ -18,12 +18,12 @@
 
 
 typedef NS_ENUM(NSInteger, SMBGameBoardTile__direction) {
+	SMBGameBoardTile__direction_unknown,
+
 	SMBGameBoardTile__direction_up,
 	SMBGameBoardTile__direction_right,
 	SMBGameBoardTile__direction_down,
 	SMBGameBoardTile__direction_left,
-
-	SMBGameBoardTile__direction_unknown,
 	
 	SMBGameBoardTile__direction__first	= SMBGameBoardTile__direction_up,
 	SMBGameBoardTile__direction__last	= SMBGameBoardTile__direction_left,
