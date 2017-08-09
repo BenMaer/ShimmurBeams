@@ -6,7 +6,7 @@
 //  Copyright © 2017 Shimmur. All rights reserved.
 //
 
-#import "SMBGameBoardTileEntity__orientations.h"
+#import "SMBGameBoardTile__directions.h"
 
 #import <Foundation/Foundation.h>
 #import <UIKit/UIKit.h>
@@ -48,9 +48,10 @@
 -(NSUInteger)gameBoardTiles_numberOfColumns;
 -(NSUInteger)gameBoardTiles_numberOfRows;
 
--(UIOffset)gameBoardTile_next_offset_for_orientation:(SMBGameBoardTileEntity__orientation)orientation;
+-(UIOffset)gameBoardTile_next_offset_for_direction:(SMBGameBoardTile__direction)direction;
 -(nullable SMBGameBoardTile*)gameBoardTile_next_from_gameBoardTile:(nonnull SMBGameBoardTile*)gameBoardTile
-													   orientation:(SMBGameBoardTileEntity__orientation)orientation;
+														 direction:(SMBGameBoardTile__direction)direction;
+
 #pragma mark - gameBoardTileEntities
 @property (nonatomic, readonly, copy, nullable) NSArray<SMBGameBoardTileEntity*>* gameBoardTileEntities;
 -(void)gameBoardTileEntities_setupActions;

@@ -11,8 +11,7 @@
 #import "SMBBeamCreatorTileEntity.h"
 #import "SMBGameBoard.h"
 #import "SMBGameBoardTilePosition.h"
-#import "SMBGeneralBeamExitOrientationRedirectTileEntity.h"
-#import "SMBBeamEntityTileNode__beamOrientations_to_SMBGameBoardTileEntity__orientation_utilities.h"
+#import "SMBGeneralBeamExitDirectionRedirectTileEntity.h"
 
 #import <ResplendentUtilities/RUConditionalReturn.h>
 #import <ResplendentUtilities/RUClassOrNilUtil.h>
@@ -32,15 +31,28 @@ static void* kSMBBeamEntityTileNode__KVOContext = &kSMBBeamEntityTileNode__KVOCo
 #pragma mark - gameBoardTile
 -(void)gameBoardTile_setKVORegistered:(BOOL)registered;
 
-#pragma mark - beamExitOrientation
-@property (nonatomic, assign) SMBBeamEntityTileNode__beamOrientation beamExitOrientation;
--(void)beamExitOrientation_update;
--(SMBBeamEntityTileNode__beamOrientation)beamExitOrientation_generate;
+#pragma mark - beamExitDirection
+@property (nonatomic, assign) SMBGameBoardTile__direction beamExitDirection;
+-(void)beamExitDirection_update;
+-(SMBGameBoardTile__direction)beamExitDirection_generate;
 
 #pragma mark - node_next
 @property (nonatomic, strong, nullable) SMBBeamEntityTileNode* node_next;
 -(void)node_next_update;
 -(nullable SMBBeamEntityTileNode*)node_next_generate;
+
+#pragma mark - draw
+-(void)draw_half_line_in_rect:(CGRect)rect
+					direction:(SMBGameBoardTile__direction)direction;
+
+-(CGPoint)draw_point_center_with_rect:(CGRect)rect;
+
+-(CGPoint)draw_point_edgeMiddle_with_rect:(CGRect)rect
+								direction:(SMBGameBoardTile__direction)direction;
+-(CGFloat)draw_point_edgeMiddle_xCoord_with_rect:(CGRect)rect
+									   direction:(SMBGameBoardTile__direction)direction;
+-(CGFloat)draw_point_edgeMiddle_yCoord_with_rect:(CGRect)rect
+									   direction:(SMBGameBoardTile__direction)direction;
 
 @end
 
@@ -59,7 +71,7 @@ static void* kSMBBeamEntityTileNode__KVOContext = &kSMBBeamEntityTileNode__KVOCo
 -(instancetype)init
 {
 	kRUConditionalReturn_ReturnValueNil(YES, YES);
-	
+
 #pragma clang diagnostic push
 #pragma clang diagnostic ignored "-Wno-nullability-completeness"
 	return [self init_with_gameBoardTile:nil
@@ -81,8 +93,8 @@ static void* kSMBBeamEntityTileNode__KVOContext = &kSMBBeamEntityTileNode__KVOCo
 		_beamEntity = beamEntity;
 		_node_previous = node_previous;
 
-		[self beamExitOrientation_update];
-		kRUConditionalReturn_ReturnValueNil(self.beamExitOrientation == SMBBeamEntityTileNode__beamOrientation_none, YES);
+		[self beamExitDirection_update];
+		kRUConditionalReturn_ReturnValueNil(self.beamExitDirection == SMBGameBoardTile__direction_unknown, YES);
 	}
 
 	return self;
@@ -93,73 +105,73 @@ static void* kSMBBeamEntityTileNode__KVOContext = &kSMBBeamEntityTileNode__KVOCo
 {
 	typeof(self.gameBoardTile) const gameBoardTile = self.gameBoardTile;
 	kRUConditionalReturn(gameBoardTile == nil, NO);
-	
+
 	NSMutableArray<NSString*>* const propertiesToObserve = [NSMutableArray<NSString*> array];
 	[propertiesToObserve addObject:[SMBGameBoardTile_PropertiesForKVO gameBoardTileEntity]];
-	
+
 	[propertiesToObserve enumerateObjectsUsingBlock:^(NSString * _Nonnull propertyToObserve, NSUInteger idx, BOOL * _Nonnull stop) {
 		if (registered)
 		{
 			[gameBoardTile addObserver:self
-						forKeyPath:propertyToObserve
-						   options:(NSKeyValueObservingOptionInitial)
-						   context:&kSMBBeamEntityTileNode__KVOContext];
+							forKeyPath:propertyToObserve
+							   options:(NSKeyValueObservingOptionInitial)
+							   context:&kSMBBeamEntityTileNode__KVOContext];
 		}
 		else
 		{
 			[gameBoardTile removeObserver:self
-						   forKeyPath:propertyToObserve
-							  context:&kSMBBeamEntityTileNode__KVOContext];
+							   forKeyPath:propertyToObserve
+								  context:&kSMBBeamEntityTileNode__KVOContext];
 		}
 	}];
 }
 
-#pragma mark - beamExitOrientation
--(void)setBeamExitOrientation:(SMBBeamEntityTileNode__beamOrientation)beamExitOrientation
+#pragma mark - beamExitDirection
+-(void)setBeamExitDirection:(SMBGameBoardTile__direction)beamExitDirection
 {
-	kRUConditionalReturn(self.beamExitOrientation == beamExitOrientation, NO);
+	kRUConditionalReturn(self.beamExitDirection == beamExitDirection, NO);
 
-	_beamExitOrientation = beamExitOrientation;
+	_beamExitDirection = beamExitDirection;
 
 	[self node_next_update];
 }
 
--(void)beamExitOrientation_update
+-(void)beamExitDirection_update
 {
-	[self setBeamExitOrientation:[self beamExitOrientation_generate]];
-	kRUConditionalReturn(self.beamExitOrientation == SMBBeamEntityTileNode__beamOrientation_none, YES);
+	[self setBeamExitDirection:[self beamExitDirection_generate]];
+	kRUConditionalReturn(self.beamExitDirection == SMBGameBoardTile__direction_unknown, YES);
 }
 
--(SMBBeamEntityTileNode__beamOrientation)beamExitOrientation_generate
+-(SMBGameBoardTile__direction)beamExitDirection_generate
 {
-	SMBBeamEntityTileNode__beamOrientation const beamOrientation_error = SMBBeamEntityTileNode__beamOrientation_none;
+	SMBGameBoardTile__direction const direction_error = SMBGameBoardTile__direction_unknown;
 
 	SMBGameBoardTile* const gameBoardTile = self.gameBoardTile;
-	kRUConditionalReturn_ReturnValue(gameBoardTile == nil, YES, beamOrientation_error);
+	kRUConditionalReturn_ReturnValue(gameBoardTile == nil, YES, direction_error);
 
 	SMBGameBoardTileEntity* const gameBoardTileEntity = gameBoardTile.gameBoardTileEntity;
 
 	SMBBeamEntityTileNode* const node_previous = self.node_previous;
 	if (node_previous == nil)
 	{
-		kRUConditionalReturn_ReturnValue(gameBoardTileEntity == nil, YES, beamOrientation_error);
+		kRUConditionalReturn_ReturnValue(gameBoardTileEntity == nil, YES, direction_error);
 
 		SMBBeamCreatorTileEntity* const beamCreatorTileEntity = kRUClassOrNil(gameBoardTileEntity, SMBBeamCreatorTileEntity);
-		kRUConditionalReturn_ReturnValue(beamCreatorTileEntity == nil, YES, beamOrientation_error);
+		kRUConditionalReturn_ReturnValue(beamCreatorTileEntity == nil, YES, direction_error);
 
-		return SMBBeamEntityTileNode__beamOrientation_for_gameBoardTileEntity__orientation(beamCreatorTileEntity.orientation);
+		return beamCreatorTileEntity.beamDirection;
 	}
 
 	if (gameBoardTileEntity)
 	{
-		SMBGeneralBeamExitOrientationRedirectTileEntity* const generalBeamExitOrientationRedirectTileEntity = kRUClassOrNil(gameBoardTileEntity, SMBGeneralBeamExitOrientationRedirectTileEntity);
-		if (generalBeamExitOrientationRedirectTileEntity)
+		SMBGeneralBeamExitDirectionRedirectTileEntity* const generalBeamExitDirectionRedirectTileEntity = kRUClassOrNil(gameBoardTileEntity, SMBGeneralBeamExitDirectionRedirectTileEntity);
+		if (generalBeamExitDirectionRedirectTileEntity)
 		{
-			return [generalBeamExitOrientationRedirectTileEntity beamExitOrientation_for_beamEnterOrientation:[self beamEnterOrientation]];
+			return [generalBeamExitDirectionRedirectTileEntity beamExitDirection_for_beamEnterDirection:[self beamEnterDirection]];
 		}
 	}
 
-	return node_previous.beamExitOrientation;
+	return node_previous.beamExitDirection;
 }
 
 #pragma mark - KVO
@@ -171,7 +183,7 @@ static void* kSMBBeamEntityTileNode__KVOContext = &kSMBBeamEntityTileNode__KVOCo
 		{
 			if ([keyPath isEqualToString:[SMBGameBoardTile_PropertiesForKVO gameBoardTileEntity]])
 			{
-				[self beamExitOrientation_update];
+				[self beamExitDirection_update];
 			}
 			else
 			{
@@ -203,15 +215,14 @@ static void* kSMBBeamEntityTileNode__KVOContext = &kSMBBeamEntityTileNode__KVOCo
 	SMBGameBoard* const gameBoard = gameBoardTile.gameBoard;
 	kRUConditionalReturn_ReturnValueNil(gameBoard == nil, YES);
 
-	SMBBeamEntityTileNode__beamOrientation const beamExitOrientation = self.beamExitOrientation;
-	kRUConditionalReturn_ReturnValueNil(SMBBeamEntityTileNode__beamOrientation__isInRange(beamExitOrientation) == false, YES);
+	SMBGameBoardTile__direction const beamExitDirection = self.beamExitDirection;
+	kRUConditionalReturn_ReturnValueNil(SMBGameBoardTile__direction__isInRange(beamExitDirection) == false, YES);
 
 	SMBBeamEntity* const beamEntity = self.beamEntity;
 	kRUConditionalReturn_ReturnValueNil(beamEntity == nil, YES);
 
 	SMBGameBoardTile* const gameBoardTile_next =
-	[gameBoard gameBoardTile_next_from_gameBoardTile:gameBoardTile
-										 orientation:SMBGameBoardTileEntity__orientation_for_beamOrientation(beamExitOrientation)];
+	[gameBoardTile gameBoardTile_next_with_direction:beamExitDirection];
 	kRUConditionalReturn_ReturnValueNil(gameBoardTile_next == nil, NO);
 
 	SMBBeamEntityTileNode* const node_next =
@@ -228,37 +239,151 @@ static void* kSMBBeamEntityTileNode__KVOContext = &kSMBBeamEntityTileNode__KVOCo
 	return [self.gameBoardTile.gameBoardTilePosition smb_uniqueKey];
 }
 
-#pragma mark - beamEnterOrientation
--(SMBBeamEntityTileNode__beamOrientation)beamEnterOrientation
+#pragma mark - beamEnterDirection
+-(SMBGameBoardTile__direction)beamEnterDirection
 {
 	SMBBeamEntityTileNode* const node_previous = self.node_previous;
-	kRUConditionalReturn_ReturnValue(node_previous == nil, YES, SMBBeamEntityTileNode__beamOrientation_none);
+	kRUConditionalReturn_ReturnValue(node_previous == nil, YES, SMBGameBoardTile__direction_unknown);
 
-	SMBBeamEntityTileNode__beamOrientation const beamExitOrientation = node_previous.beamExitOrientation;
-	switch (beamExitOrientation)
+	SMBGameBoardTile__direction const beamExitDirection = node_previous.beamExitDirection;
+	switch (beamExitDirection)
 	{
-		case SMBBeamEntityTileNode__beamOrientation_none:
+		case SMBGameBoardTile__direction_unknown:
 			break;
 
-		case SMBBeamEntityTileNode__beamOrientation_up:
-			return SMBBeamEntityTileNode__beamOrientation_down;
+		case SMBGameBoardTile__direction_up:
+			return SMBGameBoardTile__direction_down;
 			break;
 
-		case SMBBeamEntityTileNode__beamOrientation_right:
-			return SMBBeamEntityTileNode__beamOrientation_left;
+		case SMBGameBoardTile__direction_right:
+			return SMBGameBoardTile__direction_left;
 			break;
 
-		case SMBBeamEntityTileNode__beamOrientation_down:
-			return SMBBeamEntityTileNode__beamOrientation_up;
+		case SMBGameBoardTile__direction_down:
+			return SMBGameBoardTile__direction_up;
 			break;
 
-		case SMBBeamEntityTileNode__beamOrientation_left:
-			return SMBBeamEntityTileNode__beamOrientation_right;
+		case SMBGameBoardTile__direction_left:
+			return SMBGameBoardTile__direction_right;
 			break;
 	}
 
-	NSAssert(false, @"unhandled beamExitOrientation %li",(long)beamExitOrientation);
-	return SMBBeamEntityTileNode__beamOrientation_none;
+	NSAssert(false, @"unhandled beamExitDirection %li",(long)beamExitDirection);
+	return SMBGameBoardTile__direction_unknown;
+}
+
+#pragma mark - SMBGameBoardGeneralEntity: draw
+-(void)draw_in_rect:(CGRect)rect
+{
+	[super draw_in_rect:rect];
+
+	CGContextRef const context = UIGraphicsGetCurrentContext();
+
+	CGContextSetStrokeColorWithColor(context, [UIColor redColor].CGColor);
+	CGContextSetLineWidth(context, 1.0f);
+
+	if (self.node_previous != nil)
+	{
+		[self draw_half_line_in_rect:rect
+						   direction:self.beamEnterDirection];
+	}
+
+	[self draw_half_line_in_rect:rect
+					   direction:self.beamExitDirection];
+
+	CGContextStrokePath(context);
+}
+
+#pragma mark - draw
+-(void)draw_half_line_in_rect:(CGRect)rect
+					direction:(SMBGameBoardTile__direction)direction
+{
+	kRUConditionalReturn(SMBGameBoardTile__direction__isInRange(direction) == false, YES);
+
+	CGContextRef const context = UIGraphicsGetCurrentContext();
+
+	//	CGRect const rect = [gameBoardView rect:gameBoardTilePosition];
+
+	//	CGRect const rect = (CGRect){
+	//		.origin.x	= CGRectGetMinX(rect) + CGRectGetMinX(rect),
+	//		.origin.y	= CGRectGetMinY(rect) + CGRectGetMinY(rect),
+	//		.size		= rect.size,
+	//	};
+
+	CGPoint const point_center = [self draw_point_center_with_rect:rect];
+	CGPoint const point_edge = [self draw_point_edgeMiddle_with_rect:rect direction:direction];
+
+	CGContextMoveToPoint(context, point_center.x, point_center.y);
+	CGContextAddLineToPoint(context, point_edge.x, point_edge.y);
+}
+
+-(CGPoint)draw_point_center_with_rect:(CGRect)rect
+{
+	return (CGPoint){
+		.x	= CGRectGetMidX(rect),
+		.y	= CGRectGetMidY(rect),
+	};
+}
+
+-(CGPoint)draw_point_edgeMiddle_with_rect:(CGRect)rect
+								direction:(SMBGameBoardTile__direction)direction
+{
+	return (CGPoint){
+		.x	= [self draw_point_edgeMiddle_xCoord_with_rect:rect direction:direction],
+		.y	= [self draw_point_edgeMiddle_yCoord_with_rect:rect direction:direction],
+	};
+}
+
+-(CGFloat)draw_point_edgeMiddle_xCoord_with_rect:(CGRect)rect
+									   direction:(SMBGameBoardTile__direction)direction
+{
+	switch (direction)
+	{
+		case SMBGameBoardTile__direction_unknown:
+			break;
+
+		case SMBGameBoardTile__direction_up:
+		case SMBGameBoardTile__direction_down:
+			return CGRectGetMidX(rect);
+			break;
+
+		case SMBGameBoardTile__direction_right:
+			return CGRectGetMaxX(rect);
+			break;
+
+		case SMBGameBoardTile__direction_left:
+			return CGRectGetMinX(rect);
+			break;
+	}
+
+	NSAssert(false, @"unhandled direction %li",(long)direction);
+	return 0.0f;
+}
+
+-(CGFloat)draw_point_edgeMiddle_yCoord_with_rect:(CGRect)rect
+									   direction:(SMBGameBoardTile__direction)direction
+{
+	switch (direction)
+	{
+		case SMBGameBoardTile__direction_unknown:
+			break;
+
+		case SMBGameBoardTile__direction_up:
+			return CGRectGetMinY(rect);
+			break;
+
+		case SMBGameBoardTile__direction_right:
+		case SMBGameBoardTile__direction_left:
+			return CGRectGetMidY(rect);
+			break;
+
+		case SMBGameBoardTile__direction_down:
+			return CGRectGetMaxY(rect);
+			break;
+	}
+
+	NSAssert(false, @"unhandled direction %li",(long)direction);
+	return 0.0f;
 }
 
 @end

@@ -7,11 +7,15 @@
 //
 
 #import "SMBGameBoardTileEntity.h"
+#import "SMBGameBoardTile__directions.h"
 
 
 
 
 
 @interface SMBBeamCreatorTileEntity : SMBGameBoardTileEntity
+
+#pragma mark - beamDirection
+@property (nonatomic, assign) SMBGameBoardTile__direction beamDirection;
 
 @end

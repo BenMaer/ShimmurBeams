@@ -11,6 +11,8 @@
 #import "SMBGameBoardTilePosition.h"
 #import "SMBGameBoardTileEntity.h"
 #import "SMBGameBoardEntity.h"
+#import "NSArray+SMBChanges.h"
+#import "SMBBeamEntityTileNode.h"
 
 #import <ResplendentUtilities/RUConditionalReturn.h>
 #import <ResplendentUtilities/RUClassOrNilUtil.h>
@@ -178,6 +180,7 @@ static void* kSMBGameBoard__KVOContext = &kSMBGameBoard__KVOContext;
 
 	NSMutableArray<NSString*>* const propertiesToObserve_observe_old_and_initial = [NSMutableArray<NSString*> array];
 	[propertiesToObserve_observe_old_and_initial addObject:[SMBGameBoardTile_PropertiesForKVO gameBoardTileEntity]];
+	[propertiesToObserve_observe_old_and_initial addObject:[SMBGameBoardTile_PropertiesForKVO beamEntityTileNodes]];
 
 	NSMutableDictionary<NSNumber*,NSMutableArray<NSString*>*>* const KVOOptions_to_propertiesToObserve_mapping = [NSMutableDictionary<NSNumber*,NSMutableArray<NSString*>*> dictionary];
 	[KVOOptions_to_propertiesToObserve_mapping setObject:propertiesToObserve_observe_old_and_initial forKey:@(NSKeyValueObservingOptionInitial | NSKeyValueObservingOptionOld)];
@@ -232,51 +235,51 @@ static void* kSMBGameBoard__KVOContext = &kSMBGameBoard__KVOContext;
 	return [self gameBoardTiles_column_at_column:0].count;
 }
 
--(UIOffset)gameBoardTile_next_offset_for_orientation:(SMBGameBoardTileEntity__orientation)orientation
+-(UIOffset)gameBoardTile_next_offset_for_direction:(SMBGameBoardTile__direction)direction
 {
-	switch (orientation)
+	switch (direction)
 	{
-		case SMBGameBoardTileEntity__orientation_up:
+		case SMBGameBoardTile__direction_up:
 			return (UIOffset){
 				.vertical = -1,
 			};
 			break;
 
-		case SMBGameBoardTileEntity__orientation_right:
+		case SMBGameBoardTile__direction_right:
 			return (UIOffset){
 				.horizontal = 1,
 			};
 			break;
 
-		case SMBGameBoardTileEntity__orientation_down:
+		case SMBGameBoardTile__direction_down:
 			return (UIOffset){
 				.vertical = 1,
 			};
 			break;
 
-		case SMBGameBoardTileEntity__orientation_left:
+		case SMBGameBoardTile__direction_left:
 			return (UIOffset){
 				.horizontal = -1,
 			};
 			break;
 
-		case SMBGameBoardTileEntity__orientation_unknown:
+		case SMBGameBoardTile__direction_unknown:
 			break;
 	}
 
-	NSAssert(false, @"unhandled orientation %li",(long)orientation);
+	NSAssert(false, @"unhandled direction %li",(long)direction);
 	return UIOffsetZero;
 }
 
 -(nullable SMBGameBoardTile*)gameBoardTile_next_from_gameBoardTile:(nonnull SMBGameBoardTile*)gameBoardTile
-													   orientation:(SMBGameBoardTileEntity__orientation)orientation
+														 direction:(SMBGameBoardTile__direction)direction
 {
 	kRUConditionalReturn_ReturnValueNil(gameBoardTile == nil, YES);
 
 	SMBGameBoardTilePosition* const gameBoardTilePosition = gameBoardTile.gameBoardTilePosition;
 	kRUConditionalReturn_ReturnValueNil(gameBoardTilePosition == nil, YES);
 
-	UIOffset const offset = [self gameBoardTile_next_offset_for_orientation:orientation];
+	UIOffset const offset = [self gameBoardTile_next_offset_for_direction:direction];
 	SMBGameBoardTilePosition* const gameBoardTilePosition_next =
 	[[SMBGameBoardTilePosition alloc] init_with_column:gameBoardTilePosition.column + offset.horizontal
 												   row:gameBoardTilePosition.row + offset.vertical];
@@ -352,6 +355,34 @@ static void* kSMBGameBoard__KVOContext = &kSMBGameBoard__KVOContext;
 				{
 					[self gameBoardTileEntity_add:gameBoardTileEntity];
 				}
+			}
+			else if ([keyPath isEqualToString:[SMBGameBoardTile_PropertiesForKVO beamEntityTileNodes]])
+			{
+				SMBGameBoardTile* const gameBoardTile = kRUClassOrNil(object, SMBGameBoardTile);
+				kRUConditionalReturn(gameBoardTile == nil, YES);
+				
+				NSArray<SMBBeamEntityTileNode*>* const beamEntityTileNodes_old = kRUClassOrNil([change objectForKey:NSKeyValueChangeOldKey], NSArray<SMBBeamEntityTileNode*>);
+				NSArray<SMBBeamEntityTileNode*>* const beamEntityTileNodes = gameBoardTile.beamEntityTileNodes;
+
+				NSArray<SMBBeamEntityTileNode*>* beamEntityTileNodes_removed = nil;
+				NSArray<SMBBeamEntityTileNode*>* beamEntityTileNodes_new = nil;
+//				[NSArray<SMBBeamEntityTileNode*> smb_changes_from_objects:beamEntityTileNodes_old
+//															   to_objects:beamEntityTileNodes
+//														   removedObjects:&beamEntityTileNodes_removed
+//															   newObjects:&beamEntityTileNodes_new];
+
+//				if (beamEntityTileNodes_old)
+//				{
+//					[beamEntityTileNodes_removed enumerateObjectsUsingBlock:^(SMBBeamEntityTileNode * _Nonnull beamEntityTileNode, NSUInteger idx, BOOL * _Nonnull stop) {
+//						[self gameBoardTileEntity_remove:beamEntityTileNode];
+//					}];
+//				}
+////
+//				NSArray<SMBBeamEntityTileNode*>* const beamEntityTileNodes = gameBoardTile.beamEntityTileNodes;
+//				if (gameBoardTileEntity)
+//				{
+//					[self gameBoardTileEntity_add:gameBoardTileEntity];
+//				}
 			}
 			else
 			{

@@ -10,6 +10,8 @@
 #import "SMBBeamEntity.h"
 #import "SMBGameBoardTile.h"
 #import "SMBGameBoard.h"
+#import "CoreGraphics+SMBRotation.h"
+#import "SMBGameBoardTile__directions_to_CoreGraphics_SMBRotation__orientations_utilities.h"
 
 #import <UIKit/UIKit.h>
 #import <CoreGraphics/CoreGraphics.h>
@@ -34,13 +36,13 @@
 @implementation SMBBeamCreatorTileEntity
 
 #pragma mark - draw
--(void)draw_in_gameBoardView:(nonnull SMBGameBoardView*)gameBoardView
-						rect:(CGRect)rect
+-(void)draw_in_rect:(CGRect)rect
 {
-	[super draw_in_gameBoardView:gameBoardView
-							rect:rect];
+	[super draw_in_rect:rect];
 
 	CGContextRef const context = UIGraphicsGetCurrentContext();
+
+	CoreGraphics_SMBRotation__rotateCTM(context, rect, CoreGraphics_SMBRotation__orientation_for_direction(self.beamDirection));
 
 	CGContextSetStrokeColorWithColor(context, [UIColor blackColor].CGColor);
 	CGContextSetLineWidth(context, 1.0f);

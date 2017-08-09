@@ -6,7 +6,8 @@
 //  Copyright © 2017 Shimmur. All rights reserved.
 //
 
-#import "SMBBeamEntityTileNode__beamOrientations.h"
+#import "SMBGameBoardGeneralEntity.h"
+#import "SMBGameBoardTile__directions.h"
 #import "SMBMappedDataCollection_MappableObject.h"
 
 #import <Foundation/Foundation.h>
@@ -22,10 +23,10 @@
 
 
 
-@interface SMBBeamEntityTileNode : NSObject <SMBMappedDataCollection_MappableObject>
+@interface SMBBeamEntityTileNode : SMBGameBoardGeneralEntity <SMBMappedDataCollection_MappableObject>
 
 #pragma mark - gameBoardTile
-@property (nonatomic, readonly, strong, nullable) SMBGameBoardTile* gameBoardTile;
+@property (nonatomic, readonly, assign, nullable) SMBGameBoardTile* gameBoardTile;
 
 #pragma mark - beamEntity
 @property (nonatomic, readonly, assign, nullable) SMBBeamEntity* beamEntity;
@@ -36,12 +37,11 @@
 #pragma mark - node_next
 @property (nonatomic, readonly, strong, nullable) SMBBeamEntityTileNode* node_next;
 
-#pragma mark - beamExitOrientation
-@property (nonatomic, readonly, assign) SMBBeamEntityTileNode__beamOrientation beamExitOrientation;
+#pragma mark - beamExitDirection
+@property (nonatomic, readonly, assign) SMBGameBoardTile__direction beamExitDirection;
 
-#pragma mark - beamEnterOrientation
--(SMBBeamEntityTileNode__beamOrientation)beamEnterOrientation;
-
+#pragma mark - beamEnterDirection
+-(SMBGameBoardTile__direction)beamEnterDirection;
 
 #pragma mark - init
 -(nullable instancetype)init_with_gameBoardTile:(nonnull SMBGameBoardTile*)gameBoardTile

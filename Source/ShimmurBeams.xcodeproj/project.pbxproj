@@ -8,88 +8,92 @@
 
 /* Begin PBXBuildFile section */
 		C6F92B5CF1E1E584411CC937 /* libPods-ShimmurBeams.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 49C70CE907920FDEC9F64616 /* libPods-ShimmurBeams.a */; };
-		D735E49B1F364C9A003AD37C /* SMBGameBoard+SMBAddEntity.m in Sources */ = {isa = PBXBuildFile; fileRef = D735E49A1F364C9A003AD37C /* SMBGameBoard+SMBAddEntity.m */; };
-		D735E4AF1F3655D2003AD37C /* SMBUniqueStringGenerator.m in Sources */ = {isa = PBXBuildFile; fileRef = D735E4AE1F3655D2003AD37C /* SMBUniqueStringGenerator.m */; };
-		D735E4C01F38E011003AD37C /* SMBMappedDataCollection.m in Sources */ = {isa = PBXBuildFile; fileRef = D735E4BF1F38E011003AD37C /* SMBMappedDataCollection.m */; };
-		D735E4C91F38F6EA003AD37C /* SMBMutableMappedDataCollection.m in Sources */ = {isa = PBXBuildFile; fileRef = D735E4C81F38F6EA003AD37C /* SMBMutableMappedDataCollection.m */; };
-		D735E4FC1F3914D1003AD37C /* SMBBeamEntity.m in Sources */ = {isa = PBXBuildFile; fileRef = D735E4EC1F3914D1003AD37C /* SMBBeamEntity.m */; };
-		D735E4FD1F3914D1003AD37C /* SMBBeamEntityTileNode.m in Sources */ = {isa = PBXBuildFile; fileRef = D735E4EF1F3914D1003AD37C /* SMBBeamEntityTileNode.m */; };
-		D735E4FE1F3914D1003AD37C /* SMBGameBoardEntity.m in Sources */ = {isa = PBXBuildFile; fileRef = D735E4F21F3914D1003AD37C /* SMBGameBoardEntity.m */; };
-		D735E4FF1F3914D1003AD37C /* SMBGameBoardGeneralEntity.m in Sources */ = {isa = PBXBuildFile; fileRef = D735E4F41F3914D1003AD37C /* SMBGameBoardGeneralEntity.m */; };
-		D735E5001F3914D1003AD37C /* SMBBeamCreatorTileEntity.m in Sources */ = {isa = PBXBuildFile; fileRef = D735E4F81F3914D1003AD37C /* SMBBeamCreatorTileEntity.m */; };
-		D735E5011F3914D1003AD37C /* SMBGameBoardTileEntity.m in Sources */ = {isa = PBXBuildFile; fileRef = D735E4FA1F3914D1003AD37C /* SMBGameBoardTileEntity.m */; };
-		D735E5091F391724003AD37C /* SMBGameBoardGeneralEntityView.m in Sources */ = {isa = PBXBuildFile; fileRef = D735E5081F391724003AD37C /* SMBGameBoardGeneralEntityView.m */; };
-		D735E5161F3A1E8E003AD37C /* SMBGeneralBeamExitOrientationRedirectTileEntity.m in Sources */ = {isa = PBXBuildFile; fileRef = D735E5151F3A1E8E003AD37C /* SMBGeneralBeamExitOrientationRedirectTileEntity.m */; };
-		D735E51A1F3A4646003AD37C /* SMBForcedBeamRedirectTileEntity.m in Sources */ = {isa = PBXBuildFile; fileRef = D735E5191F3A4646003AD37C /* SMBForcedBeamRedirectTileEntity.m */; };
+		D761FE921F3AC2FF0083842A /* NSArray+SMBChanges.m in Sources */ = {isa = PBXBuildFile; fileRef = D761FE3D1F3AC2FF0083842A /* NSArray+SMBChanges.m */; };
+		D761FE931F3AC2FF0083842A /* SMBGameBoard+SMBAddEntity.m in Sources */ = {isa = PBXBuildFile; fileRef = D761FE411F3AC2FF0083842A /* SMBGameBoard+SMBAddEntity.m */; };
+		D761FE941F3AC2FF0083842A /* SMBGameLevel+SMBTestLevel.m in Sources */ = {isa = PBXBuildFile; fileRef = D761FE451F3AC2FF0083842A /* SMBGameLevel+SMBTestLevel.m */; };
+		D761FE951F3AC2FF0083842A /* SMBMappedDataCollection.m in Sources */ = {isa = PBXBuildFile; fileRef = D761FE4A1F3AC2FF0083842A /* SMBMappedDataCollection.m */; };
+		D761FE961F3AC2FF0083842A /* SMBMutableMappedDataCollection.m in Sources */ = {isa = PBXBuildFile; fileRef = D761FE4E1F3AC2FF0083842A /* SMBMutableMappedDataCollection.m */; };
+		D761FE971F3AC2FF0083842A /* SMBGameBoard.m in Sources */ = {isa = PBXBuildFile; fileRef = D761FE511F3AC2FF0083842A /* SMBGameBoard.m */; };
+		D761FE981F3AC2FF0083842A /* SMBBeamEntity.m in Sources */ = {isa = PBXBuildFile; fileRef = D761FE561F3AC2FF0083842A /* SMBBeamEntity.m */; };
+		D761FE991F3AC2FF0083842A /* SMBBeamEntityTileNode.m in Sources */ = {isa = PBXBuildFile; fileRef = D761FE591F3AC2FF0083842A /* SMBBeamEntityTileNode.m */; };
+		D761FE9A1F3AC2FF0083842A /* SMBGameBoardEntity.m in Sources */ = {isa = PBXBuildFile; fileRef = D761FE5B1F3AC2FF0083842A /* SMBGameBoardEntity.m */; };
+		D761FE9B1F3AC2FF0083842A /* SMBGameBoardGeneralEntity.m in Sources */ = {isa = PBXBuildFile; fileRef = D761FE5D1F3AC2FF0083842A /* SMBGameBoardGeneralEntity.m */; };
+		D761FE9C1F3AC2FF0083842A /* SMBBeamCreatorTileEntity.m in Sources */ = {isa = PBXBuildFile; fileRef = D761FE611F3AC2FF0083842A /* SMBBeamCreatorTileEntity.m */; };
+		D761FE9D1F3AC2FF0083842A /* SMBGameBoardTileEntity.m in Sources */ = {isa = PBXBuildFile; fileRef = D761FE631F3AC2FF0083842A /* SMBGameBoardTileEntity.m */; };
+		D761FE9E1F3AC2FF0083842A /* SMBForcedBeamRedirectTileEntity.m in Sources */ = {isa = PBXBuildFile; fileRef = D761FE671F3AC2FF0083842A /* SMBForcedBeamRedirectTileEntity.m */; };
+		D761FE9F1F3AC2FF0083842A /* SMBGeneralBeamExitDirectionRedirectTileEntity.m in Sources */ = {isa = PBXBuildFile; fileRef = D761FE691F3AC2FF0083842A /* SMBGeneralBeamExitDirectionRedirectTileEntity.m */; };
+		D761FEA01F3AC2FF0083842A /* SMBGameBoardTile.m in Sources */ = {isa = PBXBuildFile; fileRef = D761FE6C1F3AC2FF0083842A /* SMBGameBoardTile.m */; };
+		D761FEA11F3AC2FF0083842A /* SMBGameBoardTilePosition.m in Sources */ = {isa = PBXBuildFile; fileRef = D761FE721F3AC2FF0083842A /* SMBGameBoardTilePosition.m */; };
+		D761FEA21F3AC2FF0083842A /* SMBGameLevel.m in Sources */ = {isa = PBXBuildFile; fileRef = D761FE751F3AC2FF0083842A /* SMBGameLevel.m */; };
+		D761FEA31F3AC2FF0083842A /* SMBAppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = D761FE7E1F3AC2FF0083842A /* SMBAppDelegate.m */; };
+		D761FEA41F3AC2FF0083842A /* SMBGameBoardGeneralEntityView.m in Sources */ = {isa = PBXBuildFile; fileRef = D761FE831F3AC2FF0083842A /* SMBGameBoardGeneralEntityView.m */; };
+		D761FEA51F3AC2FF0083842A /* SMBGameBoardView.m in Sources */ = {isa = PBXBuildFile; fileRef = D761FE861F3AC2FF0083842A /* SMBGameBoardView.m */; };
+		D761FEA61F3AC2FF0083842A /* SMBGameLevelView.m in Sources */ = {isa = PBXBuildFile; fileRef = D761FE891F3AC2FF0083842A /* SMBGameLevelView.m */; };
+		D761FEA71F3AC2FF0083842A /* SMBViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = D761FE8D1F3AC2FF0083842A /* SMBViewController.m */; };
+		D761FEA81F3AC2FF0083842A /* SMBUniqueStringGenerator.m in Sources */ = {isa = PBXBuildFile; fileRef = D761FE911F3AC2FF0083842A /* SMBUniqueStringGenerator.m */; };
 		D7DAF3A31F33D66400233C39 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = D7DAF3A21F33D66400233C39 /* main.m */; };
 		D7DAF3C41F33D7B400233C39 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = D7DAF3BC1F33D7B400233C39 /* Assets.xcassets */; };
-		D7DAF3E71F33E68300233C39 /* SMBAppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = D7DAF3DE1F33E68300233C39 /* SMBAppDelegate.m */; };
-		D7DAF3E91F33E68300233C39 /* SMBViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = D7DAF3E61F33E68300233C39 /* SMBViewController.m */; };
-		D7DAF3F11F33E6E100233C39 /* SMBGameLevel.m in Sources */ = {isa = PBXBuildFile; fileRef = D7DAF3F01F33E6E100233C39 /* SMBGameLevel.m */; };
-		D7DAF3F51F33E95600233C39 /* SMBGameBoardTile.m in Sources */ = {isa = PBXBuildFile; fileRef = D7DAF3F41F33E95600233C39 /* SMBGameBoardTile.m */; };
-		D7DAF3F91F33E98900233C39 /* SMBGameBoard.m in Sources */ = {isa = PBXBuildFile; fileRef = D7DAF3F81F33E98900233C39 /* SMBGameBoard.m */; };
-		D7DAF3FD1F33EBC400233C39 /* SMBGameLevelView.m in Sources */ = {isa = PBXBuildFile; fileRef = D7DAF3FC1F33EBC400233C39 /* SMBGameLevelView.m */; };
-		D7DAF4011F33F0AF00233C39 /* SMBGameBoardTilePosition.m in Sources */ = {isa = PBXBuildFile; fileRef = D7DAF4001F33F0AF00233C39 /* SMBGameBoardTilePosition.m */; };
-		D7DAF40E1F35268E00233C39 /* SMBGameBoardView.m in Sources */ = {isa = PBXBuildFile; fileRef = D7DAF40D1F35268E00233C39 /* SMBGameBoardView.m */; };
-		D7DAF4151F35367C00233C39 /* SMBGameLevel+SMBTestLevel.m in Sources */ = {isa = PBXBuildFile; fileRef = D7DAF4141F35367C00233C39 /* SMBGameLevel+SMBTestLevel.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
 		28F24E90A6068064B725E130 /* Pods-ShimmurBeams.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-ShimmurBeams.debug.xcconfig"; path = "Pods/Target Support Files/Pods-ShimmurBeams/Pods-ShimmurBeams.debug.xcconfig"; sourceTree = "<group>"; };
 		49C70CE907920FDEC9F64616 /* libPods-ShimmurBeams.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-ShimmurBeams.a"; sourceTree = BUILT_PRODUCTS_DIR; };
-		D735E4991F364C9A003AD37C /* SMBGameBoard+SMBAddEntity.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "SMBGameBoard+SMBAddEntity.h"; sourceTree = "<group>"; };
-		D735E49A1F364C9A003AD37C /* SMBGameBoard+SMBAddEntity.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "SMBGameBoard+SMBAddEntity.m"; sourceTree = "<group>"; };
-		D735E4AD1F3655D2003AD37C /* SMBUniqueStringGenerator.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SMBUniqueStringGenerator.h; sourceTree = "<group>"; };
-		D735E4AE1F3655D2003AD37C /* SMBUniqueStringGenerator.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SMBUniqueStringGenerator.m; sourceTree = "<group>"; };
-		D735E4BE1F38E011003AD37C /* SMBMappedDataCollection.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SMBMappedDataCollection.h; sourceTree = "<group>"; };
-		D735E4BF1F38E011003AD37C /* SMBMappedDataCollection.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SMBMappedDataCollection.m; sourceTree = "<group>"; };
-		D735E4C11F38E034003AD37C /* SMBMappedDataCollection_MappableObject.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SMBMappedDataCollection_MappableObject.h; sourceTree = "<group>"; };
-		D735E4C71F38F6EA003AD37C /* SMBMutableMappedDataCollection.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SMBMutableMappedDataCollection.h; sourceTree = "<group>"; };
-		D735E4C81F38F6EA003AD37C /* SMBMutableMappedDataCollection.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SMBMutableMappedDataCollection.m; sourceTree = "<group>"; };
-		D735E4EB1F3914D1003AD37C /* SMBBeamEntity.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SMBBeamEntity.h; sourceTree = "<group>"; };
-		D735E4EC1F3914D1003AD37C /* SMBBeamEntity.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SMBBeamEntity.m; sourceTree = "<group>"; };
-		D735E4EE1F3914D1003AD37C /* SMBBeamEntityTileNode.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SMBBeamEntityTileNode.h; sourceTree = "<group>"; };
-		D735E4EF1F3914D1003AD37C /* SMBBeamEntityTileNode.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SMBBeamEntityTileNode.m; sourceTree = "<group>"; };
-		D735E4F01F3914D1003AD37C /* SMBBeamEntityTileNode__beamOrientations.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SMBBeamEntityTileNode__beamOrientations.h; sourceTree = "<group>"; };
-		D735E4F11F3914D1003AD37C /* SMBGameBoardEntity.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SMBGameBoardEntity.h; sourceTree = "<group>"; };
-		D735E4F21F3914D1003AD37C /* SMBGameBoardEntity.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SMBGameBoardEntity.m; sourceTree = "<group>"; };
-		D735E4F31F3914D1003AD37C /* SMBGameBoardGeneralEntity.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SMBGameBoardGeneralEntity.h; sourceTree = "<group>"; };
-		D735E4F41F3914D1003AD37C /* SMBGameBoardGeneralEntity.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SMBGameBoardGeneralEntity.m; sourceTree = "<group>"; };
-		D735E4F71F3914D1003AD37C /* SMBBeamCreatorTileEntity.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SMBBeamCreatorTileEntity.h; sourceTree = "<group>"; };
-		D735E4F81F3914D1003AD37C /* SMBBeamCreatorTileEntity.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SMBBeamCreatorTileEntity.m; sourceTree = "<group>"; };
-		D735E4F91F3914D1003AD37C /* SMBGameBoardTileEntity.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SMBGameBoardTileEntity.h; sourceTree = "<group>"; };
-		D735E4FA1F3914D1003AD37C /* SMBGameBoardTileEntity.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SMBGameBoardTileEntity.m; sourceTree = "<group>"; };
-		D735E4FB1F3914D1003AD37C /* SMBGameBoardTileEntity__orientations.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SMBGameBoardTileEntity__orientations.h; sourceTree = "<group>"; };
-		D735E5071F391724003AD37C /* SMBGameBoardGeneralEntityView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SMBGameBoardGeneralEntityView.h; sourceTree = "<group>"; };
-		D735E5081F391724003AD37C /* SMBGameBoardGeneralEntityView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SMBGameBoardGeneralEntityView.m; sourceTree = "<group>"; };
-		D735E50E1F3A1C44003AD37C /* SMBBeamEntityTileNode__beamOrientation_rotations.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SMBBeamEntityTileNode__beamOrientation_rotations.h; sourceTree = "<group>"; };
-		D735E5141F3A1E8E003AD37C /* SMBGeneralBeamExitOrientationRedirectTileEntity.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SMBGeneralBeamExitOrientationRedirectTileEntity.h; sourceTree = "<group>"; };
-		D735E5151F3A1E8E003AD37C /* SMBGeneralBeamExitOrientationRedirectTileEntity.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SMBGeneralBeamExitOrientationRedirectTileEntity.m; sourceTree = "<group>"; };
-		D735E5181F3A4646003AD37C /* SMBForcedBeamRedirectTileEntity.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SMBForcedBeamRedirectTileEntity.h; sourceTree = "<group>"; };
-		D735E5191F3A4646003AD37C /* SMBForcedBeamRedirectTileEntity.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SMBForcedBeamRedirectTileEntity.m; sourceTree = "<group>"; };
-		D735E51B1F3A6373003AD37C /* SMBBeamEntityTileNode__beamOrientations_to_SMBGameBoardTileEntity__orientation_utilities.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SMBBeamEntityTileNode__beamOrientations_to_SMBGameBoardTileEntity__orientation_utilities.h; sourceTree = "<group>"; };
+		D761FE3C1F3AC2FF0083842A /* NSArray+SMBChanges.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSArray+SMBChanges.h"; sourceTree = "<group>"; };
+		D761FE3D1F3AC2FF0083842A /* NSArray+SMBChanges.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSArray+SMBChanges.m"; sourceTree = "<group>"; };
+		D761FE401F3AC2FF0083842A /* SMBGameBoard+SMBAddEntity.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "SMBGameBoard+SMBAddEntity.h"; sourceTree = "<group>"; };
+		D761FE411F3AC2FF0083842A /* SMBGameBoard+SMBAddEntity.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "SMBGameBoard+SMBAddEntity.m"; sourceTree = "<group>"; };
+		D761FE441F3AC2FF0083842A /* SMBGameLevel+SMBTestLevel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "SMBGameLevel+SMBTestLevel.h"; sourceTree = "<group>"; };
+		D761FE451F3AC2FF0083842A /* SMBGameLevel+SMBTestLevel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "SMBGameLevel+SMBTestLevel.m"; sourceTree = "<group>"; };
+		D761FE491F3AC2FF0083842A /* SMBMappedDataCollection.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SMBMappedDataCollection.h; sourceTree = "<group>"; };
+		D761FE4A1F3AC2FF0083842A /* SMBMappedDataCollection.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SMBMappedDataCollection.m; sourceTree = "<group>"; };
+		D761FE4B1F3AC2FF0083842A /* SMBMappedDataCollection_MappableObject.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SMBMappedDataCollection_MappableObject.h; sourceTree = "<group>"; };
+		D761FE4D1F3AC2FF0083842A /* SMBMutableMappedDataCollection.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SMBMutableMappedDataCollection.h; sourceTree = "<group>"; };
+		D761FE4E1F3AC2FF0083842A /* SMBMutableMappedDataCollection.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SMBMutableMappedDataCollection.m; sourceTree = "<group>"; };
+		D761FE501F3AC2FF0083842A /* SMBGameBoard.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SMBGameBoard.h; sourceTree = "<group>"; };
+		D761FE511F3AC2FF0083842A /* SMBGameBoard.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SMBGameBoard.m; sourceTree = "<group>"; };
+		D761FE551F3AC2FF0083842A /* SMBBeamEntity.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SMBBeamEntity.h; sourceTree = "<group>"; };
+		D761FE561F3AC2FF0083842A /* SMBBeamEntity.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SMBBeamEntity.m; sourceTree = "<group>"; };
+		D761FE581F3AC2FF0083842A /* SMBBeamEntityTileNode.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SMBBeamEntityTileNode.h; sourceTree = "<group>"; };
+		D761FE591F3AC2FF0083842A /* SMBBeamEntityTileNode.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SMBBeamEntityTileNode.m; sourceTree = "<group>"; };
+		D761FE5A1F3AC2FF0083842A /* SMBGameBoardEntity.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SMBGameBoardEntity.h; sourceTree = "<group>"; };
+		D761FE5B1F3AC2FF0083842A /* SMBGameBoardEntity.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SMBGameBoardEntity.m; sourceTree = "<group>"; };
+		D761FE5C1F3AC2FF0083842A /* SMBGameBoardGeneralEntity.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SMBGameBoardGeneralEntity.h; sourceTree = "<group>"; };
+		D761FE5D1F3AC2FF0083842A /* SMBGameBoardGeneralEntity.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SMBGameBoardGeneralEntity.m; sourceTree = "<group>"; };
+		D761FE601F3AC2FF0083842A /* SMBBeamCreatorTileEntity.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SMBBeamCreatorTileEntity.h; sourceTree = "<group>"; };
+		D761FE611F3AC2FF0083842A /* SMBBeamCreatorTileEntity.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SMBBeamCreatorTileEntity.m; sourceTree = "<group>"; };
+		D761FE621F3AC2FF0083842A /* SMBGameBoardTileEntity.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SMBGameBoardTileEntity.h; sourceTree = "<group>"; };
+		D761FE631F3AC2FF0083842A /* SMBGameBoardTileEntity.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SMBGameBoardTileEntity.m; sourceTree = "<group>"; };
+		D761FE661F3AC2FF0083842A /* SMBForcedBeamRedirectTileEntity.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SMBForcedBeamRedirectTileEntity.h; sourceTree = "<group>"; };
+		D761FE671F3AC2FF0083842A /* SMBForcedBeamRedirectTileEntity.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SMBForcedBeamRedirectTileEntity.m; sourceTree = "<group>"; };
+		D761FE681F3AC2FF0083842A /* SMBGeneralBeamExitDirectionRedirectTileEntity.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SMBGeneralBeamExitDirectionRedirectTileEntity.h; sourceTree = "<group>"; };
+		D761FE691F3AC2FF0083842A /* SMBGeneralBeamExitDirectionRedirectTileEntity.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SMBGeneralBeamExitDirectionRedirectTileEntity.m; sourceTree = "<group>"; };
+		D761FE6B1F3AC2FF0083842A /* SMBGameBoardTile.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SMBGameBoardTile.h; sourceTree = "<group>"; };
+		D761FE6C1F3AC2FF0083842A /* SMBGameBoardTile.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SMBGameBoardTile.m; sourceTree = "<group>"; };
+		D761FE6D1F3AC2FF0083842A /* SMBGameBoardTile__direction_rotations.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SMBGameBoardTile__direction_rotations.h; sourceTree = "<group>"; };
+		D761FE6E1F3AC2FF0083842A /* SMBGameBoardTile__directions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SMBGameBoardTile__directions.h; sourceTree = "<group>"; };
+		D761FE6F1F3AC2FF0083842A /* SMBGameBoardTile__directions_to_CoreGraphics_SMBRotation__orientations_utilities.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SMBGameBoardTile__directions_to_CoreGraphics_SMBRotation__orientations_utilities.h; sourceTree = "<group>"; };
+		D761FE711F3AC2FF0083842A /* SMBGameBoardTilePosition.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SMBGameBoardTilePosition.h; sourceTree = "<group>"; };
+		D761FE721F3AC2FF0083842A /* SMBGameBoardTilePosition.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SMBGameBoardTilePosition.m; sourceTree = "<group>"; };
+		D761FE741F3AC2FF0083842A /* SMBGameLevel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SMBGameLevel.h; sourceTree = "<group>"; };
+		D761FE751F3AC2FF0083842A /* SMBGameLevel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SMBGameLevel.m; sourceTree = "<group>"; };
+		D761FE791F3AC2FF0083842A /* CoreGraphics+SMBRotation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "CoreGraphics+SMBRotation.h"; sourceTree = "<group>"; };
+		D761FE7A1F3AC2FF0083842A /* CoreGraphics+SMBRotation__orientations.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "CoreGraphics+SMBRotation__orientations.h"; sourceTree = "<group>"; };
+		D761FE7D1F3AC2FF0083842A /* SMBAppDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SMBAppDelegate.h; sourceTree = "<group>"; };
+		D761FE7E1F3AC2FF0083842A /* SMBAppDelegate.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SMBAppDelegate.m; sourceTree = "<group>"; };
+		D761FE821F3AC2FF0083842A /* SMBGameBoardGeneralEntityView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SMBGameBoardGeneralEntityView.h; sourceTree = "<group>"; };
+		D761FE831F3AC2FF0083842A /* SMBGameBoardGeneralEntityView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SMBGameBoardGeneralEntityView.m; sourceTree = "<group>"; };
+		D761FE851F3AC2FF0083842A /* SMBGameBoardView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SMBGameBoardView.h; sourceTree = "<group>"; };
+		D761FE861F3AC2FF0083842A /* SMBGameBoardView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SMBGameBoardView.m; sourceTree = "<group>"; };
+		D761FE881F3AC2FF0083842A /* SMBGameLevelView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SMBGameLevelView.h; sourceTree = "<group>"; };
+		D761FE891F3AC2FF0083842A /* SMBGameLevelView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SMBGameLevelView.m; sourceTree = "<group>"; };
+		D761FE8C1F3AC2FF0083842A /* SMBViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SMBViewController.h; sourceTree = "<group>"; };
+		D761FE8D1F3AC2FF0083842A /* SMBViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SMBViewController.m; sourceTree = "<group>"; };
+		D761FE901F3AC2FF0083842A /* SMBUniqueStringGenerator.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SMBUniqueStringGenerator.h; sourceTree = "<group>"; };
+		D761FE911F3AC2FF0083842A /* SMBUniqueStringGenerator.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SMBUniqueStringGenerator.m; sourceTree = "<group>"; };
 		D7DAF39E1F33D66400233C39 /* ShimmurBeams.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = ShimmurBeams.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		D7DAF3A21F33D66400233C39 /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
 		D7DAF3BA1F33D7B400233C39 /* ShimmurBeans-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "ShimmurBeans-Info.plist"; sourceTree = "<group>"; };
 		D7DAF3BC1F33D7B400233C39 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
-		D7DAF3DD1F33E68300233C39 /* SMBAppDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SMBAppDelegate.h; sourceTree = "<group>"; };
-		D7DAF3DE1F33E68300233C39 /* SMBAppDelegate.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SMBAppDelegate.m; sourceTree = "<group>"; };
-		D7DAF3E51F33E68300233C39 /* SMBViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SMBViewController.h; sourceTree = "<group>"; };
-		D7DAF3E61F33E68300233C39 /* SMBViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SMBViewController.m; sourceTree = "<group>"; };
-		D7DAF3EF1F33E6E100233C39 /* SMBGameLevel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SMBGameLevel.h; sourceTree = "<group>"; };
-		D7DAF3F01F33E6E100233C39 /* SMBGameLevel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SMBGameLevel.m; sourceTree = "<group>"; };
-		D7DAF3F31F33E95600233C39 /* SMBGameBoardTile.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SMBGameBoardTile.h; sourceTree = "<group>"; };
-		D7DAF3F41F33E95600233C39 /* SMBGameBoardTile.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SMBGameBoardTile.m; sourceTree = "<group>"; };
-		D7DAF3F71F33E98900233C39 /* SMBGameBoard.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SMBGameBoard.h; sourceTree = "<group>"; };
-		D7DAF3F81F33E98900233C39 /* SMBGameBoard.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SMBGameBoard.m; sourceTree = "<group>"; };
-		D7DAF3FB1F33EBC400233C39 /* SMBGameLevelView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SMBGameLevelView.h; sourceTree = "<group>"; };
-		D7DAF3FC1F33EBC400233C39 /* SMBGameLevelView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SMBGameLevelView.m; sourceTree = "<group>"; };
-		D7DAF3FF1F33F0AF00233C39 /* SMBGameBoardTilePosition.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SMBGameBoardTilePosition.h; sourceTree = "<group>"; };
-		D7DAF4001F33F0AF00233C39 /* SMBGameBoardTilePosition.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SMBGameBoardTilePosition.m; sourceTree = "<group>"; };
-		D7DAF40C1F35268E00233C39 /* SMBGameBoardView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SMBGameBoardView.h; sourceTree = "<group>"; };
-		D7DAF40D1F35268E00233C39 /* SMBGameBoardView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SMBGameBoardView.m; sourceTree = "<group>"; };
-		D7DAF4131F35367C00233C39 /* SMBGameLevel+SMBTestLevel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "SMBGameLevel+SMBTestLevel.h"; sourceTree = "<group>"; };
-		D7DAF4141F35367C00233C39 /* SMBGameLevel+SMBTestLevel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "SMBGameLevel+SMBTestLevel.m"; sourceTree = "<group>"; };
 		E8333239A81E9BC86B8B9223 /* Pods-ShimmurBeams.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-ShimmurBeams.release.xcconfig"; path = "Pods/Target Support Files/Pods-ShimmurBeams/Pods-ShimmurBeams.release.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -122,158 +126,359 @@
 			name = Frameworks;
 			sourceTree = "<group>";
 		};
-		D735E4971F364C84003AD37C /* SMBGameBoard */ = {
+		D761FE381F3AC2FF0083842A /* Code */ = {
 			isa = PBXGroup;
 			children = (
-				D735E4981F364C93003AD37C /* SMBGameBoard+SMBAddEntity */,
+				D761FE391F3AC2FF0083842A /* Category */,
+				D761FE461F3AC2FF0083842A /* Model */,
+				D761FE761F3AC2FF0083842A /* User Interface */,
+				D761FE8E1F3AC2FF0083842A /* Utility */,
+			);
+			path = Code;
+			sourceTree = "<group>";
+		};
+		D761FE391F3AC2FF0083842A /* Category */ = {
+			isa = PBXGroup;
+			children = (
+				D761FE3A1F3AC2FF0083842A /* NSArray */,
+				D761FE3E1F3AC2FF0083842A /* SMBGameBoard */,
+				D761FE421F3AC2FF0083842A /* SMBGameLevel */,
+			);
+			path = Category;
+			sourceTree = "<group>";
+		};
+		D761FE3A1F3AC2FF0083842A /* NSArray */ = {
+			isa = PBXGroup;
+			children = (
+				D761FE3B1F3AC2FF0083842A /* NSArray+SMBChanges */,
+			);
+			path = NSArray;
+			sourceTree = "<group>";
+		};
+		D761FE3B1F3AC2FF0083842A /* NSArray+SMBChanges */ = {
+			isa = PBXGroup;
+			children = (
+				D761FE3C1F3AC2FF0083842A /* NSArray+SMBChanges.h */,
+				D761FE3D1F3AC2FF0083842A /* NSArray+SMBChanges.m */,
+			);
+			path = "NSArray+SMBChanges";
+			sourceTree = "<group>";
+		};
+		D761FE3E1F3AC2FF0083842A /* SMBGameBoard */ = {
+			isa = PBXGroup;
+			children = (
+				D761FE3F1F3AC2FF0083842A /* SMBGameBoard+SMBAddEntity */,
 			);
 			path = SMBGameBoard;
 			sourceTree = "<group>";
 		};
-		D735E4981F364C93003AD37C /* SMBGameBoard+SMBAddEntity */ = {
+		D761FE3F1F3AC2FF0083842A /* SMBGameBoard+SMBAddEntity */ = {
 			isa = PBXGroup;
 			children = (
-				D735E4991F364C9A003AD37C /* SMBGameBoard+SMBAddEntity.h */,
-				D735E49A1F364C9A003AD37C /* SMBGameBoard+SMBAddEntity.m */,
+				D761FE401F3AC2FF0083842A /* SMBGameBoard+SMBAddEntity.h */,
+				D761FE411F3AC2FF0083842A /* SMBGameBoard+SMBAddEntity.m */,
 			);
 			path = "SMBGameBoard+SMBAddEntity";
 			sourceTree = "<group>";
 		};
-		D735E4AB1F365550003AD37C /* Utility */ = {
+		D761FE421F3AC2FF0083842A /* SMBGameLevel */ = {
 			isa = PBXGroup;
 			children = (
-				D735E4AC1F3655CB003AD37C /* SMBUniqueStringGenerator */,
+				D761FE431F3AC2FF0083842A /* SMBGameLevel+SMBTestLevel */,
 			);
-			path = Utility;
+			path = SMBGameLevel;
 			sourceTree = "<group>";
 		};
-		D735E4AC1F3655CB003AD37C /* SMBUniqueStringGenerator */ = {
+		D761FE431F3AC2FF0083842A /* SMBGameLevel+SMBTestLevel */ = {
 			isa = PBXGroup;
 			children = (
-				D735E4AD1F3655D2003AD37C /* SMBUniqueStringGenerator.h */,
-				D735E4AE1F3655D2003AD37C /* SMBUniqueStringGenerator.m */,
+				D761FE441F3AC2FF0083842A /* SMBGameLevel+SMBTestLevel.h */,
+				D761FE451F3AC2FF0083842A /* SMBGameLevel+SMBTestLevel.m */,
 			);
-			path = SMBUniqueStringGenerator;
+			path = "SMBGameLevel+SMBTestLevel";
 			sourceTree = "<group>";
 		};
-		D735E4BC1F38DFF4003AD37C /* DataCollection */ = {
+		D761FE461F3AC2FF0083842A /* Model */ = {
 			isa = PBXGroup;
 			children = (
-				D735E4BD1F38E000003AD37C /* SMBMappedDataCollection */,
+				D761FE471F3AC2FF0083842A /* DataCollection */,
+				D761FE4F1F3AC2FF0083842A /* SMBGameBoard */,
+				D761FE521F3AC2FF0083842A /* SMBGameBoardGeneralEntity */,
+				D761FE6A1F3AC2FF0083842A /* SMBGameBoardTile */,
+				D761FE701F3AC2FF0083842A /* SMBGameBoardTilePosition */,
+				D761FE731F3AC2FF0083842A /* SMBGameLevel */,
+			);
+			path = Model;
+			sourceTree = "<group>";
+		};
+		D761FE471F3AC2FF0083842A /* DataCollection */ = {
+			isa = PBXGroup;
+			children = (
+				D761FE481F3AC2FF0083842A /* SMBMappedDataCollection */,
 			);
 			path = DataCollection;
 			sourceTree = "<group>";
 		};
-		D735E4BD1F38E000003AD37C /* SMBMappedDataCollection */ = {
+		D761FE481F3AC2FF0083842A /* SMBMappedDataCollection */ = {
 			isa = PBXGroup;
 			children = (
-				D735E4C11F38E034003AD37C /* SMBMappedDataCollection_MappableObject.h */,
-				D735E4BE1F38E011003AD37C /* SMBMappedDataCollection.h */,
-				D735E4BF1F38E011003AD37C /* SMBMappedDataCollection.m */,
-				D735E4C61F38F6E1003AD37C /* SMBMutableMappedDataCollection */,
+				D761FE491F3AC2FF0083842A /* SMBMappedDataCollection.h */,
+				D761FE4A1F3AC2FF0083842A /* SMBMappedDataCollection.m */,
+				D761FE4B1F3AC2FF0083842A /* SMBMappedDataCollection_MappableObject.h */,
+				D761FE4C1F3AC2FF0083842A /* SMBMutableMappedDataCollection */,
 			);
 			path = SMBMappedDataCollection;
 			sourceTree = "<group>";
 		};
-		D735E4C61F38F6E1003AD37C /* SMBMutableMappedDataCollection */ = {
+		D761FE4C1F3AC2FF0083842A /* SMBMutableMappedDataCollection */ = {
 			isa = PBXGroup;
 			children = (
-				D735E4C71F38F6EA003AD37C /* SMBMutableMappedDataCollection.h */,
-				D735E4C81F38F6EA003AD37C /* SMBMutableMappedDataCollection.m */,
+				D761FE4D1F3AC2FF0083842A /* SMBMutableMappedDataCollection.h */,
+				D761FE4E1F3AC2FF0083842A /* SMBMutableMappedDataCollection.m */,
 			);
 			path = SMBMutableMappedDataCollection;
 			sourceTree = "<group>";
 		};
-		D735E4E81F3914D1003AD37C /* SMBGameBoardGeneralEntity */ = {
+		D761FE4F1F3AC2FF0083842A /* SMBGameBoard */ = {
 			isa = PBXGroup;
 			children = (
-				D735E4E91F3914D1003AD37C /* SMBGameBoardEntity */,
-				D735E4F31F3914D1003AD37C /* SMBGameBoardGeneralEntity.h */,
-				D735E4F41F3914D1003AD37C /* SMBGameBoardGeneralEntity.m */,
-				D735E4F51F3914D1003AD37C /* SMBGameBoardTileEntity */,
-				D735E5131F3A1E83003AD37C /* SMBGeneralBeamExitOrientationRedirectTileEntity */,
+				D761FE501F3AC2FF0083842A /* SMBGameBoard.h */,
+				D761FE511F3AC2FF0083842A /* SMBGameBoard.m */,
+			);
+			path = SMBGameBoard;
+			sourceTree = "<group>";
+		};
+		D761FE521F3AC2FF0083842A /* SMBGameBoardGeneralEntity */ = {
+			isa = PBXGroup;
+			children = (
+				D761FE531F3AC2FF0083842A /* SMBGameBoardEntity */,
+				D761FE5C1F3AC2FF0083842A /* SMBGameBoardGeneralEntity.h */,
+				D761FE5D1F3AC2FF0083842A /* SMBGameBoardGeneralEntity.m */,
+				D761FE5E1F3AC2FF0083842A /* SMBGameBoardTileEntity */,
+				D761FE641F3AC2FF0083842A /* SMBGeneralBeamExitDirectionRedirectTileEntity */,
 			);
 			path = SMBGameBoardGeneralEntity;
 			sourceTree = "<group>";
 		};
-		D735E4E91F3914D1003AD37C /* SMBGameBoardEntity */ = {
+		D761FE531F3AC2FF0083842A /* SMBGameBoardEntity */ = {
 			isa = PBXGroup;
 			children = (
-				D735E4EA1F3914D1003AD37C /* SMBBeamEntity */,
-				D735E4F11F3914D1003AD37C /* SMBGameBoardEntity.h */,
-				D735E4F21F3914D1003AD37C /* SMBGameBoardEntity.m */,
+				D761FE541F3AC2FF0083842A /* SMBBeamEntity */,
+				D761FE5A1F3AC2FF0083842A /* SMBGameBoardEntity.h */,
+				D761FE5B1F3AC2FF0083842A /* SMBGameBoardEntity.m */,
 			);
 			path = SMBGameBoardEntity;
 			sourceTree = "<group>";
 		};
-		D735E4EA1F3914D1003AD37C /* SMBBeamEntity */ = {
+		D761FE541F3AC2FF0083842A /* SMBBeamEntity */ = {
 			isa = PBXGroup;
 			children = (
-				D735E4EB1F3914D1003AD37C /* SMBBeamEntity.h */,
-				D735E4EC1F3914D1003AD37C /* SMBBeamEntity.m */,
-				D735E4ED1F3914D1003AD37C /* SMBBeamEntityTileNode */,
+				D761FE551F3AC2FF0083842A /* SMBBeamEntity.h */,
+				D761FE561F3AC2FF0083842A /* SMBBeamEntity.m */,
+				D761FE571F3AC2FF0083842A /* SMBBeamEntityTileNode */,
 			);
 			path = SMBBeamEntity;
 			sourceTree = "<group>";
 		};
-		D735E4ED1F3914D1003AD37C /* SMBBeamEntityTileNode */ = {
+		D761FE571F3AC2FF0083842A /* SMBBeamEntityTileNode */ = {
 			isa = PBXGroup;
 			children = (
-				D735E50E1F3A1C44003AD37C /* SMBBeamEntityTileNode__beamOrientation_rotations.h */,
-				D735E51B1F3A6373003AD37C /* SMBBeamEntityTileNode__beamOrientations_to_SMBGameBoardTileEntity__orientation_utilities.h */,
-				D735E4F01F3914D1003AD37C /* SMBBeamEntityTileNode__beamOrientations.h */,
-				D735E4EE1F3914D1003AD37C /* SMBBeamEntityTileNode.h */,
-				D735E4EF1F3914D1003AD37C /* SMBBeamEntityTileNode.m */,
+				D761FE581F3AC2FF0083842A /* SMBBeamEntityTileNode.h */,
+				D761FE591F3AC2FF0083842A /* SMBBeamEntityTileNode.m */,
 			);
 			path = SMBBeamEntityTileNode;
 			sourceTree = "<group>";
 		};
-		D735E4F51F3914D1003AD37C /* SMBGameBoardTileEntity */ = {
+		D761FE5E1F3AC2FF0083842A /* SMBGameBoardTileEntity */ = {
 			isa = PBXGroup;
 			children = (
-				D735E4F61F3914D1003AD37C /* SMBBeamCreatorTileEntity */,
-				D735E4FB1F3914D1003AD37C /* SMBGameBoardTileEntity__orientations.h */,
-				D735E4F91F3914D1003AD37C /* SMBGameBoardTileEntity.h */,
-				D735E4FA1F3914D1003AD37C /* SMBGameBoardTileEntity.m */,
+				D761FE5F1F3AC2FF0083842A /* SMBBeamCreatorTileEntity */,
+				D761FE621F3AC2FF0083842A /* SMBGameBoardTileEntity.h */,
+				D761FE631F3AC2FF0083842A /* SMBGameBoardTileEntity.m */,
 			);
 			path = SMBGameBoardTileEntity;
 			sourceTree = "<group>";
 		};
-		D735E4F61F3914D1003AD37C /* SMBBeamCreatorTileEntity */ = {
+		D761FE5F1F3AC2FF0083842A /* SMBBeamCreatorTileEntity */ = {
 			isa = PBXGroup;
 			children = (
-				D735E4F71F3914D1003AD37C /* SMBBeamCreatorTileEntity.h */,
-				D735E4F81F3914D1003AD37C /* SMBBeamCreatorTileEntity.m */,
+				D761FE601F3AC2FF0083842A /* SMBBeamCreatorTileEntity.h */,
+				D761FE611F3AC2FF0083842A /* SMBBeamCreatorTileEntity.m */,
 			);
 			path = SMBBeamCreatorTileEntity;
 			sourceTree = "<group>";
 		};
-		D735E5061F391724003AD37C /* SMBGameBoardGeneralEntityView */ = {
+		D761FE641F3AC2FF0083842A /* SMBGeneralBeamExitDirectionRedirectTileEntity */ = {
 			isa = PBXGroup;
 			children = (
-				D735E5071F391724003AD37C /* SMBGameBoardGeneralEntityView.h */,
-				D735E5081F391724003AD37C /* SMBGameBoardGeneralEntityView.m */,
+				D761FE651F3AC2FF0083842A /* SMBForcedBeamRedirectTileEntity */,
+				D761FE681F3AC2FF0083842A /* SMBGeneralBeamExitDirectionRedirectTileEntity.h */,
+				D761FE691F3AC2FF0083842A /* SMBGeneralBeamExitDirectionRedirectTileEntity.m */,
+			);
+			path = SMBGeneralBeamExitDirectionRedirectTileEntity;
+			sourceTree = "<group>";
+		};
+		D761FE651F3AC2FF0083842A /* SMBForcedBeamRedirectTileEntity */ = {
+			isa = PBXGroup;
+			children = (
+				D761FE661F3AC2FF0083842A /* SMBForcedBeamRedirectTileEntity.h */,
+				D761FE671F3AC2FF0083842A /* SMBForcedBeamRedirectTileEntity.m */,
+			);
+			path = SMBForcedBeamRedirectTileEntity;
+			sourceTree = "<group>";
+		};
+		D761FE6A1F3AC2FF0083842A /* SMBGameBoardTile */ = {
+			isa = PBXGroup;
+			children = (
+				D761FE6B1F3AC2FF0083842A /* SMBGameBoardTile.h */,
+				D761FE6C1F3AC2FF0083842A /* SMBGameBoardTile.m */,
+				D761FE6D1F3AC2FF0083842A /* SMBGameBoardTile__direction_rotations.h */,
+				D761FE6E1F3AC2FF0083842A /* SMBGameBoardTile__directions.h */,
+				D761FE6F1F3AC2FF0083842A /* SMBGameBoardTile__directions_to_CoreGraphics_SMBRotation__orientations_utilities.h */,
+			);
+			path = SMBGameBoardTile;
+			sourceTree = "<group>";
+		};
+		D761FE701F3AC2FF0083842A /* SMBGameBoardTilePosition */ = {
+			isa = PBXGroup;
+			children = (
+				D761FE711F3AC2FF0083842A /* SMBGameBoardTilePosition.h */,
+				D761FE721F3AC2FF0083842A /* SMBGameBoardTilePosition.m */,
+			);
+			path = SMBGameBoardTilePosition;
+			sourceTree = "<group>";
+		};
+		D761FE731F3AC2FF0083842A /* SMBGameLevel */ = {
+			isa = PBXGroup;
+			children = (
+				D761FE741F3AC2FF0083842A /* SMBGameLevel.h */,
+				D761FE751F3AC2FF0083842A /* SMBGameLevel.m */,
+			);
+			path = SMBGameLevel;
+			sourceTree = "<group>";
+		};
+		D761FE761F3AC2FF0083842A /* User Interface */ = {
+			isa = PBXGroup;
+			children = (
+				D761FE771F3AC2FF0083842A /* CoreGraphics */,
+				D761FE7B1F3AC2FF0083842A /* UIApplicationDelegate */,
+				D761FE7F1F3AC2FF0083842A /* UIView */,
+				D761FE8A1F3AC2FF0083842A /* UIViewController */,
+			);
+			path = "User Interface";
+			sourceTree = "<group>";
+		};
+		D761FE771F3AC2FF0083842A /* CoreGraphics */ = {
+			isa = PBXGroup;
+			children = (
+				D761FE781F3AC2FF0083842A /* CoreGraphics+SMBRotation */,
+			);
+			path = CoreGraphics;
+			sourceTree = "<group>";
+		};
+		D761FE781F3AC2FF0083842A /* CoreGraphics+SMBRotation */ = {
+			isa = PBXGroup;
+			children = (
+				D761FE791F3AC2FF0083842A /* CoreGraphics+SMBRotation.h */,
+				D761FE7A1F3AC2FF0083842A /* CoreGraphics+SMBRotation__orientations.h */,
+			);
+			path = "CoreGraphics+SMBRotation";
+			sourceTree = "<group>";
+		};
+		D761FE7B1F3AC2FF0083842A /* UIApplicationDelegate */ = {
+			isa = PBXGroup;
+			children = (
+				D761FE7C1F3AC2FF0083842A /* SMBAppDelegate */,
+			);
+			path = UIApplicationDelegate;
+			sourceTree = "<group>";
+		};
+		D761FE7C1F3AC2FF0083842A /* SMBAppDelegate */ = {
+			isa = PBXGroup;
+			children = (
+				D761FE7D1F3AC2FF0083842A /* SMBAppDelegate.h */,
+				D761FE7E1F3AC2FF0083842A /* SMBAppDelegate.m */,
+			);
+			path = SMBAppDelegate;
+			sourceTree = "<group>";
+		};
+		D761FE7F1F3AC2FF0083842A /* UIView */ = {
+			isa = PBXGroup;
+			children = (
+				D761FE801F3AC2FF0083842A /* SMBGameBoardEntityView */,
+				D761FE811F3AC2FF0083842A /* SMBGameBoardGeneralEntityView */,
+				D761FE841F3AC2FF0083842A /* SMBGameBoardView */,
+				D761FE871F3AC2FF0083842A /* SMBGameLevelView */,
+			);
+			path = UIView;
+			sourceTree = "<group>";
+		};
+		D761FE801F3AC2FF0083842A /* SMBGameBoardEntityView */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = SMBGameBoardEntityView;
+			sourceTree = "<group>";
+		};
+		D761FE811F3AC2FF0083842A /* SMBGameBoardGeneralEntityView */ = {
+			isa = PBXGroup;
+			children = (
+				D761FE821F3AC2FF0083842A /* SMBGameBoardGeneralEntityView.h */,
+				D761FE831F3AC2FF0083842A /* SMBGameBoardGeneralEntityView.m */,
 			);
 			path = SMBGameBoardGeneralEntityView;
 			sourceTree = "<group>";
 		};
-		D735E5131F3A1E83003AD37C /* SMBGeneralBeamExitOrientationRedirectTileEntity */ = {
+		D761FE841F3AC2FF0083842A /* SMBGameBoardView */ = {
 			isa = PBXGroup;
 			children = (
-				D735E5171F3A4634003AD37C /* SMBForcedBeamRedirectTileEntity */,
-				D735E5141F3A1E8E003AD37C /* SMBGeneralBeamExitOrientationRedirectTileEntity.h */,
-				D735E5151F3A1E8E003AD37C /* SMBGeneralBeamExitOrientationRedirectTileEntity.m */,
+				D761FE851F3AC2FF0083842A /* SMBGameBoardView.h */,
+				D761FE861F3AC2FF0083842A /* SMBGameBoardView.m */,
 			);
-			path = SMBGeneralBeamExitOrientationRedirectTileEntity;
+			path = SMBGameBoardView;
 			sourceTree = "<group>";
 		};
-		D735E5171F3A4634003AD37C /* SMBForcedBeamRedirectTileEntity */ = {
+		D761FE871F3AC2FF0083842A /* SMBGameLevelView */ = {
 			isa = PBXGroup;
 			children = (
-				D735E5181F3A4646003AD37C /* SMBForcedBeamRedirectTileEntity.h */,
-				D735E5191F3A4646003AD37C /* SMBForcedBeamRedirectTileEntity.m */,
+				D761FE881F3AC2FF0083842A /* SMBGameLevelView.h */,
+				D761FE891F3AC2FF0083842A /* SMBGameLevelView.m */,
 			);
-			path = SMBForcedBeamRedirectTileEntity;
+			path = SMBGameLevelView;
+			sourceTree = "<group>";
+		};
+		D761FE8A1F3AC2FF0083842A /* UIViewController */ = {
+			isa = PBXGroup;
+			children = (
+				D761FE8B1F3AC2FF0083842A /* SMBViewController */,
+			);
+			path = UIViewController;
+			sourceTree = "<group>";
+		};
+		D761FE8B1F3AC2FF0083842A /* SMBViewController */ = {
+			isa = PBXGroup;
+			children = (
+				D761FE8C1F3AC2FF0083842A /* SMBViewController.h */,
+				D761FE8D1F3AC2FF0083842A /* SMBViewController.m */,
+			);
+			path = SMBViewController;
+			sourceTree = "<group>";
+		};
+		D761FE8E1F3AC2FF0083842A /* Utility */ = {
+			isa = PBXGroup;
+			children = (
+				D761FE8F1F3AC2FF0083842A /* SMBUniqueStringGenerator */,
+			);
+			path = Utility;
+			sourceTree = "<group>";
+		};
+		D761FE8F1F3AC2FF0083842A /* SMBUniqueStringGenerator */ = {
+			isa = PBXGroup;
+			children = (
+				D761FE901F3AC2FF0083842A /* SMBUniqueStringGenerator.h */,
+				D761FE911F3AC2FF0083842A /* SMBUniqueStringGenerator.m */,
+			);
+			path = SMBUniqueStringGenerator;
 			sourceTree = "<group>";
 		};
 		D7DAF3951F33D66400233C39 = {
@@ -298,7 +503,7 @@
 			isa = PBXGroup;
 			children = (
 				D7DAF3B81F33D7B400233C39 /* Assets */,
-				D7DAF3BD1F33D7B400233C39 /* Code */,
+				D761FE381F3AC2FF0083842A /* Code */,
 				D7DAF3A11F33D66400233C39 /* Supporting Files */,
 			);
 			path = ShimmurBeams;
@@ -335,164 +540,6 @@
 				D7DAF3BC1F33D7B400233C39 /* Assets.xcassets */,
 			);
 			path = Images;
-			sourceTree = "<group>";
-		};
-		D7DAF3BD1F33D7B400233C39 /* Code */ = {
-			isa = PBXGroup;
-			children = (
-				D7DAF40F1F35360B00233C39 /* Category */,
-				D7DAF3D91F33E66700233C39 /* Model */,
-				D7DAF3DA1F33E68300233C39 /* User Interface */,
-				D735E4AB1F365550003AD37C /* Utility */,
-			);
-			path = Code;
-			sourceTree = "<group>";
-		};
-		D7DAF3D91F33E66700233C39 /* Model */ = {
-			isa = PBXGroup;
-			children = (
-				D735E4BC1F38DFF4003AD37C /* DataCollection */,
-				D7DAF3F61F33E97700233C39 /* SMBGameBoard */,
-				D735E4E81F3914D1003AD37C /* SMBGameBoardGeneralEntity */,
-				D7DAF3F21F33E94D00233C39 /* SMBGameBoardTile */,
-				D7DAF3FE1F33F0A400233C39 /* SMBGameBoardTilePosition */,
-				D7DAF3EE1F33E6E100233C39 /* SMBGameLevel */,
-			);
-			path = Model;
-			sourceTree = "<group>";
-		};
-		D7DAF3DA1F33E68300233C39 /* User Interface */ = {
-			isa = PBXGroup;
-			children = (
-				D7DAF3DB1F33E68300233C39 /* UIApplicationDelegate */,
-				D7DAF3DF1F33E68300233C39 /* UIView */,
-				D7DAF3E31F33E68300233C39 /* UIViewController */,
-			);
-			path = "User Interface";
-			sourceTree = "<group>";
-		};
-		D7DAF3DB1F33E68300233C39 /* UIApplicationDelegate */ = {
-			isa = PBXGroup;
-			children = (
-				D7DAF3DC1F33E68300233C39 /* SMBAppDelegate */,
-			);
-			path = UIApplicationDelegate;
-			sourceTree = "<group>";
-		};
-		D7DAF3DC1F33E68300233C39 /* SMBAppDelegate */ = {
-			isa = PBXGroup;
-			children = (
-				D7DAF3DD1F33E68300233C39 /* SMBAppDelegate.h */,
-				D7DAF3DE1F33E68300233C39 /* SMBAppDelegate.m */,
-			);
-			path = SMBAppDelegate;
-			sourceTree = "<group>";
-		};
-		D7DAF3DF1F33E68300233C39 /* UIView */ = {
-			isa = PBXGroup;
-			children = (
-				D735E5061F391724003AD37C /* SMBGameBoardGeneralEntityView */,
-				D7DAF40B1F35268400233C39 /* SMBGameBoardView */,
-				D7DAF3FA1F33EBC400233C39 /* SMBGameLevelView */,
-			);
-			path = UIView;
-			sourceTree = "<group>";
-		};
-		D7DAF3E31F33E68300233C39 /* UIViewController */ = {
-			isa = PBXGroup;
-			children = (
-				D7DAF3E41F33E68300233C39 /* SMBViewController */,
-			);
-			path = UIViewController;
-			sourceTree = "<group>";
-		};
-		D7DAF3E41F33E68300233C39 /* SMBViewController */ = {
-			isa = PBXGroup;
-			children = (
-				D7DAF3E51F33E68300233C39 /* SMBViewController.h */,
-				D7DAF3E61F33E68300233C39 /* SMBViewController.m */,
-			);
-			path = SMBViewController;
-			sourceTree = "<group>";
-		};
-		D7DAF3EE1F33E6E100233C39 /* SMBGameLevel */ = {
-			isa = PBXGroup;
-			children = (
-				D7DAF3EF1F33E6E100233C39 /* SMBGameLevel.h */,
-				D7DAF3F01F33E6E100233C39 /* SMBGameLevel.m */,
-			);
-			path = SMBGameLevel;
-			sourceTree = "<group>";
-		};
-		D7DAF3F21F33E94D00233C39 /* SMBGameBoardTile */ = {
-			isa = PBXGroup;
-			children = (
-				D7DAF3F31F33E95600233C39 /* SMBGameBoardTile.h */,
-				D7DAF3F41F33E95600233C39 /* SMBGameBoardTile.m */,
-			);
-			path = SMBGameBoardTile;
-			sourceTree = "<group>";
-		};
-		D7DAF3F61F33E97700233C39 /* SMBGameBoard */ = {
-			isa = PBXGroup;
-			children = (
-				D7DAF3F71F33E98900233C39 /* SMBGameBoard.h */,
-				D7DAF3F81F33E98900233C39 /* SMBGameBoard.m */,
-			);
-			path = SMBGameBoard;
-			sourceTree = "<group>";
-		};
-		D7DAF3FA1F33EBC400233C39 /* SMBGameLevelView */ = {
-			isa = PBXGroup;
-			children = (
-				D7DAF3FB1F33EBC400233C39 /* SMBGameLevelView.h */,
-				D7DAF3FC1F33EBC400233C39 /* SMBGameLevelView.m */,
-			);
-			path = SMBGameLevelView;
-			sourceTree = "<group>";
-		};
-		D7DAF3FE1F33F0A400233C39 /* SMBGameBoardTilePosition */ = {
-			isa = PBXGroup;
-			children = (
-				D7DAF3FF1F33F0AF00233C39 /* SMBGameBoardTilePosition.h */,
-				D7DAF4001F33F0AF00233C39 /* SMBGameBoardTilePosition.m */,
-			);
-			path = SMBGameBoardTilePosition;
-			sourceTree = "<group>";
-		};
-		D7DAF40B1F35268400233C39 /* SMBGameBoardView */ = {
-			isa = PBXGroup;
-			children = (
-				D7DAF40C1F35268E00233C39 /* SMBGameBoardView.h */,
-				D7DAF40D1F35268E00233C39 /* SMBGameBoardView.m */,
-			);
-			path = SMBGameBoardView;
-			sourceTree = "<group>";
-		};
-		D7DAF40F1F35360B00233C39 /* Category */ = {
-			isa = PBXGroup;
-			children = (
-				D735E4971F364C84003AD37C /* SMBGameBoard */,
-				D7DAF4101F35363400233C39 /* SMBGameLevel */,
-			);
-			path = Category;
-			sourceTree = "<group>";
-		};
-		D7DAF4101F35363400233C39 /* SMBGameLevel */ = {
-			isa = PBXGroup;
-			children = (
-				D7DAF4121F35367400233C39 /* SMBGameLevel+SMBTestLevel */,
-			);
-			path = SMBGameLevel;
-			sourceTree = "<group>";
-		};
-		D7DAF4121F35367400233C39 /* SMBGameLevel+SMBTestLevel */ = {
-			isa = PBXGroup;
-			children = (
-				D7DAF4131F35367C00233C39 /* SMBGameLevel+SMBTestLevel.h */,
-				D7DAF4141F35367C00233C39 /* SMBGameLevel+SMBTestLevel.m */,
-			);
-			path = "SMBGameLevel+SMBTestLevel";
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -617,29 +664,30 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				D7DAF3F91F33E98900233C39 /* SMBGameBoard.m in Sources */,
-				D735E4FD1F3914D1003AD37C /* SMBBeamEntityTileNode.m in Sources */,
-				D735E5001F3914D1003AD37C /* SMBBeamCreatorTileEntity.m in Sources */,
-				D735E5011F3914D1003AD37C /* SMBGameBoardTileEntity.m in Sources */,
-				D7DAF40E1F35268E00233C39 /* SMBGameBoardView.m in Sources */,
-				D735E4FE1F3914D1003AD37C /* SMBGameBoardEntity.m in Sources */,
-				D735E4C91F38F6EA003AD37C /* SMBMutableMappedDataCollection.m in Sources */,
+				D761FE971F3AC2FF0083842A /* SMBGameBoard.m in Sources */,
 				D7DAF3A31F33D66400233C39 /* main.m in Sources */,
-				D7DAF4151F35367C00233C39 /* SMBGameLevel+SMBTestLevel.m in Sources */,
-				D735E4C01F38E011003AD37C /* SMBMappedDataCollection.m in Sources */,
-				D735E5091F391724003AD37C /* SMBGameBoardGeneralEntityView.m in Sources */,
-				D7DAF3FD1F33EBC400233C39 /* SMBGameLevelView.m in Sources */,
-				D7DAF3F11F33E6E100233C39 /* SMBGameLevel.m in Sources */,
-				D7DAF4011F33F0AF00233C39 /* SMBGameBoardTilePosition.m in Sources */,
-				D735E5161F3A1E8E003AD37C /* SMBGeneralBeamExitOrientationRedirectTileEntity.m in Sources */,
-				D735E49B1F364C9A003AD37C /* SMBGameBoard+SMBAddEntity.m in Sources */,
-				D7DAF3F51F33E95600233C39 /* SMBGameBoardTile.m in Sources */,
-				D735E51A1F3A4646003AD37C /* SMBForcedBeamRedirectTileEntity.m in Sources */,
-				D735E4FF1F3914D1003AD37C /* SMBGameBoardGeneralEntity.m in Sources */,
-				D7DAF3E71F33E68300233C39 /* SMBAppDelegate.m in Sources */,
-				D735E4AF1F3655D2003AD37C /* SMBUniqueStringGenerator.m in Sources */,
-				D735E4FC1F3914D1003AD37C /* SMBBeamEntity.m in Sources */,
-				D7DAF3E91F33E68300233C39 /* SMBViewController.m in Sources */,
+				D761FEA31F3AC2FF0083842A /* SMBAppDelegate.m in Sources */,
+				D761FE9A1F3AC2FF0083842A /* SMBGameBoardEntity.m in Sources */,
+				D761FEA81F3AC2FF0083842A /* SMBUniqueStringGenerator.m in Sources */,
+				D761FE9B1F3AC2FF0083842A /* SMBGameBoardGeneralEntity.m in Sources */,
+				D761FE9F1F3AC2FF0083842A /* SMBGeneralBeamExitDirectionRedirectTileEntity.m in Sources */,
+				D761FEA61F3AC2FF0083842A /* SMBGameLevelView.m in Sources */,
+				D761FEA71F3AC2FF0083842A /* SMBViewController.m in Sources */,
+				D761FE931F3AC2FF0083842A /* SMBGameBoard+SMBAddEntity.m in Sources */,
+				D761FE951F3AC2FF0083842A /* SMBMappedDataCollection.m in Sources */,
+				D761FE921F3AC2FF0083842A /* NSArray+SMBChanges.m in Sources */,
+				D761FE9E1F3AC2FF0083842A /* SMBForcedBeamRedirectTileEntity.m in Sources */,
+				D761FEA21F3AC2FF0083842A /* SMBGameLevel.m in Sources */,
+				D761FE9C1F3AC2FF0083842A /* SMBBeamCreatorTileEntity.m in Sources */,
+				D761FEA41F3AC2FF0083842A /* SMBGameBoardGeneralEntityView.m in Sources */,
+				D761FE991F3AC2FF0083842A /* SMBBeamEntityTileNode.m in Sources */,
+				D761FE9D1F3AC2FF0083842A /* SMBGameBoardTileEntity.m in Sources */,
+				D761FE961F3AC2FF0083842A /* SMBMutableMappedDataCollection.m in Sources */,
+				D761FEA51F3AC2FF0083842A /* SMBGameBoardView.m in Sources */,
+				D761FEA11F3AC2FF0083842A /* SMBGameBoardTilePosition.m in Sources */,
+				D761FE981F3AC2FF0083842A /* SMBBeamEntity.m in Sources */,
+				D761FE941F3AC2FF0083842A /* SMBGameLevel+SMBTestLevel.m in Sources */,
+				D761FEA01F3AC2FF0083842A /* SMBGameBoardTile.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

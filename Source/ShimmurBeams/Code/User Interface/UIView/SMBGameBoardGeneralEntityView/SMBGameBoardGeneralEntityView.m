@@ -97,7 +97,7 @@ static void* kSMBGameBoardGeneralEntityView__KVOContext = &kSMBGameBoardGeneralE
 		
 		CGContextSaveGState(context);
 
-		[gameBoardGeneralEntity draw_in_gameBoardView:self.gameBoardView rect:rect];
+		[gameBoardGeneralEntity draw_in_rect:rect];
 
 		CGContextRestoreGState(context);
 	}

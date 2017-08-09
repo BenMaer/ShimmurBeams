@@ -28,8 +28,7 @@
 
 #pragma mark - draw
 @property (nonatomic, assign) BOOL needsRedraw;
--(void)draw_in_gameBoardView:(nonnull SMBGameBoardView*)gameBoardView
-						rect:(CGRect)rect;
+-(void)draw_in_rect:(CGRect)rect;
 
 @end
 

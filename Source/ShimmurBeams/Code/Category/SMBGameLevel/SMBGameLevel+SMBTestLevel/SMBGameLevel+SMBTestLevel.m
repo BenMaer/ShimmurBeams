@@ -25,17 +25,17 @@
 																	   numberOfRows:5];
 
 	SMBBeamCreatorTileEntity* const beamCreatorEntity = [SMBBeamCreatorTileEntity new];
-	[beamCreatorEntity setOrientation:SMBGameBoardTileEntity__orientation_up];
+	[beamCreatorEntity setBeamDirection:SMBGameBoardTile__direction_up];
 	[gameBoard gameBoardEntity_add:beamCreatorEntity
 						 to_column:1
 							   row:[gameBoard gameBoardTiles_numberOfRows] - 1];
 
-	SMBForcedBeamRedirectTileEntity* const forcedBeamRedirectTileEntity = [[SMBForcedBeamRedirectTileEntity alloc] init_with_forcedBeamExitOrientation:SMBBeamEntityTileNode__beamOrientation_right];
+	SMBForcedBeamRedirectTileEntity* const forcedBeamRedirectTileEntity = [[SMBForcedBeamRedirectTileEntity alloc] init_with_forcedBeamExitDirection:SMBGameBoardTile__direction_right];
 	[gameBoard gameBoardEntity_add:forcedBeamRedirectTileEntity
 						 to_column:1
 							   row:1];
 
-	SMBForcedBeamRedirectTileEntity* const forcedBeamRedirectTileEntity2 = [[SMBForcedBeamRedirectTileEntity alloc] init_with_forcedBeamExitOrientation:SMBBeamEntityTileNode__beamOrientation_down];
+	SMBForcedBeamRedirectTileEntity* const forcedBeamRedirectTileEntity2 = [[SMBForcedBeamRedirectTileEntity alloc] init_with_forcedBeamExitDirection:SMBGameBoardTile__direction_down];
 	[gameBoard gameBoardEntity_add:forcedBeamRedirectTileEntity2
 						 to_column:3
 							   row:1];
@@ -49,25 +49,25 @@
 																	   numberOfRows:5];
 
 	SMBBeamCreatorTileEntity* const beamCreatorEntity_top = [SMBBeamCreatorTileEntity new];
-	[beamCreatorEntity_top setOrientation:SMBGameBoardTileEntity__orientation_up];
+	[beamCreatorEntity_top setBeamDirection:SMBGameBoardTile__direction_up];
 	[gameBoard gameBoardEntity_add:beamCreatorEntity_top
 						 to_column:2
 							   row:1];
 
 	SMBBeamCreatorTileEntity* const beamCreatorEntity_right = [SMBBeamCreatorTileEntity new];
-	[beamCreatorEntity_right setOrientation:SMBGameBoardTileEntity__orientation_right];
+	[beamCreatorEntity_right setBeamDirection:SMBGameBoardTile__direction_right];
 	[gameBoard gameBoardEntity_add:beamCreatorEntity_right
 						 to_column:3
 							   row:2];
 
 	SMBBeamCreatorTileEntity* const beamCreatorEntity_down = [SMBBeamCreatorTileEntity new];
-	[beamCreatorEntity_down setOrientation:SMBGameBoardTileEntity__orientation_down];
+	[beamCreatorEntity_down setBeamDirection:SMBGameBoardTile__direction_down];
 	[gameBoard gameBoardEntity_add:beamCreatorEntity_down
 						 to_column:2
 							   row:3];
 
 	SMBBeamCreatorTileEntity* const beamCreatorEntity_left = [SMBBeamCreatorTileEntity new];
-	[beamCreatorEntity_left setOrientation:SMBGameBoardTileEntity__orientation_left];
+	[beamCreatorEntity_left setBeamDirection:SMBGameBoardTile__direction_left];
 	[gameBoard gameBoardEntity_add:beamCreatorEntity_left
 						 to_column:1
 							   row:2];

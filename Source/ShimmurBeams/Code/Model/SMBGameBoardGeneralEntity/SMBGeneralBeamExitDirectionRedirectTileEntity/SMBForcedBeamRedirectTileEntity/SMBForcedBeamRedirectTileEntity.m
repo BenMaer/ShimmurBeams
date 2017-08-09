@@ -7,7 +7,8 @@
 //
 
 #import "SMBForcedBeamRedirectTileEntity.h"
-#import "SMBBeamEntityTileNode__beamOrientations_to_SMBGameBoardTileEntity__orientation_utilities.h"
+#import "CoreGraphics+SMBRotation.h"
+#import "SMBGameBoardTile__directions_to_CoreGraphics_SMBRotation__orientations_utilities.h"
 
 #import <ResplendentUtilities/RUConditionalReturn.h>
 #import <ResplendentUtilities/UIView+RUUtility.h>
@@ -19,14 +20,14 @@
 @implementation SMBForcedBeamRedirectTileEntity
 
 #pragma mark - draw
--(void)draw_in_gameBoardView:(nonnull SMBGameBoardView*)gameBoardView
-						rect:(CGRect)rect
+-(void)draw_in_rect:(CGRect)rect
 {
-	[super draw_in_gameBoardView:gameBoardView
-							rect:rect];
+	[super draw_in_rect:rect];
 	
 	CGContextRef const context = UIGraphicsGetCurrentContext();
-	
+
+	CoreGraphics_SMBRotation__rotateCTM(context, rect, CoreGraphics_SMBRotation__orientation_for_direction(self.forcedBeamExitDirection));
+
 	CGContextSetStrokeColorWithColor(context, [UIColor blackColor].CGColor);
 	CGContextSetLineWidth(context, 1.0f);
 	
@@ -72,30 +73,29 @@
 {
 	kRUConditionalReturn_ReturnValueNil(YES, YES);
 
-	return [self init_with_forcedBeamExitOrientation:SMBBeamEntityTileNode__beamOrientation_none];
+	return [self init_with_forcedBeamExitDirection:SMBGameBoardTile__direction_unknown];
 }
 
 #pragma mark - init
--(nullable instancetype)init_with_forcedBeamExitOrientation:(SMBBeamEntityTileNode__beamOrientation)forcedBeamExitOrientation
+-(nullable instancetype)init_with_forcedBeamExitDirection:(SMBGameBoardTile__direction)forcedBeamExitDirection
 {
-	kRUConditionalReturn_ReturnValueNil(SMBBeamEntityTileNode__beamOrientation__isInRange(forcedBeamExitOrientation) == false, YES);
+	kRUConditionalReturn_ReturnValueNil(SMBGameBoardTile__direction__isInRange(forcedBeamExitDirection) == false, YES);
 
 	if (self = [super init])
 	{
-		_forcedBeamExitOrientation = forcedBeamExitOrientation;
-		[self setOrientation:SMBGameBoardTileEntity__orientation_for_beamOrientation(self.forcedBeamExitOrientation)];
+		_forcedBeamExitDirection = forcedBeamExitDirection;
 	}
 
 	return self;
 }
 
-#pragma mark - beamExitOrientation
--(SMBBeamEntityTileNode__beamOrientation)beamExitOrientation_for_beamEnterOrientation:(SMBBeamEntityTileNode__beamOrientation)beamEnterOrientation
+#pragma mark - beamExitDirection
+-(SMBGameBoardTile__direction)beamExitDirection_for_beamEnterDirection:(SMBGameBoardTile__direction)beamEnterDirection
 {
-	SMBBeamEntityTileNode__beamOrientation const forcedBeamExitOrientation = self.forcedBeamExitOrientation;
-	kRUConditionalReturn_ReturnValue(SMBBeamEntityTileNode__beamOrientation__isInRange(forcedBeamExitOrientation) == false, YES, SMBBeamEntityTileNode__beamOrientation_none);
+	SMBGameBoardTile__direction const forcedBeamExitDirection = self.forcedBeamExitDirection;
+	kRUConditionalReturn_ReturnValue(SMBGameBoardTile__direction__isInRange(forcedBeamExitDirection) == false, YES, SMBGameBoardTile__direction_unknown);
 
-	return forcedBeamExitOrientation;
+	return forcedBeamExitDirection;
 }
 
 @end

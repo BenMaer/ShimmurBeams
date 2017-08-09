@@ -42,7 +42,7 @@ static void* kSMBGameBoardView__KVOContext = &kSMBGameBoardView__KVOContext;
 @property (nonatomic, copy, nullable) SMBMappedDataCollection<SMBGameBoardGeneralEntityView*>* gameBoardTileEntityView_mappedDataCollection;
 -(void)gameBoardTileEntityView_mappedDataCollection_update;
 
--(void)gameBoardTileEntityViews_layout;
+-(void)gameBoardTileEntityView_mappedDataCollection_layout;
 
 -(void)gameBoardTileEntityView_layout:(nonnull SMBGameBoardGeneralEntityView*)gameBoardGeneralEntityView;
 -(CGRect)gameBoardTileEntityView_frame_with_gameBoardTileEntity:(nonnull SMBGameBoardTileEntity*)gameBoardTileEntity;
@@ -100,7 +100,7 @@ static void* kSMBGameBoardView__KVOContext = &kSMBGameBoardView__KVOContext;
 	[self grid_shapeLayer_path_update];
 	[self.grid_shapeLayer setFrame:[self grid_shapeLayer_frame]];
 
-	[self gameBoardTileEntityViews_layout];
+	[self gameBoardTileEntityView_mappedDataCollection_layout];
 
 	[self gameBoardEntityView_mappedDataCollection_layout];
 }
@@ -287,7 +287,7 @@ static void* kSMBGameBoardView__KVOContext = &kSMBGameBoardView__KVOContext;
 	[self setGameBoardTileEntityView_mappedDataCollection:[gameBoardTileEntityView_mappedDataCollection_new copy]];
 }
 
--(void)gameBoardTileEntityViews_layout
+-(void)gameBoardTileEntityView_mappedDataCollection_layout
 {
 	[[self.gameBoardTileEntityView_mappedDataCollection mappableObjects] enumerateObjectsUsingBlock:^(SMBGameBoardGeneralEntityView * _Nonnull gameBoardTileEntityView, NSUInteger idx, BOOL * _Nonnull stop) {
 		[self gameBoardTileEntityView_layout:gameBoardTileEntityView];

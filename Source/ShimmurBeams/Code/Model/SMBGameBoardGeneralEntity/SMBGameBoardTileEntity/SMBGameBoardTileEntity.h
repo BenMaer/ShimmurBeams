@@ -8,8 +8,6 @@
 
 #import "SMBGameBoardGeneralEntity.h"
 
-#import "SMBGameBoardTileEntity__orientations.h"
-
 #import <Foundation/Foundation.h>
 #import <CoreGraphics/CoreGraphics.h>
 #import <UIKit/UIKit.h>
@@ -25,9 +23,6 @@
 
 
 @interface SMBGameBoardTileEntity : SMBGameBoardGeneralEntity
-
-#pragma mark - orientation
-@property (nonatomic, assign) SMBGameBoardTileEntity__orientation orientation;
 
 #pragma mark - gameBoardTile
 @property (nonatomic, assign, nullable) SMBGameBoardTile* gameBoardTile;
