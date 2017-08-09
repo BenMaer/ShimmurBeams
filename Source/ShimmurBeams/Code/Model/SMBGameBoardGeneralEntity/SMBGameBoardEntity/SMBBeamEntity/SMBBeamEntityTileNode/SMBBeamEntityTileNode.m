@@ -467,14 +467,6 @@ static void* kSMBBeamEntityTileNode__KVOContext = &kSMBBeamEntityTileNode__KVOCo
 
 	CGContextRef const context = UIGraphicsGetCurrentContext();
 
-	//	CGRect const rect = [gameBoardView rect:gameBoardTilePosition];
-
-	//	CGRect const rect = (CGRect){
-	//		.origin.x	= CGRectGetMinX(rect) + CGRectGetMinX(rect),
-	//		.origin.y	= CGRectGetMinY(rect) + CGRectGetMinY(rect),
-	//		.size		= rect.size,
-	//	};
-
 	CGPoint const point_center = [self draw_point_center_with_rect:rect];
 	CGPoint const point_edge = [self draw_point_edgeMiddle_with_rect:rect direction:direction];
 
