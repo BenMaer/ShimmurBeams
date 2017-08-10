@@ -47,7 +47,7 @@
 
 @interface SMBBeamEntity_PropertiesForKVO : NSObject
 
-+(nonnull NSString*)beamEntityTileNode_initial;
+//+(nonnull NSString*)beamEntityTileNode_initial;
 +(nonnull NSString*)beamEntityTileNode_mappedDataCollection;
 
 @end

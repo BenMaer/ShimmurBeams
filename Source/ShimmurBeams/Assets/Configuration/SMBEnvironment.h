@@ -20,6 +20,8 @@
 
 #define kSMBEnvironment__SMBGameBoardTile_gameBoardTileEntities_powerProviders_validate (kSMBEnvironment__validations_general_enable && 1)
 
+#define kSMBEnvironment__SMBGameBoardTileEntity_gameBoardTileOwnership_validation_enabled (kSMBEnvironment__validations_general_enable && 1)
+
 
 
 

@@ -24,6 +24,17 @@
 
 
 
+/**
+ Setup sets:
+ 1) init
+ 2) set game tile
+ 3) call `setState_ready`.
+
+ Finish steps:
+ 1) remove from game tile.
+ 
+ Whoever 
+ */
 @interface SMBBeamEntityTileNode : SMBGameBoardTileEntity <SMBGameBoardTileEntity_PowerProvider>
 
 #pragma mark - beamEntity
@@ -41,10 +52,16 @@
 #pragma mark - beamEnterDirection
 -(SMBGameBoardTile__direction)beamEnterDirection;
 
+#pragma mark - state
+-(void)setState_ready;
+
 #pragma mark - init
--(nullable instancetype)init_with_gameBoardTile:(nonnull SMBGameBoardTile*)gameBoardTile
-									 beamEntity:(nonnull SMBBeamEntity*)beamEntity
-								  node_previous:(nullable SMBBeamEntityTileNode*)node_previous NS_DESIGNATED_INITIALIZER;
+-(nullable instancetype)init_with_beamEntity:(nonnull SMBBeamEntity*)beamEntity
+							   node_previous:(nullable SMBBeamEntityTileNode*)node_previous NS_DESIGNATED_INITIALIZER;
+
+//-(nullable instancetype)init_with_gameBoardTile:(nonnull SMBGameBoardTile*)gameBoardTile
+//									 beamEntity:(nonnull SMBBeamEntity*)beamEntity
+//								  node_previous:(nullable SMBBeamEntityTileNode*)node_previous NS_DESIGNATED_INITIALIZER;
 
 @end
 
