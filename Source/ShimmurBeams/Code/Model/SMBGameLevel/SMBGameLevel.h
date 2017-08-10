@@ -35,3 +35,13 @@
 @property (nonatomic, assign) BOOL isComplete;
 
 @end
+
+
+
+
+
+@interface SMBGameLevel_PropertiesForKVO : NSObject
+
++(nonnull NSString*)isComplete;
+
+@end

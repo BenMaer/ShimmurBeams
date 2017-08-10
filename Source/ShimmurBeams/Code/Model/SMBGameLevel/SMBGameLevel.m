@@ -60,3 +60,13 @@
 }
 
 @end
+
+
+
+
+
+@implementation SMBGameLevel_PropertiesForKVO
+
++(nonnull NSString*)isComplete{return NSStringFromSelector(_cmd);}
+
+@end

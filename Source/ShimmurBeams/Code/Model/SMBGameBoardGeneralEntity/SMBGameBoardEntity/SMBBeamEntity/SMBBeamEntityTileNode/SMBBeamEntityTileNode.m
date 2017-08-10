@@ -302,7 +302,7 @@ typedef NS_ENUM(NSInteger, SMBBeamEntityTileNode__state) {
 	kRUConditionalReturn(node_next == nil, YES);
 
 	SMBGameBoardTile* const gameBoardTile = node_next.gameBoardTile;
-	kRUConditionalReturn(gameBoardTile == nil, [node_next beamEntity_contains_self]);
+	kRUConditionalReturn(gameBoardTile == nil, NO);
 
 	[gameBoardTile gameBoardTileEntities_remove:node_next];
 }

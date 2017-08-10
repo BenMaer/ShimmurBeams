@@ -244,4 +244,5 @@
 +(nonnull NSString*)gameBoardTileEntity_for_beamInteractions{return NSStringFromSelector(_cmd);}
 +(nonnull NSString*)gameBoardTileEntities{return NSStringFromSelector(_cmd);}
 +(nonnull NSString*)isPowered{return NSStringFromSelector(_cmd);}
+
 @end
