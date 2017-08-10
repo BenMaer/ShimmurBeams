@@ -24,7 +24,7 @@
 
 
 
-@interface SMBBeamEntityTileNode : SMBGameBoardTileEntity <SMBMappedDataCollection_MappableObject, SMBGameBoardTileEntity_PowerProvider>
+@interface SMBBeamEntityTileNode : SMBGameBoardTileEntity <SMBGameBoardTileEntity_PowerProvider>
 
 #pragma mark - beamEntity
 @property (nonatomic, readonly, assign, nullable) SMBBeamEntity* beamEntity;

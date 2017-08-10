@@ -399,12 +399,26 @@ static void* kSMBBeamEntityTileNode__KVOContext = &kSMBBeamEntityTileNode__KVOCo
 	return node_next;
 }
 
-#pragma mark - SMBMappedDataCollection_MappableObject
--(nonnull NSString*)smb_uniqueKey
-{
-	return [self.gameBoardTile_toUseForSetting.gameBoardTilePosition smb_uniqueKey];
-}
-
+//#pragma mark - SMBMappedDataCollection_MappableObject
+//-(nonnull NSString*)smb_uniqueKey
+//{
+//	NSString* const beamEntity_id = [self.beamEntity smb_uniqueKey];
+//	kRUConditionalReturn_ReturnValueNil(beamEntity_id == nil, YES);
+//
+//	NSString* const beamEntity_id = [self.beamEntity smb_uniqueKey];
+//	kRUConditionalReturn_ReturnValueNil(beamEntity_id == nil, YES);
+//
+//	NSString* const gameBoardTilePosition_id = [self.gameBoardTile_toUseForSetting.gameBoardTilePosition smb_uniqueKey];
+//	kRUConditionalReturn_ReturnValueNil(gameBoardTilePosition_id == nil, YES);
+//
+//	NSMutableArray<NSString*>* const description_lines = [NSMutableArray<NSString*> array];
+//	[description_lines ru_addObjectIfNotNil:[self smb_uniqueKey]];
+//	[description_lines ru_addObjectIfNotNil:beamEntity_id];
+//	[description_lines ru_addObjectIfNotNil:gameBoardTilePosition_id];
+//
+//	return ;
+//}
+//
 #pragma mark - beamEnterDirection
 -(SMBGameBoardTile__direction)beamEnterDirection
 {
