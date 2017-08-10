@@ -7,6 +7,7 @@
 //
 
 #import "SMBGameLevel.h"
+#import "SMBGameBoard.h"
 
 #import <ResplendentUtilities/RUConditionalReturn.h>
 
@@ -50,6 +51,8 @@
 	if (self = [super init])
 	{
 		_gameBoard = gameBoard;
+		[self.gameBoard setGameLevel:self];
+
 		[self setUsableGameBoardTileEntities:usableGameBoardTileEntities];
 	}
 
