@@ -57,6 +57,13 @@
 @implementation SMBGameBoardTile
 
 #pragma mark - NSObject
+-(void)dealloc
+{
+	[self setGameBoardTileEntity_for_beamInteractions:nil];
+	[self setGameBoardTileEntities:nil];
+}
+
+#pragma mark - NSObject
 -(instancetype)init
 {
 	kRUConditionalReturn_ReturnValueNil(YES, YES);

@@ -14,7 +14,6 @@
 
 @class SMBBeamEntityTileNode;
 @class SMBGameBoardTile;
-@class SMBMappedDataCollection<ObjectType>;
 
 
 
