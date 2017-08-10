@@ -57,6 +57,16 @@
 @implementation SMBGameBoardTile
 
 #pragma mark - NSObject
+-(void)dealloc
+{
+	[[self.gameBoardTileEntities_mappedDataCollection mappableObjects] enumerateObjectsUsingBlock:^(SMBGameBoardTileEntity<SMBMappedDataCollection_MappableObject>*  _Nonnull gameBoardTileEntity, NSUInteger idx, BOOL * _Nonnull stop) {
+		[self gameBoardTileEntities_remove:gameBoardTileEntity];
+	}];
+
+	[self setGameBoardTileEntity_for_beamInteractions:nil];
+}
+
+#pragma mark - NSObject
 -(instancetype)init
 {
 	kRUConditionalReturn_ReturnValueNil(YES, YES);
@@ -96,19 +106,36 @@
 	return self;
 }
 
+#pragma mark - gameBoardTileEntity
+-(void)gameBoardTileEntity:(nonnull SMBGameBoardTileEntity*)gameBoardTileEntity
+		updateRelationship:(BOOL)hasRelationship
+{
+	kRUConditionalReturn(gameBoardTileEntity == nil, YES);
+
+	SMBGameBoardTile* const gameBoardTile_toSetTo = (hasRelationship ? self : nil);
+	kRUConditionalReturn(gameBoardTile_toSetTo == gameBoardTileEntity.gameBoardTile, YES);
+
+	[gameBoardTileEntity setGameBoardTile:gameBoardTile_toSetTo];
+}
+
 #pragma mark - gameBoardTileEntity_for_beamInteractions
 -(void)setGameBoardTileEntity_for_beamInteractions:(nullable SMBGameBoardTileEntity*)gameBoardTileEntity_for_beamInteractions
 {
 	kRUConditionalReturn(self.gameBoardTileEntity_for_beamInteractions == gameBoardTileEntity_for_beamInteractions, NO);
 
+	SMBGameBoardTileEntity* const gameBoardTileEntity_for_beamInteractions_old = self.gameBoardTileEntity_for_beamInteractions;
 	_gameBoardTileEntity_for_beamInteractions = gameBoardTileEntity_for_beamInteractions;
+
+	if (gameBoardTileEntity_for_beamInteractions_old)
+	{
+		[self gameBoardTileEntity:gameBoardTileEntity_for_beamInteractions_old
+			   updateRelationship:NO];
+	}
 
 	if (self.gameBoardTileEntity_for_beamInteractions)
 	{
-		if (self.gameBoardTileEntity_for_beamInteractions.gameBoardTile != self)
-		{
-			[self.gameBoardTileEntity_for_beamInteractions setGameBoardTile:self];
-		}
+		[self gameBoardTileEntity:self.gameBoardTileEntity_for_beamInteractions
+			   updateRelationship:YES];
 	}
 }
 
@@ -120,6 +147,8 @@
 
 -(void)gameBoardTileEntities_add:(nonnull SMBGameBoardTileEntity*)gameBoardTileEntity
 {
+	kRUConditionalReturn(gameBoardTileEntity == nil, YES);
+
 	[self.gameBoardTileEntities_mappedDataCollection mappableObject_add:gameBoardTileEntity];
 
 	if ([gameBoardTileEntity smb_providesPower])
@@ -128,10 +157,15 @@
 	}
 
 	[self gameBoardTileEntities_update];
+
+	[self gameBoardTileEntity:gameBoardTileEntity
+		   updateRelationship:YES];
 }
 
 -(void)gameBoardTileEntities_remove:(nonnull SMBGameBoardTileEntity*)gameBoardTileEntity
 {
+	kRUConditionalReturn(gameBoardTileEntity == nil, YES);
+
 	[self.gameBoardTileEntities_mappedDataCollection mappableObject_remove:gameBoardTileEntity];
 
 	if ([gameBoardTileEntity smb_providesPower])
@@ -140,6 +174,9 @@
 	}
 
 	[self gameBoardTileEntities_update];
+
+	[self gameBoardTileEntity:gameBoardTileEntity
+		   updateRelationship:NO];
 }
 
 #pragma mark - gameBoardTileEntities_powerProviders

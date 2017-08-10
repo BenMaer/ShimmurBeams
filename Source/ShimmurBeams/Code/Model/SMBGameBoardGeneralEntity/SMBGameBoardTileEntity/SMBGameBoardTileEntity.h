@@ -22,6 +22,15 @@
 
 
 
+/**
+ When adding a `SMBGameBoardTileEntity` instance to a tile:
+ 1) Add entity to the tile using on the the tile's properties:
+ `gameBoardTileEntity_for_beamInteractions`
+ `gameBoardTileEntities`
+ 
+ Make sure not to first set `gameBoardTile` on this instance before already adding this instance to the tile.
+ Make sure this instance doesn't already have a game board tile when setting to a new tile. If it does, make sure to remove this instance from its current game tile, before adding it to another.
+ */
 @interface SMBGameBoardTileEntity : SMBGameBoardGeneralEntity
 
 #pragma mark - gameBoardTile

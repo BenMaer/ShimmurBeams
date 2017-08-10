@@ -37,8 +37,14 @@
 		D7C8C3CC1F3B91FB006D378E /* SMBGameBoardTileView.m in Sources */ = {isa = PBXBuildFile; fileRef = D7C8C3CB1F3B91FB006D378E /* SMBGameBoardTileView.m */; };
 		D7C8C3D31F3BBE77006D378E /* SMBLevelExitTileEntity.m in Sources */ = {isa = PBXBuildFile; fileRef = D7C8C3D21F3BBE77006D378E /* SMBLevelExitTileEntity.m */; };
 		D7C8C3DC1F3CC7ED006D378E /* SMBGameBoardTileEntity+SMBProvidesPower.m in Sources */ = {isa = PBXBuildFile; fileRef = D7C8C3DB1F3CC7ED006D378E /* SMBGameBoardTileEntity+SMBProvidesPower.m */; };
+		D7C8C3E01F3CE26A006D378E /* SMBGameLevelGeneratorSetsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = D7C8C3DF1F3CE26A006D378E /* SMBGameLevelGeneratorSetsViewController.m */; };
+		D7C8C3E41F3CE2A8006D378E /* SMBGameLevelGeneratorSetsNavigationController.m in Sources */ = {isa = PBXBuildFile; fileRef = D7C8C3E31F3CE2A8006D378E /* SMBGameLevelGeneratorSetsNavigationController.m */; };
+		D7C8C3E81F3CE3C1006D378E /* SMBGameLevelGenerator.m in Sources */ = {isa = PBXBuildFile; fileRef = D7C8C3E71F3CE3C1006D378E /* SMBGameLevelGenerator.m */; };
+		D7C8C3ED1F3CE600006D378E /* SMBGameLevelGeneratorSet.m in Sources */ = {isa = PBXBuildFile; fileRef = D7C8C3EC1F3CE600006D378E /* SMBGameLevelGeneratorSet.m */; };
 		D7DAF3A31F33D66400233C39 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = D7DAF3A21F33D66400233C39 /* main.m */; };
 		D7DAF3C41F33D7B400233C39 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = D7DAF3BC1F33D7B400233C39 /* Assets.xcassets */; };
+		D7E511BB1F3CEC40008A6042 /* SMBGameLevelGeneratorSet+SMBUserSets.m in Sources */ = {isa = PBXBuildFile; fileRef = D7E511BA1F3CEC40008A6042 /* SMBGameLevelGeneratorSet+SMBUserSets.m */; };
+		D7E511BF1F3CEE67008A6042 /* SMBGameLevelGeneratorSetViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = D7E511BE1F3CEE67008A6042 /* SMBGameLevelGeneratorSetViewController.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -113,10 +119,23 @@
 		D7C8C3D71F3CC436006D378E /* ShimmurBeams-Prefix.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "ShimmurBeams-Prefix.pch"; sourceTree = "<group>"; };
 		D7C8C3DA1F3CC7ED006D378E /* SMBGameBoardTileEntity+SMBProvidesPower.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "SMBGameBoardTileEntity+SMBProvidesPower.h"; sourceTree = "<group>"; };
 		D7C8C3DB1F3CC7ED006D378E /* SMBGameBoardTileEntity+SMBProvidesPower.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "SMBGameBoardTileEntity+SMBProvidesPower.m"; sourceTree = "<group>"; };
+		D7C8C3DE1F3CE26A006D378E /* SMBGameLevelGeneratorSetsViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SMBGameLevelGeneratorSetsViewController.h; sourceTree = "<group>"; };
+		D7C8C3DF1F3CE26A006D378E /* SMBGameLevelGeneratorSetsViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SMBGameLevelGeneratorSetsViewController.m; sourceTree = "<group>"; };
+		D7C8C3E21F3CE2A8006D378E /* SMBGameLevelGeneratorSetsNavigationController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SMBGameLevelGeneratorSetsNavigationController.h; sourceTree = "<group>"; };
+		D7C8C3E31F3CE2A8006D378E /* SMBGameLevelGeneratorSetsNavigationController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SMBGameLevelGeneratorSetsNavigationController.m; sourceTree = "<group>"; };
+		D7C8C3E61F3CE3C1006D378E /* SMBGameLevelGenerator.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SMBGameLevelGenerator.h; sourceTree = "<group>"; };
+		D7C8C3E71F3CE3C1006D378E /* SMBGameLevelGenerator.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SMBGameLevelGenerator.m; sourceTree = "<group>"; };
+		D7C8C3E91F3CE3D4006D378E /* SMBGameLevelGenerator__blocks.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SMBGameLevelGenerator__blocks.h; sourceTree = "<group>"; };
+		D7C8C3EB1F3CE600006D378E /* SMBGameLevelGeneratorSet.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SMBGameLevelGeneratorSet.h; sourceTree = "<group>"; };
+		D7C8C3EC1F3CE600006D378E /* SMBGameLevelGeneratorSet.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SMBGameLevelGeneratorSet.m; sourceTree = "<group>"; };
 		D7DAF39E1F33D66400233C39 /* ShimmurBeams.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = ShimmurBeams.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		D7DAF3A21F33D66400233C39 /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
 		D7DAF3BA1F33D7B400233C39 /* ShimmurBeans-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "ShimmurBeans-Info.plist"; sourceTree = "<group>"; };
 		D7DAF3BC1F33D7B400233C39 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
+		D7E511B91F3CEC40008A6042 /* SMBGameLevelGeneratorSet+SMBUserSets.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "SMBGameLevelGeneratorSet+SMBUserSets.h"; sourceTree = "<group>"; };
+		D7E511BA1F3CEC40008A6042 /* SMBGameLevelGeneratorSet+SMBUserSets.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "SMBGameLevelGeneratorSet+SMBUserSets.m"; sourceTree = "<group>"; };
+		D7E511BD1F3CEE67008A6042 /* SMBGameLevelGeneratorSetViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SMBGameLevelGeneratorSetViewController.h; sourceTree = "<group>"; };
+		D7E511BE1F3CEE67008A6042 /* SMBGameLevelGeneratorSetViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SMBGameLevelGeneratorSetViewController.m; sourceTree = "<group>"; };
 		E8333239A81E9BC86B8B9223 /* Pods-ShimmurBeams.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-ShimmurBeams.release.xcconfig"; path = "Pods/Target Support Files/Pods-ShimmurBeams/Pods-ShimmurBeams.release.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -167,6 +186,7 @@
 				D761FE3E1F3AC2FF0083842A /* SMBGameBoard */,
 				D7C8C3D81F3CC7C7006D378E /* SMBGameBoardTileEntity */,
 				D761FE421F3AC2FF0083842A /* SMBGameLevel */,
+				D7E511B41F3CEC16008A6042 /* SMBGameLevelGeneratorSet */,
 				D7C8C3BF1F3B8A2B006D378E /* UIView */,
 			);
 			path = Category;
@@ -232,6 +252,8 @@
 				D761FE6A1F3AC2FF0083842A /* SMBGameBoardTile */,
 				D761FE701F3AC2FF0083842A /* SMBGameBoardTilePosition */,
 				D761FE731F3AC2FF0083842A /* SMBGameLevel */,
+				D7C8C3E51F3CE3B5006D378E /* SMBGameLevelGenerator */,
+				D7C8C3EA1F3CE5F1006D378E /* SMBGameLevelGeneratorSet */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -483,7 +505,10 @@
 		D761FE8A1F3AC2FF0083842A /* UIViewController */ = {
 			isa = PBXGroup;
 			children = (
+				D7C8C3DD1F3CE24A006D378E /* SMBGameLevelGeneratorSetsViewController */,
+				D7E511BC1F3CEE56008A6042 /* SMBGameLevelGeneratorSetViewController */,
 				D761FE8B1F3AC2FF0083842A /* SMBViewController */,
+				D7C8C3E11F3CE278006D378E /* UINavigationController */,
 			);
 			path = UIViewController;
 			sourceTree = "<group>";
@@ -600,6 +625,43 @@
 			path = "SMBGameBoardTileEntity+SMBProvidesPower";
 			sourceTree = "<group>";
 		};
+		D7C8C3DD1F3CE24A006D378E /* SMBGameLevelGeneratorSetsViewController */ = {
+			isa = PBXGroup;
+			children = (
+				D7C8C3DE1F3CE26A006D378E /* SMBGameLevelGeneratorSetsViewController.h */,
+				D7C8C3DF1F3CE26A006D378E /* SMBGameLevelGeneratorSetsViewController.m */,
+			);
+			path = SMBGameLevelGeneratorSetsViewController;
+			sourceTree = "<group>";
+		};
+		D7C8C3E11F3CE278006D378E /* UINavigationController */ = {
+			isa = PBXGroup;
+			children = (
+				D7C8C3E21F3CE2A8006D378E /* SMBGameLevelGeneratorSetsNavigationController.h */,
+				D7C8C3E31F3CE2A8006D378E /* SMBGameLevelGeneratorSetsNavigationController.m */,
+			);
+			path = UINavigationController;
+			sourceTree = "<group>";
+		};
+		D7C8C3E51F3CE3B5006D378E /* SMBGameLevelGenerator */ = {
+			isa = PBXGroup;
+			children = (
+				D7C8C3E91F3CE3D4006D378E /* SMBGameLevelGenerator__blocks.h */,
+				D7C8C3E61F3CE3C1006D378E /* SMBGameLevelGenerator.h */,
+				D7C8C3E71F3CE3C1006D378E /* SMBGameLevelGenerator.m */,
+			);
+			path = SMBGameLevelGenerator;
+			sourceTree = "<group>";
+		};
+		D7C8C3EA1F3CE5F1006D378E /* SMBGameLevelGeneratorSet */ = {
+			isa = PBXGroup;
+			children = (
+				D7C8C3EB1F3CE600006D378E /* SMBGameLevelGeneratorSet.h */,
+				D7C8C3EC1F3CE600006D378E /* SMBGameLevelGeneratorSet.m */,
+			);
+			path = SMBGameLevelGeneratorSet;
+			sourceTree = "<group>";
+		};
 		D7DAF3951F33D66400233C39 = {
 			isa = PBXGroup;
 			children = (
@@ -660,6 +722,32 @@
 				D7DAF3BC1F33D7B400233C39 /* Assets.xcassets */,
 			);
 			path = Images;
+			sourceTree = "<group>";
+		};
+		D7E511B41F3CEC16008A6042 /* SMBGameLevelGeneratorSet */ = {
+			isa = PBXGroup;
+			children = (
+				D7E511B81F3CEC3A008A6042 /* SMBGameLevelGeneratorSet+SMBUserSets */,
+			);
+			path = SMBGameLevelGeneratorSet;
+			sourceTree = "<group>";
+		};
+		D7E511B81F3CEC3A008A6042 /* SMBGameLevelGeneratorSet+SMBUserSets */ = {
+			isa = PBXGroup;
+			children = (
+				D7E511B91F3CEC40008A6042 /* SMBGameLevelGeneratorSet+SMBUserSets.h */,
+				D7E511BA1F3CEC40008A6042 /* SMBGameLevelGeneratorSet+SMBUserSets.m */,
+			);
+			path = "SMBGameLevelGeneratorSet+SMBUserSets";
+			sourceTree = "<group>";
+		};
+		D7E511BC1F3CEE56008A6042 /* SMBGameLevelGeneratorSetViewController */ = {
+			isa = PBXGroup;
+			children = (
+				D7E511BD1F3CEE67008A6042 /* SMBGameLevelGeneratorSetViewController.h */,
+				D7E511BE1F3CEE67008A6042 /* SMBGameLevelGeneratorSetViewController.m */,
+			);
+			path = SMBGameLevelGeneratorSetViewController;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -791,6 +879,7 @@
 				D761FE9A1F3AC2FF0083842A /* SMBGameBoardEntity.m in Sources */,
 				D761FEA81F3AC2FF0083842A /* SMBUniqueStringGenerator.m in Sources */,
 				D7C8C3B41F3B7A14006D378E /* SMBGameBoardTileEntityPickerView.m in Sources */,
+				D7C8C3E01F3CE26A006D378E /* SMBGameLevelGeneratorSetsViewController.m in Sources */,
 				D761FE9B1F3AC2FF0083842A /* SMBGameBoardGeneralEntity.m in Sources */,
 				D7C8C3D31F3BBE77006D378E /* SMBLevelExitTileEntity.m in Sources */,
 				D761FE9F1F3AC2FF0083842A /* SMBGeneralBeamExitDirectionRedirectTileEntity.m in Sources */,
@@ -798,6 +887,7 @@
 				D7C8C3DC1F3CC7ED006D378E /* SMBGameBoardTileEntity+SMBProvidesPower.m in Sources */,
 				D7C8C3CC1F3B91FB006D378E /* SMBGameBoardTileView.m in Sources */,
 				D761FEA71F3AC2FF0083842A /* SMBViewController.m in Sources */,
+				D7E511BB1F3CEC40008A6042 /* SMBGameLevelGeneratorSet+SMBUserSets.m in Sources */,
 				D761FE931F3AC2FF0083842A /* SMBGameBoard+SMBAddEntity.m in Sources */,
 				D761FE951F3AC2FF0083842A /* SMBMappedDataCollection.m in Sources */,
 				D761FE921F3AC2FF0083842A /* NSArray+SMBChanges.m in Sources */,
@@ -805,13 +895,17 @@
 				D761FE9E1F3AC2FF0083842A /* SMBForcedBeamRedirectTileEntity.m in Sources */,
 				D761FEA21F3AC2FF0083842A /* SMBGameLevel.m in Sources */,
 				D761FE9C1F3AC2FF0083842A /* SMBBeamCreatorTileEntity.m in Sources */,
+				D7C8C3E81F3CE3C1006D378E /* SMBGameLevelGenerator.m in Sources */,
 				D761FEA41F3AC2FF0083842A /* SMBGameBoardGeneralEntityView.m in Sources */,
 				D761FE991F3AC2FF0083842A /* SMBBeamEntityTileNode.m in Sources */,
+				D7C8C3E41F3CE2A8006D378E /* SMBGameLevelGeneratorSetsNavigationController.m in Sources */,
 				D761FE9D1F3AC2FF0083842A /* SMBGameBoardTileEntity.m in Sources */,
 				D761FE961F3AC2FF0083842A /* SMBMutableMappedDataCollection.m in Sources */,
 				D761FEA51F3AC2FF0083842A /* SMBGameBoardView.m in Sources */,
 				D761FEA11F3AC2FF0083842A /* SMBGameBoardTilePosition.m in Sources */,
+				D7C8C3ED1F3CE600006D378E /* SMBGameLevelGeneratorSet.m in Sources */,
 				D761FE981F3AC2FF0083842A /* SMBBeamEntity.m in Sources */,
+				D7E511BF1F3CEE67008A6042 /* SMBGameLevelGeneratorSetViewController.m in Sources */,
 				D761FE941F3AC2FF0083842A /* SMBGameLevel+SMBTestLevel.m in Sources */,
 				D761FEA01F3AC2FF0083842A /* SMBGameBoardTile.m in Sources */,
 			);

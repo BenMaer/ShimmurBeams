@@ -7,7 +7,7 @@
 //
 
 #import "SMBAppDelegate.h"
-#import "SMBViewController.h"
+#import "SMBGameLevelGeneratorSetsNavigationController.h"
 
 #import <ResplendentUtilities/RUConditionalReturn.h>
 
@@ -30,7 +30,7 @@
 {
 	UIWindow* const window = [[UIWindow alloc]initWithFrame:[UIScreen mainScreen].bounds];
 	[window setBackgroundColor:[UIColor redColor]];
-	[window setRootViewController:[SMBViewController new]];
+	[window setRootViewController:[SMBGameLevelGeneratorSetsNavigationController new]];
 
 	[self setWindow:window];
 
