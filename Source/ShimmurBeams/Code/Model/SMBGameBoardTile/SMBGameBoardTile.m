@@ -9,6 +9,8 @@
 #import "SMBGameBoardTile.h"
 #import "SMBGameBoardTileEntity.h"
 #import "SMBGameBoard.h"
+#import "SMBMutableMappedDataCollection.h"
+#import "SMBGameBoardTileEntity+SMBProvidesPower.h"
 
 #import <ResplendentUtilities/RUConditionalReturn.h>
 #import <ResplendentUtilities/NSMutableArray+RUAddObjectIfNotNil.h>
@@ -18,10 +20,33 @@
 
 
 
+#define kSMBGameBoardTile_gameBoardTileEntities_powerProviders_validate (kSMBEnvironment__SMBGameBoardTile_gameBoardTileEntities_powerProviders_validate && 1)
+
+
+
+
+
 @interface SMBGameBoardTile ()
 
 #pragma mark - gameBoardTileEntities
 @property (nonatomic, copy, nullable) NSArray<SMBGameBoardTileEntity*>* gameBoardTileEntities;
+-(void)gameBoardTileEntities_update;
+@property (nonatomic, readonly, strong, nullable) SMBMutableMappedDataCollection<SMBGameBoardTileEntity*>* gameBoardTileEntities_mappedDataCollection;
+
+#pragma mark - gameBoardTileEntities_powerProviders
+@property (nonatomic, readonly, strong, nullable) SMBMutableMappedDataCollection<SMBGameBoardTileEntity*>* gameBoardTileEntities_powerProviders;
+-(void)gameBoardTileEntities_powerProviders_add:(nonnull SMBGameBoardTileEntity*)gameBoardTileEntity;
+-(void)gameBoardTileEntities_powerProviders_remove:(nonnull SMBGameBoardTileEntity*)gameBoardTileEntity;
+
+#if kSMBGameBoardTile_gameBoardTileEntities_powerProviders_validate
+
+-(void)gameBoardTileEntities_powerProviders_validate;
+
+#endif
+
+#pragma mark - isPowered
+@property (nonatomic, assign) BOOL isPowered;
+-(void)isPowered_update;
 
 @end
 
@@ -63,6 +88,9 @@
 	{
 		_gameBoardTilePosition = gameBoardTilePosition;
 		_gameBoard = gameBoard;
+
+		_gameBoardTileEntities_mappedDataCollection = [SMBMutableMappedDataCollection<SMBGameBoardTileEntity*> new];
+		_gameBoardTileEntities_powerProviders = [SMBMutableMappedDataCollection<SMBGameBoardTileEntity*> new];
 	}
 
 	return self;
@@ -85,40 +113,72 @@
 }
 
 #pragma mark - gameBoardTileEntities
+-(void)gameBoardTileEntities_update
+{
+	[self setGameBoardTileEntities:[self.gameBoardTileEntities_mappedDataCollection mappableObjects]];
+}
+
 -(void)gameBoardTileEntities_add:(nonnull SMBGameBoardTileEntity*)gameBoardTileEntity
 {
-	kRUConditionalReturn(gameBoardTileEntity == nil, YES);
+	[self.gameBoardTileEntities_mappedDataCollection mappableObject_add:gameBoardTileEntity];
 
-	NSArray<SMBGameBoardTileEntity*>* const gameBoardTileEntities_old = self.gameBoardTileEntities;
-	kRUConditionalReturn([gameBoardTileEntities_old containsObject:gameBoardTileEntity], YES);
-
-	NSMutableArray<SMBGameBoardTileEntity*>* const gameBoardTileEntities_new = [NSMutableArray<SMBGameBoardTileEntity*> array];
-
-	if (gameBoardTileEntities_old)
+	if ([gameBoardTileEntity smb_providesPower])
 	{
-		[gameBoardTileEntities_new addObjectsFromArray:gameBoardTileEntities_old];
+		[self gameBoardTileEntities_powerProviders_add:gameBoardTileEntity];
 	}
 
-	[gameBoardTileEntities_new addObject:gameBoardTileEntity];
-
-	[self setGameBoardTileEntities:[NSArray<SMBGameBoardTileEntity*> arrayWithArray:gameBoardTileEntities_new]];
+	[self gameBoardTileEntities_update];
 }
 
 -(void)gameBoardTileEntities_remove:(nonnull SMBGameBoardTileEntity*)gameBoardTileEntity
 {
-	kRUConditionalReturn(gameBoardTileEntity == nil, YES);
+	[self.gameBoardTileEntities_mappedDataCollection mappableObject_remove:gameBoardTileEntity];
 
-	NSArray<SMBGameBoardTileEntity*>* const gameBoardTileEntities_old = self.gameBoardTileEntities;
-	kRUConditionalReturn(gameBoardTileEntities_old == nil, YES);
+	if ([gameBoardTileEntity smb_providesPower])
+	{
+		[self gameBoardTileEntities_powerProviders_remove:gameBoardTileEntity];
+	}
 
-	NSInteger const gameBoardTileEntity_index = [gameBoardTileEntities_old indexOfObject:gameBoardTileEntity];
-	kRUConditionalReturn(gameBoardTileEntity_index == NSNotFound, YES);
-
-	NSMutableArray<SMBGameBoardTileEntity*>* const gameBoardTileEntities_new = [NSMutableArray<SMBGameBoardTileEntity*> arrayWithArray:gameBoardTileEntities_old];
-	[gameBoardTileEntities_new removeObjectAtIndex:gameBoardTileEntity_index];
-
-	[self setGameBoardTileEntities:[NSArray<SMBGameBoardTileEntity*> arrayWithArray:gameBoardTileEntities_new]];
+	[self gameBoardTileEntities_update];
 }
+
+#pragma mark - gameBoardTileEntities_powerProviders
+-(void)gameBoardTileEntities_powerProviders_add:(nonnull SMBGameBoardTileEntity*)gameBoardTileEntity
+{
+	kRUConditionalReturn(gameBoardTileEntity == nil, YES);
+	kRUConditionalReturn([gameBoardTileEntity smb_providesPower] == false, YES);
+
+	[self.gameBoardTileEntities_powerProviders mappableObject_add:gameBoardTileEntity];
+
+#if kSMBGameBoardTile_gameBoardTileEntities_powerProviders_validate
+	[self gameBoardTileEntities_powerProviders_validate];
+#endif
+
+	[self isPowered_update];
+}
+
+-(void)gameBoardTileEntities_powerProviders_remove:(nonnull SMBGameBoardTileEntity*)gameBoardTileEntity
+{
+	kRUConditionalReturn(gameBoardTileEntity == nil, YES);
+	kRUConditionalReturn([gameBoardTileEntity smb_providesPower] == false, YES);
+
+	[self.gameBoardTileEntities_powerProviders mappableObject_remove:gameBoardTileEntity];
+
+#if kSMBGameBoardTile_gameBoardTileEntities_powerProviders_validate
+	[self gameBoardTileEntities_powerProviders_validate];
+#endif
+
+	[self isPowered_update];
+}
+
+#if kSMBGameBoardTile_gameBoardTileEntities_powerProviders_validate
+
+-(void)gameBoardTileEntities_powerProviders_validate
+{
+	
+}
+
+#endif
 
 #pragma mark - gameBoardTile
 -(nullable SMBGameBoardTile*)gameBoardTile_next_with_direction:(SMBGameBoardTile__direction)direction
@@ -128,6 +188,12 @@
 
 	return [gameBoard gameBoardTile_next_from_gameBoardTile:self
 												  direction:direction];
+}
+
+#pragma mark - isPowered
+-(void)isPowered_update
+{
+	[self setIsPowered:[self.gameBoardTileEntities_powerProviders mappableObjects].count];
 }
 
 @end
@@ -140,5 +206,5 @@
 
 +(nonnull NSString*)gameBoardTileEntity_for_beamInteractions{return NSStringFromSelector(_cmd);}
 +(nonnull NSString*)gameBoardTileEntities{return NSStringFromSelector(_cmd);}
-
++(nonnull NSString*)isPowered{return NSStringFromSelector(_cmd);}
 @end

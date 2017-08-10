@@ -19,11 +19,16 @@
 @class SMBGameBoardTilePosition;
 @class SMBGameBoardTileEntity;
 @class SMBGameBoardEntity;
+@class SMBGameLevel;
+
 
 
 
 
 @interface SMBGameBoard : NSObject
+
+#pragma mark - gameLevel
+@property (nonatomic, assign, nullable) SMBGameLevel* gameLevel;
 
 #pragma mark - init
 /**

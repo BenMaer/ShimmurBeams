@@ -45,6 +45,9 @@
 #pragma mark - gameBoardTile
 -(nullable SMBGameBoardTile*)gameBoardTile_next_with_direction:(SMBGameBoardTile__direction)direction;
 
+#pragma mark - isPowered
+@property (nonatomic, readonly, assign) BOOL isPowered;
+
 @end
 
 
@@ -55,5 +58,6 @@
 
 +(nonnull NSString*)gameBoardTileEntity_for_beamInteractions;
 +(nonnull NSString*)gameBoardTileEntities;
++(nonnull NSString*)isPowered;
 
 @end

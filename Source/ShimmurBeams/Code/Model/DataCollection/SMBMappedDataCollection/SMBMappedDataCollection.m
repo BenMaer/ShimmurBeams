@@ -103,10 +103,10 @@
 }
 
 #pragma mark - changes
-+(void)changes_from_mappedDataCollection:(nullable SMBMappedDataCollection<id>*)from_mappedDataCollection
-				 to_mappedDataCollection:(nullable SMBMappedDataCollection<id>*)to_mappedDataCollection
-						  removedObjects:(NSArray<id>*_Nullable * _Nonnull)removedObjects
-							  newObjects:(NSArray<id>*_Nullable * _Nonnull)newObjects
++(void)changes_from_mappedDataCollection:(nullable SMBMappedDataCollection<id<SMBMappedDataCollection_MappableObject>>*)from_mappedDataCollection
+				 to_mappedDataCollection:(nullable SMBMappedDataCollection<id<SMBMappedDataCollection_MappableObject>>*)to_mappedDataCollection
+						  removedObjects:(NSArray<id<SMBMappedDataCollection_MappableObject>>*_Nullable * _Nonnull)removedObjects
+							  newObjects:(NSArray<id<SMBMappedDataCollection_MappableObject>>*_Nullable * _Nonnull)newObjects
 {
 	kRUConditionalReturn(removedObjects == nil, YES);
 	kRUConditionalReturn(newObjects == nil, YES);

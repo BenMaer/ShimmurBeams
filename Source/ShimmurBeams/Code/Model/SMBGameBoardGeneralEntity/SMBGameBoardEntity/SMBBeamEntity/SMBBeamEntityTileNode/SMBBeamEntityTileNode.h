@@ -9,6 +9,7 @@
 #import "SMBGameBoardTileEntity.h"
 #import "SMBGameBoardTile__directions.h"
 #import "SMBMappedDataCollection_MappableObject.h"
+#import "SMBGameBoardTileEntity_PowerProvider.h"
 
 #import <Foundation/Foundation.h>
 
@@ -23,7 +24,7 @@
 
 
 
-@interface SMBBeamEntityTileNode : SMBGameBoardTileEntity <SMBMappedDataCollection_MappableObject>
+@interface SMBBeamEntityTileNode : SMBGameBoardTileEntity <SMBMappedDataCollection_MappableObject, SMBGameBoardTileEntity_PowerProvider>
 
 #pragma mark - beamEntity
 @property (nonatomic, readonly, assign, nullable) SMBBeamEntity* beamEntity;

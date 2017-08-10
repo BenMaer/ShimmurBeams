@@ -40,16 +40,9 @@
 
 	SMBForcedBeamRedirectTileEntity* const forcedBeamRedirectTileEntity = [[SMBForcedBeamRedirectTileEntity alloc] init_with_forcedBeamExitDirection:SMBGameBoardTile__direction_right];
 	[gameBoardTileEntity addObject:forcedBeamRedirectTileEntity];
-//	[gameBoard gameBoardTileEntity_for_beamInteractions_set:forcedBeamRedirectTileEntity
-//												  to_column:1
-//														row:1];
 
 	SMBForcedBeamRedirectTileEntity* const forcedBeamRedirectTileEntity2 = [[SMBForcedBeamRedirectTileEntity alloc] init_with_forcedBeamExitDirection:SMBGameBoardTile__direction_down];
 	[gameBoardTileEntity addObject:forcedBeamRedirectTileEntity2];
-//	[gameBoard gameBoardTileEntity_for_beamInteractions_set:forcedBeamRedirectTileEntity2
-//												  to_column:3
-//														row:1];
-
 
 	return
 	[[self alloc] init_with_gameBoard:gameBoard

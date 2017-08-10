@@ -31,4 +31,7 @@
 -(nullable instancetype)init_with_gameBoard:(nonnull SMBGameBoard*)gameBoard
 				usableGameBoardTileEntities:(nullable NSArray<SMBGameBoardTileEntity*>*)usableGameBoardTileEntities NS_DESIGNATED_INITIALIZER;
 
+#pragma mark - isComplete
+@property (nonatomic, assign) BOOL isComplete;
+
 @end
