@@ -38,8 +38,8 @@
 -(void)gameBoardTileEntities_add:(nonnull SMBGameBoardTileEntity*)gameBoardTileEntity;
 -(void)gameBoardTileEntities_remove:(nonnull SMBGameBoardTileEntity*)gameBoardTileEntity;
 
-#pragma mark - beamDirectionsBlocked
-@property (nonatomic, readonly, assign) SMBGameBoardTile__direction beamDirectionsBlocked;
+//#pragma mark - beamDirectionsBlocked
+//@property (nonatomic, readonly, assign) SMBGameBoardTile__direction beamDirectionsBlocked;
 
 #pragma mark - init
 -(nullable instancetype)init_with_gameBoardTilePosition:(nonnull SMBGameBoardTilePosition*)gameBoardTilePosition
@@ -61,7 +61,7 @@
 
 +(nonnull NSString*)gameBoardTileEntity_for_beamInteractions;
 +(nonnull NSString*)gameBoardTileEntities;
-+(nonnull NSString*)beamDirectionsBlocked;
+//+(nonnull NSString*)beamDirectionsBlocked;
 +(nonnull NSString*)isPowered;
 
 @end

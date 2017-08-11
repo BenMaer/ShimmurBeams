@@ -13,7 +13,6 @@
 #import "SMBGameBoardTileEntity+SMBProvidesPower.h"
 #import "SMBBeamBlockerTileEntity.h"
 #import "SMBGameBoardTileEntity_PowerProvider.h"
-#import "SMBGameBoardTileEntity+SMBBeamBlocker.h"
 
 #import <ResplendentUtilities/RUConditionalReturn.h>
 #import <ResplendentUtilities/NSMutableArray+RUAddObjectIfNotNil.h>
@@ -35,15 +34,15 @@
 -(void)gameBoardTileEntities_powerProviders_mappedDataCollection_add:(nonnull SMBGameBoardTileEntity<SMBGameBoardTileEntity_PowerProvider>*)gameBoardTileEntity;
 -(void)gameBoardTileEntities_powerProviders_mappedDataCollection_remove:(nonnull SMBGameBoardTileEntity<SMBGameBoardTileEntity_PowerProvider>*)gameBoardTileEntity;
 
-#pragma mark - gameBoardTileEntities_beamBlockers
-@property (nonatomic, strong, nullable) SMBMutableMappedDataCollection<SMBGameBoardTileEntity<SMBBeamBlockerTileEntity>*>* gameBoardTileEntities_beamBlockers_mappedDataCollection;
--(void)gameBoardTileEntities_beamBlockers_mappedDataCollection_add:(nonnull SMBGameBoardTileEntity<SMBBeamBlockerTileEntity>*)gameBoardTileEntity;
--(void)gameBoardTileEntities_beamBlockers_mappedDataCollection_remove:(nonnull SMBGameBoardTileEntity<SMBBeamBlockerTileEntity>*)gameBoardTileEntity;
+//#pragma mark - gameBoardTileEntities_beamBlockers
+//@property (nonatomic, strong, nullable) SMBMutableMappedDataCollection<SMBGameBoardTileEntity<SMBBeamBlockerTileEntity>*>* gameBoardTileEntities_beamBlockers_mappedDataCollection;
+//-(void)gameBoardTileEntities_beamBlockers_mappedDataCollection_add:(nonnull SMBGameBoardTileEntity<SMBBeamBlockerTileEntity>*)gameBoardTileEntity;
+//-(void)gameBoardTileEntities_beamBlockers_mappedDataCollection_remove:(nonnull SMBGameBoardTileEntity<SMBBeamBlockerTileEntity>*)gameBoardTileEntity;
 
-#pragma mark - beamDirectionsBlocked
-@property (nonatomic, assign) SMBGameBoardTile__direction beamDirectionsBlocked;
--(void)beamDirectionsBlocked_update;
--(SMBGameBoardTile__direction)beamDirectionsBlocked_generate;
+//#pragma mark - beamDirectionsBlocked
+//@property (nonatomic, assign) SMBGameBoardTile__direction beamDirectionsBlocked;
+//-(void)beamDirectionsBlocked_update;
+//-(SMBGameBoardTile__direction)beamDirectionsBlocked_generate;
 
 #pragma mark - isPowered
 @property (nonatomic, assign) BOOL isPowered;
@@ -102,7 +101,7 @@
 
 		_gameBoardTileEntities_mappedDataCollection = [SMBMutableMappedDataCollection<SMBGameBoardTileEntity*> new];
 		_gameBoardTileEntities_powerProviders_mappedDataCollection = [SMBMutableMappedDataCollection<SMBGameBoardTileEntity<SMBGameBoardTileEntity_PowerProvider>*> new];
-		_gameBoardTileEntities_beamBlockers_mappedDataCollection = [SMBMutableMappedDataCollection<SMBGameBoardTileEntity<SMBBeamBlockerTileEntity>*> new];
+//		_gameBoardTileEntities_beamBlockers_mappedDataCollection = [SMBMutableMappedDataCollection<SMBGameBoardTileEntity<SMBBeamBlockerTileEntity>*> new];
 	}
 
 	return self;
@@ -124,6 +123,9 @@
 -(void)setGameBoardTileEntity_for_beamInteractions:(nullable SMBGameBoardTileEntity*)gameBoardTileEntity_for_beamInteractions
 {
 	kRUConditionalReturn(self.gameBoardTileEntity_for_beamInteractions == gameBoardTileEntity_for_beamInteractions, NO);
+	kRUConditionalReturn((self.gameBoardTileEntity_for_beamInteractions == nil)
+						 ==
+						 (gameBoardTileEntity_for_beamInteractions == nil), NO);
 
 	SMBGameBoardTileEntity* const gameBoardTileEntity_for_beamInteractions_old = self.gameBoardTileEntity_for_beamInteractions;
 	_gameBoardTileEntity_for_beamInteractions = gameBoardTileEntity_for_beamInteractions;
@@ -158,10 +160,10 @@
 		[self gameBoardTileEntities_powerProviders_mappedDataCollection_add:[gameBoardTileEntity smb_providesPower_selfOrNull]];
 	}
 
-	if ([gameBoardTileEntity smb_beamBlocker])
-	{
-		[self gameBoardTileEntities_beamBlockers_mappedDataCollection_add:[gameBoardTileEntity smb_beamBlocker_selfOrNull]];
-	}
+//	if ([gameBoardTileEntity smb_beamBlocker])
+//	{
+//		[self gameBoardTileEntities_beamBlockers_mappedDataCollection_add:[gameBoardTileEntity smb_beamBlocker_selfOrNull]];
+//	}
 
 	[self gameBoardTileEntities_update];
 
@@ -180,10 +182,10 @@
 		[self gameBoardTileEntities_powerProviders_mappedDataCollection_remove:[gameBoardTileEntity smb_providesPower_selfOrNull]];
 	}
 
-	if ([gameBoardTileEntity smb_beamBlocker])
-	{
-		[self gameBoardTileEntities_beamBlockers_mappedDataCollection_remove:[gameBoardTileEntity smb_beamBlocker_selfOrNull]];
-	}
+//	if ([gameBoardTileEntity smb_beamBlocker])
+//	{
+//		[self gameBoardTileEntities_beamBlockers_mappedDataCollection_remove:[gameBoardTileEntity smb_beamBlocker_selfOrNull]];
+//	}
 
 	[self gameBoardTileEntities_update];
 
@@ -212,72 +214,79 @@
 	[self isPowered_update];
 }
 
-#pragma mark - gameBoardTileEntities_beamBlockers
--(void)gameBoardTileEntities_beamBlockers_mappedDataCollection_add:(nonnull SMBGameBoardTileEntity<SMBBeamBlockerTileEntity>*)gameBoardTileEntity
-{
-	kRUConditionalReturn(gameBoardTileEntity == nil, YES);
-	kRUConditionalReturn([gameBoardTileEntity smb_beamBlocker] == false, YES);
+//#pragma mark - gameBoardTileEntities_beamBlockers
+//-(void)gameBoardTileEntities_beamBlockers_mappedDataCollection_add:(nonnull SMBGameBoardTileEntity<SMBBeamBlockerTileEntity>*)gameBoardTileEntity
+//{
+//	kRUConditionalReturn(gameBoardTileEntity == nil, YES);
+//	kRUConditionalReturn([gameBoardTileEntity smb_beamBlocker] == false, YES);
+//
+//	[self.gameBoardTileEntities_powerProviders_mappedDataCollection mappableObject_add:gameBoardTileEntity];
+//
+//	[self beamDirectionsBlocked_update];
+//}
+//
+//-(void)gameBoardTileEntities_beamBlockers_mappedDataCollection_remove:(nonnull SMBGameBoardTileEntity<SMBBeamBlockerTileEntity>*)gameBoardTileEntity
+//{
+//	kRUConditionalReturn(gameBoardTileEntity == nil, YES);
+//	kRUConditionalReturn([gameBoardTileEntity smb_beamBlocker] == false, YES);
+//
+//	[self.gameBoardTileEntities_powerProviders_mappedDataCollection mappableObject_remove:gameBoardTileEntity];
+//
+//	[self beamDirectionsBlocked_update];
+//}
 
-	[self.gameBoardTileEntities_powerProviders_mappedDataCollection mappableObject_add:gameBoardTileEntity];
-
-	[self beamDirectionsBlocked_update];
-}
-
--(void)gameBoardTileEntities_beamBlockers_mappedDataCollection_remove:(nonnull SMBGameBoardTileEntity<SMBBeamBlockerTileEntity>*)gameBoardTileEntity
-{
-	kRUConditionalReturn(gameBoardTileEntity == nil, YES);
-	kRUConditionalReturn([gameBoardTileEntity smb_beamBlocker] == false, YES);
-
-	[self.gameBoardTileEntities_powerProviders_mappedDataCollection mappableObject_remove:gameBoardTileEntity];
-
-	[self beamDirectionsBlocked_update];
-}
-
-#pragma mark - beamDirectionsBlocked
--(void)beamDirectionsBlocked_update
-{
-	[self setBeamDirectionsBlocked:[self beamDirectionsBlocked_generate]];
-}
-
--(SMBGameBoardTile__direction)beamDirectionsBlocked_generate
-{
-	NSMutableIndexSet* const directions_unblocked = [NSMutableIndexSet indexSet];
-	
-	for (SMBGameBoardTile__direction direction = SMBGameBoardTile__direction__first;
-		 direction <= SMBGameBoardTile__direction__last;
-		 direction = direction << 1)
-	{
-		[directions_unblocked addIndex:direction];
-	}
-
-	[[self.gameBoardTileEntities_mappedDataCollection mappableObjects] enumerateObjectsUsingBlock:^(SMBGameBoardTileEntity<SMBMappedDataCollection_MappableObject>* _Nonnull gameBoardTileEntity, NSUInteger idx, BOOL * _Nonnull stop) {
-
-		SMBGameBoardTileEntity<SMBBeamBlockerTileEntity>* const gameBoardTileEntity_beamBlocker = [gameBoardTileEntity smb_beamBlocker_selfOrNull];
-		kRUConditionalReturn(gameBoardTileEntity_beamBlocker == nil, NO);
-
-		NSIndexSet* const directions_unblocked_copy = [[NSIndexSet alloc] initWithIndexSet:directions_unblocked];
-		[directions_unblocked_copy enumerateIndexesUsingBlock:^(NSUInteger idx, BOOL * _Nonnull stop) {
-			SMBGameBoardTile__direction direction = idx;
-			if ([gameBoardTileEntity_beamBlocker beamEnterDirection_isBlocked:direction])
-			{
-				[directions_unblocked removeIndex:idx];
-			}
-		}];
-	}];
-
-	SMBGameBoardTile__direction beamDirectionsBlocked = 0;
-	for (SMBGameBoardTile__direction direction = SMBGameBoardTile__direction__first;
-		 direction <= SMBGameBoardTile__direction__last;
-		 direction = direction << 1)
-	{
-		if ([directions_unblocked containsIndex:direction] == false)
-		{
-			beamDirectionsBlocked |= direction;
-		}
-	}
-
-	return beamDirectionsBlocked;
-}
+//#pragma mark - beamDirectionsBlocked
+//-(void)setBeamDirectionsBlocked:(SMBGameBoardTile__direction)beamDirectionsBlocked
+//{
+//	kRUConditionalReturn(self.beamDirectionsBlocked == beamDirectionsBlocked, NO);
+//
+//	_beamDirectionsBlocked = beamDirectionsBlocked;
+//}
+//
+//-(void)beamDirectionsBlocked_update
+//{
+//	[self setBeamDirectionsBlocked:[self beamDirectionsBlocked_generate]];
+//}
+//
+//-(SMBGameBoardTile__direction)beamDirectionsBlocked_generate
+//{
+//	NSMutableIndexSet* const directions_unblocked = [NSMutableIndexSet indexSet];
+//	
+//	for (SMBGameBoardTile__direction direction = SMBGameBoardTile__direction__first;
+//		 direction <= SMBGameBoardTile__direction__last;
+//		 direction = direction << 1)
+//	{
+//		[directions_unblocked addIndex:direction];
+//	}
+//
+//	[[self.gameBoardTileEntities_mappedDataCollection mappableObjects] enumerateObjectsUsingBlock:^(SMBGameBoardTileEntity<SMBMappedDataCollection_MappableObject>* _Nonnull gameBoardTileEntity, NSUInteger idx, BOOL * _Nonnull stop) {
+//
+//		SMBGameBoardTileEntity<SMBBeamBlockerTileEntity>* const gameBoardTileEntity_beamBlocker = [gameBoardTileEntity smb_beamBlocker_selfOrNull];
+//		kRUConditionalReturn(gameBoardTileEntity_beamBlocker == nil, NO);
+//
+//		NSIndexSet* const directions_unblocked_copy = [[NSIndexSet alloc] initWithIndexSet:directions_unblocked];
+//		[directions_unblocked_copy enumerateIndexesUsingBlock:^(NSUInteger idx, BOOL * _Nonnull stop) {
+//			SMBGameBoardTile__direction direction = idx;
+//			if ([gameBoardTileEntity_beamBlocker beamEnterDirection_isBlocked:direction])
+//			{
+//				[directions_unblocked removeIndex:idx];
+//			}
+//		}];
+//	}];
+//
+//	SMBGameBoardTile__direction beamDirectionsBlocked = 0;
+//	for (SMBGameBoardTile__direction direction = SMBGameBoardTile__direction__first;
+//		 direction <= SMBGameBoardTile__direction__last;
+//		 direction = direction << 1)
+//	{
+//		if ([directions_unblocked containsIndex:direction] == false)
+//		{
+//			beamDirectionsBlocked |= direction;
+//		}
+//	}
+//
+//	return beamDirectionsBlocked;
+//}
 
 #pragma mark - gameBoardTile
 -(nullable SMBGameBoardTile*)gameBoardTile_next_with_direction:(SMBGameBoardTile__direction)direction

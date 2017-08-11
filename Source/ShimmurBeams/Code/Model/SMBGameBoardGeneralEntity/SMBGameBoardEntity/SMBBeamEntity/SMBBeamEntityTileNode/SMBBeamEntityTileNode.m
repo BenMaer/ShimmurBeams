@@ -13,6 +13,8 @@
 #import "SMBGameBoardTilePosition.h"
 #import "SMBGeneralBeamExitDirectionRedirectTileEntity.h"
 #import "SMBBeamEntity.h"
+#import "SMBGameBoardTileEntity+SMBBeamBlocker.h"
+#import "SMBGameBoardTile__directions.h"
 
 #import <ResplendentUtilities/RUConditionalReturn.h>
 #import <ResplendentUtilities/RUClassOrNilUtil.h>
@@ -71,8 +73,10 @@ typedef NS_ENUM(NSInteger, SMBBeamEntityTileNode__state) {
 -(void)node_next_generationEnabled_update;
 -(BOOL)node_next_generationEnabled_shouldBe;
 
-#pragma mark - gameBoardTile
--(nullable SMBGameBoardTile*)gameBoardTile_next_appropriate;
+#pragma mark - node_next_gameTile
+@property (nonatomic, strong, nullable) SMBGameBoardTile* node_next_gameTile;
+-(void)node_next_gameTile_update;
+-(nullable SMBGameBoardTile*)node_next_gameTile_appropriate;
 
 #pragma mark - draw
 -(void)draw_half_line_in_rect:(CGRect)rect
@@ -183,7 +187,6 @@ typedef NS_ENUM(NSInteger, SMBBeamEntityTileNode__state) {
 
 	NSMutableArray<NSString*>* const propertiesToObserve = [NSMutableArray<NSString*> array];
 	[propertiesToObserve addObject:[SMBGameBoardTile_PropertiesForKVO gameBoardTileEntity_for_beamInteractions]];
-	[propertiesToObserve addObject:[SMBGameBoardTile_PropertiesForKVO beamDirectionsBlocked]];
 
 	[propertiesToObserve enumerateObjectsUsingBlock:^(NSString * _Nonnull propertyToObserve, NSUInteger idx, BOOL * _Nonnull stop) {
 		if (registered)
@@ -266,10 +269,7 @@ typedef NS_ENUM(NSInteger, SMBBeamEntityTileNode__state) {
 			if ([keyPath isEqualToString:[SMBGameBoardTile_PropertiesForKVO gameBoardTileEntity_for_beamInteractions]])
 			{
 				[self beamExitDirection_update];
-			}
-			else if ([keyPath isEqualToString:[SMBGameBoardTile_PropertiesForKVO beamDirectionsBlocked]])
-			{
-				[self node_next_update];
+				[self node_next_gameTile_update];
 			}
 			else
 			{
@@ -350,20 +350,34 @@ typedef NS_ENUM(NSInteger, SMBBeamEntityTileNode__state) {
 	SMBBeamEntity* const beamEntity = self.beamEntity;
 	kRUConditionalReturn_ReturnValueNil(beamEntity == nil, YES);
 
-	SMBGameBoardTile* const gameBoardTile_next = [self gameBoardTile_next_appropriate];
-	kRUConditionalReturn_ReturnValueNil(gameBoardTile_next == nil, NO);
+	SMBGameBoardTile* const node_next_gameTile = self.node_next_gameTile;
+	kRUConditionalReturn_ReturnValueNil(node_next_gameTile == nil, NO);
 
 	SMBBeamEntityTileNode* const node_next =
 	[[SMBBeamEntityTileNode alloc] init_with_beamEntity:beamEntity
 										  node_previous:self];
 
-	[gameBoardTile_next gameBoardTileEntities_add:node_next];
+	[node_next_gameTile gameBoardTileEntities_add:node_next];
 
 	return node_next;
 }
 
-#pragma mark - gameBoardTile
--(nullable SMBGameBoardTile*)gameBoardTile_next_appropriate
+#pragma mark - node_next_gameTile
+-(void)setNode_next_gameTile:(nullable SMBGameBoardTile*)node_next_gameTile
+{
+	kRUConditionalReturn(self.node_next_gameTile == node_next_gameTile, NO);
+
+	_node_next_gameTile = node_next_gameTile;
+
+	[self node_next_update];
+}
+
+-(void)node_next_gameTile_update
+{
+	[self setNode_next_gameTile:[self node_next_gameTile_appropriate]];
+}
+
+-(nullable SMBGameBoardTile*)node_next_gameTile_appropriate
 {
 	SMBGameBoardTile* const gameBoardTile = self.gameBoardTile;
 	kRUConditionalReturn_ReturnValueNil(gameBoardTile == nil, YES);
@@ -372,7 +386,10 @@ typedef NS_ENUM(NSInteger, SMBBeamEntityTileNode__state) {
 	kRUConditionalReturn_ReturnValueNil(beamExitDirection == SMBGameBoardTile__direction_none, NO);
 	kRUConditionalReturn_ReturnValueNil(SMBGameBoardTile__direction__isInRange(beamExitDirection) == false, YES);
 
-	kRUConditionalReturn_ReturnValueNil(gameBoardTile.beamDirectionsBlocked & [SMBBeamEntityTileNode beamEnterDirection_for_node_previous_exitDirection:beamExitDirection], NO);
+	SMBGameBoardTileEntity* const gameBoardTileEntity = gameBoardTile.gameBoardTileEntity_for_beamInteractions;
+	kRUConditionalReturn_ReturnValueNil((gameBoardTileEntity != nil)
+										&&
+										([gameBoardTileEntity smb_beamBlocker_and_beamEnterDirection_isBlocked:[SMBBeamEntityTileNode beamEnterDirection_for_node_previous_exitDirection:beamExitDirection]]), NO);
 
 	return [gameBoardTile gameBoardTile_next_with_direction:beamExitDirection];
 }

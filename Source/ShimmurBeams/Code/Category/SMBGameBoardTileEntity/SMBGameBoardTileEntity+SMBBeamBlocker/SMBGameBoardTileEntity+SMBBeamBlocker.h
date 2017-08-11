@@ -8,6 +8,7 @@
 
 #import "SMBGameBoardTileEntity.h"
 #import "SMBBeamBlockerTileEntity.h"
+#import "SMBGameBoardTile__directions.h"
 
 
 
@@ -18,5 +19,6 @@
 #pragma mark - beamBlocker
 -(BOOL)smb_beamBlocker;
 -(nullable SMBGameBoardTileEntity<SMBBeamBlockerTileEntity>*)smb_beamBlocker_selfOrNull;
+-(BOOL)smb_beamBlocker_and_beamEnterDirection_isBlocked:(SMBGameBoardTile__direction)direction;
 
 @end

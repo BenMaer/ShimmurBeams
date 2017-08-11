@@ -22,6 +22,7 @@
 +(nonnull instancetype)smb_userSet_1
 {
 	NSMutableArray<SMBGameLevelGenerator*>* const gameLevelGenerators = [NSMutableArray<SMBGameLevelGenerator*> array];
+
 	[gameLevelGenerators addObject:[[SMBGameLevelGenerator alloc] init_with_generateLevelBlock:^SMBGameLevel * _Nonnull{
 		return [SMBGameLevel smb_testLevel_oneForce_right];
 	}
@@ -41,6 +42,11 @@
 		return [SMBGameLevel smb_testLevel_twoWalls_threeForces];
 	}
 																						  name:@"Two walls in the way"]];
+
+	[gameLevelGenerators addObject:[[SMBGameLevelGenerator alloc] init_with_generateLevelBlock:^SMBGameLevel * _Nonnull{
+		return [SMBGameLevel smb_testLevel_wallsAndForces_twoForcesNotMovable];
+	}
+																						  name:@"Walls and forces, some forces not movable"]];
 
 	[gameLevelGenerators addObject:[[SMBGameLevelGenerator alloc] init_with_generateLevelBlock:^SMBGameLevel * _Nonnull{
 		return [SMBGameLevel smb_testLevel_clover];

@@ -19,6 +19,7 @@
 +(nonnull instancetype)smb_testLevel_twoForces_leftThenDown;
 +(nonnull instancetype)smb_testLevel_oneWall_threeForces;
 +(nonnull instancetype)smb_testLevel_twoWalls_threeForces;
++(nonnull instancetype)smb_testLevel_wallsAndForces_twoForcesNotMovable;
 +(nonnull instancetype)smb_testLevel_clover;
 
 @end

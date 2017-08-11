@@ -140,7 +140,19 @@ static void* kSMBGameLevelView__KVOContext = &kSMBGameLevelView__KVOContext;
 		[gameBoardTile_old setGameBoardTileEntity_for_beamInteractions:nil];
 	}
 
+	SMBGameBoardTileEntity* const gameBoardTileEntity_for_beamInteractions = gameBoardTile.gameBoardTileEntity_for_beamInteractions;
+	/**
+	 If the tile has has beam interaction, and it's pickable, let's take it off the tile so the new one can be added.
+	 */
+	if ((gameBoardTileEntity_for_beamInteractions != nil)
+		&&
+		[self.gameLevel.usableGameBoardTileEntities containsObject:gameBoardTileEntity_for_beamInteractions])
+	{
+		[gameBoardTile setGameBoardTileEntity_for_beamInteractions:nil];
+	}
+
 	[gameBoardTile setGameBoardTileEntity_for_beamInteractions:selectedGameBoardTileEntity];
+
 	[self.gameBoardTileEntityPickerView setSelectedGameBoardTileEntity:nil];
 }
 

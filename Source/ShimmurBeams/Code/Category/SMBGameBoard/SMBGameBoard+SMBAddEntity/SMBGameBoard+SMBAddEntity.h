@@ -30,4 +30,12 @@
 										  to_column:(NSUInteger)column
 												row:(NSUInteger)row;
 
+#pragma mark - levelExit
+-(void)gameBoardTileEntity_add_levelExit_to_column:(NSUInteger)column
+											   row:(NSUInteger)row;
+
+#pragma mark - wall
+-(void)gameBoardTileEntity_add_wall_to_column:(NSUInteger)column
+										  row:(NSUInteger)row;
+
 @end

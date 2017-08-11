@@ -21,14 +21,15 @@
 static inline void CoreGraphics_SMBDrawArrow(CGContextRef context, CGRect rect){
 	CGFloat const arrow_base_width = CGRectGetWidth(rect) / 2.0f;
 
-	CGFloat const arrow_triangle_extraWidth = 4.0f;
+	CGFloat const arrow_triangle_extraWidth = CGRectGetWidth(rect) / 6.0f;
 	CGFloat const arrow_triangle_width = arrow_base_width + (2.0f * arrow_triangle_extraWidth);
+	CGFloat const arrow_triangle_height = arrow_triangle_width / 2.0f;
 
 	CGRect const arrow_triangle_frame = (CGRect){
 		.origin.x		= CGRectGetMinX(rect) + CGRectGetHorizontallyAlignedXCoordForWidthOnWidth(arrow_triangle_width, CGRectGetWidth(rect)),
 		.origin.y		= CGRectGetMinY(rect),
 		.size.width		= arrow_triangle_width,
-		.size.height	= arrow_triangle_width,
+		.size.height	= arrow_triangle_height,
 	};
 
 	CGFloat const arrow_shaft_yCoord = CGRectGetMaxY(arrow_triangle_frame);
