@@ -247,7 +247,17 @@ static void* kSMBGameLevelView__KVOContext = &kSMBGameLevelView__KVOContext;
 -(void)gameBoardView:(nonnull SMBGameBoardView*)gameBoardView
 	  tile_wasTapped:(nonnull SMBGameBoardTile*)gameBoardTile
 {
-	[self gameBoardTileEntityPickerView_selectedGameBoardTileEntity_move_to_tile:gameBoardTile];
+	if (self.gameBoardTileEntityPickerView.selectedGameBoardTileEntity)
+	{
+		[self gameBoardTileEntityPickerView_selectedGameBoardTileEntity_move_to_tile:gameBoardTile];
+		return;
+	}
+
+	SMBGameBoardTileEntity* const gameBoardTileEntity = gameBoardTile.gameBoardTileEntity_for_beamInteractions;
+	kRUConditionalReturn(gameBoardTileEntity == nil, NO);
+	kRUConditionalReturn([self.gameLevel.usableGameBoardTileEntities containsObject:gameBoardTileEntity] == false, NO);
+
+	[self.gameBoardTileEntityPickerView setSelectedGameBoardTileEntity:gameBoardTileEntity];
 }
 
 #pragma mark - KVO
