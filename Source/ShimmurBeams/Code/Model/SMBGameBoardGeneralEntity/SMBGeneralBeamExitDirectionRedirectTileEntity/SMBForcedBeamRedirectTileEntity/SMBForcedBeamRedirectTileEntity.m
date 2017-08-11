@@ -78,7 +78,7 @@
 #pragma mark - init
 -(nullable instancetype)init_with_forcedBeamExitDirection:(SMBGameBoardTile__direction)forcedBeamExitDirection
 {
-	kRUConditionalReturn_ReturnValueNil(SMBGameBoardTile__direction__isInRange(forcedBeamExitDirection) == false, YES);
+	kRUConditionalReturn_ReturnValueNil(SMBGameBoardTile__direction__isInRange_or_none(forcedBeamExitDirection) == false, YES);
 
 	if (self = [super init])
 	{
@@ -92,7 +92,7 @@
 -(SMBGameBoardTile__direction)beamExitDirection_for_beamEnterDirection:(SMBGameBoardTile__direction)beamEnterDirection
 {
 	SMBGameBoardTile__direction const forcedBeamExitDirection = self.forcedBeamExitDirection;
-	kRUConditionalReturn_ReturnValue(SMBGameBoardTile__direction__isInRange(forcedBeamExitDirection) == false, YES, SMBGameBoardTile__direction_unknown);
+	kRUConditionalReturn_ReturnValue(SMBGameBoardTile__direction__isInRange_or_none(forcedBeamExitDirection) == false, YES, SMBGameBoardTile__direction_unknown);
 
 	return forcedBeamExitDirection;
 }

@@ -18,19 +18,26 @@
 
 
 typedef NS_ENUM(NSInteger, SMBGameBoardTile__direction) {
-	SMBGameBoardTile__direction_unknown,
+	SMBGameBoardTile__direction_unknown = 1 << 0,
+	SMBGameBoardTile__direction_none	= 1 << 1,
 
-	SMBGameBoardTile__direction_up,
-	SMBGameBoardTile__direction_right,
-	SMBGameBoardTile__direction_down,
-	SMBGameBoardTile__direction_left,
+	SMBGameBoardTile__direction_up		= 1 << 2,
+	SMBGameBoardTile__direction_right	= 1 << 3,
+	SMBGameBoardTile__direction_down	= 1 << 4,
+	SMBGameBoardTile__direction_left	= 1 << 5,
 
-	SMBGameBoardTile__direction_none,
 
 	SMBGameBoardTile__direction__first	= SMBGameBoardTile__direction_up,
-	SMBGameBoardTile__direction__last	= SMBGameBoardTile__direction_none,
+	SMBGameBoardTile__direction__last	= SMBGameBoardTile__direction_left,
 };
 
 static inline RUEnumIsInRangeSynthesization_autoFirstLast(SMBGameBoardTile__direction)
+static inline BOOL SMBGameBoardTile__direction__isInRange_or_none(SMBGameBoardTile__direction direction){
+	return
+	(direction == SMBGameBoardTile__direction_none
+	 ||
+	 SMBGameBoardTile__direction__isInRange(direction)
+	);
+}
 
 #endif /* SMBGameBoardTile__directions_h */

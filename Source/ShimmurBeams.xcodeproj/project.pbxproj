@@ -44,6 +44,7 @@
 		D7E511BB1F3CEC40008A6042 /* SMBGameLevelGeneratorSet+SMBUserSets.m in Sources */ = {isa = PBXBuildFile; fileRef = D7E511BA1F3CEC40008A6042 /* SMBGameLevelGeneratorSet+SMBUserSets.m */; };
 		D7E511BF1F3CEE67008A6042 /* SMBGameLevelGeneratorSetViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = D7E511BE1F3CEE67008A6042 /* SMBGameLevelGeneratorSetViewController.m */; };
 		D7E511C91F3D4382008A6042 /* SMBWallTileEntity.m in Sources */ = {isa = PBXBuildFile; fileRef = D7E511C81F3D4382008A6042 /* SMBWallTileEntity.m */; };
+		D7E511CD1F3D4CFA008A6042 /* SMBGameBoardTileEntity+SMBBeamBlocker.m in Sources */ = {isa = PBXBuildFile; fileRef = D7E511CC1F3D4CFA008A6042 /* SMBGameBoardTileEntity+SMBBeamBlocker.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -137,6 +138,8 @@
 		D7E511C51F3D42D9008A6042 /* SMBBeamBlockerTileEntity.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SMBBeamBlockerTileEntity.h; sourceTree = "<group>"; };
 		D7E511C71F3D4382008A6042 /* SMBWallTileEntity.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SMBWallTileEntity.h; sourceTree = "<group>"; };
 		D7E511C81F3D4382008A6042 /* SMBWallTileEntity.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SMBWallTileEntity.m; sourceTree = "<group>"; };
+		D7E511CB1F3D4CFA008A6042 /* SMBGameBoardTileEntity+SMBBeamBlocker.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "SMBGameBoardTileEntity+SMBBeamBlocker.h"; sourceTree = "<group>"; };
+		D7E511CC1F3D4CFA008A6042 /* SMBGameBoardTileEntity+SMBBeamBlocker.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "SMBGameBoardTileEntity+SMBBeamBlocker.m"; sourceTree = "<group>"; };
 		E8333239A81E9BC86B8B9223 /* Pods-ShimmurBeams.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-ShimmurBeams.release.xcconfig"; path = "Pods/Target Support Files/Pods-ShimmurBeams/Pods-ShimmurBeams.release.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -604,6 +607,7 @@
 		D7C8C3D81F3CC7C7006D378E /* SMBGameBoardTileEntity */ = {
 			isa = PBXGroup;
 			children = (
+				D7E511CA1F3D4CEE008A6042 /* SMBGameBoardTileEntity+SMBBeamBlocker */,
 				D7C8C3D91F3CC7E0006D378E /* SMBGameBoardTileEntity+SMBProvidesPower */,
 			);
 			path = SMBGameBoardTileEntity;
@@ -769,6 +773,15 @@
 			path = SMBWallTileEntity;
 			sourceTree = "<group>";
 		};
+		D7E511CA1F3D4CEE008A6042 /* SMBGameBoardTileEntity+SMBBeamBlocker */ = {
+			isa = PBXGroup;
+			children = (
+				D7E511CB1F3D4CFA008A6042 /* SMBGameBoardTileEntity+SMBBeamBlocker.h */,
+				D7E511CC1F3D4CFA008A6042 /* SMBGameBoardTileEntity+SMBBeamBlocker.m */,
+			);
+			path = "SMBGameBoardTileEntity+SMBBeamBlocker";
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -904,6 +917,7 @@
 				D7C8C3D31F3BBE77006D378E /* SMBLevelExitTileEntity.m in Sources */,
 				D761FEA61F3AC2FF0083842A /* SMBGameLevelView.m in Sources */,
 				D7C8C3DC1F3CC7ED006D378E /* SMBGameBoardTileEntity+SMBProvidesPower.m in Sources */,
+				D7E511CD1F3D4CFA008A6042 /* SMBGameBoardTileEntity+SMBBeamBlocker.m in Sources */,
 				D7C8C3CC1F3B91FB006D378E /* SMBGameBoardTileView.m in Sources */,
 				D7E511BB1F3CEC40008A6042 /* SMBGameLevelGeneratorSet+SMBUserSets.m in Sources */,
 				D761FE931F3AC2FF0083842A /* SMBGameBoard+SMBAddEntity.m in Sources */,

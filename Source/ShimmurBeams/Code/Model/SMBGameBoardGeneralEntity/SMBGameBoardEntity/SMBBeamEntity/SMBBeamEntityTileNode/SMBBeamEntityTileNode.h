@@ -51,6 +51,7 @@
 
 #pragma mark - beamEnterDirection
 -(SMBGameBoardTile__direction)beamEnterDirection;
++(SMBGameBoardTile__direction)beamEnterDirection_for_node_previous_exitDirection:(SMBGameBoardTile__direction)node_previous_exitDirection;
 
 #pragma mark - state
 -(void)setState_ready;

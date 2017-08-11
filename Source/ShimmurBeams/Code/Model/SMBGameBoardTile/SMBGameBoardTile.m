@@ -11,16 +11,13 @@
 #import "SMBGameBoard.h"
 #import "SMBMutableMappedDataCollection.h"
 #import "SMBGameBoardTileEntity+SMBProvidesPower.h"
+#import "SMBBeamBlockerTileEntity.h"
+#import "SMBGameBoardTileEntity_PowerProvider.h"
+#import "SMBGameBoardTileEntity+SMBBeamBlocker.h"
 
 #import <ResplendentUtilities/RUConditionalReturn.h>
 #import <ResplendentUtilities/NSMutableArray+RUAddObjectIfNotNil.h>
 #import <ResplendentUtilities/RUConstants.h>
-
-
-
-
-
-#define kSMBGameBoardTile_gameBoardTileEntities_powerProviders_validate (kSMBEnvironment__SMBGameBoardTile_gameBoardTileEntities_powerProviders_validate && 1)
 
 
 
@@ -33,16 +30,20 @@
 -(void)gameBoardTileEntities_update;
 @property (nonatomic, readonly, strong, nullable) SMBMutableMappedDataCollection<SMBGameBoardTileEntity*>* gameBoardTileEntities_mappedDataCollection;
 
-#pragma mark - gameBoardTileEntities_powerProviders
-@property (nonatomic, readonly, strong, nullable) SMBMutableMappedDataCollection<SMBGameBoardTileEntity*>* gameBoardTileEntities_powerProviders;
--(void)gameBoardTileEntities_powerProviders_add:(nonnull SMBGameBoardTileEntity*)gameBoardTileEntity;
--(void)gameBoardTileEntities_powerProviders_remove:(nonnull SMBGameBoardTileEntity*)gameBoardTileEntity;
+#pragma mark - gameBoardTileEntities_powerProviders_mappedDataCollection
+@property (nonatomic, readonly, strong, nullable) SMBMutableMappedDataCollection<SMBGameBoardTileEntity<SMBGameBoardTileEntity_PowerProvider>*>* gameBoardTileEntities_powerProviders_mappedDataCollection;
+-(void)gameBoardTileEntities_powerProviders_mappedDataCollection_add:(nonnull SMBGameBoardTileEntity<SMBGameBoardTileEntity_PowerProvider>*)gameBoardTileEntity;
+-(void)gameBoardTileEntities_powerProviders_mappedDataCollection_remove:(nonnull SMBGameBoardTileEntity<SMBGameBoardTileEntity_PowerProvider>*)gameBoardTileEntity;
 
-#if kSMBGameBoardTile_gameBoardTileEntities_powerProviders_validate
+#pragma mark - gameBoardTileEntities_beamBlockers
+@property (nonatomic, strong, nullable) SMBMutableMappedDataCollection<SMBGameBoardTileEntity<SMBBeamBlockerTileEntity>*>* gameBoardTileEntities_beamBlockers_mappedDataCollection;
+-(void)gameBoardTileEntities_beamBlockers_mappedDataCollection_add:(nonnull SMBGameBoardTileEntity<SMBBeamBlockerTileEntity>*)gameBoardTileEntity;
+-(void)gameBoardTileEntities_beamBlockers_mappedDataCollection_remove:(nonnull SMBGameBoardTileEntity<SMBBeamBlockerTileEntity>*)gameBoardTileEntity;
 
--(void)gameBoardTileEntities_powerProviders_validate;
-
-#endif
+#pragma mark - beamDirectionsBlocked
+@property (nonatomic, assign) SMBGameBoardTile__direction beamDirectionsBlocked;
+-(void)beamDirectionsBlocked_update;
+-(SMBGameBoardTile__direction)beamDirectionsBlocked_generate;
 
 #pragma mark - isPowered
 @property (nonatomic, assign) BOOL isPowered;
@@ -100,7 +101,8 @@
 		_gameBoard = gameBoard;
 
 		_gameBoardTileEntities_mappedDataCollection = [SMBMutableMappedDataCollection<SMBGameBoardTileEntity*> new];
-		_gameBoardTileEntities_powerProviders = [SMBMutableMappedDataCollection<SMBGameBoardTileEntity*> new];
+		_gameBoardTileEntities_powerProviders_mappedDataCollection = [SMBMutableMappedDataCollection<SMBGameBoardTileEntity<SMBGameBoardTileEntity_PowerProvider>*> new];
+		_gameBoardTileEntities_beamBlockers_mappedDataCollection = [SMBMutableMappedDataCollection<SMBGameBoardTileEntity<SMBBeamBlockerTileEntity>*> new];
 	}
 
 	return self;
@@ -153,7 +155,12 @@
 
 	if ([gameBoardTileEntity smb_providesPower])
 	{
-		[self gameBoardTileEntities_powerProviders_add:gameBoardTileEntity];
+		[self gameBoardTileEntities_powerProviders_mappedDataCollection_add:[gameBoardTileEntity smb_providesPower_selfOrNull]];
+	}
+
+	if ([gameBoardTileEntity smb_beamBlocker])
+	{
+		[self gameBoardTileEntities_beamBlockers_mappedDataCollection_add:[gameBoardTileEntity smb_beamBlocker_selfOrNull]];
 	}
 
 	[self gameBoardTileEntities_update];
@@ -170,7 +177,12 @@
 
 	if ([gameBoardTileEntity smb_providesPower])
 	{
-		[self gameBoardTileEntities_powerProviders_remove:gameBoardTileEntity];
+		[self gameBoardTileEntities_powerProviders_mappedDataCollection_remove:[gameBoardTileEntity smb_providesPower_selfOrNull]];
+	}
+
+	if ([gameBoardTileEntity smb_beamBlocker])
+	{
+		[self gameBoardTileEntities_beamBlockers_mappedDataCollection_remove:[gameBoardTileEntity smb_beamBlocker_selfOrNull]];
 	}
 
 	[self gameBoardTileEntities_update];
@@ -179,43 +191,93 @@
 		   updateRelationship:NO];
 }
 
-#pragma mark - gameBoardTileEntities_powerProviders
--(void)gameBoardTileEntities_powerProviders_add:(nonnull SMBGameBoardTileEntity*)gameBoardTileEntity
+#pragma mark - gameBoardTileEntities_powerProviders_mappedDataCollection
+-(void)gameBoardTileEntities_powerProviders_mappedDataCollection_add:(nonnull SMBGameBoardTileEntity<SMBGameBoardTileEntity_PowerProvider>*)gameBoardTileEntity
 {
 	kRUConditionalReturn(gameBoardTileEntity == nil, YES);
 	kRUConditionalReturn([gameBoardTileEntity smb_providesPower] == false, YES);
 
-	[self.gameBoardTileEntities_powerProviders mappableObject_add:gameBoardTileEntity];
-
-#if kSMBGameBoardTile_gameBoardTileEntities_powerProviders_validate
-	[self gameBoardTileEntities_powerProviders_validate];
-#endif
+	[self.gameBoardTileEntities_powerProviders_mappedDataCollection mappableObject_add:gameBoardTileEntity];
 
 	[self isPowered_update];
 }
 
--(void)gameBoardTileEntities_powerProviders_remove:(nonnull SMBGameBoardTileEntity*)gameBoardTileEntity
+-(void)gameBoardTileEntities_powerProviders_mappedDataCollection_remove:(nonnull SMBGameBoardTileEntity<SMBGameBoardTileEntity_PowerProvider>*)gameBoardTileEntity
 {
 	kRUConditionalReturn(gameBoardTileEntity == nil, YES);
 	kRUConditionalReturn([gameBoardTileEntity smb_providesPower] == false, YES);
 
-	[self.gameBoardTileEntities_powerProviders mappableObject_remove:gameBoardTileEntity];
-
-#if kSMBGameBoardTile_gameBoardTileEntities_powerProviders_validate
-	[self gameBoardTileEntities_powerProviders_validate];
-#endif
+	[self.gameBoardTileEntities_powerProviders_mappedDataCollection mappableObject_remove:gameBoardTileEntity];
 
 	[self isPowered_update];
 }
 
-#if kSMBGameBoardTile_gameBoardTileEntities_powerProviders_validate
-
--(void)gameBoardTileEntities_powerProviders_validate
+#pragma mark - gameBoardTileEntities_beamBlockers
+-(void)gameBoardTileEntities_beamBlockers_mappedDataCollection_add:(nonnull SMBGameBoardTileEntity<SMBBeamBlockerTileEntity>*)gameBoardTileEntity
 {
+	kRUConditionalReturn(gameBoardTileEntity == nil, YES);
+	kRUConditionalReturn([gameBoardTileEntity smb_beamBlocker] == false, YES);
+
+	[self.gameBoardTileEntities_powerProviders_mappedDataCollection mappableObject_add:gameBoardTileEntity];
+
+	[self beamDirectionsBlocked_update];
+}
+
+-(void)gameBoardTileEntities_beamBlockers_mappedDataCollection_remove:(nonnull SMBGameBoardTileEntity<SMBBeamBlockerTileEntity>*)gameBoardTileEntity
+{
+	kRUConditionalReturn(gameBoardTileEntity == nil, YES);
+	kRUConditionalReturn([gameBoardTileEntity smb_beamBlocker] == false, YES);
+
+	[self.gameBoardTileEntities_powerProviders_mappedDataCollection mappableObject_remove:gameBoardTileEntity];
+
+	[self beamDirectionsBlocked_update];
+}
+
+#pragma mark - beamDirectionsBlocked
+-(void)beamDirectionsBlocked_update
+{
+	[self setBeamDirectionsBlocked:[self beamDirectionsBlocked_generate]];
+}
+
+-(SMBGameBoardTile__direction)beamDirectionsBlocked_generate
+{
+	NSMutableIndexSet* const directions_unblocked = [NSMutableIndexSet indexSet];
 	
-}
+	for (SMBGameBoardTile__direction direction = SMBGameBoardTile__direction__first;
+		 direction <= SMBGameBoardTile__direction__last;
+		 direction = direction << 1)
+	{
+		[directions_unblocked addIndex:direction];
+	}
 
-#endif
+	[[self.gameBoardTileEntities_mappedDataCollection mappableObjects] enumerateObjectsUsingBlock:^(SMBGameBoardTileEntity<SMBMappedDataCollection_MappableObject>* _Nonnull gameBoardTileEntity, NSUInteger idx, BOOL * _Nonnull stop) {
+
+		SMBGameBoardTileEntity<SMBBeamBlockerTileEntity>* const gameBoardTileEntity_beamBlocker = [gameBoardTileEntity smb_beamBlocker_selfOrNull];
+		kRUConditionalReturn(gameBoardTileEntity_beamBlocker == nil, NO);
+
+		NSIndexSet* const directions_unblocked_copy = [[NSIndexSet alloc] initWithIndexSet:directions_unblocked];
+		[directions_unblocked_copy enumerateIndexesUsingBlock:^(NSUInteger idx, BOOL * _Nonnull stop) {
+			SMBGameBoardTile__direction direction = idx;
+			if ([gameBoardTileEntity_beamBlocker beamEnterDirection_isBlocked:direction])
+			{
+				[directions_unblocked removeIndex:idx];
+			}
+		}];
+	}];
+
+	SMBGameBoardTile__direction beamDirectionsBlocked = 0;
+	for (SMBGameBoardTile__direction direction = SMBGameBoardTile__direction__first;
+		 direction <= SMBGameBoardTile__direction__last;
+		 direction = direction << 1)
+	{
+		if ([directions_unblocked containsIndex:direction] == false)
+		{
+			beamDirectionsBlocked |= direction;
+		}
+	}
+
+	return beamDirectionsBlocked;
+}
 
 #pragma mark - gameBoardTile
 -(nullable SMBGameBoardTile*)gameBoardTile_next_with_direction:(SMBGameBoardTile__direction)direction
@@ -230,7 +292,7 @@
 #pragma mark - isPowered
 -(void)isPowered_update
 {
-	[self setIsPowered:[self.gameBoardTileEntities_powerProviders mappableObjects].count];
+	[self setIsPowered:[self.gameBoardTileEntities_powerProviders_mappedDataCollection mappableObjects].count];
 }
 
 @end
@@ -243,6 +305,7 @@
 
 +(nonnull NSString*)gameBoardTileEntity_for_beamInteractions{return NSStringFromSelector(_cmd);}
 +(nonnull NSString*)gameBoardTileEntities{return NSStringFromSelector(_cmd);}
++(nonnull NSString*)beamDirectionsBlocked{return NSStringFromSelector(_cmd);}
 +(nonnull NSString*)isPowered{return NSStringFromSelector(_cmd);}
 
 @end

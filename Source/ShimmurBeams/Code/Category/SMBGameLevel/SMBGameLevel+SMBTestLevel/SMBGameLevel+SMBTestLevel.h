@@ -17,6 +17,8 @@
 #pragma mark - testLevel
 +(nonnull instancetype)smb_testLevel_oneForce_right;
 +(nonnull instancetype)smb_testLevel_twoForces_leftThenDown;
++(nonnull instancetype)smb_testLevel_oneWall_threeForces;
++(nonnull instancetype)smb_testLevel_twoWalls_threeForces;
 +(nonnull instancetype)smb_testLevel_clover;
 
 @end

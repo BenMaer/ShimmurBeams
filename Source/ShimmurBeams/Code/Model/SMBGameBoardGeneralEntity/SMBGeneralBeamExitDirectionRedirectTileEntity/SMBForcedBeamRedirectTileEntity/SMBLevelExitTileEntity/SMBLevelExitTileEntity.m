@@ -91,7 +91,7 @@ static void* kSMBLevelExitTileEntity__KVOContext = &kSMBLevelExitTileEntity__KVO
 
 	for (SMBGameBoardTile__direction direction = SMBGameBoardTile__direction__first;
 		 direction <= SMBGameBoardTile__direction__last;
-		 direction++)
+		 direction = direction << 1)
 	{
 		CGContextSaveGState(context);
 

@@ -25,4 +25,10 @@
 	CGContextFillRect(context, rect);
 }
 
+#pragma mark - SMBBeamBlockerTileEntity
+-(BOOL)beamEnterDirection_isBlocked:(SMBGameBoardTile__direction)beamEnterDirection
+{
+	return YES;
+}
+
 @end

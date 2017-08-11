@@ -7,11 +7,12 @@
 //
 
 #import "SMBGameBoardTileEntity.h"
+#import "SMBBeamBlockerTileEntity.h"
 
 
 
 
 
-@interface SMBWallTileEntity : SMBGameBoardTileEntity
+@interface SMBWallTileEntity : SMBGameBoardTileEntity <SMBBeamBlockerTileEntity>
 
 @end

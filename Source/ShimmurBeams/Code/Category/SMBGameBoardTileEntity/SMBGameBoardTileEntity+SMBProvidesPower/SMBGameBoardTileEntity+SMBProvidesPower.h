@@ -7,6 +7,7 @@
 //
 
 #import "SMBGameBoardTileEntity.h"
+#import "SMBGameBoardTileEntity_PowerProvider.h"
 
 
 
@@ -16,5 +17,6 @@
 
 #pragma mark - providesPower
 -(BOOL)smb_providesPower;
+-(nullable SMBGameBoardTileEntity<SMBGameBoardTileEntity_PowerProvider>*)smb_providesPower_selfOrNull;
 
 @end
