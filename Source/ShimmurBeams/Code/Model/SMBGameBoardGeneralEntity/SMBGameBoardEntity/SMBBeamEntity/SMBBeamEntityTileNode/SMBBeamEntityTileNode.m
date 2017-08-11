@@ -64,6 +64,7 @@ typedef NS_ENUM(NSInteger, SMBBeamEntityTileNode__state) {
 
 #pragma mark - node_next
 @property (nonatomic, strong, nullable) SMBBeamEntityTileNode* node_next;
+-(void)node_next_setKVORegistered:(BOOL)registered;
 -(void)node_next_update;
 -(nullable SMBBeamEntityTileNode*)node_next_generate;
 
@@ -72,6 +73,11 @@ typedef NS_ENUM(NSInteger, SMBBeamEntityTileNode__state) {
 @property (nonatomic, assign) BOOL node_next_generationEnabled;
 -(void)node_next_generationEnabled_update;
 -(BOOL)node_next_generationEnabled_shouldBe;
+
+#pragma mark - beamEnterDirection
+@property (nonatomic, assign) SMBGameBoardTile__direction beamEnterDirection;
+-(void)beamEnterDirection_update;
+-(SMBGameBoardTile__direction)beamEnterDirection_appropriate;
 
 #pragma mark - node_next_gameTile
 @property (nonatomic, strong, nullable) SMBGameBoardTile* node_next_gameTile;
@@ -106,6 +112,7 @@ typedef NS_ENUM(NSInteger, SMBBeamEntityTileNode__state) {
 #pragma mark - NSObject
 -(void)dealloc
 {
+	[self node_next_setKVORegistered:NO];
 	[self gameBoardTile_setKVORegistered:NO];
 }
 
@@ -130,6 +137,8 @@ typedef NS_ENUM(NSInteger, SMBBeamEntityTileNode__state) {
 	{
 		_beamEntity = beamEntity;
 		_node_previous = node_previous;
+
+		[self beamEnterDirection_update];
 
 		[self setState:SMBBeamEntityTileNode__state_created];
 	}
@@ -212,7 +221,7 @@ typedef NS_ENUM(NSInteger, SMBBeamEntityTileNode__state) {
 
 	_beamExitDirection = beamExitDirection;
 
-	[self node_next_update];
+	[self node_next_gameTile_update];
 	[self setNeedsRedraw:YES];
 }
 
@@ -269,6 +278,17 @@ typedef NS_ENUM(NSInteger, SMBBeamEntityTileNode__state) {
 			if ([keyPath isEqualToString:[SMBGameBoardTile_PropertiesForKVO gameBoardTileEntity_for_beamInteractions]])
 			{
 				[self beamExitDirection_update];
+				[self beamEnterDirection_update];
+			}
+			else
+			{
+				NSAssert(false, @"unhandled keyPath %@",keyPath);
+			}
+		}
+		else if (object == self.node_next)
+		{
+			if ([keyPath isEqualToString:[SMBBeamEntityTileNode_PropertiesForKVO beamEnterDirection]])
+			{
 				[self node_next_gameTile_update];
 			}
 			else
@@ -297,12 +317,41 @@ typedef NS_ENUM(NSInteger, SMBBeamEntityTileNode__state) {
 		[self node_next_removeFromTile];
 	}
 
+	[self node_next_setKVORegistered:NO];
+
 	_node_next = node_next;
+
+	[self node_next_setKVORegistered:YES];
 
 	if (self.node_next)
 	{
 		[self.node_next setState_ready];
 	}
+}
+
+-(void)node_next_setKVORegistered:(BOOL)registered
+{
+	typeof(self.node_next) const node_next = self.node_next;
+	kRUConditionalReturn(node_next == nil, NO);
+	
+	NSMutableArray<NSString*>* const propertiesToObserve = [NSMutableArray<NSString*> array];
+	[propertiesToObserve addObject:[SMBBeamEntityTileNode_PropertiesForKVO beamEnterDirection]];
+	
+	[propertiesToObserve enumerateObjectsUsingBlock:^(NSString * _Nonnull propertyToObserve, NSUInteger idx, BOOL * _Nonnull stop) {
+		if (registered)
+		{
+			[node_next addObserver:self
+							forKeyPath:propertyToObserve
+							   options:(NSKeyValueObservingOptionInitial)
+							   context:&kSMBBeamEntityTileNode__KVOContext];
+		}
+		else
+		{
+			[node_next removeObserver:self
+							   forKeyPath:propertyToObserve
+								  context:&kSMBBeamEntityTileNode__KVOContext];
+		}
+	}];
 }
 
 -(void)node_next_removeFromTile
@@ -386,19 +435,27 @@ typedef NS_ENUM(NSInteger, SMBBeamEntityTileNode__state) {
 	kRUConditionalReturn_ReturnValueNil(beamExitDirection == SMBGameBoardTile__direction_none, NO);
 	kRUConditionalReturn_ReturnValueNil(SMBGameBoardTile__direction__isInRange(beamExitDirection) == false, YES);
 
-	SMBGameBoardTileEntity* const gameBoardTileEntity = gameBoardTile.gameBoardTileEntity_for_beamInteractions;
+	SMBGameBoardTile* const gameBoardTile_next = [gameBoardTile gameBoardTile_next_with_direction:beamExitDirection];
+	kRUConditionalReturn_ReturnValueNil(gameBoardTile_next == nil, NO);
+
+	SMBGameBoardTileEntity* const gameBoardTileEntity = gameBoardTile_next.gameBoardTileEntity_for_beamInteractions;
 	kRUConditionalReturn_ReturnValueNil((gameBoardTileEntity != nil)
 										&&
 										([gameBoardTileEntity smb_beamBlocker_and_beamEnterDirection_isBlocked:[SMBBeamEntityTileNode beamEnterDirection_for_node_previous_exitDirection:beamExitDirection]]), NO);
 
-	return [gameBoardTile gameBoardTile_next_with_direction:beamExitDirection];
+	return gameBoardTile_next;
 }
 
 #pragma mark - beamEnterDirection
--(SMBGameBoardTile__direction)beamEnterDirection
+-(void)beamEnterDirection_update
+{
+	[self setBeamEnterDirection:[self beamEnterDirection_appropriate]];
+}
+
+-(SMBGameBoardTile__direction)beamEnterDirection_appropriate
 {
 	SMBBeamEntityTileNode* const node_previous = self.node_previous;
-	kRUConditionalReturn_ReturnValue(node_previous == nil, YES, SMBGameBoardTile__direction_unknown);
+	kRUConditionalReturn_ReturnValue(node_previous == nil, NO, SMBGameBoardTile__direction_none);
 
 	return [[self class] beamEnterDirection_for_node_previous_exitDirection:node_previous.beamExitDirection];
 }
@@ -601,5 +658,6 @@ typedef NS_ENUM(NSInteger, SMBBeamEntityTileNode__state) {
 @implementation SMBBeamEntityTileNode_PropertiesForKVO
 
 +(nonnull NSString*)node_next{return NSStringFromSelector(_cmd);}
++(nonnull NSString*)beamEnterDirection{return NSStringFromSelector(_cmd);}
 
 @end

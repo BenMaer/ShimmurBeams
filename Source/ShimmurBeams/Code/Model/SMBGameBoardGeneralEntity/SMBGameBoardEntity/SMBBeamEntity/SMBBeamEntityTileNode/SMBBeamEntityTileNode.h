@@ -50,7 +50,7 @@
 @property (nonatomic, readonly, assign) SMBGameBoardTile__direction beamExitDirection;
 
 #pragma mark - beamEnterDirection
--(SMBGameBoardTile__direction)beamEnterDirection;
+@property (nonatomic, readonly, assign) SMBGameBoardTile__direction beamEnterDirection;
 +(SMBGameBoardTile__direction)beamEnterDirection_for_node_previous_exitDirection:(SMBGameBoardTile__direction)node_previous_exitDirection;
 
 #pragma mark - state
@@ -73,5 +73,6 @@
 @interface SMBBeamEntityTileNode_PropertiesForKVO : NSObject
 
 +(nonnull NSString*)node_next;
++(nonnull NSString*)beamEnterDirection;
 
 @end

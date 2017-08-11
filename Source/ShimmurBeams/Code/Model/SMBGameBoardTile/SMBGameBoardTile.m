@@ -301,7 +301,7 @@
 #pragma mark - isPowered
 -(void)isPowered_update
 {
-	[self setIsPowered:[self.gameBoardTileEntities_powerProviders_mappedDataCollection mappableObjects].count];
+	[self setIsPowered:([self.gameBoardTileEntities_powerProviders_mappedDataCollection mappableObjects].count > 0)];
 }
 
 @end
