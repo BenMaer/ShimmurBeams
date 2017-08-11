@@ -9,9 +9,9 @@
 #import "SMBForcedBeamRedirectTileEntity.h"
 #import "CoreGraphics+SMBRotation.h"
 #import "SMBGameBoardTile__directions_to_CoreGraphics_SMBRotation__orientations_utilities.h"
+#import "CoreGraphics+SMBDrawArrow.h"
 
 #import <ResplendentUtilities/RUConditionalReturn.h>
-#import <ResplendentUtilities/UIView+RUUtility.h>
 
 
 
@@ -30,7 +30,7 @@
 
 @implementation SMBForcedBeamRedirectTileEntity
 
-#pragma mark - draw
+#pragma mark - SMBGameBoardGeneralEntity: draw
 -(void)draw_in_rect:(CGRect)rect
 {
 	[super draw_in_rect:rect];
@@ -59,42 +59,12 @@
 
 	CGContextSetStrokeColorWithColor(context, [UIColor blackColor].CGColor);
 	CGContextSetLineWidth(context, 1.0f);
-	
+
 	CGFloat const arrow_inset_from_side = CGRectGetWidth(rect) / 4.0f;
 
-	CGFloat const arrow_base_width = CGRectGetWidth(rect) / 4.0f;
+	CGRect const rect_inset = UIEdgeInsetsInsetRect(rect, RU_UIEdgeInsetsMakeAll(arrow_inset_from_side));
 
-	CGFloat const arrow_triangle_extraWidth = 4.0f;
-	CGFloat const arrow_triangle_width = arrow_base_width + (2.0f * arrow_triangle_extraWidth);
-
-	CGRect const arrow_triangle_frame = (CGRect){
-		.origin.x		= CGRectGetMinX(rect) + CGRectGetHorizontallyAlignedXCoordForWidthOnWidth(arrow_triangle_width, CGRectGetWidth(rect)),
-		.origin.y		= CGRectGetMinY(rect) + arrow_inset_from_side,
-		.size.width		= arrow_triangle_width,
-		.size.height	= arrow_triangle_width,
-	};
-
-	CGFloat const arrow_shaft_yCoord = CGRectGetMaxY(arrow_triangle_frame);
-	CGRect const arrow_shaft_frame = (CGRect){
-		.origin.x		= CGRectGetMinX(rect) + CGRectGetHorizontallyAlignedXCoordForWidthOnWidth(arrow_base_width, CGRectGetWidth(rect)),
-		.origin.y		= arrow_shaft_yCoord,
-		.size.width		= arrow_base_width,
-		.size.height	= CGRectGetMaxY(rect) - arrow_inset_from_side - CGRectGetMaxY(arrow_triangle_frame),
-	};
-
-	CGContextMoveToPoint(context, CGRectGetMinX(arrow_shaft_frame), CGRectGetMaxY(arrow_shaft_frame)); /* Shaft, bottom left */
-	CGContextAddLineToPoint(context, CGRectGetMinX(arrow_shaft_frame), CGRectGetMinY(arrow_shaft_frame)); /* Shaft, top left */
-
-	CGContextAddLineToPoint(context, CGRectGetMinX(arrow_triangle_frame), CGRectGetMaxY(arrow_triangle_frame)); /* Triangle, bottom left */
-	CGContextAddLineToPoint(context, CGRectGetMidX(arrow_triangle_frame), CGRectGetMinY(arrow_triangle_frame)); /* Triangle, top middle point */
-	CGContextAddLineToPoint(context, CGRectGetMaxX(arrow_triangle_frame), CGRectGetMaxY(arrow_triangle_frame)); /* Triangle, bottom right */
-
-	CGContextAddLineToPoint(context, CGRectGetMaxX(arrow_shaft_frame), CGRectGetMinY(arrow_shaft_frame)); /* Shaft, top right */
-	CGContextAddLineToPoint(context, CGRectGetMaxX(arrow_shaft_frame), CGRectGetMaxY(arrow_shaft_frame)); /* Shaft, bottom right */
-
-	CGContextClosePath(context);
-
-	CGContextStrokePath(context);
+	CoreGraphics_SMBDrawArrow(context, rect_inset);
 }
 
 #pragma mark - NSObject

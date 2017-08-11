@@ -246,7 +246,7 @@ static void* kSMBGameBoard__KVOContext = &kSMBGameBoard__KVOContext;
 	return [self gameBoardTiles_column_at_column:0].count;
 }
 
--(UIOffset)gameBoardTile_next_offset_for_direction:(SMBGameBoardTile__direction)direction
+-(SMBGameBoardTile__direction_offset)gameBoardTile_next_offset_for_direction:(SMBGameBoardTile__direction)direction
 {
 	switch (direction)
 	{
@@ -254,36 +254,36 @@ static void* kSMBGameBoard__KVOContext = &kSMBGameBoard__KVOContext;
 			break;
 
 		case SMBGameBoardTile__direction_up:
-			return (UIOffset){
+			return (SMBGameBoardTile__direction_offset){
 				.vertical = -1,
 			};
 			break;
 
 		case SMBGameBoardTile__direction_right:
-			return (UIOffset){
+			return (SMBGameBoardTile__direction_offset){
 				.horizontal = 1,
 			};
 			break;
 
 		case SMBGameBoardTile__direction_down:
-			return (UIOffset){
+			return (SMBGameBoardTile__direction_offset){
 				.vertical = 1,
 			};
 			break;
 
 		case SMBGameBoardTile__direction_left:
-			return (UIOffset){
+			return (SMBGameBoardTile__direction_offset){
 				.horizontal = -1,
 			};
 			break;
 
 		case SMBGameBoardTile__direction_none:
-			return UIOffsetZero;
+			return SMBGameBoardTile__direction_offset_zero;
 			break;
 	}
 
 	NSAssert(false, @"unhandled direction %li",(long)direction);
-	return UIOffsetZero;
+	return SMBGameBoardTile__direction_offset_zero;
 }
 
 -(nullable SMBGameBoardTile*)gameBoardTile_next_from_gameBoardTile:(nonnull SMBGameBoardTile*)gameBoardTile
@@ -294,7 +294,7 @@ static void* kSMBGameBoard__KVOContext = &kSMBGameBoard__KVOContext;
 	SMBGameBoardTilePosition* const gameBoardTilePosition = gameBoardTile.gameBoardTilePosition;
 	kRUConditionalReturn_ReturnValueNil(gameBoardTilePosition == nil, YES);
 
-	UIOffset const offset = [self gameBoardTile_next_offset_for_direction:direction];
+	SMBGameBoardTile__direction_offset const offset = [self gameBoardTile_next_offset_for_direction:direction];
 	SMBGameBoardTilePosition* const gameBoardTilePosition_next =
 	[[SMBGameBoardTilePosition alloc] init_with_column:gameBoardTilePosition.column + offset.horizontal
 												   row:gameBoardTilePosition.row + offset.vertical];

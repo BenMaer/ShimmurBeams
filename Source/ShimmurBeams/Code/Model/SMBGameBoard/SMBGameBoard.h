@@ -7,6 +7,7 @@
 //
 
 #import "SMBGameBoardTile__directions.h"
+#import "SMBGameBoardTile__direction_offsets.h"
 
 #import <Foundation/Foundation.h>
 #import <UIKit/UIKit.h>
@@ -56,7 +57,7 @@
 -(NSUInteger)gameBoardTiles_numberOfColumns;
 -(NSUInteger)gameBoardTiles_numberOfRows;
 
--(UIOffset)gameBoardTile_next_offset_for_direction:(SMBGameBoardTile__direction)direction;
+-(SMBGameBoardTile__direction_offset)gameBoardTile_next_offset_for_direction:(SMBGameBoardTile__direction)direction;
 -(nullable SMBGameBoardTile*)gameBoardTile_next_from_gameBoardTile:(nonnull SMBGameBoardTile*)gameBoardTile
 														 direction:(SMBGameBoardTile__direction)direction;
 

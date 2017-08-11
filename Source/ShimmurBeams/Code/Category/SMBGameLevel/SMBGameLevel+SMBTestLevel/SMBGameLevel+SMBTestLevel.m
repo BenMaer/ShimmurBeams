@@ -36,6 +36,7 @@
 												  to_column:[gameBoard gameBoardTiles_numberOfColumns] - 2
 														row:[gameBoard gameBoardTiles_numberOfRows] - 2];
 
+
 	NSMutableArray<SMBGameBoardTileEntity*>* const gameBoardTileEntity = [NSMutableArray<SMBGameBoardTileEntity*> array];
 
 	SMBForcedBeamRedirectTileEntity* const forcedBeamRedirectTileEntity = [[SMBForcedBeamRedirectTileEntity alloc] init_with_forcedBeamExitDirection:SMBGameBoardTile__direction_right];
