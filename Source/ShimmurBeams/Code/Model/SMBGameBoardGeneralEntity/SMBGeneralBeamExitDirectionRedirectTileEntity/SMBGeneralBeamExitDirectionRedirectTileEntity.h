@@ -2,20 +2,20 @@
 //  SMBGeneralBeamExitDirectionRedirectTileEntity.h
 //  ShimmurBeams
 //
-//  Created by Benjamin Maer on 8/8/17.
+//  Created by Benjamin Maer on 8/10/17.
 //  Copyright © 2017 Shimmur. All rights reserved.
 //
 
-#import "SMBGameBoardTileEntity.h"
 #import "SMBGameBoardTile__directions.h"
 
+#import <Foundation/Foundation.h>
 
 
 
 
-@interface SMBGeneralBeamExitDirectionRedirectTileEntity : SMBGameBoardTileEntity
 
-#pragma mark - beamExitDirection
+@protocol SMBGeneralBeamExitDirectionRedirectTileEntity <NSObject>
+
 -(SMBGameBoardTile__direction)beamExitDirection_for_beamEnterDirection:(SMBGameBoardTile__direction)beamEnterDirection;
 
 @end

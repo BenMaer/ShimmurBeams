@@ -46,6 +46,9 @@
 -(nullable instancetype)init_with_gameLevelGenerators:(nonnull NSArray<SMBGameLevelGenerator*>*)gameLevelGenerators
 												 name:(nonnull NSString*)name
 {
+	kRUConditionalReturn_ReturnValueNil(gameLevelGenerators == nil, YES);
+	kRUConditionalReturn_ReturnValueNil(name == nil, YES);
+
 	if (self = [super init])
 	{
 		[self setGameLevelGenerators:gameLevelGenerators];

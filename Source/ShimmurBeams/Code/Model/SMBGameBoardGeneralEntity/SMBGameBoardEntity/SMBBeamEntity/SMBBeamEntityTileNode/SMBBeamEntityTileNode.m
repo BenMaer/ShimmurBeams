@@ -16,6 +16,7 @@
 
 #import <ResplendentUtilities/RUConditionalReturn.h>
 #import <ResplendentUtilities/RUClassOrNilUtil.h>
+#import <ResplendentUtilities/RUProtocolOrNil.h>
 
 
 
@@ -241,7 +242,7 @@ typedef NS_ENUM(NSInteger, SMBBeamEntityTileNode__state) {
 
 	if (gameBoardTileEntity_for_beamInteractions)
 	{
-		SMBGeneralBeamExitDirectionRedirectTileEntity* const generalBeamExitDirectionRedirectTileEntity = kRUClassOrNil(gameBoardTileEntity_for_beamInteractions, SMBGeneralBeamExitDirectionRedirectTileEntity);
+		id<SMBGeneralBeamExitDirectionRedirectTileEntity> const generalBeamExitDirectionRedirectTileEntity = kRUProtocolOrNil(gameBoardTileEntity_for_beamInteractions, SMBGeneralBeamExitDirectionRedirectTileEntity);
 		if (generalBeamExitDirectionRedirectTileEntity)
 		{
 			return [generalBeamExitDirectionRedirectTileEntity beamExitDirection_for_beamEnterDirection:[self beamEnterDirection]];

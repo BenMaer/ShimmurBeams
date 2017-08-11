@@ -19,6 +19,9 @@
 #pragma mark - generateLevelBlock
 @property (nonatomic, readonly, strong, nullable) SMBGameLevelGenerator__generateLevelBlock generateLevelBlock;
 
+#pragma mark - name
+@property (nonatomic, copy, nullable) NSString* name;
+
 @end
 
 
@@ -34,18 +37,21 @@
 
 #pragma clang diagnostic push
 #pragma clang diagnostic ignored "-Wno-nullability-completeness"
-	return [self init_with_generateLevelBlock:nil];
+	return [self init_with_generateLevelBlock:nil
+										 name:nil];
 #pragma clang diagnostic pop
 }
 
 #pragma mark - init
 -(nullable instancetype)init_with_generateLevelBlock:(nonnull SMBGameLevelGenerator__generateLevelBlock)generateLevelBlock
+												name:(nonnull NSString*)name
 {
 	kRUConditionalReturn_ReturnValueNil(generateLevelBlock == nil, YES);
 
 	if (self = [super init])
 	{
 		_generateLevelBlock = generateLevelBlock;
+		[self setName:name];
 	}
 
 	return self;

@@ -32,6 +32,7 @@ static void* kSMBGameLevelGeneratorSetViewController__KVOContext = &kSMBGameLeve
 @property (nonatomic, readonly, strong, nullable) SMBGameLevel* gameLevelView_gameLevel;
 -(void)gameLevelView_gameLevel_update;
 -(nullable SMBGameLevel*)gameLevelView_gameLevel_appropriate;
+-(nullable SMBGameLevelGenerator*)gameLevelView_gameLevel_generator_appropriate;
 
 -(void)gameLevelView_gameLevel_didComplete;
 
@@ -131,6 +132,18 @@ static void* kSMBGameLevelGeneratorSetViewController__KVOContext = &kSMBGameLeve
 
 -(nullable SMBGameLevel*)gameLevelView_gameLevel_appropriate
 {
+	SMBGameLevelGenerator* const gameLevelView_gameLevel_generator_appropriate = [self gameLevelView_gameLevel_generator_appropriate];
+	kRUConditionalReturn_ReturnValueNil(gameLevelView_gameLevel_generator_appropriate == nil, YES);
+	
+	SMBGameLevel* const gameLevel =
+	[gameLevelView_gameLevel_generator_appropriate gameLevel_generate];
+	NSAssert(gameLevel != nil, @"Should have generated a level");
+	
+	return gameLevel;
+}
+
+-(nullable SMBGameLevelGenerator*)gameLevelView_gameLevel_generator_appropriate
+{
 	kRUConditionalReturn_ReturnValueNil(self.gameLevelView_isBeingSet == YES, NO);
 	
 	SMBGameLevelGeneratorSet* const gameLevelGeneratorSet = self.gameLevelGeneratorSet;
@@ -142,11 +155,7 @@ static void* kSMBGameLevelGeneratorSetViewController__KVOContext = &kSMBGameLeve
 	NSUInteger const gameLevelGeneratorSet_levelIndex = self.gameLevelGeneratorSet_levelIndex;
 	kRUConditionalReturn_ReturnValueNil(gameLevelGeneratorSet_levelIndex >= gameLevelGenerators.count, NO);
 	
-	SMBGameLevel* const gameLevel =
-	[[gameLevelGenerators objectAtIndex:gameLevelGeneratorSet_levelIndex] gameLevel_generate];
-	NSAssert(gameLevel != nil, @"Should have generated a level");
-	
-	return gameLevel;
+	return [gameLevelGenerators objectAtIndex:gameLevelGeneratorSet_levelIndex];
 }
 
 -(void)gameLevelView_gameLevel_didComplete
@@ -292,9 +301,11 @@ static void* kSMBGameLevelGeneratorSetViewController__KVOContext = &kSMBGameLeve
 -(nullable NSString*)navigationItem_title_generate
 {
 	return
-	RUStringWithFormat(@"Level %lu/%lu",
+	RUStringWithFormat(@"%@      %lu/%lu",
+					   [[self gameLevelView_gameLevel_generator_appropriate] name],
 					   (unsigned long)self.gameLevelGeneratorSet_levelIndex + 1,
-					   (unsigned long)self.gameLevelGeneratorSet.gameLevelGenerators.count);
+					   (unsigned long)self.gameLevelGeneratorSet.gameLevelGenerators.count
+					   );
 }
 
 @end

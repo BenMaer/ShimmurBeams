@@ -88,7 +88,7 @@
 	return self;
 }
 
-#pragma mark - beamExitDirection
+#pragma mark - SMBGeneralBeamExitDirectionRedirectTileEntity
 -(SMBGameBoardTile__direction)beamExitDirection_for_beamEnterDirection:(SMBGameBoardTile__direction)beamEnterDirection
 {
 	SMBGameBoardTile__direction const forcedBeamExitDirection = self.forcedBeamExitDirection;

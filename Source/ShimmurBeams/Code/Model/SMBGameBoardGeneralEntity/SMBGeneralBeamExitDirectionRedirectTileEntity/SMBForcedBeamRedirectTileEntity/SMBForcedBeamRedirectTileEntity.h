@@ -6,13 +6,14 @@
 //  Copyright © 2017 Shimmur. All rights reserved.
 //
 
+#import "SMBGameBoardTileEntity.h"
 #import "SMBGeneralBeamExitDirectionRedirectTileEntity.h"
 
 
 
 
 
-@interface SMBForcedBeamRedirectTileEntity : SMBGeneralBeamExitDirectionRedirectTileEntity
+@interface SMBForcedBeamRedirectTileEntity : SMBGameBoardTileEntity <SMBGeneralBeamExitDirectionRedirectTileEntity>
 
 #pragma mark - forcedBeamExitDirection
 @property (nonatomic, readonly, assign) SMBGameBoardTile__direction forcedBeamExitDirection;
