@@ -37,8 +37,6 @@
 		[self uniqueId_generate];
 		kRUConditionalReturn_ReturnValueNil(self.uniqueId == nil, YES);
 		kRUConditionalReturn_ReturnValueNil(self.uniqueId.length == 0, YES);
-		
-		[self setNeedsRedraw:YES];
 	}
 	
 	return self;
@@ -56,37 +54,10 @@
 	[self setUniqueId:[uniqueStringGenerator uniqueId_next]];
 }
 
-#if DEBUG
-#pragma mark - needsRedraw
--(void)setNeedsRedraw:(BOOL)needsRedraw
-{
-	NSAssert([NSThread isMainThread], @"should be");
-	kRUConditionalReturn(self.needsRedraw == needsRedraw, NO);
-
-	_needsRedraw = needsRedraw;
-}
-#endif
-
-#pragma mark - draw
--(void)draw_in_rect:(CGRect)rect
-{
-	[self setNeedsRedraw:NO];
-}
-
 #pragma mark - SMBMappedDataCollection_MappableObject
 -(nonnull NSString*)smb_uniqueKey
 {
 	return self.uniqueId;
 }
-
-@end
-
-
-
-
-
-@implementation SMBGameBoardGeneralEntity_PropertiesForKVO
-
-+(nonnull NSString*)needsRedraw{return NSStringFromSelector(_cmd);}
 
 @end

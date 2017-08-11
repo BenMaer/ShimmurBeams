@@ -39,12 +39,18 @@ static void* kSMBGameLevelView__KVOContext = &kSMBGameLevelView__KVOContext;
 -(CGRect)gameBoardView_frame_with_boundingSize:(CGSize)boundingSize;
 
 #pragma mark - gameBoardTileEntityPickerView
+-(void)gameBoardTileEntityPickerView_setKVORegistered:(BOOL)registered;
 @property (nonatomic, readonly, strong, nullable) SMBGameBoardTileEntityPickerView* gameBoardTileEntityPickerView;
 -(CGRect)gameBoardTileEntityPickerView_frame;
 -(CGRect)gameBoardTileEntityPickerView_frame_with_boundingSize:(CGSize)boundingSize;
 
 #pragma mark - gameBoardTileEntity_toMove
 -(void)gameBoardTileEntityPickerView_selectedGameBoardTileEntity_move_to_tile:(nonnull SMBGameBoardTile*)gameBoardTile;
+
+#pragma mark - gameBoardTile
+@property (nonatomic, strong, nullable) SMBGameBoardTile* gameBoardTile_selected;
+-(void)gameBoardTile_selected_update;
+-(nullable SMBGameBoardTile*)gameBoardTile_selected_appropriate;
 
 @end
 
@@ -54,6 +60,12 @@ static void* kSMBGameLevelView__KVOContext = &kSMBGameLevelView__KVOContext;
 
 @implementation SMBGameLevelView
 
+#pragma mark - NSObject
+-(void)dealloc
+{
+	[self gameBoardTileEntityPickerView_setKVORegistered:NO];
+}
+
 #pragma mark - UIView
 -(instancetype)initWithFrame:(CGRect)frame
 {
@@ -62,6 +74,7 @@ static void* kSMBGameLevelView__KVOContext = &kSMBGameLevelView__KVOContext;
 		[self setBackgroundColor:[UIColor clearColor]];
 
 		_gameBoardTileEntityPickerView = [SMBGameBoardTileEntityPickerView new];
+		[self gameBoardTileEntityPickerView_setKVORegistered:YES];
 		[self addSubview:self.gameBoardTileEntityPickerView];
 
 		_gameBoardView = [SMBGameBoardView new];
@@ -109,6 +122,31 @@ static void* kSMBGameLevelView__KVOContext = &kSMBGameLevelView__KVOContext;
 }
 
 #pragma mark - gameBoardTileEntityPickerView
+-(void)gameBoardTileEntityPickerView_setKVORegistered:(BOOL)registered
+{
+	typeof(self.gameBoardTileEntityPickerView) const gameBoardTileEntityPickerView = self.gameBoardTileEntityPickerView;
+	kRUConditionalReturn(gameBoardTileEntityPickerView == nil, NO);
+	
+	NSMutableArray<NSString*>* const propertiesToObserve = [NSMutableArray<NSString*> array];
+	[propertiesToObserve addObject:[SMBGameBoardTileEntityPickerView_PropertiesForKVO selectedGameBoardTileEntity]];
+	
+	[propertiesToObserve enumerateObjectsUsingBlock:^(NSString * _Nonnull propertyToObserve, NSUInteger idx, BOOL * _Nonnull stop) {
+		if (registered)
+		{
+			[gameBoardTileEntityPickerView addObserver:self
+											forKeyPath:propertyToObserve
+											   options:(NSKeyValueObservingOptionInitial)
+											   context:&kSMBGameLevelView__KVOContext];
+		}
+		else
+		{
+			[gameBoardTileEntityPickerView removeObserver:self
+											   forKeyPath:propertyToObserve
+												  context:&kSMBGameLevelView__KVOContext];
+		}
+	}];
+}
+
 -(CGRect)gameBoardTileEntityPickerView_frame
 {
 	return
@@ -210,6 +248,67 @@ static void* kSMBGameLevelView__KVOContext = &kSMBGameLevelView__KVOContext;
 	  tile_wasTapped:(nonnull SMBGameBoardTile*)gameBoardTile
 {
 	[self gameBoardTileEntityPickerView_selectedGameBoardTileEntity_move_to_tile:gameBoardTile];
+}
+
+#pragma mark - KVO
+-(void)observeValueForKeyPath:(nullable NSString*)keyPath ofObject:(nullable id)object change:(nullable NSDictionary*)change context:(nullable void*)context
+{
+	if (context == kSMBGameLevelView__KVOContext)
+	{
+		if (object == self.gameBoardTileEntityPickerView)
+		{
+			if ([keyPath isEqualToString:[SMBGameBoardTileEntityPickerView_PropertiesForKVO selectedGameBoardTileEntity]])
+			{
+				[self gameBoardTile_selected_update];
+			}
+			else
+			{
+				NSAssert(false, @"unhandled keyPath %@",keyPath);
+			}
+		}
+		else
+		{
+			NSAssert(false, @"unhandled object %@",object);
+		}
+	}
+	else
+	{
+		[super observeValueForKeyPath:keyPath ofObject:object change:change context:context];
+	}
+}
+
+#pragma mark - gameBoardTile
+-(void)setGameBoardTile_selected:(nullable SMBGameBoardTile*)gameBoardTile_selected
+{
+	kRUConditionalReturn(self.gameBoardTile_selected == gameBoardTile_selected, NO);
+
+	if (self.gameBoardTile_selected)
+	{
+		[self.gameBoardTile_selected setIsHighlighted:NO];
+	}
+
+	_gameBoardTile_selected = gameBoardTile_selected;
+
+	if (self.gameBoardTile_selected)
+	{
+		[self.gameBoardTile_selected setIsHighlighted:YES];
+	}
+}
+
+-(void)gameBoardTile_selected_update
+{
+	[self setGameBoardTile_selected:[self gameBoardTile_selected_appropriate]];
+}
+
+-(nullable SMBGameBoardTile*)gameBoardTile_selected_appropriate
+{
+	SMBGameBoardTileEntityPickerView* const gameBoardTileEntityPickerView = self.gameBoardTileEntityPickerView;
+	kRUConditionalReturn_ReturnValueNil(gameBoardTileEntityPickerView == nil, YES);
+
+	SMBGameBoardTileEntity* const selectedGameBoardTileEntity = gameBoardTileEntityPickerView.selectedGameBoardTileEntity;
+	kRUConditionalReturn_ReturnValueNil(selectedGameBoardTileEntity == nil, NO);
+
+	return selectedGameBoardTileEntity.gameBoardTile;
 }
 
 @end

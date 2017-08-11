@@ -2,29 +2,30 @@
 //  SMBGameBoardGeneralEntityView.h
 //  ShimmurBeams
 //
-//  Created by Benjamin Maer on 8/4/17.
+//  Created by Benjamin Maer on 8/11/17.
 //  Copyright © 2017 Shimmur. All rights reserved.
 //
 
+#import "SMBDrawableObjectView.h"
 #import "SMBMappedDataCollection_MappableObject.h"
 
-#import <UIKit/UIKit.h>
 
 
 
 
-
-@class SMBGameBoardView;
 @class SMBGameBoardGeneralEntity;
 
 
 
 
 
-@interface SMBGameBoardGeneralEntityView : UIView <SMBMappedDataCollection_MappableObject>
+@interface SMBGameBoardGeneralEntityView : SMBDrawableObjectView <SMBMappedDataCollection_MappableObject>
 
 #pragma mark - gameBoardGeneralEntity
-@property (nonatomic, readonly, strong, nullable) SMBGameBoardGeneralEntity* gameBoardGeneralEntity;
+-(nullable SMBGameBoardGeneralEntity*)gameBoardGeneralEntity;
+
+#pragma mark - SMBDrawableObjectView: init
+-(nullable instancetype)init_with_drawableObject:(nonnull SMBDrawableObject*)drawableObject OBJC_DEPRECATED("Must use init");
 
 #pragma mark - init
 -(nullable instancetype)init_with_gameBoardGeneralEntity:(nonnull SMBGameBoardGeneralEntity*)gameBoardGeneralEntity NS_DESIGNATED_INITIALIZER;

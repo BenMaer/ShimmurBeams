@@ -7,9 +7,10 @@
 //
 
 #import "SMBGameBoardTileEntityPickerViewCollectionViewCell.h"
-#import "SMBGameBoardGeneralEntityView.h"
+#import "SMBDrawableObjectView.h"
 #import "SMBGameBoardTileEntity.h"
 #import "UIView+SMBCommonFraming.h"
+#import "UIColor+SMBColors.h"
 
 #import <ResplendentUtilities/RUConditionalReturn.h>
 
@@ -23,10 +24,10 @@
 -(void)layer_borderColor_update;
 
 #pragma mark - gameBoardGeneralEntityView
-@property (nonatomic, strong, nullable) SMBGameBoardGeneralEntityView* gameBoardGeneralEntityView;
+@property (nonatomic, strong, nullable) SMBDrawableObjectView* gameBoardGeneralEntityView;
 -(CGRect)gameBoardGeneralEntityView_frame;
 -(void)gameBoardGeneralEntityView_update;
--(nullable SMBGameBoardGeneralEntityView*)gameBoardGeneralEntityView_generate_appropriate;
+-(nullable SMBDrawableObjectView*)gameBoardGeneralEntityView_generate_appropriate;
 
 @end
 
@@ -75,11 +76,11 @@
 #pragma mark - layer
 -(void)layer_borderColor_update
 {
-	[self.layer setBorderColor:(self.gameBoardTileEntity_isSelected ? [UIColor greenColor] : [UIColor blackColor]).CGColor];
+	[self.layer setBorderColor:(self.gameBoardTileEntity_isSelected ? [UIColor smb_selectedTileEntity_color] : [UIColor blackColor]).CGColor];
 }
 
 #pragma mark - gameBoardGeneralEntityView
--(void)setGameBoardGeneralEntityView:(nullable SMBGameBoardGeneralEntityView*)gameBoardGeneralEntityView
+-(void)setGameBoardGeneralEntityView:(nullable SMBDrawableObjectView*)gameBoardGeneralEntityView
 {
 	kRUConditionalReturn(self.gameBoardGeneralEntityView == gameBoardGeneralEntityView, NO);
 
@@ -117,12 +118,12 @@
 	[self setGameBoardGeneralEntityView:[self gameBoardGeneralEntityView_generate_appropriate]];
 }
 
--(nullable SMBGameBoardGeneralEntityView*)gameBoardGeneralEntityView_generate_appropriate
+-(nullable SMBDrawableObjectView*)gameBoardGeneralEntityView_generate_appropriate
 {
 	SMBGameBoardTileEntity* const gameBoardTileEntity = self.gameBoardTileEntity;
 	kRUConditionalReturn_ReturnValueNil(gameBoardTileEntity == nil, YES);
 
-	return [[SMBGameBoardGeneralEntityView alloc] init_with_gameBoardGeneralEntity:gameBoardTileEntity];
+	return [[SMBDrawableObjectView alloc] init_with_drawableObject:gameBoardTileEntity];
 }
 
 @end

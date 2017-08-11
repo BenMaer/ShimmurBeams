@@ -36,7 +36,7 @@ typedef NS_ENUM(NSInteger, SMBBeamEntityTileNode__state) {
 	SMBBeamEntityTileNode__state_created,
 	SMBBeamEntityTileNode__state_ready,
 	SMBBeamEntityTileNode__state_finished,
-	
+
 	SMBBeamEntityTileNode__state__first		= SMBBeamEntityTileNode__state_created,
 	SMBBeamEntityTileNode__state__last		= SMBBeamEntityTileNode__state_finished,
 };
@@ -333,23 +333,23 @@ typedef NS_ENUM(NSInteger, SMBBeamEntityTileNode__state) {
 {
 	typeof(self.node_next) const node_next = self.node_next;
 	kRUConditionalReturn(node_next == nil, NO);
-	
+
 	NSMutableArray<NSString*>* const propertiesToObserve = [NSMutableArray<NSString*> array];
 	[propertiesToObserve addObject:[SMBBeamEntityTileNode_PropertiesForKVO beamEnterDirection]];
-	
+
 	[propertiesToObserve enumerateObjectsUsingBlock:^(NSString * _Nonnull propertyToObserve, NSUInteger idx, BOOL * _Nonnull stop) {
 		if (registered)
 		{
 			[node_next addObserver:self
-							forKeyPath:propertyToObserve
-							   options:(NSKeyValueObservingOptionInitial)
-							   context:&kSMBBeamEntityTileNode__KVOContext];
+						forKeyPath:propertyToObserve
+						   options:(NSKeyValueObservingOptionInitial)
+						   context:&kSMBBeamEntityTileNode__KVOContext];
 		}
 		else
 		{
 			[node_next removeObserver:self
-							   forKeyPath:propertyToObserve
-								  context:&kSMBBeamEntityTileNode__KVOContext];
+						   forKeyPath:propertyToObserve
+							  context:&kSMBBeamEntityTileNode__KVOContext];
 		}
 	}];
 }
@@ -430,7 +430,7 @@ typedef NS_ENUM(NSInteger, SMBBeamEntityTileNode__state) {
 {
 	SMBGameBoardTile* const gameBoardTile = self.gameBoardTile;
 	kRUConditionalReturn_ReturnValueNil(gameBoardTile == nil, YES);
-	
+
 	SMBGameBoardTile__direction const beamExitDirection = self.beamExitDirection;
 	kRUConditionalReturn_ReturnValueNil(beamExitDirection == SMBGameBoardTile__direction_none, NO);
 	kRUConditionalReturn_ReturnValueNil(SMBGameBoardTile__direction__isInRange(beamExitDirection) == false, YES);

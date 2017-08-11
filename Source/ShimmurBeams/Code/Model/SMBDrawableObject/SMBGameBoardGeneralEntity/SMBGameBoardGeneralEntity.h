@@ -6,6 +6,7 @@
 //  Copyright © 2017 Shimmur. All rights reserved.
 //
 
+#import "SMBDrawableObject.h"
 #import "SMBMappedDataCollection_MappableObject.h"
 
 #import <Foundation/Foundation.h>
@@ -21,23 +22,9 @@
 
 
 
-@interface SMBGameBoardGeneralEntity : NSObject <SMBMappedDataCollection_MappableObject>
+@interface SMBGameBoardGeneralEntity : SMBDrawableObject <SMBMappedDataCollection_MappableObject>
 
 #pragma mark - uniqueId
 @property (nonatomic, readonly, strong, nullable) NSString* uniqueId;
-
-#pragma mark - draw
-@property (nonatomic, assign) BOOL needsRedraw;
--(void)draw_in_rect:(CGRect)rect;
-
-@end
-
-
-
-
-
-@interface SMBGameBoardGeneralEntity_PropertiesForKVO : NSObject
-
-+(nonnull NSString*)needsRedraw;
 
 @end

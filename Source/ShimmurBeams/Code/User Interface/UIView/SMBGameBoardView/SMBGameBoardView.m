@@ -316,7 +316,7 @@ static void* kSMBGameBoardView__KVOContext = &kSMBGameBoardView__KVOContext;
 
 -(void)gameBoardTileEntityView_layout:(nonnull SMBGameBoardGeneralEntityView*)gameBoardGeneralEntityView
 {
-	[gameBoardGeneralEntityView setFrame:[self gameBoardTileEntityView_frame_with_gameBoardTileEntity:kRUClassOrNil(gameBoardGeneralEntityView.gameBoardGeneralEntity, SMBGameBoardTileEntity)]];
+	[gameBoardGeneralEntityView setFrame:[self gameBoardTileEntityView_frame_with_gameBoardTileEntity:kRUClassOrNil(gameBoardGeneralEntityView.drawableObject, SMBGameBoardTileEntity)]];
 }
 
 -(CGRect)gameBoardTileEntityView_frame_with_gameBoardTileEntity:(nonnull SMBGameBoardTileEntity*)gameBoardTileEntity

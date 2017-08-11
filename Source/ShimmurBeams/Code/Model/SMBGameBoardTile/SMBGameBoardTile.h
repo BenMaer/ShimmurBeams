@@ -6,6 +6,7 @@
 //  Copyright © 2017 Shimmur. All rights reserved.
 //
 
+#import "SMBDrawableObject.h"
 #import "SMBGameBoardTile__directions.h"
 
 #import <Foundation/Foundation.h>
@@ -22,7 +23,7 @@
 
 
 
-@interface SMBGameBoardTile : NSObject
+@interface SMBGameBoardTile : SMBDrawableObject
 
 #pragma mark - gameBoardTilePosition
 @property (nonatomic, readonly, strong, nullable) SMBGameBoardTilePosition* gameBoardTilePosition;
@@ -38,9 +39,6 @@
 -(void)gameBoardTileEntities_add:(nonnull SMBGameBoardTileEntity*)gameBoardTileEntity;
 -(void)gameBoardTileEntities_remove:(nonnull SMBGameBoardTileEntity*)gameBoardTileEntity;
 
-//#pragma mark - beamDirectionsBlocked
-//@property (nonatomic, readonly, assign) SMBGameBoardTile__direction beamDirectionsBlocked;
-
 #pragma mark - init
 -(nullable instancetype)init_with_gameBoardTilePosition:(nonnull SMBGameBoardTilePosition*)gameBoardTilePosition
 											  gameBoard:(nonnull SMBGameBoard*)gameBoard NS_DESIGNATED_INITIALIZER;
@@ -50,6 +48,9 @@
 
 #pragma mark - isPowered
 @property (nonatomic, readonly, assign) BOOL isPowered;
+
+#pragma mark - isHighlighted
+@property (nonatomic, assign) BOOL isHighlighted;
 
 @end
 

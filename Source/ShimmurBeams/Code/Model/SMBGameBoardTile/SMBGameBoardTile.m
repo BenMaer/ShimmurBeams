@@ -13,10 +13,12 @@
 #import "SMBGameBoardTileEntity+SMBProvidesPower.h"
 #import "SMBBeamBlockerTileEntity.h"
 #import "SMBGameBoardTileEntity_PowerProvider.h"
+#import "UIColor+SMBColors.h"
 
 #import <ResplendentUtilities/RUConditionalReturn.h>
 #import <ResplendentUtilities/NSMutableArray+RUAddObjectIfNotNil.h>
 #import <ResplendentUtilities/RUConstants.h>
+#import <ResplendentUtilities/UIGeometry+RUUtility.h>
 
 
 
@@ -251,7 +253,7 @@
 //-(SMBGameBoardTile__direction)beamDirectionsBlocked_generate
 //{
 //	NSMutableIndexSet* const directions_unblocked = [NSMutableIndexSet indexSet];
-//	
+//
 //	for (SMBGameBoardTile__direction direction = SMBGameBoardTile__direction__first;
 //		 direction <= SMBGameBoardTile__direction__last;
 //		 direction = direction << 1)
@@ -302,6 +304,44 @@
 -(void)isPowered_update
 {
 	[self setIsPowered:([self.gameBoardTileEntities_powerProviders_mappedDataCollection mappableObjects].count > 0)];
+}
+
+#pragma mark - isHighlighted
+-(void)setIsHighlighted:(BOOL)isHighlighted
+{
+	kRUConditionalReturn(self.isHighlighted == isHighlighted, NO);
+
+	_isHighlighted = isHighlighted;
+
+	[self setNeedsRedraw:YES];
+}
+
+#pragma mark - SMBGameBoardGeneralEntity: draw
+-(void)draw_in_rect:(CGRect)rect
+{
+	[super draw_in_rect:rect];
+
+	if (self.isHighlighted)
+	{
+		CGContextRef const context = UIGraphicsGetCurrentContext();
+
+		CGContextSaveGState(context);
+
+		CGFloat const lineWidth = 1.0f;
+
+		CGContextSetStrokeColorWithColor(context, [UIColor smb_selectedTileEntity_color].CGColor);
+
+		CGRect const rect_inset = UIEdgeInsetsInsetRect(rect, RU_UIEdgeInsetsMakeAll(lineWidth / 2.0f));
+		UIBezierPath* const path =
+		[UIBezierPath bezierPathWithRoundedRect:rect_inset cornerRadius:CGRectGetHeight(rect) / 5.0f];
+
+		[path setLineWidth:lineWidth];
+		[path stroke];
+
+		CGContextStrokePath(context);
+
+		CGContextRestoreGState(context);
+	}
 }
 
 @end

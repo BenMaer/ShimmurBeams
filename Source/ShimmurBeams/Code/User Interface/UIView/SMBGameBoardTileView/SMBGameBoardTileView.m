@@ -7,6 +7,8 @@
 //
 
 #import "SMBGameBoardTileView.h"
+#import "SMBDrawableObjectView.h"
+#import "SMBGameBoardTile.h"
 
 #import <ResplendentUtilities/RUConditionalReturn.h>
 
@@ -15,6 +17,10 @@
 
 
 @interface SMBGameBoardTileView ()
+
+#pragma mark - drawableObjectView
+@property (nonatomic, readonly, strong, nullable) SMBDrawableObjectView* drawableObjectView;
+-(CGRect)drawableObjectView_frame;
 
 #pragma mark - tapGestureRecognizer
 @property (nonatomic, readonly, strong, nullable) UITapGestureRecognizer* tapGestureRecognizer;
@@ -58,11 +64,28 @@
 	{
 		_gameBoardTile = gameBoardTile;
 
+		_drawableObjectView = [[SMBDrawableObjectView alloc] init_with_drawableObject:self.gameBoardTile];
+		[self.drawableObjectView setUserInteractionEnabled:NO];
+		[self addSubview:self.drawableObjectView];
+
 		_tapGestureRecognizer = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(tapGestureRecognizer_action_didFire)];
 		[self addGestureRecognizer:self.tapGestureRecognizer];
 	}
 	
 	return self;
+}
+
+-(void)layoutSubviews
+{
+	[super layoutSubviews];
+	
+	[self.drawableObjectView setFrame:[self drawableObjectView_frame]];
+}
+
+#pragma mark - drawableObjectView
+-(CGRect)drawableObjectView_frame
+{
+	return self.bounds;
 }
 
 #pragma mark - tapGestureRecognizer
