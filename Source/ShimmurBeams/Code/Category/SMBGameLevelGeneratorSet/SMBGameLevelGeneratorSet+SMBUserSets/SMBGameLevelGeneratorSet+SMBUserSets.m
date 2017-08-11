@@ -28,20 +28,20 @@
 	}
 																						  name:@"One force right"]];
 
-//	[gameLevelGenerators addObject:[[SMBGameLevelGenerator alloc] init_with_generateLevelBlock:^SMBGameLevel * _Nonnull{
-//		return [SMBGameLevel smb_testLevel_twoForces_leftThenDown];
-//	}
-//																						  name:@"Two forces"]];
-//
-//	[gameLevelGenerators addObject:[[SMBGameLevelGenerator alloc] init_with_generateLevelBlock:^SMBGameLevel * _Nonnull{
-//		return [SMBGameLevel smb_testLevel_oneWall_threeForces];
-//	}
-//																						  name:@"Wall in the way"]];
-//
-//	[gameLevelGenerators addObject:[[SMBGameLevelGenerator alloc] init_with_generateLevelBlock:^SMBGameLevel * _Nonnull{
-//		return [SMBGameLevel smb_testLevel_twoWalls_threeForces];
-//	}
-//																						  name:@"Two walls in the way"]];
+	[gameLevelGenerators addObject:[[SMBGameLevelGenerator alloc] init_with_generateLevelBlock:^SMBGameLevel * _Nonnull{
+		return [SMBGameLevel smb_testLevel_twoForces_leftThenDown];
+	}
+																						  name:@"Two forces"]];
+
+	[gameLevelGenerators addObject:[[SMBGameLevelGenerator alloc] init_with_generateLevelBlock:^SMBGameLevel * _Nonnull{
+		return [SMBGameLevel smb_testLevel_oneWall_threeForces];
+	}
+																						  name:@"Wall in the way"]];
+
+	[gameLevelGenerators addObject:[[SMBGameLevelGenerator alloc] init_with_generateLevelBlock:^SMBGameLevel * _Nonnull{
+		return [SMBGameLevel smb_testLevel_twoWalls_threeForces];
+	}
+																						  name:@"Two walls in the way"]];
 
 	[gameLevelGenerators addObject:[[SMBGameLevelGenerator alloc] init_with_generateLevelBlock:^SMBGameLevel * _Nonnull{
 		return [SMBGameLevel smb_testLevel_wallsAndForces_twoForcesNotMovable];
