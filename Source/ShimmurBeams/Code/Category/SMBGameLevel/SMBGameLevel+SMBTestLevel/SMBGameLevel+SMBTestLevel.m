@@ -20,7 +20,7 @@
 @implementation SMBGameLevel (SMBTestLevel)
 
 #pragma mark - testLevel
-+(nonnull instancetype)smb_testLevel
++(nonnull instancetype)smb_testLevel_oneTurnRight
 {
 	SMBGameBoard* const gameBoard = [[SMBGameBoard alloc] init_with_numberOfColumns:5
 																	   numberOfRows:5];
@@ -33,17 +33,13 @@
 
 	SMBLevelExitTileEntity* const levelExitTileEntity = [SMBLevelExitTileEntity new];
 	[gameBoard gameBoardTileEntity_for_beamInteractions_set:levelExitTileEntity
-												  to_column:[gameBoard gameBoardTiles_numberOfColumns] - 2
+												  to_column:2
 														row:[gameBoard gameBoardTiles_numberOfRows] - 2];
-
 
 	NSMutableArray<SMBGameBoardTileEntity*>* const gameBoardTileEntity = [NSMutableArray<SMBGameBoardTileEntity*> array];
 
 	SMBForcedBeamRedirectTileEntity* const forcedBeamRedirectTileEntity = [[SMBForcedBeamRedirectTileEntity alloc] init_with_forcedBeamExitDirection:SMBGameBoardTile__direction_right];
 	[gameBoardTileEntity addObject:forcedBeamRedirectTileEntity];
-
-	SMBForcedBeamRedirectTileEntity* const forcedBeamRedirectTileEntity2 = [[SMBForcedBeamRedirectTileEntity alloc] init_with_forcedBeamExitDirection:SMBGameBoardTile__direction_down];
-	[gameBoardTileEntity addObject:forcedBeamRedirectTileEntity2];
 
 	return
 	[[self alloc] init_with_gameBoard:gameBoard

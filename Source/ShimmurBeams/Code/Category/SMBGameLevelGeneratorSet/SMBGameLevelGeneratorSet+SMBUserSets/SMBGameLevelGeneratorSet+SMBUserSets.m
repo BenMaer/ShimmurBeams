@@ -23,7 +23,7 @@
 {
 	NSMutableArray<SMBGameLevelGenerator*>* const gameLevelGenerators = [NSMutableArray<SMBGameLevelGenerator*> array];
 	[gameLevelGenerators addObject:[[SMBGameLevelGenerator alloc] init_with_generateLevelBlock:^SMBGameLevel * _Nonnull{
-		return [SMBGameLevel smb_testLevel];
+		return [SMBGameLevel smb_testLevel_oneTurnRight];
 	}]];
 	[gameLevelGenerators addObject:[[SMBGameLevelGenerator alloc] init_with_generateLevelBlock:^SMBGameLevel * _Nonnull{
 		return [SMBGameLevel smb_testLevel_clover];

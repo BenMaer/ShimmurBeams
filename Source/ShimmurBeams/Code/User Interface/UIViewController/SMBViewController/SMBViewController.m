@@ -38,7 +38,7 @@
 	[self.view setBackgroundColor:[UIColor whiteColor]];
 
 	_gameLevelView = [SMBGameLevelView new];
-	[self.gameLevelView setGameLevel:[SMBGameLevel smb_testLevel]];
+	[self.gameLevelView setGameLevel:[SMBGameLevel smb_testLevel_oneTurnRight]];
 	NSAssert(self.gameLevelView.gameLevel != nil, @"Unable to load level");
 	[self.view addSubview:self.gameLevelView];
 }
