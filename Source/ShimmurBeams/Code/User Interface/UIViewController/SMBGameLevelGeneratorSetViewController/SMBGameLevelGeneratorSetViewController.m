@@ -14,6 +14,7 @@
 
 #import <ResplendentUtilities/UIView+RUUtility.h>
 #import <ResplendentUtilities/RUConditionalReturn.h>
+#import <ResplendentUtilities/RUConstants.h>
 
 
 
@@ -32,6 +33,8 @@ static void* kSMBGameLevelGeneratorSetViewController__KVOContext = &kSMBGameLeve
 -(void)gameLevelView_gameLevel_update;
 -(nullable SMBGameLevel*)gameLevelView_gameLevel_appropriate;
 
+-(void)gameLevelView_gameLevel_didComplete;
+
 #pragma mark - gameLevelView
 @property (nonatomic, readonly, strong, nullable) SMBGameLevelView* gameLevelView;
 @property (nonatomic, assign) BOOL gameLevelView_isBeingSet;
@@ -40,6 +43,10 @@ static void* kSMBGameLevelGeneratorSetViewController__KVOContext = &kSMBGameLeve
 
 #pragma mark - gameLevelGeneratorSet
 @property (nonatomic, assign) NSUInteger gameLevelGeneratorSet_levelIndex;
+
+#pragma mark - navigationItem_title
+-(void)navigationItem_title_update;
+-(nullable NSString*)navigationItem_title_generate;
 
 @end
 
@@ -67,6 +74,8 @@ static void* kSMBGameLevelGeneratorSetViewController__KVOContext = &kSMBGameLeve
 	_gameLevelView = [SMBGameLevelView new];
 	[self gameLevelView_update];
 	[self.view addSubview:self.gameLevelView];
+
+	[self navigationItem_title_update];
 }
 
 -(void)viewWillLayoutSubviews
@@ -140,6 +149,62 @@ static void* kSMBGameLevelGeneratorSetViewController__KVOContext = &kSMBGameLeve
 	return gameLevel;
 }
 
+-(void)gameLevelView_gameLevel_didComplete
+{
+	SMBGameLevelGeneratorSet* const gameLevelGeneratorSet = self.gameLevelGeneratorSet;
+	kRUConditionalReturn(gameLevelGeneratorSet == nil, YES);
+
+	NSArray<SMBGameLevelGenerator*>* const gameLevelGenerators = gameLevelGeneratorSet.gameLevelGenerators;
+	kRUConditionalReturn(gameLevelGenerators == nil, YES);
+
+	NSUInteger const gameLevelGeneratorSet_levelIndex = self.gameLevelGeneratorSet_levelIndex;
+	NSUInteger const gameLevelGeneratorSet_levelIndex_new = gameLevelGeneratorSet_levelIndex + 1;
+	if (gameLevelGeneratorSet_levelIndex < gameLevelGenerators.count)
+	{
+		UIAlertController* const alertController =
+		[UIAlertController alertControllerWithTitle:@"Congratulations!"
+											message:RUStringWithFormat(@"You beat level %lu! Continue to the next level?",gameLevelGeneratorSet_levelIndex + 1)
+									 preferredStyle:UIAlertControllerStyleAlert];
+		
+		__weak typeof(self) const self_weak = self;
+		[alertController addAction:
+		 [UIAlertAction actionWithTitle:@"Yes"
+								  style:UIAlertActionStyleDefault
+								handler:
+		  ^(UIAlertAction * _Nonnull action) {
+			  [self_weak setGameLevelGeneratorSet_levelIndex:gameLevelGeneratorSet_levelIndex_new];
+		  }]];
+
+		[alertController addAction:
+		 [UIAlertAction actionWithTitle:@"Quit"
+								  style:UIAlertActionStyleDefault
+								handler:
+		  ^(UIAlertAction * _Nonnull action) {
+			  [self_weak.navigationController popViewControllerAnimated:YES];
+		  }]];
+
+		[self presentViewController:alertController animated:YES completion:nil];
+	}
+	else
+	{
+		UIAlertController* const alertController =
+		[UIAlertController alertControllerWithTitle:@"Congratulations!"
+											message:@"You have beaten the last level in this set!"
+									 preferredStyle:UIAlertControllerStyleAlert];
+
+		__weak typeof(self) const self_weak = self;
+		[alertController addAction:
+		 [UIAlertAction actionWithTitle:@"Awesome!"
+								  style:UIAlertActionStyleDefault
+								handler:
+		  ^(UIAlertAction * _Nonnull action) {
+			  [self_weak.navigationController popViewControllerAnimated:YES];
+		  }]];
+
+		[self presentViewController:alertController animated:YES completion:nil];
+	}
+}
+
 #pragma mark - gameLevelView
 -(CGRect)gameLevelView_frame
 {
@@ -189,7 +254,7 @@ static void* kSMBGameLevelGeneratorSetViewController__KVOContext = &kSMBGameLeve
 
 				kRUConditionalReturn(gameLevelView_gameLevel.isComplete == NO, NO);
 
-				[self setGameLevelGeneratorSet_levelIndex:self.gameLevelGeneratorSet_levelIndex + 1];
+				[self gameLevelView_gameLevel_didComplete];
 			}
 			else
 			{
@@ -214,7 +279,22 @@ static void* kSMBGameLevelGeneratorSetViewController__KVOContext = &kSMBGameLeve
 
 	_gameLevelGeneratorSet_levelIndex = gameLevelGeneratorSet_levelIndex;
 
+	[self navigationItem_title_update];
 	[self gameLevelView_gameLevel_update];
+}
+
+#pragma mark - navigationItem_title
+-(void)navigationItem_title_update
+{
+	[self.navigationItem setTitle:[self navigationItem_title_generate]];
+}
+
+-(nullable NSString*)navigationItem_title_generate
+{
+	return
+	RUStringWithFormat(@"Level %lu/%lu",
+					   (unsigned long)self.gameLevelGeneratorSet_levelIndex + 1,
+					   (unsigned long)self.gameLevelGeneratorSet.gameLevelGenerators.count);
 }
 
 @end
