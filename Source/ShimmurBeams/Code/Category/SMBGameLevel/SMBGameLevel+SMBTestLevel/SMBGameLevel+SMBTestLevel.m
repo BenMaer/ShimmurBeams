@@ -20,7 +20,7 @@
 @implementation SMBGameLevel (SMBTestLevel)
 
 #pragma mark - testLevel
-+(nonnull instancetype)smb_testLevel_oneTurnRight
++(nonnull instancetype)smb_testLevel_oneForce_right
 {
 	SMBGameBoard* const gameBoard = [[SMBGameBoard alloc] init_with_numberOfColumns:5
 																	   numberOfRows:5];
@@ -29,17 +29,46 @@
 	[beamCreatorEntity setBeamDirection:SMBGameBoardTile__direction_up];
 	[gameBoard gameBoardTileEntity_for_beamInteractions_set:beamCreatorEntity
 												  to_column:1
-														row:[gameBoard gameBoardTiles_numberOfRows] - 1];
+														row:[gameBoard gameBoardTiles_numberOfRows] - 2];
 
 	SMBLevelExitTileEntity* const levelExitTileEntity = [SMBLevelExitTileEntity new];
 	[gameBoard gameBoardTileEntity_for_beamInteractions_set:levelExitTileEntity
 												  to_column:[gameBoard gameBoardTiles_numberOfColumns] - 2
-														row:[gameBoard gameBoardTiles_numberOfRows] - 2];
+														row:1];
 
 	NSMutableArray<SMBGameBoardTileEntity*>* const gameBoardTileEntity = [NSMutableArray<SMBGameBoardTileEntity*> array];
 
 	SMBForcedBeamRedirectTileEntity* const forcedBeamRedirectTileEntity = [[SMBForcedBeamRedirectTileEntity alloc] init_with_forcedBeamExitDirection:SMBGameBoardTile__direction_right];
 	[gameBoardTileEntity addObject:forcedBeamRedirectTileEntity];
+
+	return
+	[[self alloc] init_with_gameBoard:gameBoard
+		  usableGameBoardTileEntities:[NSArray<SMBGameBoardTileEntity*> arrayWithArray:gameBoardTileEntity]];
+}
+
++(nonnull instancetype)smb_testLevel_twoForces_leftThenDown
+{
+	SMBGameBoard* const gameBoard = [[SMBGameBoard alloc] init_with_numberOfColumns:5
+																	   numberOfRows:5];
+	
+	SMBBeamCreatorTileEntity* const beamCreatorEntity = [SMBBeamCreatorTileEntity new];
+	[beamCreatorEntity setBeamDirection:SMBGameBoardTile__direction_up];
+	[gameBoard gameBoardTileEntity_for_beamInteractions_set:beamCreatorEntity
+												  to_column:[gameBoard gameBoardTiles_numberOfColumns] - 2
+														row:3];
+	
+	SMBLevelExitTileEntity* const levelExitTileEntity = [SMBLevelExitTileEntity new];
+	[gameBoard gameBoardTileEntity_for_beamInteractions_set:levelExitTileEntity
+												  to_column:1
+														row:[gameBoard gameBoardTiles_numberOfRows] - 2];
+	
+	NSMutableArray<SMBGameBoardTileEntity*>* const gameBoardTileEntity = [NSMutableArray<SMBGameBoardTileEntity*> array];
+	
+	SMBForcedBeamRedirectTileEntity* const forcedBeamRedirectTileEntity_left = [[SMBForcedBeamRedirectTileEntity alloc] init_with_forcedBeamExitDirection:SMBGameBoardTile__direction_left];
+	[gameBoardTileEntity addObject:forcedBeamRedirectTileEntity_left];
+
+	SMBForcedBeamRedirectTileEntity* const forcedBeamRedirectTileEntity_down = [[SMBForcedBeamRedirectTileEntity alloc] init_with_forcedBeamExitDirection:SMBGameBoardTile__direction_down];
+	[gameBoardTileEntity addObject:forcedBeamRedirectTileEntity_down];
 
 	return
 	[[self alloc] init_with_gameBoard:gameBoard

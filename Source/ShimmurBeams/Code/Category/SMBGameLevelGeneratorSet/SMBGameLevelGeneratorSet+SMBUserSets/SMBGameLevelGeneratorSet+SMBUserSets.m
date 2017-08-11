@@ -23,9 +23,15 @@
 {
 	NSMutableArray<SMBGameLevelGenerator*>* const gameLevelGenerators = [NSMutableArray<SMBGameLevelGenerator*> array];
 	[gameLevelGenerators addObject:[[SMBGameLevelGenerator alloc] init_with_generateLevelBlock:^SMBGameLevel * _Nonnull{
-		return [SMBGameLevel smb_testLevel_oneTurnRight];
+		return [SMBGameLevel smb_testLevel_oneForce_right];
 	}
-																						  name:@"One Turn Right"]];
+																						  name:@"One force right"]];
+
+	[gameLevelGenerators addObject:[[SMBGameLevelGenerator alloc] init_with_generateLevelBlock:^SMBGameLevel * _Nonnull{
+		return [SMBGameLevel smb_testLevel_twoForces_leftThenDown];
+	}
+																						  name:@"Two forces"]];
+
 	[gameLevelGenerators addObject:[[SMBGameLevelGenerator alloc] init_with_generateLevelBlock:^SMBGameLevel * _Nonnull{
 		return [SMBGameLevel smb_testLevel_clover];
 	}
