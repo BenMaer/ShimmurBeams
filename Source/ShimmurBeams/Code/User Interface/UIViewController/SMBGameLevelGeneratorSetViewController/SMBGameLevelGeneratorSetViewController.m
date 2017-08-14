@@ -168,7 +168,7 @@ static void* kSMBGameLevelGeneratorSetViewController__KVOContext = &kSMBGameLeve
 
 	NSUInteger const gameLevelGeneratorSet_levelIndex = self.gameLevelGeneratorSet_levelIndex;
 	NSUInteger const gameLevelGeneratorSet_levelIndex_new = gameLevelGeneratorSet_levelIndex + 1;
-	if (gameLevelGeneratorSet_levelIndex < gameLevelGenerators.count)
+	if (gameLevelGeneratorSet_levelIndex_new < gameLevelGenerators.count)
 	{
 		UIAlertController* const alertController =
 		[UIAlertController alertControllerWithTitle:@"Congratulations!"

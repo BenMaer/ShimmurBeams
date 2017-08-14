@@ -18,6 +18,10 @@
 +(nonnull instancetype)smb_forcedRedirectsAndWalls_twoForces_leftThenDown;
 +(nonnull instancetype)smb_forcedRedirectsAndWalls_oneWall_threeForces;
 +(nonnull instancetype)smb_forcedRedirectsAndWalls_twoWalls_threeForces;
-+(nonnull instancetype)smb_forcedRedirectsAndWalls_wallsAndForces_twoForcesNotMovable;
++(nonnull instancetype)smb_forcedRedirectsAndWalls_wallsAndForces_twoForcesNotMovable_tricky;
+
+#pragma mark - forces not movable
++(nonnull instancetype)smb_forcedRedirects_oneForceNotMovable;
++(nonnull instancetype)smb_forcedRedirects_wallsAndForces_threeForcesNotMovable;
 
 @end
