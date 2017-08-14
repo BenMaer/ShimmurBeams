@@ -201,7 +201,7 @@ typedef NS_ENUM(NSInteger, SMBBeamEntity__drawingPiece) {
 }
 
 #pragma mark - beamEntityTileNodes
--(BOOL)beamEntityTileNode_contains:(nonnull SMBBeamEntityTileNode*)beamEntityTileNode
+-(BOOL)beamEntityTileNodes_contains:(nonnull SMBBeamEntityTileNode*)beamEntityTileNode
 {
 	kRUConditionalReturn_ReturnValueFalse(beamEntityTileNode == nil, YES);
 

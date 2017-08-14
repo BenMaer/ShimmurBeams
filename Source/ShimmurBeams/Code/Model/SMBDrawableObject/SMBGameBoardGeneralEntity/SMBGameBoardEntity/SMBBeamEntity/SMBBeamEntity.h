@@ -34,7 +34,7 @@
  @param beamEntityTileNode The node to check if exists in this beam.
  @return YES if the node exists in this beam, otherwise NO.
  */
--(BOOL)beamEntityTileNode_contains:(nonnull SMBBeamEntityTileNode*)beamEntityTileNode;
+-(BOOL)beamEntityTileNodes_contains:(nonnull SMBBeamEntityTileNode*)beamEntityTileNode;
 
 #pragma mark - init
 -(nullable instancetype)init_with_gameBoardTile:(nonnull SMBGameBoardTile*)gameBoardTile NS_DESIGNATED_INITIALIZER;

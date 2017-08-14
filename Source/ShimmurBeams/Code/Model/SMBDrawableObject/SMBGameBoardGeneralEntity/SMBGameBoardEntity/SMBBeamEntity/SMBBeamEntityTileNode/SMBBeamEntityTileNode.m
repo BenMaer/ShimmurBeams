@@ -152,7 +152,7 @@ typedef NS_ENUM(NSInteger, SMBBeamEntityTileNode__state) {
 	SMBBeamEntity* const beamEntity = self.beamEntity;
 	kRUConditionalReturn_ReturnValueFalse(beamEntity == nil, YES);
 
-	return [beamEntity beamEntityTileNode_contains:self];
+	return [beamEntity beamEntityTileNodes_contains:self];
 }
 
 #pragma mark - gameBoardTile
