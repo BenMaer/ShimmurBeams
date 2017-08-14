@@ -7,43 +7,40 @@
 //
 
 #import "SMBGameLevelGeneratorSetViewController.h"
-#import "SMBGameLevelView.h"
 #import "SMBGameLevelGeneratorSet.h"
 #import "SMBGameLevelGenerator.h"
-#import "SMBGameLevel.h"
+#import "SMBGameLevelGeneratorViewController.h"
 
-#import <ResplendentUtilities/UIView+RUUtility.h>
 #import <ResplendentUtilities/RUConditionalReturn.h>
 #import <ResplendentUtilities/RUConstants.h>
+#import <ResplendentUtilities/NSString+RUMacros.h>
 
 
 
 
 
-static void* kSMBGameLevelGeneratorSetViewController__KVOContext = &kSMBGameLevelGeneratorSetViewController__KVOContext;
+@interface SMBGameLevelGeneratorSetViewController () <SMBGameLevelGeneratorViewController_gameLevelDidCompleteDelegate, UITableViewDataSource, UITableViewDelegate>
 
+#pragma mark - gameLevelGeneratorViewController
+@property (nonatomic, weak, nullable) SMBGameLevelGeneratorViewController* gameLevelGeneratorViewController;
+-(void)gameLevelGeneratorViewController_push_attempt;
+-(void)gameLevelGeneratorViewController_gameLevelGenerator_updateExisting;
 
-
-
-
-@interface SMBGameLevelGeneratorSetViewController ()
-
-#pragma mark - gameLevelView_gameLevel
-@property (nonatomic, readonly, strong, nullable) SMBGameLevel* gameLevelView_gameLevel;
--(void)gameLevelView_gameLevel_update;
--(nullable SMBGameLevel*)gameLevelView_gameLevel_appropriate;
--(nullable SMBGameLevelGenerator*)gameLevelView_gameLevel_generator_appropriate;
-
--(void)gameLevelView_gameLevel_didComplete;
-
-#pragma mark - gameLevelView
-@property (nonatomic, readonly, strong, nullable) SMBGameLevelView* gameLevelView;
-@property (nonatomic, assign) BOOL gameLevelView_isBeingSet;
--(CGRect)gameLevelView_frame;
--(void)gameLevelView_update;
+#pragma mark - gameLevelGenerator
+@property (nonatomic, assign) BOOL gameLevelGenerator_appropriate_disable;
+-(nullable SMBGameLevelGenerator*)gameLevelGenerator_appropriate;
 
 #pragma mark - gameLevelGeneratorSet
 @property (nonatomic, assign) NSUInteger gameLevelGeneratorSet_levelIndex;
+-(void)gameLevelGeneratorSet_levelIndex_increment_attempt;
+
+#pragma mark - tableView
+@property (nonatomic, readonly, strong, nullable) UITableView* tableView;
+-(CGRect)tableView_frame;
+
+#pragma mark - gameLevelGenerators
+-(nullable SMBGameLevelGenerator*)gameLevelGenerator_at_index:(NSUInteger)gameLevelGenerator_index;
+-(NSUInteger)gameLevelGenerator_index_for_indexPathSection:(NSInteger)indexPathSection;
 
 #pragma mark - navigationItem_title
 -(void)navigationItem_title_update;
@@ -57,108 +54,111 @@ static void* kSMBGameLevelGeneratorSetViewController__KVOContext = &kSMBGameLeve
 
 @implementation SMBGameLevelGeneratorSetViewController
 
-#pragma mark - NSObject
--(void)dealloc
-{
-	[self gameLevelView_gameLevel_setKVORegistered:NO];
-}
-
 #pragma mark - UIViewController
 -(void)viewDidLoad
 {
 	[super viewDidLoad];
-	
-	[self setAutomaticallyAdjustsScrollViewInsets:NO];
+
+	[self navigationItem_title_update];
 
 	[self.view setBackgroundColor:[UIColor whiteColor]];
 
-	_gameLevelView = [SMBGameLevelView new];
-	[self gameLevelView_update];
-	[self.view addSubview:self.gameLevelView];
-
-	[self navigationItem_title_update];
+	_tableView = [[UITableView alloc] initWithFrame:CGRectZero style:UITableViewStylePlain];
+	[self.tableView setBackgroundColor:[UIColor clearColor]];
+	[self.tableView setDataSource:self];
+	[self.tableView setDelegate:self];
+	[self.tableView setSeparatorStyle:UITableViewCellSeparatorStyleNone];
+	[self.view addSubview:self.tableView];
 }
 
 -(void)viewWillLayoutSubviews
 {
 	[super viewWillLayoutSubviews];
-	
-	[self.gameLevelView setFrame:[self gameLevelView_frame]];
+
+	[self.tableView setFrame:[self tableView_frame]];
 }
 
-#pragma mark - gameLevelView_gameLevel
--(void)setGameLevelView_gameLevel:(nullable SMBGameLevel*)gameLevelView_gameLevel
+#pragma mark - gameLevelGeneratorViewController
+-(void)setGameLevelGeneratorViewController:(nullable SMBGameLevelGeneratorViewController*)gameLevelGeneratorViewController
 {
-	kRUConditionalReturn(self.gameLevelView_gameLevel == gameLevelView_gameLevel, NO);
+	kRUConditionalReturn(self.gameLevelGeneratorViewController == gameLevelGeneratorViewController, NO);
 
-	[self gameLevelView_gameLevel_setKVORegistered:NO];
+	_gameLevelGeneratorViewController = gameLevelGeneratorViewController;
 
-	_gameLevelView_gameLevel = gameLevelView_gameLevel;
-
-	[self gameLevelView_gameLevel_setKVORegistered:YES];
-
-	[self gameLevelView_update];
+	if (self.gameLevelGeneratorViewController)
+	{
+		[self gameLevelGeneratorViewController_gameLevelGenerator_updateExisting];
+	}
 }
 
--(void)gameLevelView_gameLevel_setKVORegistered:(BOOL)registered
+-(void)gameLevelGeneratorViewController_push_attempt
 {
-	typeof(self.gameLevelView_gameLevel) const gameLevelView_gameLevel = self.gameLevelView_gameLevel;
-	kRUConditionalReturn(gameLevelView_gameLevel == nil, NO);
-	
-	NSMutableArray<NSString*>* const propertiesToObserve = [NSMutableArray<NSString*> array];
-	[propertiesToObserve addObject:[SMBGameLevel_PropertiesForKVO isComplete]];
-	
-	[propertiesToObserve enumerateObjectsUsingBlock:^(NSString * _Nonnull propertyToObserve, NSUInteger idx, BOOL * _Nonnull stop) {
-		if (registered)
-		{
-			[gameLevelView_gameLevel addObserver:self
-									  forKeyPath:propertyToObserve
-										 options:(NSKeyValueObservingOptionInitial)
-										 context:&kSMBGameLevelGeneratorSetViewController__KVOContext];
-		}
-		else
-		{
-			[gameLevelView_gameLevel removeObserver:self
-										 forKeyPath:propertyToObserve
-											context:&kSMBGameLevelGeneratorSetViewController__KVOContext];
-		}
-	}];
+	kRUConditionalReturn(self.gameLevelGeneratorViewController != nil, YES);
+
+	SMBGameLevelGeneratorViewController* const gameLevelGeneratorViewController = [SMBGameLevelGeneratorViewController new];
+	[gameLevelGeneratorViewController setGameLevelDidCompleteDelegate:self];
+
+	[self setGameLevelGeneratorViewController:gameLevelGeneratorViewController];
+	kRUConditionalReturn(self.gameLevelGeneratorViewController == nil, YES);
+
+	[self.navigationController pushViewController:gameLevelGeneratorViewController animated:YES];
 }
 
--(void)gameLevelView_gameLevel_update
+-(void)gameLevelGeneratorViewController_gameLevelGenerator_updateExisting
 {
-	[self setGameLevelView_gameLevel:[self gameLevelView_gameLevel_appropriate]];
+	SMBGameLevelGeneratorViewController* const gameLevelGeneratorViewController = self.gameLevelGeneratorViewController;
+	kRUConditionalReturn(gameLevelGeneratorViewController == nil, NO);
+
+	SMBGameLevelGenerator* const gameLevelGenerator_appropriate = [self gameLevelGenerator_appropriate];
+	kRUConditionalReturn(gameLevelGenerator_appropriate == nil, NO);
+
+	[gameLevelGeneratorViewController setGameLevelGenerator:gameLevelGenerator_appropriate];
 }
 
--(nullable SMBGameLevel*)gameLevelView_gameLevel_appropriate
+#pragma mark - gameLevelGenerator
+-(nullable SMBGameLevelGenerator*)gameLevelGenerator_appropriate
 {
-	SMBGameLevelGenerator* const gameLevelView_gameLevel_generator_appropriate = [self gameLevelView_gameLevel_generator_appropriate];
-	kRUConditionalReturn_ReturnValueNil(gameLevelView_gameLevel_generator_appropriate == nil, YES);
-	
-	SMBGameLevel* const gameLevel =
-	[gameLevelView_gameLevel_generator_appropriate gameLevel_generate];
-	NSAssert(gameLevel != nil, @"Should have generated a level");
-	
-	return gameLevel;
-}
+	kRUConditionalReturn_ReturnValueNil(self.gameLevelGenerator_appropriate_disable == YES, NO);
 
--(nullable SMBGameLevelGenerator*)gameLevelView_gameLevel_generator_appropriate
-{
-	kRUConditionalReturn_ReturnValueNil(self.gameLevelView_isBeingSet == YES, NO);
-	
 	SMBGameLevelGeneratorSet* const gameLevelGeneratorSet = self.gameLevelGeneratorSet;
 	kRUConditionalReturn_ReturnValueNil(gameLevelGeneratorSet == nil, NO);
-	
+
 	NSArray<SMBGameLevelGenerator*>* const gameLevelGenerators = gameLevelGeneratorSet.gameLevelGenerators;
 	kRUConditionalReturn_ReturnValueNil(gameLevelGenerators == nil, NO);
-	
+
 	NSUInteger const gameLevelGeneratorSet_levelIndex = self.gameLevelGeneratorSet_levelIndex;
 	kRUConditionalReturn_ReturnValueNil(gameLevelGeneratorSet_levelIndex >= gameLevelGenerators.count, NO);
-	
+
 	return [gameLevelGenerators objectAtIndex:gameLevelGeneratorSet_levelIndex];
 }
 
--(void)gameLevelView_gameLevel_didComplete
+#pragma mark - gameLevelGeneratorSet
+-(void)setGameLevelGeneratorSet:(nullable SMBGameLevelGeneratorSet*)gameLevelGeneratorSet
+{
+	kRUConditionalReturn(self.gameLevelGeneratorSet == gameLevelGeneratorSet, NO);
+
+	[self setGameLevelGenerator_appropriate_disable:YES];
+
+	_gameLevelGeneratorSet = gameLevelGeneratorSet;
+	[self setGameLevelGeneratorSet_levelIndex:0];
+
+	[self setGameLevelGenerator_appropriate_disable:NO];
+
+	[self navigationItem_title_update];
+	[self gameLevelGeneratorViewController_gameLevelGenerator_updateExisting];
+}
+
+#pragma mark - gameLevelGeneratorSet
+-(void)setGameLevelGeneratorSet_levelIndex:(NSUInteger)gameLevelGeneratorSet_levelIndex
+{
+	kRUConditionalReturn(self.gameLevelGeneratorSet_levelIndex == gameLevelGeneratorSet_levelIndex, NO);
+
+	_gameLevelGeneratorSet_levelIndex = gameLevelGeneratorSet_levelIndex;
+
+	[self gameLevelGeneratorViewController_gameLevelGenerator_updateExisting];
+}
+
+-(void)gameLevelGeneratorSet_levelIndex_increment_attempt
 {
 	SMBGameLevelGeneratorSet* const gameLevelGeneratorSet = self.gameLevelGeneratorSet;
 	kRUConditionalReturn(gameLevelGeneratorSet == nil, YES);
@@ -167,14 +167,16 @@ static void* kSMBGameLevelGeneratorSetViewController__KVOContext = &kSMBGameLeve
 	kRUConditionalReturn(gameLevelGenerators == nil, YES);
 
 	NSUInteger const gameLevelGeneratorSet_levelIndex = self.gameLevelGeneratorSet_levelIndex;
+
 	NSUInteger const gameLevelGeneratorSet_levelIndex_new = gameLevelGeneratorSet_levelIndex + 1;
+
 	if (gameLevelGeneratorSet_levelIndex_new < gameLevelGenerators.count)
 	{
 		UIAlertController* const alertController =
 		[UIAlertController alertControllerWithTitle:@"Congratulations!"
 											message:RUStringWithFormat(@"You beat level %lu! Continue to the next level?",gameLevelGeneratorSet_levelIndex + 1)
 									 preferredStyle:UIAlertControllerStyleAlert];
-		
+
 		__weak typeof(self) const self_weak = self;
 		[alertController addAction:
 		 [UIAlertAction actionWithTitle:@"Yes"
@@ -189,10 +191,10 @@ static void* kSMBGameLevelGeneratorSetViewController__KVOContext = &kSMBGameLeve
 								  style:UIAlertActionStyleDefault
 								handler:
 		  ^(UIAlertAction * _Nonnull action) {
-			  [self_weak.navigationController popViewControllerAnimated:YES];
+			  [self_weak.navigationController popToViewController:self_weak animated:YES];
 		  }]];
 
-		[self presentViewController:alertController animated:YES completion:nil];
+		[self.navigationController presentViewController:alertController animated:YES completion:nil];
 	}
 	else
 	{
@@ -207,89 +209,86 @@ static void* kSMBGameLevelGeneratorSetViewController__KVOContext = &kSMBGameLeve
 								  style:UIAlertActionStyleDefault
 								handler:
 		  ^(UIAlertAction * _Nonnull action) {
-			  [self_weak.navigationController popViewControllerAnimated:YES];
+			  [self_weak.navigationController popToViewController:self_weak animated:YES];
 		  }]];
 
-		[self presentViewController:alertController animated:YES completion:nil];
+		[self.navigationController presentViewController:alertController animated:YES completion:nil];
 	}
 }
 
-#pragma mark - gameLevelView
--(CGRect)gameLevelView_frame
+#pragma mark - SMBGameLevelGeneratorViewController_gameLevelDidCompleteDelegate
+-(void)gameLevelGeneratorViewController:(nonnull SMBGameLevelGeneratorViewController*)gameLevelGeneratorViewController
+				   gameLevelDidComplete:(nonnull SMBGameLevel*)gameLevel
 {
-	CGSize const size = [self.gameLevelView sizeThatFits:self.view.bounds.size];
-	
-	return CGRectCeilOrigin((CGRect){
-		.origin.x	= CGRectGetHorizontallyAlignedXCoordForWidthOnWidth(size.width, CGRectGetWidth(self.view.bounds)),
-		.origin.y	= CGRectGetVerticallyAlignedYCoordForHeightOnHeight(size.height, CGRectGetHeight(self.view.bounds)),
-		.size		= size,
-	});
+	[self gameLevelGeneratorSet_levelIndex_increment_attempt];
 }
 
--(void)gameLevelView_update
+#pragma mark - UITableViewDataSource
+-(NSInteger)numberOfSectionsInTableView:(nonnull UITableView*)tableView
 {
-	SMBGameLevelView* const gameLevelView = self.gameLevelView;
-	kRUConditionalReturn(gameLevelView == nil, NO);
-
-	[gameLevelView setGameLevel:self.gameLevelView_gameLevel];
+	return self.gameLevelGeneratorSet.gameLevelGenerators.count;
 }
 
-#pragma mark - gameLevelGeneratorSet
--(void)setGameLevelGeneratorSet:(nullable SMBGameLevelGeneratorSet*)gameLevelGeneratorSet
+-(NSInteger)tableView:(nonnull UITableView*)tableView numberOfRowsInSection:(NSInteger)section
 {
-	kRUConditionalReturn(self.gameLevelGeneratorSet == gameLevelGeneratorSet, NO);
-
-	[self setGameLevelView_isBeingSet:YES];
-
-	_gameLevelGeneratorSet = gameLevelGeneratorSet;
-	[self setGameLevelGeneratorSet_levelIndex:0];
-
-	[self setGameLevelView_isBeingSet:NO];
-
-	[self gameLevelView_gameLevel_update];
+	return 1;
 }
 
-#pragma mark - KVO
--(void)observeValueForKeyPath:(nullable NSString*)keyPath ofObject:(nullable id)object change:(nullable NSDictionary*)change context:(nullable void*)context
+-(nonnull UITableViewCell*)tableView:(nonnull UITableView*)tableView cellForRowAtIndexPath:(nonnull NSIndexPath*)indexPath
 {
-	if (context == kSMBGameLevelGeneratorSetViewController__KVOContext)
-	{
-		if (object == self.gameLevelView_gameLevel)
-		{
-			if ([keyPath isEqualToString:[SMBGameLevel_PropertiesForKVO isComplete]])
-			{
-				SMBGameLevel* const gameLevelView_gameLevel = self.gameLevelView_gameLevel;
-				kRUConditionalReturn(gameLevelView_gameLevel == nil, YES);
+	kRUDefineNSStringConstant(tableViewCell_dequeIdentifier)
+	UITableViewCell* const tableViewCell =
+	([tableView dequeueReusableCellWithIdentifier:tableViewCell_dequeIdentifier]
+	 ?:
+	 [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:tableViewCell_dequeIdentifier]
+	 );
 
-				kRUConditionalReturn(gameLevelView_gameLevel.isComplete == NO, NO);
+	NSUInteger const gameLevelGenerator_index = [self gameLevelGenerator_index_for_indexPathSection:indexPath.section];
+	SMBGameLevelGenerator* const gameLevelGenerator = [self gameLevelGenerator_at_index:gameLevelGenerator_index];
+	[tableViewCell.textLabel setText:RUStringWithFormat(@"%lu) %@",
+														(unsigned long)gameLevelGenerator_index + 1,
+														gameLevelGenerator.name)];
 
-				[self gameLevelView_gameLevel_didComplete];
-			}
-			else
-			{
-				NSAssert(false, @"unhandled keyPath %@",keyPath);
-			}
-		}
-		else
-		{
-			NSAssert(false, @"unhandled object %@",object);
-		}
-	}
-	else
-	{
-		[super observeValueForKeyPath:keyPath ofObject:object change:change context:context];
-	}
+	return tableViewCell;
 }
 
-#pragma mark - gameLevelGeneratorSet
--(void)setGameLevelGeneratorSet_levelIndex:(NSUInteger)gameLevelGeneratorSet_levelIndex
+#pragma mark - UITableViewDelegate
+-(CGFloat)tableView:(nonnull UITableView*)tableView heightForRowAtIndexPath:(nonnull NSIndexPath*)indexPath
 {
-	kRUConditionalReturn(self.gameLevelGeneratorSet_levelIndex == gameLevelGeneratorSet_levelIndex, NO);
+	return 30.0f;
+}
 
-	_gameLevelGeneratorSet_levelIndex = gameLevelGeneratorSet_levelIndex;
+-(void)tableView:(nonnull UITableView*)tableView didSelectRowAtIndexPath:(nonnull NSIndexPath*)indexPath
+{
+	kRUConditionalReturn(self.gameLevelGeneratorViewController != nil, YES);
 
-	[self navigationItem_title_update];
-	[self gameLevelView_gameLevel_update];
+	[self setGameLevelGeneratorSet_levelIndex:[self gameLevelGenerator_index_for_indexPathSection:indexPath.section]];
+
+	[self gameLevelGeneratorViewController_push_attempt];
+}
+
+#pragma mark - gameLevelGenerators
+-(nullable SMBGameLevelGenerator*)gameLevelGenerator_at_index:(NSUInteger)gameLevelGenerator_index
+{
+	SMBGameLevelGeneratorSet* const gameLevelGeneratorSet = self.gameLevelGeneratorSet;
+	kRUConditionalReturn_ReturnValueNil(gameLevelGeneratorSet == nil, YES);
+
+	NSArray<SMBGameLevelGenerator*>* const gameLevelGenerators = gameLevelGeneratorSet.gameLevelGenerators;
+	kRUConditionalReturn_ReturnValueNil(gameLevelGenerators == nil, YES);
+	kRUConditionalReturn_ReturnValueNil(gameLevelGenerator_index >= gameLevelGenerators.count, YES);
+
+	return [gameLevelGenerators objectAtIndex:gameLevelGenerator_index];
+}
+
+-(NSUInteger)gameLevelGenerator_index_for_indexPathSection:(NSInteger)indexPathSection
+{
+	return indexPathSection;
+}
+
+#pragma mark - tableView
+-(CGRect)tableView_frame
+{
+	return self.view.bounds;
 }
 
 #pragma mark - navigationItem_title
@@ -300,12 +299,7 @@ static void* kSMBGameLevelGeneratorSetViewController__KVOContext = &kSMBGameLeve
 
 -(nullable NSString*)navigationItem_title_generate
 {
-	return
-	RUStringWithFormat(@"%@      %lu/%lu",
-					   [[self gameLevelView_gameLevel_generator_appropriate] name],
-					   (unsigned long)self.gameLevelGeneratorSet_levelIndex + 1,
-					   (unsigned long)self.gameLevelGeneratorSet.gameLevelGenerators.count
-					   );
+	return self.gameLevelGeneratorSet.name;
 }
 
 @end

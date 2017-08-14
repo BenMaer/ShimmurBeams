@@ -230,7 +230,10 @@ static void* kSMBGameLevelView__KVOContext = &kSMBGameLevelView__KVOContext;
 	CGFloat const inset = [self content_inset];
 
 	NSUInteger const numberOfColumns = [self.gameLevel.gameBoard gameBoardTiles_numberOfColumns];
+	kRUConditionalReturn_ReturnValue(numberOfColumns == 0, NO, CGSizeZero);
+
 	NSUInteger const numberOfRows = [self.gameLevel.gameBoard gameBoardTiles_numberOfRows];
+	kRUConditionalReturn_ReturnValue(numberOfRows == 0, NO, CGSizeZero);
 
 	CGFloat const width_perItem_bounded = floor((boundingSize.width - (inset * 2.0f)) / (CGFloat)numberOfColumns);
 	CGFloat const height_perItem_bounded = floor((boundingSize.height - (inset * 2.0f)) / (CGFloat)numberOfRows);

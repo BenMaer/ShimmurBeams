@@ -42,6 +42,8 @@
 
 	[self.view setBackgroundColor:[UIColor whiteColor]];
 
+	[self.navigationItem setTitle:@"Level Sets"];
+
 	_tableView = [[UITableView alloc] initWithFrame:CGRectZero style:UITableViewStylePlain];
 	[self.tableView setBackgroundColor:[UIColor clearColor]];
 	[self.tableView setDataSource:self];
