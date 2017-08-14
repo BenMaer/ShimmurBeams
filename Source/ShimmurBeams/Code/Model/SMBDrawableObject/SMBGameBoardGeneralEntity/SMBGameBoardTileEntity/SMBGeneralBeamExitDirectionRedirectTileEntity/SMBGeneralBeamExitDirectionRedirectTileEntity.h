@@ -14,6 +14,9 @@
 
 
 
+/**
+ Should only be used on instance of class/subclass of `SMBGameBoardTileEntity`.
+ */
 @protocol SMBGeneralBeamExitDirectionRedirectTileEntity <NSObject>
 
 -(SMBGameBoardTile__direction)beamExitDirection_for_beamEnterDirection:(SMBGameBoardTile__direction)beamEnterDirection;
