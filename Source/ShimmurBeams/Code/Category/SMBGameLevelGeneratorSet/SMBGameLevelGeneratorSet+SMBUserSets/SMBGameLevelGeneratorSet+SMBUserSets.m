@@ -8,7 +8,7 @@
 
 #import "SMBGameLevelGeneratorSet+SMBUserSets.h"
 #import "SMBGameLevelGenerator.h"
-#import "SMBGameLevel+SMBTestLevel.h"
+#import "SMBGameLevel+SMBForcedRedirectsAndWalls.h"
 
 #import <ResplendentUtilities/NSMutableArray+RUAddObjectIfNotNil.h>
 
@@ -24,38 +24,33 @@
 	NSMutableArray<SMBGameLevelGenerator*>* const gameLevelGenerators = [NSMutableArray<SMBGameLevelGenerator*> array];
 
 	[gameLevelGenerators addObject:[[SMBGameLevelGenerator alloc] init_with_generateLevelBlock:^SMBGameLevel * _Nonnull{
-		return [SMBGameLevel smb_testLevel_oneForce_right];
+		return [SMBGameLevel smb_forcedRedirectsAndWalls_oneForce_right];
 	}
 																						  name:@"One force right"]];
 
 	[gameLevelGenerators addObject:[[SMBGameLevelGenerator alloc] init_with_generateLevelBlock:^SMBGameLevel * _Nonnull{
-		return [SMBGameLevel smb_testLevel_twoForces_leftThenDown];
+		return [SMBGameLevel smb_forcedRedirectsAndWalls_twoForces_leftThenDown];
 	}
 																						  name:@"Two forces"]];
 
 	[gameLevelGenerators addObject:[[SMBGameLevelGenerator alloc] init_with_generateLevelBlock:^SMBGameLevel * _Nonnull{
-		return [SMBGameLevel smb_testLevel_oneWall_threeForces];
+		return [SMBGameLevel smb_forcedRedirectsAndWalls_oneWall_threeForces];
 	}
 																						  name:@"Wall in the way"]];
 
 	[gameLevelGenerators addObject:[[SMBGameLevelGenerator alloc] init_with_generateLevelBlock:^SMBGameLevel * _Nonnull{
-		return [SMBGameLevel smb_testLevel_twoWalls_threeForces];
+		return [SMBGameLevel smb_forcedRedirectsAndWalls_twoWalls_threeForces];
 	}
 																						  name:@"Two walls in the way"]];
 
 	[gameLevelGenerators addObject:[[SMBGameLevelGenerator alloc] init_with_generateLevelBlock:^SMBGameLevel * _Nonnull{
-		return [SMBGameLevel smb_testLevel_wallsAndForces_twoForcesNotMovable];
+		return [SMBGameLevel smb_forcedRedirectsAndWalls_wallsAndForces_twoForcesNotMovable];
 	}
 																						  name:@"Tricky"]];
 
-	[gameLevelGenerators addObject:[[SMBGameLevelGenerator alloc] init_with_generateLevelBlock:^SMBGameLevel * _Nonnull{
-		return [SMBGameLevel smb_testLevel_clover];
-	}
-																						  name:@"Clover"]];
-
 	return
 	[[self alloc] init_with_gameLevelGenerators:[NSArray<SMBGameLevelGenerator*> arrayWithArray:gameLevelGenerators]
-										   name:@"User sets 1"];
+										   name:@"1) Forced Redirects and Walls"];
 }
 
 @end
