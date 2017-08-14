@@ -55,6 +55,7 @@
 
 #pragma mark - state
 -(void)setState_ready;
+-(void)setState_finished;
 
 #pragma mark - init
 -(nullable instancetype)init_with_beamEntity:(nonnull SMBBeamEntity*)beamEntity

@@ -362,9 +362,9 @@ static void* kSMBGameBoardView__KVOContext = &kSMBGameBoardView__KVOContext;
 	NSArray<SMBGameBoardGeneralEntityView*>* removedObjects = nil;
 	NSArray<SMBGameBoardGeneralEntityView*>* newObjects = nil;
 	[SMBMappedDataCollection<SMBGameBoardGeneralEntityView*> changes_from_mappedDataCollection:gameBoardEntityView_mappedDataCollection_old
-																	to_mappedDataCollection:self.gameBoardEntityView_mappedDataCollection
-																			 removedObjects:&removedObjects
-																				 newObjects:&newObjects];
+																	   to_mappedDataCollection:self.gameBoardEntityView_mappedDataCollection
+																				removedObjects:&removedObjects
+																					newObjects:&newObjects];
 
 	[removedObjects enumerateObjectsUsingBlock:^(SMBGameBoardGeneralEntityView * _Nonnull gameBoardEntityView, NSUInteger idx, BOOL * _Nonnull stop) {
 		NSAssert(gameBoardEntityView.superview == self, @"Should be self");

@@ -169,11 +169,6 @@ typedef NS_ENUM(NSInteger, SMBBeamEntityTileNode__state) {
 
 	kRUConditionalReturn(gameBoardTile == gameBoardTile_old, NO);
 
-	if (self.gameBoardTile == nil)
-	{
-		[self setState:SMBBeamEntityTileNode__state_finished];
-	}
-
 	[self node_next_generationEnabled_update];
 }
 
@@ -182,9 +177,6 @@ typedef NS_ENUM(NSInteger, SMBBeamEntityTileNode__state) {
 	kRUConditionalReturn_ReturnValueFalse((gameBoardTile != nil)
 										  &&
 										  (self.gameBoardTile != nil), YES) /* Should not be set to a new tile while we already . */
-
-	BOOL const state_wants_nonNilGameBoardTile = (self.state == SMBBeamEntityTileNode__state_created);
-	kRUConditionalReturn_ReturnValueFalse((state_wants_nonNilGameBoardTile != (gameBoardTile != nil)), NO);
 
 	return YES;
 }
@@ -322,11 +314,6 @@ typedef NS_ENUM(NSInteger, SMBBeamEntityTileNode__state) {
 	_node_next = node_next;
 
 	[self node_next_setKVORegistered:YES];
-
-	if (self.node_next)
-	{
-		[self.node_next setState_ready];
-	}
 }
 
 -(void)node_next_setKVORegistered:(BOOL)registered
@@ -398,6 +385,33 @@ typedef NS_ENUM(NSInteger, SMBBeamEntityTileNode__state) {
 
 	SMBBeamEntity* const beamEntity = self.beamEntity;
 	kRUConditionalReturn_ReturnValueNil(beamEntity == nil, YES);
+
+	SMBGameBoardTile* const gameBoardTile = self.gameBoardTile;
+	kRUConditionalReturn_ReturnValueNil(gameBoardTile == nil, NO);
+
+	SMBGameBoardTilePosition* const gameBoardTilePosition = gameBoardTile.gameBoardTilePosition;
+	kRUConditionalReturn_ReturnValueNil(gameBoardTilePosition == nil, NO);
+
+	NSArray<SMBBeamEntityTileNode*>* const beamEntityTileNodes_at_samePosition =
+	[beamEntity beamEntityTileNodes_contained_at_position:gameBoardTilePosition
+								   with_beamExitDirection:self.beamExitDirection];
+	/* This node should be included in these nodes already. */
+	kRUConditionalReturn_ReturnValueNil((beamEntityTileNodes_at_samePosition == nil)
+										||
+										([beamEntityTileNodes_at_samePosition containsObject:self] == false),
+										YES);
+
+	__block BOOL alreadyHaveNextNode = NO;
+	[beamEntityTileNodes_at_samePosition enumerateObjectsUsingBlock:^(SMBBeamEntityTileNode * _Nonnull beamEntityTileNode, NSUInteger idx, BOOL * _Nonnull stop) {
+		if ((beamEntityTileNode != self)
+			&&
+			beamEntityTileNode.node_next != nil)
+		{
+			alreadyHaveNextNode = YES;
+			*stop = YES;
+		}
+	}];
+	kRUConditionalReturn_ReturnValueNil(alreadyHaveNextNode, NO);
 
 	SMBGameBoardTile* const node_next_gameTile = self.node_next_gameTile;
 	kRUConditionalReturn_ReturnValueNil(node_next_gameTile == nil, NO);
@@ -617,6 +631,11 @@ typedef NS_ENUM(NSInteger, SMBBeamEntityTileNode__state) {
 -(void)setState_ready
 {
 	[self setState:SMBBeamEntityTileNode__state_ready];
+}
+
+-(void)setState_finished
+{
+	[self setState:SMBBeamEntityTileNode__state_finished];
 }
 
 -(BOOL)state_validate_new:(SMBBeamEntityTileNode__state)state_new

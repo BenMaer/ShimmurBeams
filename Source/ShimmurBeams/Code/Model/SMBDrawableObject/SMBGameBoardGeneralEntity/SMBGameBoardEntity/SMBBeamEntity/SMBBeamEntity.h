@@ -7,6 +7,7 @@
 //
 
 #import "SMBGameBoardEntity.h"
+#import "SMBGameBoardTile__directions.h"
 
 
 
@@ -14,6 +15,7 @@
 
 @class SMBBeamEntityTileNode;
 @class SMBGameBoardTile;
+@class SMBGameBoardTilePosition;
 
 
 
@@ -35,6 +37,9 @@
  @return YES if the node exists in this beam, otherwise NO.
  */
 -(BOOL)beamEntityTileNodes_contains:(nonnull SMBBeamEntityTileNode*)beamEntityTileNode;
+-(nullable NSArray<SMBBeamEntityTileNode*>*)beamEntityTileNodes_contained_at_position:(nonnull SMBGameBoardTilePosition*)gameBoardTilePosition;
+-(nullable NSArray<SMBBeamEntityTileNode*>*)beamEntityTileNodes_contained_at_position:(nonnull SMBGameBoardTilePosition*)gameBoardTilePosition
+															   with_beamExitDirection:(SMBGameBoardTile__direction)direction;
 
 #pragma mark - init
 -(nullable instancetype)init_with_gameBoardTile:(nonnull SMBGameBoardTile*)gameBoardTile NS_DESIGNATED_INITIALIZER;

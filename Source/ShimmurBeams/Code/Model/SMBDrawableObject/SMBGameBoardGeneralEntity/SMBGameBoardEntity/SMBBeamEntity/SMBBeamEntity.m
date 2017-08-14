@@ -11,6 +11,7 @@
 #import "SMBMutableMappedDataCollection.h"
 #import "SMBGameBoardTile.h"
 #import "SMBGameBoardView.h"
+#import "SMBGameBoardTilePosition.h"
 
 #import <ResplendentUtilities/RUConditionalReturn.h>
 
@@ -81,7 +82,6 @@ typedef NS_ENUM(NSInteger, SMBBeamEntity__drawingPiece) {
 		[[SMBBeamEntityTileNode alloc] init_with_beamEntity:self
 											  node_previous:nil];
 		[gameBoardTile gameBoardTileEntities_add:self.beamEntityTileNode_initial];
-		[self.beamEntityTileNode_initial setState_ready];
 
 		[self beamEntityTileNode_mappedDataCollection_update];
 	}
@@ -110,9 +110,29 @@ typedef NS_ENUM(NSInteger, SMBBeamEntity__drawingPiece) {
 
 	[self beamEntityTileNode_mappedDataCollection_setKVORegistered:NO];
 
+	SMBMappedDataCollection<SMBBeamEntityTileNode*>* const beamEntityTileNode_mappedDataCollection_old = self.beamEntityTileNode_mappedDataCollection;
 	_beamEntityTileNode_mappedDataCollection = beamEntityTileNode_mappedDataCollection;
 
 	[self beamEntityTileNode_mappedDataCollection_setKVORegistered:YES];
+
+	NSArray<SMBBeamEntityTileNode*>* beamEntityTileNode_mappedDataCollection_removedObjects = nil;
+	NSArray<SMBBeamEntityTileNode*>* beamEntityTileNode_mappedDataCollection_newObjects = nil;
+	[SMBMappedDataCollection<SMBBeamEntityTileNode*> changes_from_mappedDataCollection:beamEntityTileNode_mappedDataCollection_old
+																	   to_mappedDataCollection:self.beamEntityTileNode_mappedDataCollection
+																			 removedObjects:&beamEntityTileNode_mappedDataCollection_removedObjects
+																				 newObjects:&beamEntityTileNode_mappedDataCollection_newObjects];
+
+	[beamEntityTileNode_mappedDataCollection_removedObjects enumerateObjectsUsingBlock:^(SMBBeamEntityTileNode * _Nonnull beamEntityTileNode, NSUInteger idx, BOOL * _Nonnull stop) {
+		
+		[beamEntityTileNode setState_finished];
+		
+	}];
+
+	[beamEntityTileNode_mappedDataCollection_newObjects enumerateObjectsUsingBlock:^(SMBBeamEntityTileNode * _Nonnull beamEntityTileNode, NSUInteger idx, BOOL * _Nonnull stop) {
+
+		[beamEntityTileNode setState_ready];
+
+	}];
 }
 
 -(void)beamEntityTileNode_mappedDataCollection_setKVORegistered:(BOOL)registered
@@ -173,6 +193,45 @@ typedef NS_ENUM(NSInteger, SMBBeamEntity__drawingPiece) {
 	return [beamEntityTileNode_mappedDataCollection copy];
 }
 
+-(nullable NSArray<SMBBeamEntityTileNode*>*)beamEntityTileNodes_contained_at_position:(nonnull SMBGameBoardTilePosition*)gameBoardTilePosition
+{
+	kRUConditionalReturn_ReturnValueNil(gameBoardTilePosition == nil, YES);
+
+	NSMutableArray<SMBBeamEntityTileNode*>* const beamEntityTileNodes_contained = [NSMutableArray<SMBBeamEntityTileNode*> array];
+
+	[[self.beamEntityTileNode_mappedDataCollection mappableObjects] enumerateObjectsUsingBlock:^(SMBBeamEntityTileNode<SMBMappedDataCollection_MappableObject>*  _Nonnull beamEntityTileNode, NSUInteger idx, BOOL * _Nonnull stop) {
+		SMBGameBoardTile* const gameBoardTile = beamEntityTileNode.gameBoardTile;
+		kRUConditionalReturn(gameBoardTile == nil, YES);
+
+		if ([gameBoardTilePosition isEqual_to_gameBoardTilePosition:gameBoardTile.gameBoardTilePosition])
+		{
+			[beamEntityTileNodes_contained addObject:beamEntityTileNode];
+		}
+	}];
+
+	return [NSArray<SMBBeamEntityTileNode*> arrayWithArray:beamEntityTileNodes_contained];
+}
+
+-(nullable NSArray<SMBBeamEntityTileNode*>*)beamEntityTileNodes_contained_at_position:(nonnull SMBGameBoardTilePosition*)gameBoardTilePosition
+															   with_beamExitDirection:(SMBGameBoardTile__direction)direction
+{
+	NSArray<SMBBeamEntityTileNode*>* const beamEntityTileNodes_at_position = [self beamEntityTileNodes_contained_at_position:gameBoardTilePosition];
+	kRUConditionalReturn_ReturnValueNil((beamEntityTileNodes_at_position == nil)
+										||
+										(beamEntityTileNodes_at_position.count == 0), NO);
+
+	NSMutableArray<SMBBeamEntityTileNode*>* const beamEntityTileNodes_contained = [NSMutableArray<SMBBeamEntityTileNode*> array];
+
+	[beamEntityTileNodes_at_position enumerateObjectsUsingBlock:^(SMBBeamEntityTileNode * _Nonnull beamEntityTileNode_at_position, NSUInteger idx, BOOL * _Nonnull stop) {
+		if (beamEntityTileNode_at_position.beamExitDirection == direction)
+		{
+			[beamEntityTileNodes_contained addObject:beamEntityTileNode_at_position];
+		}
+	}];
+
+	return [NSArray<SMBBeamEntityTileNode*> arrayWithArray:beamEntityTileNodes_contained];
+}
+
 #pragma mark - KVO
 -(void)observeValueForKeyPath:(nullable NSString*)keyPath ofObject:(nullable id)object change:(nullable NSDictionary*)change context:(nullable void*)context
 {
@@ -205,7 +264,6 @@ typedef NS_ENUM(NSInteger, SMBBeamEntity__drawingPiece) {
 {
 	kRUConditionalReturn_ReturnValueFalse(beamEntityTileNode == nil, YES);
 
-	kRUConditionalReturn_ReturnValueTrue(beamEntityTileNode == self.beamEntityTileNode_initial, NO);
 	kRUConditionalReturn_ReturnValueTrue([self.beamEntityTileNode_mappedDataCollection mappableObject_exists:beamEntityTileNode], NO);
 
 	return NO;

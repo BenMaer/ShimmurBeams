@@ -91,8 +91,8 @@
 -(BOOL)isEqual_to_mappedDataCollection:(nullable SMBMappedDataCollection<id>*)mappedDataCollection
 {
 	kRUConditionalReturn_ReturnValueFalse(mappedDataCollection == nil, YES);
-	kRUConditionalReturn_ReturnValueTrue(self == mappedDataCollection == false, NO);
-	
+	kRUConditionalReturn_ReturnValueTrue(self == mappedDataCollection, NO);
+
 	kRUConditionalReturn_ReturnValueFalse(__RUClassOrNilUtilFunction(mappedDataCollection, [self class]) == nil, YES);
 	
 	kRUConditionalReturn_ReturnValueFalse((self.uniqueKey_to_mappableObject_mapping != mappedDataCollection.uniqueKey_to_mappableObject_mapping)
