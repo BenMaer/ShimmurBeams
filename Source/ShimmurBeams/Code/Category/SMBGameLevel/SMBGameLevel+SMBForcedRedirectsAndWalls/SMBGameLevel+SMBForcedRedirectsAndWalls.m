@@ -255,6 +255,9 @@
 												  to_column:beamCreatorEntity.gameBoardTile.gameBoardTilePosition.column
 														row:beamCreatorEntity.gameBoardTile.gameBoardTilePosition.row - 3];
 
+	[gameBoard gameBoardTileEntity_add_wall_to_column:2
+												  row:0];
+
 	[gameBoard gameBoardTileEntity_for_beamInteractions_set:[[SMBForcedBeamRedirectTileEntity alloc] init_with_forcedBeamExitDirection:SMBGameBoardTile__direction_right]
 												  to_column:beamCreatorEntity.gameBoardTile.gameBoardTilePosition.column - 2
 														row:beamCreatorEntity.gameBoardTile.gameBoardTilePosition.row - 5];
