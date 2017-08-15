@@ -320,6 +320,10 @@
 								   to_gameBoardTilePosition:[[SMBGameBoardTilePosition alloc]
 															 init_with_column:0
 															 row:0]];
+	
+	[gameBoard gameBoardTileEntity_add_wall_to_gameBoardTilePosition:
+	 [[SMBGameBoardTilePosition alloc] init_with_column:beamCreatorEntity.gameBoardTile.gameBoardTilePosition.column - 1
+													row:beamCreatorEntity.gameBoardTile.gameBoardTilePosition.row - 2]];
 
 	
 	[gameBoard gameBoardTileEntity_add_levelExit_to_gameBoardTilePosition:
