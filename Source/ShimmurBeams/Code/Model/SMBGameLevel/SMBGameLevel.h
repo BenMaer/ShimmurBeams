@@ -14,6 +14,7 @@
 
 @class SMBGameBoard;
 @class SMBGameBoardTileEntity;
+@class SMBGameLevelCompletion;
 
 
 
@@ -31,8 +32,8 @@
 -(nullable instancetype)init_with_gameBoard:(nonnull SMBGameBoard*)gameBoard
 				usableGameBoardTileEntities:(nullable NSArray<SMBGameBoardTileEntity*>*)usableGameBoardTileEntities NS_DESIGNATED_INITIALIZER;
 
-#pragma mark - isComplete
-@property (nonatomic, assign) BOOL isComplete;
+#pragma mark - gameLevelCompletion
+@property (nonatomic, strong, nullable) SMBGameLevelCompletion* completion;
 
 @end
 
@@ -42,6 +43,6 @@
 
 @interface SMBGameLevel_PropertiesForKVO : NSObject
 
-+(nonnull NSString*)isComplete;
++(nonnull NSString*)completion;
 
 @end

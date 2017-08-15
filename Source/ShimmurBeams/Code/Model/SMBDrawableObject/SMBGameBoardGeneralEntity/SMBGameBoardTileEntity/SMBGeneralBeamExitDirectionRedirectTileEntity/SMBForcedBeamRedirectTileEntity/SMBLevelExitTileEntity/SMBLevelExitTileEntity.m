@@ -13,6 +13,7 @@
 #import "SMBGameBoardTile__directions_to_CoreGraphics_SMBRotation__orientations_utilities.h"
 #import "CoreGraphics+SMBRotation.h"
 #import "CoreGraphics+SMBDrawArrow.h"
+#import "SMBGameLevelCompletion.h"
 
 #import <ResplendentUtilities/RUConditionalReturn.h>
 #import <ResplendentUtilities/UIView+RUUtility.h>
@@ -201,7 +202,7 @@ static void* kSMBLevelExitTileEntity__KVOContext = &kSMBLevelExitTileEntity__KVO
 	SMBGameLevel* const gameLevel = gameBoard.gameLevel;
 	kRUConditionalReturn(gameLevel == nil, YES);
 
-	[gameLevel setIsComplete:YES];
+	[gameLevel setCompletion:[SMBGameLevelCompletion new]];
 }
 
 @end

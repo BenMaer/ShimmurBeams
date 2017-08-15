@@ -14,6 +14,7 @@
 #import "SMBGameBoardTile.h"
 #import "SMBGameBoardTilePosition.h"
 #import "SMBForcedBeamRedirectTileEntity.h"
+#import "SMBDeathBlockTileEntity.h"
 
 
 
@@ -118,6 +119,35 @@
 	
 	[gameBoardTileEntity addObject:[[SMBBeamRotateTileEntity alloc] init_with_direction_rotation:SMBGameBoardTile__direction_rotation_right]];
 	[gameBoardTileEntity addObject:[[SMBBeamRotateTileEntity alloc] init_with_direction_rotation:SMBGameBoardTile__direction_rotation_left]];
+	[gameBoardTileEntity addObject:[[SMBBeamRotateTileEntity alloc] init_with_direction_rotation:SMBGameBoardTile__direction_rotation_right]];
+	
+	return
+	[[self alloc] init_with_gameBoard:gameBoard
+		  usableGameBoardTileEntities:[NSArray<SMBGameBoardTileEntity*> arrayWithArray:gameBoardTileEntity]];
+}
+
+#pragma mark - rotates and death block
++(nonnull instancetype)smb_rotates_twoRight_deathBlock_one
+{
+	SMBGameBoard* const gameBoard = [[SMBGameBoard alloc] init_with_numberOfColumns:7
+																	   numberOfRows:7];
+	
+	SMBBeamCreatorTileEntity* const beamCreatorEntity = [SMBBeamCreatorTileEntity new];
+	[beamCreatorEntity setBeamDirection:SMBGameBoardTile__direction_up];
+	[gameBoard gameBoardTileEntity_for_beamInteractions_set:beamCreatorEntity
+												  to_column:1
+														row:[gameBoard gameBoardTiles_numberOfRows] - 2];
+
+	[gameBoard gameBoardTileEntity_for_beamInteractions_set:[SMBDeathBlockTileEntity new]
+												  to_column:beamCreatorEntity.gameBoardTile.gameBoardTilePosition.column + 2
+														row:beamCreatorEntity.gameBoardTile.gameBoardTilePosition.row - 2];
+
+	[gameBoard gameBoardTileEntity_add_levelExit_to_column:[gameBoard gameBoardTiles_numberOfColumns] - 2
+													   row:beamCreatorEntity.gameBoardTile.gameBoardTilePosition.row - 2];
+	
+	NSMutableArray<SMBGameBoardTileEntity*>* const gameBoardTileEntity = [NSMutableArray<SMBGameBoardTileEntity*> array];
+	
+	[gameBoardTileEntity addObject:[[SMBBeamRotateTileEntity alloc] init_with_direction_rotation:SMBGameBoardTile__direction_rotation_right]];
 	[gameBoardTileEntity addObject:[[SMBBeamRotateTileEntity alloc] init_with_direction_rotation:SMBGameBoardTile__direction_rotation_right]];
 	
 	return

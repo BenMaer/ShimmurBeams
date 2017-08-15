@@ -25,6 +25,9 @@
 #pragma mark - gameLevelGenerator
 @property (nonatomic, strong, nullable) SMBGameLevelGenerator* gameLevelGenerator;
 
+#pragma mark - gameLevelGenerator_gameLevel
+-(void)gameLevelGenerator_gameLevel_regenerate;
+
 #pragma mark - gameLevelDidCompleteDelegate
 @property (nonatomic, assign, nullable) id<SMBGameLevelGeneratorViewController_gameLevelDidCompleteDelegate> gameLevelDidCompleteDelegate;
 

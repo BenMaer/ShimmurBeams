@@ -52,6 +52,7 @@
 	{
 		_gameBoard = gameBoard;
 		[self.gameBoard setGameLevel:self];
+		kRUConditionalReturn_ReturnValueNil(self.completion != nil, YES);
 
 		[self setUsableGameBoardTileEntities:usableGameBoardTileEntities];
 	}
@@ -67,6 +68,6 @@
 
 @implementation SMBGameLevel_PropertiesForKVO
 
-+(nonnull NSString*)isComplete{return NSStringFromSelector(_cmd);}
++(nonnull NSString*)completion{return NSStringFromSelector(_cmd);}
 
 @end

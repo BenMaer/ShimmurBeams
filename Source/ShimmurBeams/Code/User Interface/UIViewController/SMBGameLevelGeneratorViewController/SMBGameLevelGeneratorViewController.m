@@ -136,7 +136,7 @@ static void* kSMBGameLevelGeneratorViewController__KVOContext = &kSMBGameLevelGe
 	kRUConditionalReturn(gameLevelGenerator_gameLevel == nil, NO);
 
 	NSMutableArray<NSString*>* const propertiesToObserve = [NSMutableArray<NSString*> array];
-	[propertiesToObserve addObject:[SMBGameLevel_PropertiesForKVO isComplete]];
+	[propertiesToObserve addObject:[SMBGameLevel_PropertiesForKVO completion]];
 
 	[propertiesToObserve enumerateObjectsUsingBlock:^(NSString * _Nonnull propertyToObserve, NSUInteger idx, BOOL * _Nonnull stop) {
 		if (registered)
@@ -153,6 +153,14 @@ static void* kSMBGameLevelGeneratorViewController__KVOContext = &kSMBGameLevelGe
 												 context:&kSMBGameLevelGeneratorViewController__KVOContext];
 		}
 	}];
+}
+
+-(void)gameLevelGenerator_gameLevel_regenerate
+{
+	kRUConditionalReturn(self.gameLevelGenerator == nil, YES);
+	kRUConditionalReturn(self.gameLevelGenerator_gameLevel == nil, YES);
+
+	[self gameLevelGenerator_gameLevel_update];
 }
 
 #pragma mark - gameLevelView
@@ -198,12 +206,12 @@ static void* kSMBGameLevelGeneratorViewController__KVOContext = &kSMBGameLevelGe
 	{
 		if (object == self.gameLevelGenerator_gameLevel)
 		{
-			if ([keyPath isEqualToString:[SMBGameLevel_PropertiesForKVO isComplete]])
+			if ([keyPath isEqualToString:[SMBGameLevel_PropertiesForKVO completion]])
 			{
 				SMBGameLevel* const gameLevelGenerator_gameLevel = self.gameLevelGenerator_gameLevel;
 				kRUConditionalReturn(gameLevelGenerator_gameLevel == nil, YES);
 
-				kRUConditionalReturn(gameLevelGenerator_gameLevel.isComplete == NO, NO);
+				kRUConditionalReturn(gameLevelGenerator_gameLevel.completion == NO, NO);
 
 				[self gameLevelGenerator_gameLevel_didComplete];
 			}

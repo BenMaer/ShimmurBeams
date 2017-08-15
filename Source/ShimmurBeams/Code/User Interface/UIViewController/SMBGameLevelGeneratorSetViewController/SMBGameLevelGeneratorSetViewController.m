@@ -10,6 +10,8 @@
 #import "SMBGameLevelGeneratorSet.h"
 #import "SMBGameLevelGenerator.h"
 #import "SMBGameLevelGeneratorViewController.h"
+#import "SMBGameLevel.h"
+#import "SMBGameLevelCompletion.h"
 
 #import <ResplendentUtilities/RUConditionalReturn.h>
 #import <ResplendentUtilities/RUConstants.h>
@@ -25,6 +27,7 @@
 @property (nonatomic, weak, nullable) SMBGameLevelGeneratorViewController* gameLevelGeneratorViewController;
 -(void)gameLevelGeneratorViewController_push_attempt;
 -(void)gameLevelGeneratorViewController_gameLevelGenerator_updateExisting;
+-(void)gameLevelGeneratorViewController_regenerateLevel;
 
 #pragma mark - gameLevelGenerator
 @property (nonatomic, assign) BOOL gameLevelGenerator_appropriate_disable;
@@ -113,6 +116,14 @@
 	kRUConditionalReturn(gameLevelGenerator_appropriate == nil, NO);
 
 	[gameLevelGeneratorViewController setGameLevelGenerator:gameLevelGenerator_appropriate];
+}
+
+-(void)gameLevelGeneratorViewController_regenerateLevel
+{
+	SMBGameLevelGeneratorViewController* const gameLevelGeneratorViewController = self.gameLevelGeneratorViewController;
+	kRUConditionalReturn(gameLevelGeneratorViewController == nil, YES);
+
+	[gameLevelGeneratorViewController gameLevelGenerator_gameLevel_regenerate];
 }
 
 #pragma mark - gameLevelGenerator
@@ -220,6 +231,41 @@
 -(void)gameLevelGeneratorViewController:(nonnull SMBGameLevelGeneratorViewController*)gameLevelGeneratorViewController
 				   gameLevelDidComplete:(nonnull SMBGameLevel*)gameLevel
 {
+	kRUConditionalReturn(gameLevel == nil, YES);
+
+	SMBGameLevelCompletion* const gameLevelCompletion = gameLevel.completion;
+	kRUConditionalReturn(gameLevelCompletion == nil, YES);
+
+	NSString* const failureReason = gameLevelCompletion.failureReason;
+	if (failureReason != nil)
+	{
+		UIAlertController* const alertController =
+		[UIAlertController alertControllerWithTitle:@"Oops!"
+											message:RUStringWithFormat(@"%@\nWould you like to retry?",
+																	   failureReason)
+									 preferredStyle:UIAlertControllerStyleAlert];
+		
+		__weak typeof(self) const self_weak = self;
+		[alertController addAction:
+		 [UIAlertAction actionWithTitle:@"Retry"
+								  style:UIAlertActionStyleDefault
+								handler:
+		  ^(UIAlertAction * _Nonnull action) {
+			  [self_weak gameLevelGeneratorViewController_regenerateLevel];
+		  }]];
+		
+		[alertController addAction:
+		 [UIAlertAction actionWithTitle:@"Quit"
+								  style:UIAlertActionStyleDefault
+								handler:
+		  ^(UIAlertAction * _Nonnull action) {
+			  [self_weak.navigationController popToViewController:self_weak animated:YES];
+		  }]];
+		
+		[self.navigationController presentViewController:alertController animated:YES completion:nil];
+		return;
+	}
+
 	[self gameLevelGeneratorSet_levelIndex_increment_attempt];
 }
 

@@ -89,6 +89,11 @@
 	}
 																						  name:@"Rotate around wall"]];
 
+	[gameLevelGenerators addObject:[[SMBGameLevelGenerator alloc] init_with_generateLevelBlock:^SMBGameLevel * _Nonnull{
+		return [SMBGameLevel smb_rotates_twoRight_deathBlock_one];
+	}
+																						  name:@"Thorn"]];
+
 	return
 	[[self alloc] init_with_gameLevelGenerators:[NSArray<SMBGameLevelGenerator*> arrayWithArray:gameLevelGenerators]
 										   name:@"Rotates and Death Blocks"];
