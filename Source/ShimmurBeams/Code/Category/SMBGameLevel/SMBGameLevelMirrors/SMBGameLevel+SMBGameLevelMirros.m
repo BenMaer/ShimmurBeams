@@ -14,6 +14,7 @@
 #import "SMBGameBoardTile.h"
 #import "SMBGameBoard+SMBAddEntity.h"
 #import "SMBForcedBeamRedirectTileEntity.h"
+#import "SMBMeltableWallTileEntity.h"
 
 
 
@@ -84,6 +85,35 @@
 	NSMutableArray<SMBGameBoardTileEntity*>* const gameBoardTileEntity = [NSMutableArray<SMBGameBoardTileEntity*> array];
 	[gameBoardTileEntity addObject:[[SMBForcedBeamRedirectTileEntity alloc] init_with_forcedBeamExitDirection:SMBGameBoardTile__direction_up]];
 	[gameBoardTileEntity addObject:[[SMBForcedBeamRedirectTileEntity alloc] init_with_forcedBeamExitDirection:SMBGameBoardTile__direction_right]];
+	
+	return
+	[[self alloc] init_with_gameBoard:gameBoard
+		  usableGameBoardTileEntities:[NSArray<SMBGameBoardTileEntity*> arrayWithArray:gameBoardTileEntity]];
+}
+
+#pragma mark - meltableWall
++(nonnull instancetype)smb_meltableWall_introduction
+{
+	SMBGameBoard* const gameBoard = [[SMBGameBoard alloc] init_with_numberOfColumns:5
+																	   numberOfRows:5];
+	
+	SMBBeamCreatorTileEntity* const beamCreatorEntity = [SMBBeamCreatorTileEntity new];
+	[beamCreatorEntity setBeamDirection:SMBGameBoardTile__direction_up];
+	
+	[gameBoard gameBoardTileEntity_for_beamInteractions_set:beamCreatorEntity
+									  to_gameBoardTilePosition:[[SMBGameBoardTilePosition alloc] init_with_column:1
+																											  row:3]];
+
+	[gameBoard gameBoardTileEntity_for_beamInteractions_set:[SMBMeltableWallTileEntity new]
+								   to_gameBoardTilePosition:[[SMBGameBoardTilePosition alloc] init_with_column:beamCreatorEntity.gameBoardTile.gameBoardTilePosition.column + 1
+																										   row:beamCreatorEntity.gameBoardTile.gameBoardTilePosition.row - 2]];
+
+	[gameBoard gameBoardTileEntity_add_levelExit_to_gameBoardTilePosition:
+	 [[SMBGameBoardTilePosition alloc] init_with_column:beamCreatorEntity.gameBoardTile.gameBoardTilePosition.column + 2
+													row:beamCreatorEntity.gameBoardTile.gameBoardTilePosition.row - 2]];
+	
+	NSMutableArray<SMBGameBoardTileEntity*>* const gameBoardTileEntity = [NSMutableArray<SMBGameBoardTileEntity*> array];
+	[gameBoardTileEntity addObject:[[SMBMirrorBoardTileEntity alloc] init_with_startingPosition:SMBMirrorBoardTileEntity_startingPosition_bottomLeft]];
 	
 	return
 	[[self alloc] init_with_gameBoard:gameBoard

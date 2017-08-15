@@ -115,10 +115,7 @@
 {
 	kRUConditionalReturn(gameBoardTileEntity == nil, YES);
 
-	SMBGameBoardTile* const gameBoardTile_toSetTo = (hasRelationship ? self : nil);
-	kRUConditionalReturn(gameBoardTile_toSetTo == gameBoardTileEntity.gameBoardTile, YES);
-
-	[gameBoardTileEntity setGameBoardTile:gameBoardTile_toSetTo];
+	[gameBoardTileEntity setGameBoardTile:(hasRelationship ? self : nil)];
 }
 
 #pragma mark - gameBoardTileEntity_for_beamInteractions

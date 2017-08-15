@@ -123,16 +123,21 @@
 	[gameLevelGenerators addObject:[[SMBGameLevelGenerator alloc] init_with_generateLevelBlock:^SMBGameLevel * _Nonnull{
 		return [SMBGameLevel smb_mirrors_introduction];
 	}
-																						  name:@"Introduction To Mirrors"]];
+																						  name:@"Mirror Introduction"]];
 	
 	[gameLevelGenerators addObject:[[SMBGameLevelGenerator alloc] init_with_generateLevelBlock:^SMBGameLevel * _Nonnull{
 		return [SMBGameLevel smb_mirror_man_in_the_mirror];
 	}
 																						  name:@"That Man In The Mirror"]];
-	
+
+	[gameLevelGenerators addObject:[[SMBGameLevelGenerator alloc] init_with_generateLevelBlock:^SMBGameLevel * _Nonnull{
+		return [SMBGameLevel smb_meltableWall_introduction];
+	}
+																						  name:@"Meltable Wall Introduction"]];
+
 	return
 	[[self alloc] init_with_gameLevelGenerators:[NSArray<SMBGameLevelGenerator*> arrayWithArray:gameLevelGenerators]
-										   name:@"Mirrors"];
+										   name:@"Mirrors and Meltable Walls"];
 }
 
 @end
