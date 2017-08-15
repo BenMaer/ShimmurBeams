@@ -77,7 +77,48 @@ static void* kSMBDeathBlockTileEntity__KVOContext = &kSMBDeathBlockTileEntity__K
 	CGContextSetStrokeColorWithColor(context, [UIColor redColor].CGColor);
 	CGContextSetLineWidth(context, 3.0f);
 
-	CGFloat const x_dimention_distanceFromCenter = CGRectGetWidth(rect) / 3.0f;
+	CGFloat const horizontal_distanceFromEdge = CGRectGetWidth(rect) / 8.0f;
+	CGFloat const lines_boundingWidth = CGRectGetWidth(rect) - (horizontal_distanceFromEdge * 2.0f);
+
+	NSUInteger const numberOfLines = 4;
+	CGFloat const line_horizontal_distance = lines_boundingWidth / (CGFloat)numberOfLines;
+	CGFloat const line_vertical_distance = line_horizontal_distance;
+
+	CGFloat (^line_yCoord)(NSUInteger line_index) = ^CGFloat(NSUInteger line_index){
+		double const line_index_halved = ((double)line_index / 2.0f);
+		BOOL const isEven = (line_index_halved == ceil(line_index_halved));
+		return
+		(
+		CGRectGetMidY(rect)
+		 +
+		 (
+		 (line_vertical_distance
+		  /
+		  2.0f
+		  )
+		 )
+		 *
+		 (
+		 isEven
+		  ?
+		  1.0f
+		  :
+		  -1.0f
+		 )
+		);
+	};
+	CGContextMoveToPoint(context,
+						 CGRectGetMinX(rect) + horizontal_distanceFromEdge,
+						 CGRectGetMidY(rect) - x_dimention_distanceFromCenter);
+
+	for (NSUInteger line_index = 0;
+		 line_index < numberOfLines;
+		 line_index++)
+	{
+		<#statements#>
+	}
+
+	CGContextMoveToPoint(context, CGRectGetMidX(rect) - x_dimention_distanceFromCenter, CGRectGetMidY(rect) - x_dimention_distanceFromCenter); /* Top left. */
 
 	CGContextMoveToPoint(context, CGRectGetMidX(rect) - x_dimention_distanceFromCenter, CGRectGetMidY(rect) - x_dimention_distanceFromCenter); /* Top left. */
 	CGContextAddLineToPoint(context, CGRectGetMidX(rect) + x_dimention_distanceFromCenter, CGRectGetMidY(rect) + x_dimention_distanceFromCenter); /* Bottom right. */
