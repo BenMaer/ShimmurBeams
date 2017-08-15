@@ -76,9 +76,14 @@
 																						  name:@"One rotate right"]];
 
 	[gameLevelGenerators addObject:[[SMBGameLevelGenerator alloc] init_with_generateLevelBlock:^SMBGameLevel * _Nonnull{
-		return [SMBGameLevel smb_rotates_twoLefts_right];
+		return [SMBGameLevel smb_rotates_twoRotates_right];
 	}
 																						  name:@"Two rotates left"]];
+
+	[gameLevelGenerators addObject:[[SMBGameLevelGenerator alloc] init_with_generateLevelBlock:^SMBGameLevel * _Nonnull{
+		return [SMBGameLevel smb_rotates_oneRotate_left_oneForced_left];
+	}
+																						  name:@"Rotate and forced left"]];
 
 	return
 	[[self alloc] init_with_gameLevelGenerators:[NSArray<SMBGameLevelGenerator*> arrayWithArray:gameLevelGenerators]

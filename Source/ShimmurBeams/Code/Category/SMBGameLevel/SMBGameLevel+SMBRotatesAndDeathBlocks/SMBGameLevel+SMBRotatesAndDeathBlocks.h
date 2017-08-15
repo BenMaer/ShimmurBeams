@@ -16,6 +16,9 @@
 
 #pragma mark - rotates
 +(nonnull instancetype)smb_rotates_oneRotate_right;
-+(nonnull instancetype)smb_rotates_twoLefts_right;
++(nonnull instancetype)smb_rotates_twoRotates_right;
+
+#pragma mark - rotates and forced
++(nonnull instancetype)smb_rotates_oneRotate_left_oneForced_left;
 
 @end
