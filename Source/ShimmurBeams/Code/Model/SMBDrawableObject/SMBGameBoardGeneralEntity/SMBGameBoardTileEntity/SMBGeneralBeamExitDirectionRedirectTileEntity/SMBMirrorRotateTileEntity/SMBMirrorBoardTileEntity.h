@@ -25,6 +25,6 @@ typedef NS_ENUM(NSInteger, SMBMirrorBoardTileEntity_startingPosition) {
 -(nullable instancetype)init_with_startingPosition:(SMBMirrorBoardTileEntity_startingPosition)startingPosition NS_DESIGNATED_INITIALIZER;
 
 #pragma mark - startingPosition
-@property (nonatomic, readonly) SMBMirrorBoardTileEntity_startingPosition startingPosition;
+@property (nonatomic, assign, readonly) SMBMirrorBoardTileEntity_startingPosition startingPosition;
 
 @end
