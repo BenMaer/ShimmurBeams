@@ -244,7 +244,7 @@
 		  usableGameBoardTileEntities:[NSArray<SMBGameBoardTileEntity*> arrayWithArray:gameBoardTileEntity]];
 }
 
-+(nonnull instancetype)smb_rotates_deathBlocks_overlapingLaser
++(nonnull instancetype)smb_rotates_deathBlocks_blackAnglesMatter
 {
 	SMBGameBoard* const gameBoard = [[SMBGameBoard alloc] init_with_numberOfColumns:5
 																	   numberOfRows:5];

@@ -105,7 +105,7 @@
 																						  name:@"Scattered"]];
 	
 	[gameLevelGenerators addObject:[[SMBGameLevelGenerator alloc]init_with_generateLevelBlock:^SMBGameLevel * _Nonnull{
-		return [SMBGameLevel smb_rotates_deathBlocks_overlapingLaser];
+		return [SMBGameLevel smb_rotates_deathBlocks_blackAnglesMatter];
 	}
 																						 name:@"Black Angles Matter"]];
 
