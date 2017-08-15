@@ -9,6 +9,7 @@
 /* Begin PBXBuildFile section */
 		C6F92B5CF1E1E584411CC937 /* libPods-ShimmurBeams.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 49C70CE907920FDEC9F64616 /* libPods-ShimmurBeams.a */; };
 		CAC035991F43813700192474 /* SMBMirrorBoardTileEntity.m in Sources */ = {isa = PBXBuildFile; fileRef = CAC035981F43813700192474 /* SMBMirrorBoardTileEntity.m */; };
+		CAC0359D1F439D7000192474 /* SMBGameLevel+SMBGameLevelMirros.m in Sources */ = {isa = PBXBuildFile; fileRef = CAC0359C1F439D7000192474 /* SMBGameLevel+SMBGameLevelMirros.m */; };
 		D761FE921F3AC2FF0083842A /* NSArray+SMBChanges.m in Sources */ = {isa = PBXBuildFile; fileRef = D761FE3D1F3AC2FF0083842A /* NSArray+SMBChanges.m */; };
 		D761FE931F3AC2FF0083842A /* SMBGameBoard+SMBAddEntity.m in Sources */ = {isa = PBXBuildFile; fileRef = D761FE411F3AC2FF0083842A /* SMBGameBoard+SMBAddEntity.m */; };
 		D761FE951F3AC2FF0083842A /* SMBMappedDataCollection.m in Sources */ = {isa = PBXBuildFile; fileRef = D761FE4A1F3AC2FF0083842A /* SMBMappedDataCollection.m */; };
@@ -61,6 +62,8 @@
 		49C70CE907920FDEC9F64616 /* libPods-ShimmurBeams.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-ShimmurBeams.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		CAC035971F43813700192474 /* SMBMirrorBoardTileEntity.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SMBMirrorBoardTileEntity.h; sourceTree = "<group>"; };
 		CAC035981F43813700192474 /* SMBMirrorBoardTileEntity.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SMBMirrorBoardTileEntity.m; sourceTree = "<group>"; };
+		CAC0359B1F439D7000192474 /* SMBGameLevel+SMBGameLevelMirros.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "SMBGameLevel+SMBGameLevelMirros.h"; sourceTree = "<group>"; };
+		CAC0359C1F439D7000192474 /* SMBGameLevel+SMBGameLevelMirros.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "SMBGameLevel+SMBGameLevelMirros.m"; sourceTree = "<group>"; };
 		D761FE3C1F3AC2FF0083842A /* NSArray+SMBChanges.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSArray+SMBChanges.h"; sourceTree = "<group>"; };
 		D761FE3D1F3AC2FF0083842A /* NSArray+SMBChanges.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSArray+SMBChanges.m"; sourceTree = "<group>"; };
 		D761FE401F3AC2FF0083842A /* SMBGameBoard+SMBAddEntity.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "SMBGameBoard+SMBAddEntity.h"; sourceTree = "<group>"; };
@@ -211,6 +214,15 @@
 			path = SMBMirrorRotateTileEntity;
 			sourceTree = "<group>";
 		};
+		CAC0359A1F439D3000192474 /* SMBGameLevelMirrors */ = {
+			isa = PBXGroup;
+			children = (
+				CAC0359B1F439D7000192474 /* SMBGameLevel+SMBGameLevelMirros.h */,
+				CAC0359C1F439D7000192474 /* SMBGameLevel+SMBGameLevelMirros.m */,
+			);
+			path = SMBGameLevelMirrors;
+			sourceTree = "<group>";
+		};
 		D761FE381F3AC2FF0083842A /* Code */ = {
 			isa = PBXGroup;
 			children = (
@@ -274,6 +286,7 @@
 		D761FE421F3AC2FF0083842A /* SMBGameLevel */ = {
 			isa = PBXGroup;
 			children = (
+				CAC0359A1F439D3000192474 /* SMBGameLevelMirrors */,
 				D7951D0E1F43143F00A33AB2 /* SMBGameLevel+SMBRotatesAndDeathBlocks */,
 				D7951D011F41E78E00A33AB2 /* SMBGameLevel+SMBForcedRedirectsAndWalls */,
 			);
@@ -1058,6 +1071,7 @@
 				D7951D0D1F424E3900A33AB2 /* SMBBeamRotateTileEntity.m in Sources */,
 				D7C8C3CC1F3B91FB006D378E /* SMBGameBoardTileView.m in Sources */,
 				D78CD0A91F3D6EB500118FB4 /* SMBDrawableObjectView.m in Sources */,
+				CAC0359D1F439D7000192474 /* SMBGameLevel+SMBGameLevelMirros.m in Sources */,
 				D7951D151F4331B900A33AB2 /* SMBDeathBlockTileEntity.m in Sources */,
 				D7951D041F41E79800A33AB2 /* SMBGameLevel+SMBForcedRedirectsAndWalls.m in Sources */,
 				D78CD09F1F3D6E5800118FB4 /* SMBGameBoardEntity.m in Sources */,
