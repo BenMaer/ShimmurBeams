@@ -14,9 +14,6 @@
 
 @interface SMBMirrorBoardTileEntity ()
 
-#pragma mark - startingPosition
-@property (nonatomic, assign)SMBMirrorBoardTileEntity_startingPosition startingPosition;
-
 #pragma mark - draw_startingPoint
 -(CGFloat)draw_startingPoint_x_forFrame:(CGRect)frame;
 -(CGFloat)draw_startingPoint_y_forFrame:(CGRect)frame;
@@ -24,6 +21,9 @@
 #pragma mark - draw_endingPoint
 -(CGFloat)draw_endingPoint_x_forFrame:(CGRect)frame;
 -(CGFloat)draw_endingPoint_y_forFrame:(CGRect)frame;
+
+#pragma mark - mirrorTileEntity_draw_in_rect
+-(void)mirrorTileEntity_draw_in_rect:(CGRect)rect;
 
 @end
 
