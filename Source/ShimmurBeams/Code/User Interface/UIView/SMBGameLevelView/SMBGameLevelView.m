@@ -155,12 +155,12 @@ static void* kSMBGameLevelView__KVOContext = &kSMBGameLevelView__KVOContext;
 
 -(CGRect)gameBoardTileEntityPickerView_frame_with_boundingSize:(CGSize)boundingSize
 {
-	CGSize const gameBoardView_tileSize = [self gameBoardView_tileSize_with_boundingSize:boundingSize];
+	CGFloat const height = 30.0f;
 
 	return CGRectCeilOrigin((CGRect){
 		.origin.y		= CGRectGetMaxY([self gameBoardView_frame_with_boundingSize:boundingSize]) + 20.0f,
 		.size.width		= boundingSize.width,
-		.size.height	= gameBoardView_tileSize.height,
+		.size.height	= height,
 	});
 }
 
@@ -168,28 +168,10 @@ static void* kSMBGameLevelView__KVOContext = &kSMBGameLevelView__KVOContext;
 {
 	kRUConditionalReturn(gameBoardTile == nil, YES);
 	
-	SMBGameBoardTileEntity* const selectedGameBoardTileEntity = self.gameBoardTileEntityPickerView.selectedGameBoardTileEntity;
-	kRUConditionalReturn(selectedGameBoardTileEntity == nil, NO);
+	SMBGameBoardTileEntity* const gameBoardTileEntityPickerView_selectedGameBoardTileEntity = self.gameBoardTileEntityPickerView.selectedGameBoardTileEntity;
+	kRUConditionalReturn(gameBoardTileEntityPickerView_selectedGameBoardTileEntity == nil, NO);
 
-	SMBGameBoardTile* const gameBoardTile_old = selectedGameBoardTileEntity.gameBoardTile;
-	if (gameBoardTile_old)
-	{
-		kRUConditionalReturn(gameBoardTile_old.gameBoardTileEntity_for_beamInteractions != selectedGameBoardTileEntity, YES);
-		[gameBoardTile_old setGameBoardTileEntity_for_beamInteractions:nil];
-	}
-
-	SMBGameBoardTileEntity* const gameBoardTileEntity_for_beamInteractions = gameBoardTile.gameBoardTileEntity_for_beamInteractions;
-	/**
-	 If the tile has has beam interaction, and it's pickable, let's take it off the tile so the new one can be added.
-	 */
-	if ((gameBoardTileEntity_for_beamInteractions != nil)
-		&&
-		[self.gameLevel.usableGameBoardTileEntities containsObject:gameBoardTileEntity_for_beamInteractions])
-	{
-		[gameBoardTile setGameBoardTileEntity_for_beamInteractions:nil];
-	}
-
-	[gameBoardTile setGameBoardTileEntity_for_beamInteractions:selectedGameBoardTileEntity];
+	[gameBoardTile setGameBoardTileEntity_for_beamInteractions:gameBoardTileEntityPickerView_selectedGameBoardTileEntity];
 
 	[self.gameBoardTileEntityPickerView setSelectedGameBoardTileEntity:nil];
 }
@@ -210,40 +192,12 @@ static void* kSMBGameLevelView__KVOContext = &kSMBGameLevelView__KVOContext;
 		.height		= boundingSize.height - (inset * 2.0f),
 	};
 
-	CGSize const gameBoardView_tileSize = [self gameBoardView_tileSize_with_boundingSize:boundingSize_inset];
-
-	NSUInteger const numberOfColumns = [self.gameLevel.gameBoard gameBoardTiles_numberOfColumns];
-	NSUInteger const numberOfRows = [self.gameLevel.gameBoard gameBoardTiles_numberOfRows];
-
-	CGFloat const width = gameBoardView_tileSize.width * (CGFloat)numberOfColumns;
-	CGFloat const height = gameBoardView_tileSize.height * (CGFloat)numberOfRows;
+	CGSize const size = [self.gameBoardView sizeThatFits:boundingSize_inset];
 
 	return CGRectCeilOrigin((CGRect){
-		.origin.x		= CGRectGetHorizontallyAlignedXCoordForWidthOnWidth(width, boundingSize.width),
-		.size.width		= width,
-		.size.height	= height,
-	});;
-}
-
--(CGSize)gameBoardView_tileSize_with_boundingSize:(CGSize)boundingSize
-{
-	CGFloat const inset = [self content_inset];
-
-	NSUInteger const numberOfColumns = [self.gameLevel.gameBoard gameBoardTiles_numberOfColumns];
-	kRUConditionalReturn_ReturnValue(numberOfColumns == 0, NO, CGSizeZero);
-
-	NSUInteger const numberOfRows = [self.gameLevel.gameBoard gameBoardTiles_numberOfRows];
-	kRUConditionalReturn_ReturnValue(numberOfRows == 0, NO, CGSizeZero);
-
-	CGFloat const width_perItem_bounded = floor((boundingSize.width - (inset * 2.0f)) / (CGFloat)numberOfColumns);
-	CGFloat const height_perItem_bounded = floor((boundingSize.height - (inset * 2.0f)) / (CGFloat)numberOfRows);
-
-	CGFloat const dimension_length = MIN(width_perItem_bounded, height_perItem_bounded);
-
-	return (CGSize){
-		.width		= dimension_length,
-		.height		= dimension_length,
-	};
+		.origin.x	= CGRectGetHorizontallyAlignedXCoordForWidthOnWidth(size.width, boundingSize.width),
+		.size		= size,
+	});
 }
 
 #pragma mark - SMBGameBoardView_tileTapDelegate

@@ -49,8 +49,7 @@ static void* kSMBGameBoardView__KVOContext = &kSMBGameBoardView__KVOContext;
 -(void)gameBoardTileEntityView_layout:(nonnull SMBGameBoardGeneralEntityView*)gameBoardGeneralEntityView;
 -(CGRect)gameBoardTileEntityView_frame_with_gameBoardTileEntity:(nonnull SMBGameBoardTileEntity*)gameBoardTileEntity;
 
--(CGFloat)gameBoardTileEntityView_width;
--(CGFloat)gameBoardTileEntityView_height;
+-(CGSize)gameBoardTileEntityView_size;
 
 #pragma mark - gameBoardEntityView_mappedDataCollection
 @property (nonatomic, copy, nullable) SMBMappedDataCollection<SMBGameBoardGeneralEntityView*>* gameBoardEntityView_mappedDataCollection;
@@ -115,6 +114,16 @@ static void* kSMBGameBoardView__KVOContext = &kSMBGameBoardView__KVOContext;
 	[self gameBoardEntityView_mappedDataCollection_layout];
 }
 
+-(CGSize)sizeThatFits:(CGSize)size
+{
+	CGSize const gameBoardTileEntityView_size = [self gameBoardTileEntityView_size_with_boundingSize:size];
+	
+	return (CGSize){
+		.width		= gameBoardTileEntityView_size.width * (CGFloat)[self.gameBoard gameBoardTiles_numberOfColumns],
+		.height		= gameBoardTileEntityView_size.height * (CGFloat)[self.gameBoard gameBoardTiles_numberOfRows],
+	};
+}
+
 #pragma mark - gameBoard
 -(void)setGameBoard:(nullable SMBGameBoard*)gameBoard
 {
@@ -175,9 +184,10 @@ static void* kSMBGameBoardView__KVOContext = &kSMBGameBoardView__KVOContext;
 	NSUInteger const numberOfRows = [gameBoard gameBoardTiles_numberOfRows];
 	kRUConditionalReturn(numberOfRows <= 0, YES);
 
+	CGSize const gameBoardTileEntityView_size = [self gameBoardTileEntityView_size];
 	if (numberOfColumns > 1)
 	{
-		CGFloat const horizontal_increment = [self gameBoardTileEntityView_width];
+		CGFloat const horizontal_increment = gameBoardTileEntityView_size.width;
 		for (NSUInteger columnToDraw = 1;
 			 columnToDraw < numberOfColumns;
 			 columnToDraw++)
@@ -196,7 +206,7 @@ static void* kSMBGameBoardView__KVOContext = &kSMBGameBoardView__KVOContext;
 
 	if (numberOfRows > 1)
 	{
-		CGFloat const vertical_increment = CGRectGetWidth(self.bounds) / (CGFloat)numberOfRows;
+		CGFloat const vertical_increment = gameBoardTileEntityView_size.height;
 		for (NSUInteger rowToDraw = 1;
 			 rowToDraw < numberOfRows;
 			 rowToDraw++)
@@ -327,26 +337,28 @@ static void* kSMBGameBoardView__KVOContext = &kSMBGameBoardView__KVOContext;
 	return [self gameBoardTilePosition_frame:gameBoardTilePosition];
 }
 
--(CGFloat)gameBoardTileEntityView_width
+-(CGSize)gameBoardTileEntityView_size_with_boundingSize:(CGSize)boundingSize
 {
-	SMBGameBoard* const gameBoard = self.gameBoard;
-	kRUConditionalReturn_ReturnValue(gameBoard == nil, YES, 0.0f);
+	NSUInteger const numberOfColumns = [self.gameBoard gameBoardTiles_numberOfColumns];
+	kRUConditionalReturn_ReturnValue(numberOfColumns == 0, NO, CGSizeZero);
 
-	NSUInteger const numberOfColumns = [gameBoard gameBoardTiles_numberOfColumns];
-	kRUConditionalReturn_ReturnValue(numberOfColumns <= 0, YES, 0.0f);
+	NSUInteger const numberOfRows = [self.gameBoard gameBoardTiles_numberOfRows];
+	kRUConditionalReturn_ReturnValue(numberOfRows == 0, NO, CGSizeZero);
 
-	return CGRectGetWidth(self.bounds) / numberOfColumns;
+	CGFloat const width_perItem_bounded = floor((boundingSize.width) / (CGFloat)numberOfColumns);
+	CGFloat const height_perItem_bounded = floor((boundingSize.height) / (CGFloat)numberOfRows);
+
+	CGFloat const dimension_length = MIN(width_perItem_bounded, height_perItem_bounded);
+
+	return (CGSize){
+		.width		= dimension_length,
+		.height		= dimension_length,
+	};
 }
 
--(CGFloat)gameBoardTileEntityView_height
+-(CGSize)gameBoardTileEntityView_size
 {
-	SMBGameBoard* const gameBoard = self.gameBoard;
-	kRUConditionalReturn_ReturnValue(gameBoard == nil, YES, 0.0f);
-
-	NSUInteger const numberOfRows = [gameBoard gameBoardTiles_numberOfRows];
-	kRUConditionalReturn_ReturnValue(numberOfRows <= 0, YES, 0.0f);
-
-	return CGRectGetHeight(self.bounds) / numberOfRows;
+	return [self gameBoardTileEntityView_size_with_boundingSize:self.bounds.size];
 }
 
 #pragma mark - gameBoardEntityView_mappedDataCollection
@@ -417,14 +429,12 @@ static void* kSMBGameBoardView__KVOContext = &kSMBGameBoardView__KVOContext;
 {
 	kRUConditionalReturn_ReturnValue(gameBoardTilePosition == nil, YES, CGRectZero);
 
-	CGFloat const gameBoardEntityView_width = [self gameBoardTileEntityView_width];
-	CGFloat const gameBoardEntityView_height = [self gameBoardTileEntityView_height];
+	CGSize const gameBoardEntityView_size = [self gameBoardTileEntityView_size];
 
 	return (CGRect){
-		.origin.x		= gameBoardEntityView_width * gameBoardTilePosition.column,
-		.origin.y		= gameBoardEntityView_height * gameBoardTilePosition.row,
-		.size.width		= gameBoardEntityView_width,
-		.size.height	= gameBoardEntityView_height,
+		.origin.x	= gameBoardEntityView_size.width * gameBoardTilePosition.column,
+		.origin.y	= gameBoardEntityView_size.height * gameBoardTilePosition.row,
+		.size		= gameBoardEntityView_size,
 	};
 }
 
@@ -445,7 +455,7 @@ static void* kSMBGameBoardView__KVOContext = &kSMBGameBoardView__KVOContext;
 
 	[self.gameBoardTileViews enumerateObjectsUsingBlock:^(SMBGameBoardTileView * _Nonnull gameBoardTileView, NSUInteger idx, BOOL * _Nonnull stop) {
 		NSAssert(gameBoardTileView.superview == nil, @"superview should be nil");
-		
+
 		[self addSubview:gameBoardTileView];
 	}];
 }

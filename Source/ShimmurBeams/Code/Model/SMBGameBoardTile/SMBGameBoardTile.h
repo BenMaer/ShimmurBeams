@@ -8,6 +8,7 @@
 
 #import "SMBDrawableObject.h"
 #import "SMBGameBoardTile__directions.h"
+#import "SMBGameBoardTile__entityTypes.h"
 
 #import <Foundation/Foundation.h>
 
@@ -34,9 +35,17 @@
 #pragma mark - gameBoardTileEntity_for_beamInteractions
 @property (nonatomic, strong, nullable) SMBGameBoardTileEntity* gameBoardTileEntity_for_beamInteractions;
 
+#pragma mark - gameBoardTileEntities_many
+@property (nonatomic, readonly, copy, nullable) NSArray<SMBGameBoardTileEntity*>* gameBoardTileEntities_many;
+-(void)gameBoardTileEntities_many_add:(nonnull SMBGameBoardTileEntity*)gameBoardTileEntity;
+-(void)gameBoardTileEntities_many_remove:(nonnull SMBGameBoardTileEntity*)gameBoardTileEntity;
+
 #pragma mark - gameBoardTileEntities
-@property (nonatomic, readonly, copy, nullable) NSArray<SMBGameBoardTileEntity*>* gameBoardTileEntities;
--(void)gameBoardTileEntities_add:(nonnull SMBGameBoardTileEntity*)gameBoardTileEntity;
+-(void)gameBoardTileEntities_add:(nonnull SMBGameBoardTileEntity*)gameBoardTileEntity
+					  entityType:(SMBGameBoardTile__entityType)entityType;
+-(void)gameBoardTileEntities_remove:(nonnull SMBGameBoardTileEntity*)gameBoardTileEntity
+						 entityType:(SMBGameBoardTile__entityType)entityType;
+-(SMBGameBoardTile__entityType)gameBoardTileEntity_currentType:(nonnull SMBGameBoardTileEntity*)gameBoardTileEntity;
 -(void)gameBoardTileEntities_remove:(nonnull SMBGameBoardTileEntity*)gameBoardTileEntity;
 
 #pragma mark - init
@@ -61,7 +70,7 @@
 @interface SMBGameBoardTile_PropertiesForKVO : NSObject
 
 +(nonnull NSString*)gameBoardTileEntity_for_beamInteractions;
-+(nonnull NSString*)gameBoardTileEntities;
++(nonnull NSString*)gameBoardTileEntities_many;
 //+(nonnull NSString*)beamDirectionsBlocked;
 +(nonnull NSString*)isPowered;
 

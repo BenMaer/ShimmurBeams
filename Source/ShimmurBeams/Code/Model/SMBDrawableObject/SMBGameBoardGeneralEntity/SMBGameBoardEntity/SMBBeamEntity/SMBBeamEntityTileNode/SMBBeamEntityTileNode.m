@@ -349,7 +349,7 @@ typedef NS_ENUM(NSInteger, SMBBeamEntityTileNode__state) {
 	SMBGameBoardTile* const gameBoardTile = node_next.gameBoardTile;
 	kRUConditionalReturn(gameBoardTile == nil, NO);
 
-	[gameBoardTile gameBoardTileEntities_remove:node_next];
+	[gameBoardTile gameBoardTileEntities_many_remove:node_next];
 }
 
 -(void)setNode_next_generationEnabled:(BOOL)node_next_generationEnabled
@@ -420,7 +420,7 @@ typedef NS_ENUM(NSInteger, SMBBeamEntityTileNode__state) {
 	[[SMBBeamEntityTileNode alloc] init_with_beamEntity:beamEntity
 										  node_previous:self];
 
-	[node_next_gameTile gameBoardTileEntities_add:node_next];
+	[node_next_gameTile gameBoardTileEntities_many_add:node_next];
 
 	return node_next;
 }

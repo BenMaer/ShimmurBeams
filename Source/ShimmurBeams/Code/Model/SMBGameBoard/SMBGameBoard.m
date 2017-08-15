@@ -194,7 +194,7 @@ static void* kSMBGameBoard__KVOContext = &kSMBGameBoard__KVOContext;
 
 	NSMutableArray<NSString*>* const propertiesToObserve_observe_old_and_initial = [NSMutableArray<NSString*> array];
 	[propertiesToObserve_observe_old_and_initial addObject:[SMBGameBoardTile_PropertiesForKVO gameBoardTileEntity_for_beamInteractions]];
-	[propertiesToObserve_observe_old_and_initial addObject:[SMBGameBoardTile_PropertiesForKVO gameBoardTileEntities]];
+	[propertiesToObserve_observe_old_and_initial addObject:[SMBGameBoardTile_PropertiesForKVO gameBoardTileEntities_many]];
 
 	NSMutableDictionary<NSNumber*,NSMutableArray<NSString*>*>* const KVOOptions_to_propertiesToObserve_mapping = [NSMutableDictionary<NSNumber*,NSMutableArray<NSString*>*> dictionary];
 	[KVOOptions_to_propertiesToObserve_mapping setObject:propertiesToObserve_observe_old_and_initial forKey:@(NSKeyValueObservingOptionInitial | NSKeyValueObservingOptionOld)];
@@ -364,13 +364,13 @@ static void* kSMBGameBoard__KVOContext = &kSMBGameBoard__KVOContext;
 					[self gameBoardTileEntity_add:gameBoardTileEntity_for_beamInteractions];
 				}
 			}
-			else if ([keyPath isEqualToString:[SMBGameBoardTile_PropertiesForKVO gameBoardTileEntities]])
+			else if ([keyPath isEqualToString:[SMBGameBoardTile_PropertiesForKVO gameBoardTileEntities_many]])
 			{
 				SMBGameBoardTile* const gameBoardTile = kRUClassOrNil(object, SMBGameBoardTile);
 				kRUConditionalReturn(gameBoardTile == nil, YES);
 				
 				NSArray<SMBGameBoardTileEntity*>* const gameBoardTileEntities_old = kRUClassOrNil([change objectForKey:NSKeyValueChangeOldKey], NSArray<SMBBeamEntityTileNode*>);
-				NSArray<SMBGameBoardTileEntity*>* const gameBoardTileEntities = gameBoardTile.gameBoardTileEntities;
+				NSArray<SMBGameBoardTileEntity*>* const gameBoardTileEntities = gameBoardTile.gameBoardTileEntities_many;
 
 				NSArray<SMBGameBoardTileEntity*>* gameBoardTileEntities_removed = nil;
 				NSArray<SMBGameBoardTileEntity*>* gameBoardTileEntities_new = nil;

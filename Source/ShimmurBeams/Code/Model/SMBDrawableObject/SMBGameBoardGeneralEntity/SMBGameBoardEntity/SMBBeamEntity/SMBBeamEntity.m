@@ -81,7 +81,7 @@ typedef NS_ENUM(NSInteger, SMBBeamEntity__drawingPiece) {
 		_beamEntityTileNode_initial =
 		[[SMBBeamEntityTileNode alloc] init_with_beamEntity:self
 											  node_previous:nil];
-		[gameBoardTile gameBoardTileEntities_add:self.beamEntityTileNode_initial];
+		[gameBoardTile gameBoardTileEntities_many_add:self.beamEntityTileNode_initial];
 
 		[self beamEntityTileNode_mappedDataCollection_update];
 	}
@@ -98,7 +98,7 @@ typedef NS_ENUM(NSInteger, SMBBeamEntity__drawingPiece) {
 	SMBGameBoardTile* const gameBoardTile = beamEntityTileNode_initial.gameBoardTile;
 	kRUConditionalReturn(gameBoardTile == nil, YES);
 
-	[gameBoardTile gameBoardTileEntities_remove:beamEntityTileNode_initial];
+	[gameBoardTile gameBoardTileEntities_many_remove:beamEntityTileNode_initial];
 }
 
 #pragma mark - beamEntityTileNode_mappedDataCollection

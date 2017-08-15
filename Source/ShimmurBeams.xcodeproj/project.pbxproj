@@ -129,6 +129,8 @@
 		D7951D141F4331B900A33AB2 /* SMBDeathBlockTileEntity.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SMBDeathBlockTileEntity.m; sourceTree = "<group>"; };
 		D7951D171F43332C00A33AB2 /* SMBGameLevelCompletion.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SMBGameLevelCompletion.h; sourceTree = "<group>"; };
 		D7951D181F43332C00A33AB2 /* SMBGameLevelCompletion.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SMBGameLevelCompletion.m; sourceTree = "<group>"; };
+		D7951D1A1F433E2500A33AB2 /* SMBGameBoardTile__entityTypes.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SMBGameBoardTile__entityTypes.h; sourceTree = "<group>"; };
+		D7951D1B1F4340D500A33AB2 /* SMBGameBoard+SMBAddEntity__blocks.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "SMBGameBoard+SMBAddEntity__blocks.h"; sourceTree = "<group>"; };
 		D7C8C3B21F3B7A14006D378E /* SMBGameBoardTileEntityPickerView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SMBGameBoardTileEntityPickerView.h; sourceTree = "<group>"; };
 		D7C8C3B31F3B7A14006D378E /* SMBGameBoardTileEntityPickerView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SMBGameBoardTileEntityPickerView.m; sourceTree = "<group>"; };
 		D7C8C3B71F3B8035006D378E /* SMBGameBoardTileEntityPickerViewCollectionViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SMBGameBoardTileEntityPickerViewCollectionViewCell.h; sourceTree = "<group>"; };
@@ -250,6 +252,7 @@
 		D761FE3F1F3AC2FF0083842A /* SMBGameBoard+SMBAddEntity */ = {
 			isa = PBXGroup;
 			children = (
+				D7951D1B1F4340D500A33AB2 /* SMBGameBoard+SMBAddEntity__blocks.h */,
 				D761FE401F3AC2FF0083842A /* SMBGameBoard+SMBAddEntity.h */,
 				D761FE411F3AC2FF0083842A /* SMBGameBoard+SMBAddEntity.m */,
 			);
@@ -321,10 +324,11 @@
 		D761FE6A1F3AC2FF0083842A /* SMBGameBoardTile */ = {
 			isa = PBXGroup;
 			children = (
+				D7E511C21F3D2B31008A6042 /* SMBGameBoardTile__direction_offsets.h */,
 				D761FE6D1F3AC2FF0083842A /* SMBGameBoardTile__direction_rotations.h */,
 				D761FE6F1F3AC2FF0083842A /* SMBGameBoardTile__directions_to_CoreGraphics_SMBRotation__orientations_utilities.h */,
 				D761FE6E1F3AC2FF0083842A /* SMBGameBoardTile__directions.h */,
-				D7E511C21F3D2B31008A6042 /* SMBGameBoardTile__direction_offsets.h */,
+				D7951D1A1F433E2500A33AB2 /* SMBGameBoardTile__entityTypes.h */,
 				D761FE6B1F3AC2FF0083842A /* SMBGameBoardTile.h */,
 				D761FE6C1F3AC2FF0083842A /* SMBGameBoardTile.m */,
 				D7C8C3D41F3CB9B0006D378E /* SMBGameBoardTileEntity_PowerProvider.h */,

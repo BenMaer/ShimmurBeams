@@ -24,7 +24,9 @@
 #pragma mark - rotates and wall
 +(nonnull instancetype)smb_rotates_oneLeft_twoRight_wall_oneCenter;
 
-#pragma mark - rotates and death block
+#pragma mark - rotates and death blocks
 +(nonnull instancetype)smb_rotates_twoRight_deathBlock_one;
++(nonnull instancetype)smb_rotates_twoRight_twoLeft_deathBlocks_surrounded_and_someBlocking;
+//+(nonnull instancetype)smb_rotates_twoRight_deathBlocks_scattered;
 
 @end

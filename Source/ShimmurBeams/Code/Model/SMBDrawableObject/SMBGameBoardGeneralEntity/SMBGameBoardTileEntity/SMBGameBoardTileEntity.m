@@ -54,6 +54,12 @@
 {
 	kRUConditionalReturn(self.gameBoardTile == gameBoardTile, NO);
 
+	SMBGameBoardTile* const gameBoardTile_old = self.gameBoardTile;
+	if (gameBoardTile_old)
+	{
+		[gameBoardTile_old gameBoardTileEntities_remove:self];
+	}
+
 #if kSMBGameBoardTileEntity_gameBoardTileOwnership_validation_enabled
 	NSAssert((self.gameBoardTile == nil)
 			 ||
@@ -77,7 +83,7 @@
 	kRUConditionalReturn_ReturnValueFalse(gameBoardTile == nil, YES);
 
 	kRUConditionalReturn_ReturnValueTrue(gameBoardTile.gameBoardTileEntity_for_beamInteractions == self, NO);
-	kRUConditionalReturn_ReturnValueTrue([gameBoardTile.gameBoardTileEntities containsObject:self], NO);
+	kRUConditionalReturn_ReturnValueTrue([gameBoardTile.gameBoardTileEntities_many containsObject:self], NO);
 
 	return NO;
 }

@@ -26,20 +26,20 @@
 
 @interface SMBGameBoardTile ()
 
-#pragma mark - gameBoardTileEntities
-@property (nonatomic, copy, nullable) NSArray<SMBGameBoardTileEntity*>* gameBoardTileEntities;
--(void)gameBoardTileEntities_update;
-@property (nonatomic, readonly, strong, nullable) SMBMutableMappedDataCollection<SMBGameBoardTileEntity*>* gameBoardTileEntities_mappedDataCollection;
+#pragma mark - gameBoardTileEntities_many
+@property (nonatomic, copy, nullable) NSArray<SMBGameBoardTileEntity*>* gameBoardTileEntities_many;
+-(void)gameBoardTileEntities_many_update;
+@property (nonatomic, readonly, strong, nullable) SMBMutableMappedDataCollection<SMBGameBoardTileEntity*>* gameBoardTileEntities_many_mappedDataCollection;
 
-#pragma mark - gameBoardTileEntities_powerProviders_mappedDataCollection
-@property (nonatomic, readonly, strong, nullable) SMBMutableMappedDataCollection<SMBGameBoardTileEntity<SMBGameBoardTileEntity_PowerProvider>*>* gameBoardTileEntities_powerProviders_mappedDataCollection;
--(void)gameBoardTileEntities_powerProviders_mappedDataCollection_add:(nonnull SMBGameBoardTileEntity<SMBGameBoardTileEntity_PowerProvider>*)gameBoardTileEntity;
--(void)gameBoardTileEntities_powerProviders_mappedDataCollection_remove:(nonnull SMBGameBoardTileEntity<SMBGameBoardTileEntity_PowerProvider>*)gameBoardTileEntity;
+#pragma mark - gameBoardTileEntities_many_powerProviders_mappedDataCollection
+@property (nonatomic, readonly, strong, nullable) SMBMutableMappedDataCollection<SMBGameBoardTileEntity<SMBGameBoardTileEntity_PowerProvider>*>* gameBoardTileEntities_many_powerProviders_mappedDataCollection;
+-(void)gameBoardTileEntities_many_powerProviders_mappedDataCollection_add:(nonnull SMBGameBoardTileEntity<SMBGameBoardTileEntity_PowerProvider>*)gameBoardTileEntity;
+-(void)gameBoardTileEntities_many_powerProviders_mappedDataCollection_remove:(nonnull SMBGameBoardTileEntity<SMBGameBoardTileEntity_PowerProvider>*)gameBoardTileEntity;
 
-//#pragma mark - gameBoardTileEntities_beamBlockers
-//@property (nonatomic, strong, nullable) SMBMutableMappedDataCollection<SMBGameBoardTileEntity<SMBBeamBlockerTileEntity>*>* gameBoardTileEntities_beamBlockers_mappedDataCollection;
-//-(void)gameBoardTileEntities_beamBlockers_mappedDataCollection_add:(nonnull SMBGameBoardTileEntity<SMBBeamBlockerTileEntity>*)gameBoardTileEntity;
-//-(void)gameBoardTileEntities_beamBlockers_mappedDataCollection_remove:(nonnull SMBGameBoardTileEntity<SMBBeamBlockerTileEntity>*)gameBoardTileEntity;
+//#pragma mark - gameBoardTileEntities_many_beamBlockers
+//@property (nonatomic, strong, nullable) SMBMutableMappedDataCollection<SMBGameBoardTileEntity<SMBBeamBlockerTileEntity>*>* gameBoardTileEntities_many_beamBlockers_mappedDataCollection;
+//-(void)gameBoardTileEntities_many_beamBlockers_mappedDataCollection_add:(nonnull SMBGameBoardTileEntity<SMBBeamBlockerTileEntity>*)gameBoardTileEntity;
+//-(void)gameBoardTileEntities_many_beamBlockers_mappedDataCollection_remove:(nonnull SMBGameBoardTileEntity<SMBBeamBlockerTileEntity>*)gameBoardTileEntity;
 
 //#pragma mark - beamDirectionsBlocked
 //@property (nonatomic, assign) SMBGameBoardTile__direction beamDirectionsBlocked;
@@ -61,8 +61,8 @@
 #pragma mark - NSObject
 -(void)dealloc
 {
-	[[self.gameBoardTileEntities_mappedDataCollection mappableObjects] enumerateObjectsUsingBlock:^(SMBGameBoardTileEntity<SMBMappedDataCollection_MappableObject>*  _Nonnull gameBoardTileEntity, NSUInteger idx, BOOL * _Nonnull stop) {
-		[self gameBoardTileEntities_remove:gameBoardTileEntity];
+	[[self.gameBoardTileEntities_many_mappedDataCollection mappableObjects] enumerateObjectsUsingBlock:^(SMBGameBoardTileEntity<SMBMappedDataCollection_MappableObject>*  _Nonnull gameBoardTileEntity, NSUInteger idx, BOOL * _Nonnull stop) {
+		[self gameBoardTileEntities_many_remove:gameBoardTileEntity];
 	}];
 
 	[self setGameBoardTileEntity_for_beamInteractions:nil];
@@ -101,9 +101,9 @@
 		_gameBoardTilePosition = gameBoardTilePosition;
 		_gameBoard = gameBoard;
 
-		_gameBoardTileEntities_mappedDataCollection = [SMBMutableMappedDataCollection<SMBGameBoardTileEntity*> new];
-		_gameBoardTileEntities_powerProviders_mappedDataCollection = [SMBMutableMappedDataCollection<SMBGameBoardTileEntity<SMBGameBoardTileEntity_PowerProvider>*> new];
-//		_gameBoardTileEntities_beamBlockers_mappedDataCollection = [SMBMutableMappedDataCollection<SMBGameBoardTileEntity<SMBBeamBlockerTileEntity>*> new];
+		_gameBoardTileEntities_many_mappedDataCollection = [SMBMutableMappedDataCollection<SMBGameBoardTileEntity*> new];
+		_gameBoardTileEntities_many_powerProviders_mappedDataCollection = [SMBMutableMappedDataCollection<SMBGameBoardTileEntity<SMBGameBoardTileEntity_PowerProvider>*> new];
+//		_gameBoardTileEntities_many_beamBlockers_mappedDataCollection = [SMBMutableMappedDataCollection<SMBGameBoardTileEntity<SMBBeamBlockerTileEntity>*> new];
 	}
 
 	return self;
@@ -125,9 +125,6 @@
 -(void)setGameBoardTileEntity_for_beamInteractions:(nullable SMBGameBoardTileEntity*)gameBoardTileEntity_for_beamInteractions
 {
 	kRUConditionalReturn(self.gameBoardTileEntity_for_beamInteractions == gameBoardTileEntity_for_beamInteractions, NO);
-	kRUConditionalReturn((self.gameBoardTileEntity_for_beamInteractions == nil)
-						 ==
-						 (gameBoardTileEntity_for_beamInteractions == nil), NO);
 
 	SMBGameBoardTileEntity* const gameBoardTileEntity_for_beamInteractions_old = self.gameBoardTileEntity_for_beamInteractions;
 	_gameBoardTileEntity_for_beamInteractions = gameBoardTileEntity_for_beamInteractions;
@@ -145,94 +142,148 @@
 	}
 }
 
-#pragma mark - gameBoardTileEntities
--(void)gameBoardTileEntities_update
+#pragma mark - gameBoardTileEntities_many
+-(void)gameBoardTileEntities_many_update
 {
-	[self setGameBoardTileEntities:[self.gameBoardTileEntities_mappedDataCollection mappableObjects]];
+	[self setGameBoardTileEntities_many:[self.gameBoardTileEntities_many_mappedDataCollection mappableObjects]];
 }
 
--(void)gameBoardTileEntities_add:(nonnull SMBGameBoardTileEntity*)gameBoardTileEntity
+-(void)gameBoardTileEntities_many_add:(nonnull SMBGameBoardTileEntity*)gameBoardTileEntity
 {
 	kRUConditionalReturn(gameBoardTileEntity == nil, YES);
 
-	[self.gameBoardTileEntities_mappedDataCollection mappableObject_add:gameBoardTileEntity];
+	[self.gameBoardTileEntities_many_mappedDataCollection mappableObject_add:gameBoardTileEntity];
 
 	if ([gameBoardTileEntity smb_providesPower])
 	{
-		[self gameBoardTileEntities_powerProviders_mappedDataCollection_add:[gameBoardTileEntity smb_providesPower_selfOrNull]];
+		[self gameBoardTileEntities_many_powerProviders_mappedDataCollection_add:[gameBoardTileEntity smb_providesPower_selfOrNull]];
 	}
 
-//	if ([gameBoardTileEntity smb_beamBlocker])
-//	{
-//		[self gameBoardTileEntities_beamBlockers_mappedDataCollection_add:[gameBoardTileEntity smb_beamBlocker_selfOrNull]];
-//	}
-
-	[self gameBoardTileEntities_update];
+	[self gameBoardTileEntities_many_update];
 
 	[self gameBoardTileEntity:gameBoardTileEntity
 		   updateRelationship:YES];
+}
+
+-(void)gameBoardTileEntities_many_remove:(nonnull SMBGameBoardTileEntity*)gameBoardTileEntity
+{
+	kRUConditionalReturn(gameBoardTileEntity == nil, YES);
+
+	[self.gameBoardTileEntities_many_mappedDataCollection mappableObject_remove:gameBoardTileEntity];
+
+	if ([gameBoardTileEntity smb_providesPower])
+	{
+		[self gameBoardTileEntities_many_powerProviders_mappedDataCollection_remove:[gameBoardTileEntity smb_providesPower_selfOrNull]];
+	}
+
+	[self gameBoardTileEntities_many_update];
+
+	[self gameBoardTileEntity:gameBoardTileEntity
+		   updateRelationship:NO];
+}
+
+#pragma mark - gameBoardTileEntities
+-(void)gameBoardTileEntities_add:(nonnull SMBGameBoardTileEntity*)gameBoardTileEntity
+					  entityType:(SMBGameBoardTile__entityType)entityType
+{
+	switch (entityType)
+	{
+		case SMBGameBoardTile__entityType_none:
+			NSAssert(false, @"unhandled entityType %li",(long)entityType);
+			break;
+
+		case SMBGameBoardTile__entityType_many:
+			[self gameBoardTileEntities_many_add:gameBoardTileEntity];
+			break;
+			
+		case SMBGameBoardTile__entityType_beamInteractions:
+			[self setGameBoardTileEntity_for_beamInteractions:gameBoardTileEntity];
+			break;
+	}
+}
+
+-(void)gameBoardTileEntities_remove:(nonnull SMBGameBoardTileEntity*)gameBoardTileEntity
+						 entityType:(SMBGameBoardTile__entityType)entityType
+{
+	switch (entityType)
+	{
+		case SMBGameBoardTile__entityType_none:
+			NSAssert(false, @"unhandled entityType %li",(long)entityType);
+			break;
+
+		case SMBGameBoardTile__entityType_many:
+			[self gameBoardTileEntities_many_remove:gameBoardTileEntity];
+			break;
+			
+		case SMBGameBoardTile__entityType_beamInteractions:
+		{
+			kRUConditionalReturn(self.gameBoardTileEntity_for_beamInteractions != gameBoardTileEntity, YES);
+			[self setGameBoardTileEntity_for_beamInteractions:nil];
+		}
+			break;
+	}
+}
+
+-(SMBGameBoardTile__entityType)gameBoardTileEntity_currentType:(nonnull SMBGameBoardTileEntity*)gameBoardTileEntity
+{
+	kRUConditionalReturn_ReturnValue(gameBoardTileEntity == nil, YES, SMBGameBoardTile__entityType_none);
+
+	kRUConditionalReturn_ReturnValue(self.gameBoardTileEntity_for_beamInteractions == gameBoardTileEntity, NO, SMBGameBoardTile__entityType_beamInteractions);
+	kRUConditionalReturn_ReturnValue([self.gameBoardTileEntities_many_mappedDataCollection mappableObject_exists:gameBoardTileEntity], NO, SMBGameBoardTile__entityType_many);
+
+	return SMBGameBoardTile__entityType_none;
 }
 
 -(void)gameBoardTileEntities_remove:(nonnull SMBGameBoardTileEntity*)gameBoardTileEntity
 {
 	kRUConditionalReturn(gameBoardTileEntity == nil, YES);
 
-	[self.gameBoardTileEntities_mappedDataCollection mappableObject_remove:gameBoardTileEntity];
+	SMBGameBoardTile__entityType const entityType = [self gameBoardTileEntity_currentType:gameBoardTileEntity];
+	kRUConditionalReturn(entityType == SMBGameBoardTile__entityType_none, NO);
+	kRUConditionalReturn(SMBGameBoardTile__entityType__isInRange(entityType) == false, YES);
 
-	if ([gameBoardTileEntity smb_providesPower])
-	{
-		[self gameBoardTileEntities_powerProviders_mappedDataCollection_remove:[gameBoardTileEntity smb_providesPower_selfOrNull]];
-	}
-
-//	if ([gameBoardTileEntity smb_beamBlocker])
-//	{
-//		[self gameBoardTileEntities_beamBlockers_mappedDataCollection_remove:[gameBoardTileEntity smb_beamBlocker_selfOrNull]];
-//	}
-
-	[self gameBoardTileEntities_update];
-
-	[self gameBoardTileEntity:gameBoardTileEntity
-		   updateRelationship:NO];
+	[self gameBoardTileEntities_remove:gameBoardTileEntity
+							entityType:entityType];
 }
 
-#pragma mark - gameBoardTileEntities_powerProviders_mappedDataCollection
--(void)gameBoardTileEntities_powerProviders_mappedDataCollection_add:(nonnull SMBGameBoardTileEntity<SMBGameBoardTileEntity_PowerProvider>*)gameBoardTileEntity
+#pragma mark - gameBoardTileEntities_many_powerProviders_mappedDataCollection
+-(void)gameBoardTileEntities_many_powerProviders_mappedDataCollection_add:(nonnull SMBGameBoardTileEntity<SMBGameBoardTileEntity_PowerProvider>*)gameBoardTileEntity
 {
 	kRUConditionalReturn(gameBoardTileEntity == nil, YES);
 	kRUConditionalReturn([gameBoardTileEntity smb_providesPower] == false, YES);
 
-	[self.gameBoardTileEntities_powerProviders_mappedDataCollection mappableObject_add:gameBoardTileEntity];
+	[self.gameBoardTileEntities_many_powerProviders_mappedDataCollection mappableObject_add:gameBoardTileEntity];
 
 	[self isPowered_update];
 }
 
--(void)gameBoardTileEntities_powerProviders_mappedDataCollection_remove:(nonnull SMBGameBoardTileEntity<SMBGameBoardTileEntity_PowerProvider>*)gameBoardTileEntity
+-(void)gameBoardTileEntities_many_powerProviders_mappedDataCollection_remove:(nonnull SMBGameBoardTileEntity<SMBGameBoardTileEntity_PowerProvider>*)gameBoardTileEntity
 {
 	kRUConditionalReturn(gameBoardTileEntity == nil, YES);
 	kRUConditionalReturn([gameBoardTileEntity smb_providesPower] == false, YES);
 
-	[self.gameBoardTileEntities_powerProviders_mappedDataCollection mappableObject_remove:gameBoardTileEntity];
+	[self.gameBoardTileEntities_many_powerProviders_mappedDataCollection mappableObject_remove:gameBoardTileEntity];
 
 	[self isPowered_update];
 }
 
-//#pragma mark - gameBoardTileEntities_beamBlockers
-//-(void)gameBoardTileEntities_beamBlockers_mappedDataCollection_add:(nonnull SMBGameBoardTileEntity<SMBBeamBlockerTileEntity>*)gameBoardTileEntity
+//#pragma mark - gameBoardTileEntities_many_beamBlockers
+//-(void)gameBoardTileEntities_many_beamBlockers_mappedDataCollection_add:(nonnull SMBGameBoardTileEntity<SMBBeamBlockerTileEntity>*)gameBoardTileEntity
 //{
 //	kRUConditionalReturn(gameBoardTileEntity == nil, YES);
 //	kRUConditionalReturn([gameBoardTileEntity smb_beamBlocker] == false, YES);
 //
-//	[self.gameBoardTileEntities_powerProviders_mappedDataCollection mappableObject_add:gameBoardTileEntity];
+//	[self.gameBoardTileEntities_many_powerProviders_mappedDataCollection mappableObject_add:gameBoardTileEntity];
 //
 //	[self beamDirectionsBlocked_update];
 //}
 //
-//-(void)gameBoardTileEntities_beamBlockers_mappedDataCollection_remove:(nonnull SMBGameBoardTileEntity<SMBBeamBlockerTileEntity>*)gameBoardTileEntity
+//-(void)gameBoardTileEntities_many_beamBlockers_mappedDataCollection_remove:(nonnull SMBGameBoardTileEntity<SMBBeamBlockerTileEntity>*)gameBoardTileEntity
 //{
 //	kRUConditionalReturn(gameBoardTileEntity == nil, YES);
 //	kRUConditionalReturn([gameBoardTileEntity smb_beamBlocker] == false, YES);
 //
-//	[self.gameBoardTileEntities_powerProviders_mappedDataCollection mappableObject_remove:gameBoardTileEntity];
+//	[self.gameBoardTileEntities_many_powerProviders_mappedDataCollection mappableObject_remove:gameBoardTileEntity];
 //
 //	[self beamDirectionsBlocked_update];
 //}
@@ -261,7 +312,7 @@
 //		[directions_unblocked addIndex:direction];
 //	}
 //
-//	[[self.gameBoardTileEntities_mappedDataCollection mappableObjects] enumerateObjectsUsingBlock:^(SMBGameBoardTileEntity<SMBMappedDataCollection_MappableObject>* _Nonnull gameBoardTileEntity, NSUInteger idx, BOOL * _Nonnull stop) {
+//	[[self.gameBoardTileEntities_many_mappedDataCollection mappableObjects] enumerateObjectsUsingBlock:^(SMBGameBoardTileEntity<SMBMappedDataCollection_MappableObject>* _Nonnull gameBoardTileEntity, NSUInteger idx, BOOL * _Nonnull stop) {
 //
 //		SMBGameBoardTileEntity<SMBBeamBlockerTileEntity>* const gameBoardTileEntity_beamBlocker = [gameBoardTileEntity smb_beamBlocker_selfOrNull];
 //		kRUConditionalReturn(gameBoardTileEntity_beamBlocker == nil, NO);
@@ -303,7 +354,7 @@
 #pragma mark - isPowered
 -(void)isPowered_update
 {
-	[self setIsPowered:([self.gameBoardTileEntities_powerProviders_mappedDataCollection mappableObjects].count > 0)];
+	[self setIsPowered:([self.gameBoardTileEntities_many_powerProviders_mappedDataCollection mappableObjects].count > 0)];
 }
 
 #pragma mark - isHighlighted
@@ -353,7 +404,7 @@
 @implementation SMBGameBoardTile_PropertiesForKVO
 
 +(nonnull NSString*)gameBoardTileEntity_for_beamInteractions{return NSStringFromSelector(_cmd);}
-+(nonnull NSString*)gameBoardTileEntities{return NSStringFromSelector(_cmd);}
++(nonnull NSString*)gameBoardTileEntities_many{return NSStringFromSelector(_cmd);}
 +(nonnull NSString*)beamDirectionsBlocked{return NSStringFromSelector(_cmd);}
 +(nonnull NSString*)isPowered{return NSStringFromSelector(_cmd);}
 

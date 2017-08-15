@@ -32,11 +32,6 @@ static void* kSMBDeathBlockTileEntity__KVOContext = &kSMBDeathBlockTileEntity__K
 #pragma mark - failLevelAction
 -(void)failLevelAction_attempt;
 
-//#pragma mark - arrow
-//-(void)arrow_draw_in_rect:(CGRect)rect;
-//-(void)arrow_draw_in_rect:(CGRect)rect
-//				direction:(SMBGameBoardTile__direction)direction;
-
 @end
 
 
@@ -94,50 +89,6 @@ static void* kSMBDeathBlockTileEntity__KVOContext = &kSMBDeathBlockTileEntity__K
 
 	CGContextRestoreGState(context);
 }
-//
-//#pragma mark - arrow
-//-(void)arrow_draw_in_rect:(CGRect)rect
-//{
-//	CGContextRef const context = UIGraphicsGetCurrentContext();
-//
-//	CGContextSetStrokeColorWithColor(context, [UIColor blackColor].CGColor);
-//	CGContextSetLineWidth(context, 1.0f);
-//
-//	for (SMBGameBoardTile__direction direction = SMBGameBoardTile__direction__first;
-//		 direction <= SMBGameBoardTile__direction__last;
-//		 direction = direction << 1)
-//	{
-//		CGContextSaveGState(context);
-//
-//		[self arrow_draw_in_rect:rect
-//					   direction:direction];
-//
-//		CGContextRestoreGState(context);
-//	}
-//}
-//
-//-(void)arrow_draw_in_rect:(CGRect)rect
-//				direction:(SMBGameBoardTile__direction)direction
-//{
-//	kRUConditionalReturn(direction == SMBGameBoardTile__direction_none, NO);
-//
-//	CGContextRef const context = UIGraphicsGetCurrentContext();
-//
-//	CGFloat const inset_small = 5.0f;
-//	CGFloat const inset_large = (CGRectGetWidth(rect) / 2.0f) + 2.0f;
-//	CGFloat const dimension_length = CGRectGetWidth(rect) - inset_large - inset_small;
-//
-//	CoreGraphics_SMBRotation__rotateCTM(context, rect, CoreGraphics_SMBRotation__orientation_for_direction(direction));
-//
-//	CGRect const arrow_rect = (CGRect){
-//		.origin.x		= CGRectGetMinX(rect) + CGRectGetHorizontallyAlignedXCoordForWidthOnWidth(dimension_length, CGRectGetWidth(rect)),
-//		.origin.y		= CGRectGetMinY(rect) + inset_large,
-//		.size.width		= dimension_length,
-//		.size.height	= dimension_length,
-//	};
-//
-//	CoreGraphics_SMBDrawArrow(context, arrow_rect);
-//}
 
 #pragma mark - gameBoardTile
 -(void)setGameBoardTile:(nullable SMBGameBoardTile*)gameBoardTile
