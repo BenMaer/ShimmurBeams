@@ -34,7 +34,7 @@
 -(instancetype)init
 {
 	kRUConditionalReturn_ReturnValueNil(YES, YES);
-	
+
 	return [self init_with_forcedBeamExitDirection:SMBGameBoardTile__direction_unknown];
 }
 
@@ -42,12 +42,12 @@
 -(nullable instancetype)init_with_forcedBeamExitDirection:(SMBGameBoardTile__direction)forcedBeamExitDirection
 {
 	kRUConditionalReturn_ReturnValueNil(SMBGameBoardTile__direction__isInRange_or_none(forcedBeamExitDirection) == false, YES);
-	
+
 	if (self = [super init])
 	{
 		_forcedBeamExitDirection = forcedBeamExitDirection;
 	}
-	
+
 	return self;
 }
 
