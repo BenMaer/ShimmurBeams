@@ -11,10 +11,16 @@
 #import "SMBGameBoard.h"
 #import "SMBGameLevel.h"
 #import "SMBGameLevelCompletion.h"
-#import "SMBTimer.h"
 
 #import <ResplendentUtilities/RUConditionalReturn.h>
+
+#define kSMBDeathBlockTileEntity__shortCircuitTimer (0)
+
+#if kSMBDeathBlockTileEntity__shortCircuitTimer
+#import "SMBTimer.h"
+
 #import <ResplendentUtilities/RUEnumIsInRangeSynthesization.h>
+#endif
 
 
 
@@ -25,6 +31,8 @@ static void* kSMBDeathBlockTileEntity__KVOContext = &kSMBDeathBlockTileEntity__K
 
 
 
+
+#if kSMBDeathBlockTileEntity__shortCircuitTimer
 
 typedef NS_ENUM(NSInteger, SMBDeathBlockTileEntity__drawState) {
 	SMBDeathBlockTileEntity__drawState_none,
@@ -38,11 +46,16 @@ typedef NS_ENUM(NSInteger, SMBDeathBlockTileEntity__drawState) {
 
 RUEnumIsInRangeSynthesization_autoFirstLast(SMBDeathBlockTileEntity__drawState);
 
+#endif
 
 
 
 
-@interface SMBDeathBlockTileEntity () <SMBTimer__timerDidFireDelegate>
+
+@interface SMBDeathBlockTileEntity ()
+#if kSMBDeathBlockTileEntity__shortCircuitTimer
+<SMBTimer__timerDidFireDelegate>
+#endif
 
 #pragma mark - gameBoardTile
 -(void)SMBDeathBlockTileEntity_gameBoardTile_setKVORegistered:(BOOL)registered;
@@ -50,15 +63,19 @@ RUEnumIsInRangeSynthesization_autoFirstLast(SMBDeathBlockTileEntity__drawState);
 #pragma mark - failLevelAction
 -(void)failLevelAction_attempt;
 
-#pragma mark - timer
-@property (nonatomic, readonly, strong, nullable) SMBTimer* timer;
--(void)timer_running_update;
--(BOOL)timer_running_shouldBe;
+#if kSMBDeathBlockTileEntity__shortCircuitTimer
+
+#pragma mark - drawStateTimer
+@property (nonatomic, readonly, strong, nullable) SMBTimer* drawStateTimer;
+-(void)drawStateTimer_running_update;
+-(BOOL)drawStateTimer_running_shouldBe;
 
 #pragma mark - drawState
 @property (nonatomic, assign) SMBDeathBlockTileEntity__drawState drawState;
 -(void)drawState_toggle;
 -(SMBDeathBlockTileEntity__drawState)drawState_toggle_nextState;
+
+#endif
 
 @end
 
@@ -81,13 +98,15 @@ RUEnumIsInRangeSynthesization_autoFirstLast(SMBDeathBlockTileEntity__drawState);
 	{
 		[self setForcedBeamRedirectArrow_drawing_disable:YES];
 
-		_timer = [SMBTimer new];
-		[self.timer setTimerDidFireDelegate:self];
+#if kSMBDeathBlockTileEntity__shortCircuitTimer
+		_drawStateTimer = [SMBTimer new];
+		[self.drawStateTimer setTimerDidFireDelegate:self];
 
 		NSUInteger const numberOfFramePerSecond = 2;
-		[self.timer setTimerDuration:1.0f / (CGFloat)numberOfFramePerSecond];
+		[self.drawStateTimer setTimerDuration:1.0f / (CGFloat)numberOfFramePerSecond];
 
 		[self setDrawState:SMBDeathBlockTileEntity__drawState__first];
+#endif
 	}
 
 	return self;
@@ -113,6 +132,7 @@ RUEnumIsInRangeSynthesization_autoFirstLast(SMBDeathBlockTileEntity__drawState);
 	CGContextSetStrokeColorWithColor(context, [UIColor redColor].CGColor);
 	CGContextSetLineWidth(context, 3.0f);
 
+#if kSMBDeathBlockTileEntity__shortCircuitTimer
 	CGFloat const horizontal_distanceFromEdge = CGRectGetWidth(rect) / 8.0f;
 	CGFloat const lines_boundingWidth = CGRectGetWidth(rect) - (horizontal_distanceFromEdge * 2.0f);
 
@@ -176,13 +196,15 @@ RUEnumIsInRangeSynthesization_autoFirstLast(SMBDeathBlockTileEntity__drawState);
 								line_yCoord(line_end_index + 1));
 	}
 
-//	CGContextMoveToPoint(context, CGRectGetMidX(rect) - x_dimention_distanceFromCenter, CGRectGetMidY(rect) - x_dimention_distanceFromCenter); /* Top left. */
-//
-//	CGContextMoveToPoint(context, CGRectGetMidX(rect) - x_dimention_distanceFromCenter, CGRectGetMidY(rect) - x_dimention_distanceFromCenter); /* Top left. */
-//	CGContextAddLineToPoint(context, CGRectGetMidX(rect) + x_dimention_distanceFromCenter, CGRectGetMidY(rect) + x_dimention_distanceFromCenter); /* Bottom right. */
-//
-//	CGContextMoveToPoint(context, CGRectGetMidX(rect) - x_dimention_distanceFromCenter, CGRectGetMidY(rect) + x_dimention_distanceFromCenter); /* Top right. */
-//	CGContextAddLineToPoint(context, CGRectGetMidX(rect) + x_dimention_distanceFromCenter, CGRectGetMidY(rect) - x_dimention_distanceFromCenter); /* Bottom left. */
+#else
+	CGFloat const x_dimention_distanceFromCenter = CGRectGetWidth(rect) / 3.0f;
+
+	CGContextMoveToPoint(context, CGRectGetMidX(rect) - x_dimention_distanceFromCenter, CGRectGetMidY(rect) - x_dimention_distanceFromCenter); /* Top left. */
+	CGContextAddLineToPoint(context, CGRectGetMidX(rect) + x_dimention_distanceFromCenter, CGRectGetMidY(rect) + x_dimention_distanceFromCenter); /* Bottom right. */
+
+	CGContextMoveToPoint(context, CGRectGetMidX(rect) - x_dimention_distanceFromCenter, CGRectGetMidY(rect) + x_dimention_distanceFromCenter); /* Top right. */
+	CGContextAddLineToPoint(context, CGRectGetMidX(rect) + x_dimention_distanceFromCenter, CGRectGetMidY(rect) - x_dimention_distanceFromCenter); /* Bottom left. */
+#endif
 
 	CGContextStrokePath(context);
 
@@ -198,7 +220,9 @@ RUEnumIsInRangeSynthesization_autoFirstLast(SMBDeathBlockTileEntity__drawState);
 
 	[self SMBDeathBlockTileEntity_gameBoardTile_setKVORegistered:YES];
 
-	[self timer_running_update];
+#if kSMBDeathBlockTileEntity__shortCircuitTimer
+	[self drawStateTimer_running_update];
+#endif
 }
 
 -(void)SMBDeathBlockTileEntity_gameBoardTile_setKVORegistered:(BOOL)registered
@@ -270,16 +294,18 @@ RUEnumIsInRangeSynthesization_autoFirstLast(SMBDeathBlockTileEntity__drawState);
 	[gameLevel setCompletion:[[SMBGameLevelCompletion alloc] init_with_failureReason:@"You have died!"]];
 }
 
-#pragma mark - timer
--(void)timer_running_update
-{
-	SMBTimer* const timer = self.timer;
-	kRUConditionalReturn(timer == nil, YES);
+#if kSMBDeathBlockTileEntity__shortCircuitTimer
 
-	[timer setRunning:[self timer_running_shouldBe]];
+#pragma mark - drawStateTimer
+-(void)drawStateTimer_running_update
+{
+	SMBTimer* const drawStateTimer = self.drawStateTimer;
+	kRUConditionalReturn(drawStateTimer == nil, YES);
+
+	[drawStateTimer setRunning:[self drawStateTimer_running_shouldBe]];
 }
 
--(BOOL)timer_running_shouldBe
+-(BOOL)drawStateTimer_running_shouldBe
 {
 	kRUConditionalReturn_ReturnValueFalse(self.gameBoardTile == nil, NO);
 
@@ -321,5 +347,7 @@ RUEnumIsInRangeSynthesization_autoFirstLast(SMBDeathBlockTileEntity__drawState);
 	 drawState + 1
 	 );
 }
+
+#endif
 
 @end
