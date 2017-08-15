@@ -25,6 +25,9 @@
 #pragma mark - mirrorTileEntity_draw_in_rect
 -(void)mirrorTileEntity_draw_in_rect:(CGRect)rect;
 
+#pragma mark - paddingFromEdge
++(CGFloat)paddingFromEdge_forRect:(CGRect)rect;
+
 @end
 
 
@@ -96,23 +99,25 @@
 #pragma mark - draw_startingPoint
 -(CGFloat)draw_startingPoint_x_forFrame:(CGRect)frame
 {
-	return CGRectGetMinX(frame) + 1;
+	return CGRectGetMinX(frame) + [[self class]paddingFromEdge_forRect:frame];
 }
 
 -(CGFloat)draw_startingPoint_y_forFrame:(CGRect)frame
 {
-	return (self.startingPosition == SMBMirrorBoardTileEntity_startingPosition_topLeft ? CGRectGetMinY(frame) + 1 : CGRectGetMaxY(frame) - 1.0);
+	CGFloat const padding = [[self class]paddingFromEdge_forRect:frame];
+	return (self.startingPosition == SMBMirrorBoardTileEntity_startingPosition_topLeft ? CGRectGetMinY(frame) + padding : CGRectGetMaxY(frame) - padding);
 }
 
 #pragma mark - draw_endingPoint
 -(CGFloat)draw_endingPoint_x_forFrame:(CGRect)frame
 {
-	return CGRectGetMaxX(frame);
+	return CGRectGetMaxX(frame) - [[self class]paddingFromEdge_forRect:frame];;
 }
 
 -(CGFloat)draw_endingPoint_y_forFrame:(CGRect)frame
 {
-	return (self.startingPosition == SMBMirrorBoardTileEntity_startingPosition_topLeft ? CGRectGetMaxY(frame) - 1.0 : CGRectGetMinY(frame) + 1);
+	CGFloat const padding = [[self class]paddingFromEdge_forRect:frame];
+	return (self.startingPosition == SMBMirrorBoardTileEntity_startingPosition_topLeft ? CGRectGetMaxY(frame) - padding : CGRectGetMinY(frame) + padding);
 }
 
 #pragma SMBGeneralBeamExitDirectionRedirectTileEntity
@@ -146,6 +151,12 @@
 	
 	NSAssert(false, @"unhandled type %li", (long) enterDirection);
 	return SMBGameBoardTile__direction_left;
+}
+
+#pragma mark - paddingFromEdge
++(CGFloat)paddingFromEdge_forRect:(CGRect)rect
+{
+	return CGRectGetWidth(rect) / 5.0f;
 }
 
 @end

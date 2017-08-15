@@ -125,6 +125,11 @@
 	}
 																						  name:@"Introduction To Mirrors"]];
 	
+	[gameLevelGenerators addObject:[[SMBGameLevelGenerator alloc] init_with_generateLevelBlock:^SMBGameLevel * _Nonnull{
+		return [SMBGameLevel smb_mirror_man_in_the_mirror];
+	}
+																						  name:@"That Man In The Mirror"]];
+	
 	return
 	[[self alloc] init_with_gameLevelGenerators:[NSArray<SMBGameLevelGenerator*> arrayWithArray:gameLevelGenerators]
 										   name:@"Mirrors"];
