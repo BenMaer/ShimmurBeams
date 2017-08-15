@@ -10,6 +10,7 @@
 #import "SMBGameLevelGenerator.h"
 #import "SMBGameLevel+SMBForcedRedirectsAndWalls.h"
 #import "SMBGameLevel+SMBRotatesAndDeathBlocks.h"
+#import "SMBGameLevel+SMBGameLevelMirros.h"
 
 #import <ResplendentUtilities/NSMutableArray+RUAddObjectIfNotNil.h>
 
@@ -112,6 +113,21 @@
 	return
 	[[self alloc] init_with_gameLevelGenerators:[NSArray<SMBGameLevelGenerator*> arrayWithArray:gameLevelGenerators]
 										   name:@"Rotates and Death Blocks"];
+}
+
+#pragma mark - mirrorsIntroduction
++(nonnull instancetype)smb_mirrors_introduction
+{
+	NSMutableArray<SMBGameLevelGenerator*>* const gameLevelGenerators = [NSMutableArray<SMBGameLevelGenerator*> array];
+	
+	[gameLevelGenerators addObject:[[SMBGameLevelGenerator alloc] init_with_generateLevelBlock:^SMBGameLevel * _Nonnull{
+		return [SMBGameLevel smb_mirrors_introduction];
+	}
+																						  name:@"Introduction To Mirrors"]];
+	
+	return
+	[[self alloc] init_with_gameLevelGenerators:[NSArray<SMBGameLevelGenerator*> arrayWithArray:gameLevelGenerators]
+										   name:@"Mirrors"];
 }
 
 @end
