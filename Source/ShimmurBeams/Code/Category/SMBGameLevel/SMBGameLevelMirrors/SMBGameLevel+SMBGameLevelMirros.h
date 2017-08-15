@@ -15,5 +15,6 @@
 @interface SMBGameLevel (SMBGameLevelMirros)
 
 +(nonnull instancetype)smb_mirrors_introduction;
++(nonnull instancetype)smb_mirror_man_in_the_mirror;
 
 @end
