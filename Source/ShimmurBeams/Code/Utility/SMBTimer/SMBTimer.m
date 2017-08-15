@@ -80,12 +80,15 @@
 
 -(void)timer_didFire_with_timer_pointer:(nonnull NSObject*)timer_pointer
 {
-	kRUConditionalReturn(self.timer_pointer == timer_pointer, NO);
+	kRUConditionalReturn(timer_pointer == nil, YES);
+	kRUConditionalReturn(self.timer_pointer != timer_pointer, NO);
 
 	id<SMBTimer__timerDidFireDelegate> const timerDidFireDelegate = self.timerDidFireDelegate;
 	kRUConditionalReturn(self.timerDidFireDelegate == nil, YES);
 
 	[timerDidFireDelegate timer_didFire:self];
+
+	[self timer_update];
 }
 
 @end
