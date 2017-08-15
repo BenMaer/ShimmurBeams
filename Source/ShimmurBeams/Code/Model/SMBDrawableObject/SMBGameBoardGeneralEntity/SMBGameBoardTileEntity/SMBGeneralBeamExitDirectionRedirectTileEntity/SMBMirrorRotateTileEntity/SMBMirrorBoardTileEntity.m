@@ -14,8 +14,8 @@
 
 @interface SMBMirrorBoardTileEntity ()
 
-#pragma mark - topLeftToBottomRight
-@property (nonatomic, assign)BOOL topLeftToBottomRight;
+#pragma mark - startingPosition
+@property (nonatomic, assign)SMBMirrorBoardTileEntity_startingPosition startingPosition;
 
 #pragma mark - draw_startingPoint
 -(CGFloat)draw_startingPoint_x_forFrame:(CGRect)frame;
@@ -46,15 +46,15 @@
 {
 	kRUConditionalReturn_ReturnValueNil(YES, YES);
 	
-	return [self init_with_topLeftToBotoomRight:NO];
+	return [self init_with_startingPosition:SMBMirrorBoardTileEntity_startingPosition_topLeft];
 }
 
 #pragma mark - init
--(nullable instancetype)init_with_topLeftToBotoomRight:(BOOL)topLeftToBotoomRight
+-(nullable instancetype)init_with_startingPosition:(SMBMirrorBoardTileEntity_startingPosition)startingPosition
 {
 	if (self = [super init])
 	{
-		_topLeftToBottomRight = topLeftToBotoomRight;
+		_startingPosition = startingPosition;
 	}
 	
 	return self;
@@ -101,7 +101,7 @@
 
 -(CGFloat)draw_startingPoint_y_forFrame:(CGRect)frame
 {
-	return (self.topLeftToBottomRight ? CGRectGetMinY(frame) + 1 : CGRectGetMaxY(frame) - 1.0);
+	return (self.startingPosition == SMBMirrorBoardTileEntity_startingPosition_topLeft ? CGRectGetMinY(frame) + 1 : CGRectGetMaxY(frame) - 1.0);
 }
 
 #pragma mark - draw_endingPoint
@@ -112,14 +112,14 @@
 
 -(CGFloat)draw_endingPoint_y_forFrame:(CGRect)frame
 {
-	return (self.topLeftToBottomRight ? CGRectGetMaxY(frame) - 1.0 : CGRectGetMinY(frame) + 1);
+	return (self.startingPosition == SMBMirrorBoardTileEntity_startingPosition_topLeft ? CGRectGetMaxY(frame) - 1.0 : CGRectGetMinY(frame) + 1);
 }
 
 #pragma SMBGeneralBeamExitDirectionRedirectTileEntity
 -(SMBGameBoardTile__direction)beamExitDirection_for_beamEnterDirection:(SMBGameBoardTile__direction)beamEnterDirection
 {
 	SMBGameBoardTile__direction const enterDirection = beamEnterDirection;
-	BOOL const topLeftToBottomRight = self.topLeftToBottomRight;
+	BOOL const topLeftToBottomRight = (self.startingPosition == SMBMirrorBoardTileEntity_startingPosition_topLeft);
 	
 	switch (enterDirection)
 	{

@@ -14,9 +14,14 @@
 
 
 
+typedef NS_ENUM(NSInteger, SMBMirrorBoardTileEntity_startingPosition) {
+	SMBMirrorBoardTileEntity_startingPosition_topLeft,
+	SMBMirrorBoardTileEntity_startingPosition_bottomLeft,
+};
+
 @interface SMBMirrorBoardTileEntity : SMBGameBoardTileEntity <SMBGeneralBeamExitDirectionRedirectTileEntity>
 
 #pragma mark - init
--(nullable instancetype)init_with_topLeftToBotoomRight:(BOOL)topLeftToBotoomRight NS_DESIGNATED_INITIALIZER;
+-(nullable instancetype)init_with_startingPosition:(SMBMirrorBoardTileEntity_startingPosition)startingPosition NS_DESIGNATED_INITIALIZER;
 
 @end
