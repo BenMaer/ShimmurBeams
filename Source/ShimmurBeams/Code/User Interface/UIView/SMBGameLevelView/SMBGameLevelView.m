@@ -171,6 +171,11 @@ static void* kSMBGameLevelView__KVOContext = &kSMBGameLevelView__KVOContext;
 	SMBGameBoardTileEntity* const gameBoardTileEntityPickerView_selectedGameBoardTileEntity = self.gameBoardTileEntityPickerView.selectedGameBoardTileEntity;
 	kRUConditionalReturn(gameBoardTileEntityPickerView_selectedGameBoardTileEntity == nil, NO);
 
+	SMBGameBoardTileEntity* const gameBoardTileEntity_for_beamInteractions_old = gameBoardTile.gameBoardTileEntity_for_beamInteractions;
+	kRUConditionalReturn((gameBoardTileEntity_for_beamInteractions_old != nil)
+						 &&
+						 ([self.gameBoardTileEntityPickerView.gameBoardTileEntities containsObject:gameBoardTileEntity_for_beamInteractions_old] == false), NO);
+
 	[gameBoardTile setGameBoardTileEntity_for_beamInteractions:gameBoardTileEntityPickerView_selectedGameBoardTileEntity];
 
 	[self.gameBoardTileEntityPickerView setSelectedGameBoardTileEntity:nil];
