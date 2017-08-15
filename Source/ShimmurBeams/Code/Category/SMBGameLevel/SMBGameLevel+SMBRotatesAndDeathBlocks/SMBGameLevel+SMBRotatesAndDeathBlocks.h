@@ -29,5 +29,6 @@
 +(nonnull instancetype)smb_rotates_twoRight_twoLeft_deathBlocks_surrounded_and_someBlocking;
 +(nonnull instancetype)smb_rotates_deathBlocks_scattered;
 +(nonnull instancetype)smb_rotates_deathBlocks_blackAnglesMatter;
++(nonnull instancetype)smb_rotates_deathBlocks_mirrors;
 
 @end

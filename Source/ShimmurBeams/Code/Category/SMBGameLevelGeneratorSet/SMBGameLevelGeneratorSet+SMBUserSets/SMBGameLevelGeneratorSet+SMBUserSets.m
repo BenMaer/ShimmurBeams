@@ -109,6 +109,11 @@
 	}
 																						  name:@"Scattered"]];
 	
+	[gameLevelGenerators addObject:[[SMBGameLevelGenerator alloc] init_with_generateLevelBlock:^SMBGameLevel * _Nonnull{
+		return [SMBGameLevel smb_rotates_deathBlocks_mirrors];
+	}
+																						  name:@"Mirrors"]];
+	
 	return
 	[[self alloc] init_with_gameLevelGenerators:[NSArray<SMBGameLevelGenerator*> arrayWithArray:gameLevelGenerators]
 										   name:@"Rotates and Death Blocks"];
