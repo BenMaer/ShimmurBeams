@@ -1,12 +1,12 @@
 //
-//  SMBGameLevel+SMBGameLevelMirros.m
+//  SMBGameLevel+SMBMirrorsAndMeltableBlocks.m
 //  ShimmurBeams
 //
 //  Created by Jordan Langsam on 8/15/17.
 //  Copyright © 2017 Shimmur. All rights reserved.
 //
 
-#import "SMBGameLevel+SMBGameLevelMirros.h"
+#import "SMBGameLevel+SMBMirrorsAndMeltableBlocks.h"
 #import "SMBDiagonalMirrorTileEntity.h"
 #import "SMBGameBoardTilePosition.h"
 #import "SMBBeamCreatorTileEntity.h"
@@ -20,7 +20,7 @@
 
 
 
-@implementation SMBGameLevel (SMBGameLevelMirros)
+@implementation SMBGameLevel (SMBMirrorsAndMeltableBlocks)
 
 +(nonnull instancetype)smb_mirrors_introduction
 {

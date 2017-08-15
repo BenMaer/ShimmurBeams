@@ -8,7 +8,6 @@
 
 /* Begin PBXBuildFile section */
 		C6F92B5CF1E1E584411CC937 /* libPods-ShimmurBeams.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 49C70CE907920FDEC9F64616 /* libPods-ShimmurBeams.a */; };
-		CAC0359D1F439D7000192474 /* SMBGameLevel+SMBGameLevelMirros.m in Sources */ = {isa = PBXBuildFile; fileRef = CAC0359C1F439D7000192474 /* SMBGameLevel+SMBGameLevelMirros.m */; };
 		D761FE921F3AC2FF0083842A /* NSArray+SMBChanges.m in Sources */ = {isa = PBXBuildFile; fileRef = D761FE3D1F3AC2FF0083842A /* NSArray+SMBChanges.m */; };
 		D761FE931F3AC2FF0083842A /* SMBGameBoard+SMBAddEntity.m in Sources */ = {isa = PBXBuildFile; fileRef = D761FE411F3AC2FF0083842A /* SMBGameBoard+SMBAddEntity.m */; };
 		D761FE951F3AC2FF0083842A /* SMBMappedDataCollection.m in Sources */ = {isa = PBXBuildFile; fileRef = D761FE4A1F3AC2FF0083842A /* SMBMappedDataCollection.m */; };
@@ -43,6 +42,7 @@
 		D7951D4A1F43ADAC00A33AB2 /* SMBWallTileEntity.m in Sources */ = {isa = PBXBuildFile; fileRef = D7951D421F43ADAC00A33AB2 /* SMBWallTileEntity.m */; };
 		D7951D4E1F43AF8200A33AB2 /* SMBMeltableWallTileEntity.m in Sources */ = {isa = PBXBuildFile; fileRef = D7951D4D1F43AF8200A33AB2 /* SMBMeltableWallTileEntity.m */; };
 		D7951D521F43BF7F00A33AB2 /* SMBDiagonalMirrorTileEntity.m in Sources */ = {isa = PBXBuildFile; fileRef = D7951D511F43BF7F00A33AB2 /* SMBDiagonalMirrorTileEntity.m */; };
+		D7951D561F43C06700A33AB2 /* SMBGameLevel+SMBMirrorsAndMeltableBlocks.m in Sources */ = {isa = PBXBuildFile; fileRef = D7951D551F43C06700A33AB2 /* SMBGameLevel+SMBMirrorsAndMeltableBlocks.m */; };
 		D7C8C3B41F3B7A14006D378E /* SMBGameBoardTileEntityPickerView.m in Sources */ = {isa = PBXBuildFile; fileRef = D7C8C3B31F3B7A14006D378E /* SMBGameBoardTileEntityPickerView.m */; };
 		D7C8C3B91F3B8035006D378E /* SMBGameBoardTileEntityPickerViewCollectionViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = D7C8C3B81F3B8035006D378E /* SMBGameBoardTileEntityPickerViewCollectionViewCell.m */; };
 		D7C8C3C31F3B8A42006D378E /* UIView+SMBCommonFraming.m in Sources */ = {isa = PBXBuildFile; fileRef = D7C8C3C21F3B8A42006D378E /* UIView+SMBCommonFraming.m */; };
@@ -62,8 +62,6 @@
 /* Begin PBXFileReference section */
 		28F24E90A6068064B725E130 /* Pods-ShimmurBeams.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-ShimmurBeams.debug.xcconfig"; path = "Pods/Target Support Files/Pods-ShimmurBeams/Pods-ShimmurBeams.debug.xcconfig"; sourceTree = "<group>"; };
 		49C70CE907920FDEC9F64616 /* libPods-ShimmurBeams.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-ShimmurBeams.a"; sourceTree = BUILT_PRODUCTS_DIR; };
-		CAC0359B1F439D7000192474 /* SMBGameLevel+SMBGameLevelMirros.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "SMBGameLevel+SMBGameLevelMirros.h"; sourceTree = "<group>"; };
-		CAC0359C1F439D7000192474 /* SMBGameLevel+SMBGameLevelMirros.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "SMBGameLevel+SMBGameLevelMirros.m"; sourceTree = "<group>"; };
 		D761FE3C1F3AC2FF0083842A /* NSArray+SMBChanges.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSArray+SMBChanges.h"; sourceTree = "<group>"; };
 		D761FE3D1F3AC2FF0083842A /* NSArray+SMBChanges.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSArray+SMBChanges.m"; sourceTree = "<group>"; };
 		D761FE401F3AC2FF0083842A /* SMBGameBoard+SMBAddEntity.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "SMBGameBoard+SMBAddEntity.h"; sourceTree = "<group>"; };
@@ -145,6 +143,8 @@
 		D7951D4D1F43AF8200A33AB2 /* SMBMeltableWallTileEntity.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SMBMeltableWallTileEntity.m; sourceTree = "<group>"; };
 		D7951D501F43BF7F00A33AB2 /* SMBDiagonalMirrorTileEntity.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SMBDiagonalMirrorTileEntity.h; sourceTree = "<group>"; };
 		D7951D511F43BF7F00A33AB2 /* SMBDiagonalMirrorTileEntity.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SMBDiagonalMirrorTileEntity.m; sourceTree = "<group>"; };
+		D7951D541F43C06700A33AB2 /* SMBGameLevel+SMBMirrorsAndMeltableBlocks.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "SMBGameLevel+SMBMirrorsAndMeltableBlocks.h"; sourceTree = "<group>"; };
+		D7951D551F43C06700A33AB2 /* SMBGameLevel+SMBMirrorsAndMeltableBlocks.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "SMBGameLevel+SMBMirrorsAndMeltableBlocks.m"; sourceTree = "<group>"; };
 		D7C8C3B21F3B7A14006D378E /* SMBGameBoardTileEntityPickerView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SMBGameBoardTileEntityPickerView.h; sourceTree = "<group>"; };
 		D7C8C3B31F3B7A14006D378E /* SMBGameBoardTileEntityPickerView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SMBGameBoardTileEntityPickerView.m; sourceTree = "<group>"; };
 		D7C8C3B71F3B8035006D378E /* SMBGameBoardTileEntityPickerViewCollectionViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SMBGameBoardTileEntityPickerViewCollectionViewCell.h; sourceTree = "<group>"; };
@@ -213,15 +213,6 @@
 			name = Frameworks;
 			sourceTree = "<group>";
 		};
-		CAC0359A1F439D3000192474 /* SMBGameLevelMirrors */ = {
-			isa = PBXGroup;
-			children = (
-				CAC0359B1F439D7000192474 /* SMBGameLevel+SMBGameLevelMirros.h */,
-				CAC0359C1F439D7000192474 /* SMBGameLevel+SMBGameLevelMirros.m */,
-			);
-			path = SMBGameLevelMirrors;
-			sourceTree = "<group>";
-		};
 		D761FE381F3AC2FF0083842A /* Code */ = {
 			isa = PBXGroup;
 			children = (
@@ -285,9 +276,9 @@
 		D761FE421F3AC2FF0083842A /* SMBGameLevel */ = {
 			isa = PBXGroup;
 			children = (
-				CAC0359A1F439D3000192474 /* SMBGameLevelMirrors */,
-				D7951D0E1F43143F00A33AB2 /* SMBGameLevel+SMBRotatesAndDeathBlocks */,
 				D7951D011F41E78E00A33AB2 /* SMBGameLevel+SMBForcedRedirectsAndWalls */,
+				D7951D531F43C06700A33AB2 /* SMBGameLevel+SMBMirrorsAndMeltableBlocks */,
+				D7951D0E1F43143F00A33AB2 /* SMBGameLevel+SMBRotatesAndDeathBlocks */,
 			);
 			path = SMBGameLevel;
 			sourceTree = "<group>";
@@ -753,6 +744,15 @@
 			path = SMBDiagonalMirrorTileEntity;
 			sourceTree = "<group>";
 		};
+		D7951D531F43C06700A33AB2 /* SMBGameLevel+SMBMirrorsAndMeltableBlocks */ = {
+			isa = PBXGroup;
+			children = (
+				D7951D541F43C06700A33AB2 /* SMBGameLevel+SMBMirrorsAndMeltableBlocks.h */,
+				D7951D551F43C06700A33AB2 /* SMBGameLevel+SMBMirrorsAndMeltableBlocks.m */,
+			);
+			path = "SMBGameLevel+SMBMirrorsAndMeltableBlocks";
+			sourceTree = "<group>";
+		};
 		D7C8C3B11F3B7A07006D378E /* SMBGameBoardTileEntityPickerView */ = {
 			isa = PBXGroup;
 			children = (
@@ -1105,6 +1105,7 @@
 				D7951D451F43ADAC00A33AB2 /* SMBDeathBlockTileEntity.m in Sources */,
 				D7951D4E1F43AF8200A33AB2 /* SMBMeltableWallTileEntity.m in Sources */,
 				D7C8C3B41F3B7A14006D378E /* SMBGameBoardTileEntityPickerView.m in Sources */,
+				D7951D561F43C06700A33AB2 /* SMBGameLevel+SMBMirrorsAndMeltableBlocks.m in Sources */,
 				D78CD07D1F3D6DB800118FB4 /* SMBDrawableObject.m in Sources */,
 				D7C8C3E01F3CE26A006D378E /* SMBGameLevelGeneratorSetsViewController.m in Sources */,
 				D761FEA61F3AC2FF0083842A /* SMBGameLevelView.m in Sources */,
@@ -1116,7 +1117,6 @@
 				D7C8C3CC1F3B91FB006D378E /* SMBGameBoardTileView.m in Sources */,
 				D7951D4A1F43ADAC00A33AB2 /* SMBWallTileEntity.m in Sources */,
 				D78CD0A91F3D6EB500118FB4 /* SMBDrawableObjectView.m in Sources */,
-				CAC0359D1F439D7000192474 /* SMBGameLevel+SMBGameLevelMirros.m in Sources */,
 				D7951D441F43ADAC00A33AB2 /* SMBBeamRotateTileEntity.m in Sources */,
 				D7951D041F41E79800A33AB2 /* SMBGameLevel+SMBForcedRedirectsAndWalls.m in Sources */,
 				D78CD09F1F3D6E5800118FB4 /* SMBGameBoardEntity.m in Sources */,

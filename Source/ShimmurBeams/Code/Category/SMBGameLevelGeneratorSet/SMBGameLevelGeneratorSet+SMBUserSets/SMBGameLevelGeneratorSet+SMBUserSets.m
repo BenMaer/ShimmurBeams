@@ -10,7 +10,7 @@
 #import "SMBGameLevelGenerator.h"
 #import "SMBGameLevel+SMBForcedRedirectsAndWalls.h"
 #import "SMBGameLevel+SMBRotatesAndDeathBlocks.h"
-#import "SMBGameLevel+SMBGameLevelMirros.h"
+#import "SMBGameLevel+SMBMirrorsAndMeltableBlocks.h"
 
 #import <ResplendentUtilities/NSMutableArray+RUAddObjectIfNotNil.h>
 
