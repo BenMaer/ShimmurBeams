@@ -183,9 +183,10 @@
 	 [[SMBGameBoardTilePosition alloc] init_with_column:beamCreatorEntity.gameBoardTile.gameBoardTilePosition.column
 													row:floor((CGFloat)[gameBoard gameBoardTiles_numberOfRows] / 2.0f)]];
 
-	[gameBoard gameBoardTileEntity_add_levelExit_to_gameBoardTilePosition:
-	 [[SMBGameBoardTilePosition alloc] init_with_column:beamCreatorEntity.gameBoardTile.gameBoardTilePosition.column
-													row:1]];
+	SMBGameBoardTilePosition* const gameBoardTilePosition_levelExit =
+	[[SMBGameBoardTilePosition alloc] init_with_column:beamCreatorEntity.gameBoardTile.gameBoardTilePosition.column
+												   row:1];
+	[gameBoard gameBoardTileEntity_add_levelExit_to_gameBoardTilePosition:gameBoardTilePosition_levelExit];
 
 	[gameBoard gameBoardTileEntities_add:
 	 ^SMBGameBoardTileEntity * _Nullable(SMBGameBoardTilePosition * _Nonnull position) {
@@ -203,6 +204,16 @@
 		 .location	= 0,
 		 .length	= [gameBoard gameBoardTiles_numberOfRows],
 	 }];
+
+	[gameBoard gameBoardTileEntity_for_beamInteractions_set:[SMBDeathBlockTileEntity new]
+								   to_gameBoardTilePosition:
+	 [[SMBGameBoardTilePosition alloc] init_with_column:gameBoardTilePosition_levelExit.column - 1
+													row:gameBoardTilePosition_levelExit.row]];
+
+	[gameBoard gameBoardTileEntity_for_beamInteractions_set:[SMBDeathBlockTileEntity new]
+								   to_gameBoardTilePosition:
+	 [[SMBGameBoardTilePosition alloc] init_with_column:gameBoardTilePosition_levelExit.column + 1
+													row:gameBoardTilePosition_levelExit.row]];
 
 	NSMutableArray<SMBGameBoardTileEntity*>* const gameBoardTileEntity = [NSMutableArray<SMBGameBoardTileEntity*> array];
 
