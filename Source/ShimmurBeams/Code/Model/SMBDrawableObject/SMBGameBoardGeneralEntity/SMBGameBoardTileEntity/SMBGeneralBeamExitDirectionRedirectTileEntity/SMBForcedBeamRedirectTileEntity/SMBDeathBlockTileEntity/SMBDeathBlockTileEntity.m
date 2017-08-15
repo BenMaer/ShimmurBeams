@@ -84,6 +84,20 @@ static void* kSMBDeathBlockTileEntity__KVOContext = &kSMBDeathBlockTileEntity__K
 	CGFloat const line_horizontal_distance = lines_boundingWidth / (CGFloat)numberOfLines;
 	CGFloat const line_vertical_distance = line_horizontal_distance;
 
+	CGFloat (^line_xCoord)(NSUInteger line_index) = ^CGFloat(NSUInteger line_index){
+		return
+		(
+		 CGRectGetMinX(rect)
+		 +
+		 horizontal_distanceFromEdge
+		 +
+		 ((CGFloat)line_index
+		  *
+		  line_horizontal_distance
+		 )
+		);
+	};
+
 	CGFloat (^line_yCoord)(NSUInteger line_index) = ^CGFloat(NSUInteger line_index){
 		double const line_index_halved = ((double)line_index / 2.0f);
 		BOOL const isEven = (line_index_halved == ceil(line_index_halved));
@@ -107,24 +121,27 @@ static void* kSMBDeathBlockTileEntity__KVOContext = &kSMBDeathBlockTileEntity__K
 		 )
 		);
 	};
-	CGContextMoveToPoint(context,
-						 CGRectGetMinX(rect) + horizontal_distanceFromEdge,
-						 CGRectGetMidY(rect) - x_dimention_distanceFromCenter);
 
-	for (NSUInteger line_index = 0;
-		 line_index < numberOfLines;
-		 line_index++)
+	CGContextMoveToPoint(context,
+						 line_xCoord(0),
+						 line_yCoord(0));
+
+	for (NSUInteger line_end_index = 0;
+		 line_end_index < numberOfLines;
+		 line_end_index++)
 	{
-		<#statements#>
+		CGContextAddLineToPoint(context,
+								line_xCoord(line_end_index + 1),
+								line_yCoord(line_end_index + 1));
 	}
 
-	CGContextMoveToPoint(context, CGRectGetMidX(rect) - x_dimention_distanceFromCenter, CGRectGetMidY(rect) - x_dimention_distanceFromCenter); /* Top left. */
-
-	CGContextMoveToPoint(context, CGRectGetMidX(rect) - x_dimention_distanceFromCenter, CGRectGetMidY(rect) - x_dimention_distanceFromCenter); /* Top left. */
-	CGContextAddLineToPoint(context, CGRectGetMidX(rect) + x_dimention_distanceFromCenter, CGRectGetMidY(rect) + x_dimention_distanceFromCenter); /* Bottom right. */
-
-	CGContextMoveToPoint(context, CGRectGetMidX(rect) - x_dimention_distanceFromCenter, CGRectGetMidY(rect) + x_dimention_distanceFromCenter); /* Top right. */
-	CGContextAddLineToPoint(context, CGRectGetMidX(rect) + x_dimention_distanceFromCenter, CGRectGetMidY(rect) - x_dimention_distanceFromCenter); /* Bottom left. */
+//	CGContextMoveToPoint(context, CGRectGetMidX(rect) - x_dimention_distanceFromCenter, CGRectGetMidY(rect) - x_dimention_distanceFromCenter); /* Top left. */
+//
+//	CGContextMoveToPoint(context, CGRectGetMidX(rect) - x_dimention_distanceFromCenter, CGRectGetMidY(rect) - x_dimention_distanceFromCenter); /* Top left. */
+//	CGContextAddLineToPoint(context, CGRectGetMidX(rect) + x_dimention_distanceFromCenter, CGRectGetMidY(rect) + x_dimention_distanceFromCenter); /* Bottom right. */
+//
+//	CGContextMoveToPoint(context, CGRectGetMidX(rect) - x_dimention_distanceFromCenter, CGRectGetMidY(rect) + x_dimention_distanceFromCenter); /* Top right. */
+//	CGContextAddLineToPoint(context, CGRectGetMidX(rect) + x_dimention_distanceFromCenter, CGRectGetMidY(rect) - x_dimention_distanceFromCenter); /* Bottom left. */
 
 	CGContextStrokePath(context);
 
