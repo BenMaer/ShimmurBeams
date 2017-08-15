@@ -27,7 +27,7 @@
 
 #if kSMBGameBoardTileEntity_gameBoardTileOwnership_validation_enabled
 #pragma mark - gameBoardTile
--(BOOL)gameBoardTile_belongsTo;
+-(BOOL)belongsTo_gameBoardTile:(nonnull SMBGameBoardTile*)gameBoardTile;
 #endif
 
 @end
@@ -55,31 +55,30 @@
 	kRUConditionalReturn(self.gameBoardTile == gameBoardTile, NO);
 
 	SMBGameBoardTile* const gameBoardTile_old = self.gameBoardTile;
+	_gameBoardTile = gameBoardTile;
+
 	if (gameBoardTile_old)
 	{
 		[gameBoardTile_old gameBoardTileEntities_remove:self];
 	}
 
 #if kSMBGameBoardTileEntity_gameBoardTileOwnership_validation_enabled
-	NSAssert((self.gameBoardTile == nil)
+	NSAssert((gameBoardTile_old == nil)
 			 ||
-			 ([self gameBoardTile_belongsTo] == false),
+			 ([self belongsTo_gameBoardTile:gameBoardTile_old] == false),
 			 @"shouldn't belong to game tile anymore");
 #endif
-
-	_gameBoardTile = gameBoardTile;
 
 #if kSMBGameBoardTileEntity_gameBoardTileOwnership_validation_enabled
 	NSAssert((self.gameBoardTile == nil)
 			 ||
-			 ([self gameBoardTile_belongsTo]),
+			 ([self belongsTo_gameBoardTile:self.gameBoardTile]),
 			 @"should belong game tile already");
 #endif
 }
 
--(BOOL)gameBoardTile_belongsTo
+-(BOOL)belongsTo_gameBoardTile:(nonnull SMBGameBoardTile*)gameBoardTile
 {
-	SMBGameBoardTile* const gameBoardTile = self.gameBoardTile;
 	kRUConditionalReturn_ReturnValueFalse(gameBoardTile == nil, YES);
 
 	kRUConditionalReturn_ReturnValueTrue(gameBoardTile.gameBoardTileEntity_for_beamInteractions == self, NO);

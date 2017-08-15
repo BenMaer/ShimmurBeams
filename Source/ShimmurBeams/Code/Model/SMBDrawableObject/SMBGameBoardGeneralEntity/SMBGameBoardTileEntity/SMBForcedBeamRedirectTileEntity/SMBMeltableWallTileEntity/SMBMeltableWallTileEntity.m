@@ -10,6 +10,7 @@
 #import "SMBGameBoardTile.h"
 #import "CoreGraphics+SMBRotation.h"
 #import "SMBGameBoardTile__directions_to_CoreGraphics_SMBRotation__orientations_utilities.h"
+#import "SMBTimer.h"
 
 #import <ResplendentUtilities/RUConditionalReturn.h>
 
@@ -23,13 +24,10 @@ static void* kSMBMeltableWallTileEntity__KVOContext = &kSMBMeltableWallTileEntit
 
 
 
-@interface SMBMeltableWallTileEntity ()
+@interface SMBMeltableWallTileEntity () <SMBTimer__timerDidFireDelegate>
 
 #pragma mark - gameBoardTile
 -(void)SMBMeltableWallTileEntity_gameBoardTile_setKVORegistered:(BOOL)registered;
-
-#pragma mark - meltAction
--(void)meltAction_attempt;
 
 #pragma mark - square
 -(void)squares_draw_in_rect:(CGRect)rect;
@@ -37,6 +35,11 @@ static void* kSMBMeltableWallTileEntity__KVOContext = &kSMBMeltableWallTileEntit
 -(void)square_draw_in_rect:(CGRect)rect
 				 direction:(SMBGameBoardTile__direction)direction
    inset_fromEdgeAndCenter:(CGFloat)inset_fromEdgeAndCenter;
+
+#pragma mark - melting_timer
+@property (nonatomic, strong, nullable) SMBTimer* melting_timer;
+-(void)melting_timer_update;
+-(nullable SMBTimer*)melting_timer_generate_attempt;
 
 @end
 
@@ -153,6 +156,8 @@ static void* kSMBMeltableWallTileEntity__KVOContext = &kSMBMeltableWallTileEntit
 	[super setGameBoardTile:gameBoardTile];
 	
 	[self SMBMeltableWallTileEntity_gameBoardTile_setKVORegistered:YES];
+
+	[self melting_timer_update];
 }
 
 -(void)SMBMeltableWallTileEntity_gameBoardTile_setKVORegistered:(BOOL)registered
@@ -168,7 +173,7 @@ static void* kSMBMeltableWallTileEntity__KVOContext = &kSMBMeltableWallTileEntit
 		{
 			[gameBoardTile addObserver:self
 							forKeyPath:propertyToObserve
-							   options:(NSKeyValueObservingOptionInitial)
+							   options:(0)
 							   context:&kSMBMeltableWallTileEntity__KVOContext];
 		}
 		else
@@ -189,7 +194,7 @@ static void* kSMBMeltableWallTileEntity__KVOContext = &kSMBMeltableWallTileEntit
 		{
 			if ([keyPath isEqualToString:[SMBGameBoardTile_PropertiesForKVO isPowered]])
 			{
-				[self meltAction_attempt];
+				[self melting_timer_update];
 			}
 			else
 			{
@@ -207,9 +212,41 @@ static void* kSMBMeltableWallTileEntity__KVOContext = &kSMBMeltableWallTileEntit
 	}
 }
 
-#pragma mark - meltAction
--(void)meltAction_attempt
+#pragma mark - melting_timer
+-(void)setMelting_timer:(nullable SMBTimer*)melting_timer
 {
+	kRUConditionalReturn(self.melting_timer == melting_timer, NO);
+
+	_melting_timer = melting_timer;
+
+	if (self.melting_timer)
+	{
+		[self.melting_timer setRunning:YES];
+	}
+}
+
+-(void)melting_timer_update
+{
+	[self setMelting_timer:[self melting_timer_generate_attempt]];
+}
+
+-(nullable SMBTimer*)melting_timer_generate_attempt
+{
+	SMBGameBoardTile* const gameBoardTile = self.gameBoardTile;
+	kRUConditionalReturn_ReturnValueNil(gameBoardTile == nil, NO);
+	kRUConditionalReturn_ReturnValueNil(gameBoardTile.isPowered == NO, NO);
+
+	SMBTimer* const timer = [SMBTimer new];
+	[timer setTimerDidFireDelegate:self];
+	[timer setTimerDuration:2.0f];
+
+	return timer;
+}
+
+#pragma mark - SMBTimer__timerDidFireDelegate
+-(void)timer_didFire:(nonnull SMBTimer*)timer
+{
+	[self setGameBoardTile:nil];
 }
 
 @end

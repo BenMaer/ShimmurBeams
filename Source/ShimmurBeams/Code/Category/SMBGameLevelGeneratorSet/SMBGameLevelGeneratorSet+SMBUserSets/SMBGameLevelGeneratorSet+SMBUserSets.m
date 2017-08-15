@@ -137,7 +137,7 @@
 
 	return
 	[[self alloc] init_with_gameLevelGenerators:[NSArray<SMBGameLevelGenerator*> arrayWithArray:gameLevelGenerators]
-										   name:@"Mirrors"];
+										   name:@"Mirrors and Meltable Walls"];
 }
 
 @end
