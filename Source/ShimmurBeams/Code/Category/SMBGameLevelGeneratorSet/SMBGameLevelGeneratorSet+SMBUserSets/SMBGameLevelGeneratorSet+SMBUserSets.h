@@ -14,7 +14,10 @@
 
 @interface SMBGameLevelGeneratorSet (SMBUserSets)
 
-#pragma mark - userSet_1
-+(nonnull instancetype)smb_userSet_1;
+#pragma mark - forcedRedirectsAndWalls
++(nonnull instancetype)smb_forcedRedirectsAndWalls;
+
+#pragma mark - rotatesAndDeathBlocks
++(nonnull instancetype)smb_rotatesAndDeathBlocks;
 
 @end

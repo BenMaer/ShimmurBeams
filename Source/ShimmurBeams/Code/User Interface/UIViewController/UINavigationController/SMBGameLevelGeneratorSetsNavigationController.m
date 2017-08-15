@@ -48,7 +48,8 @@
 -(nonnull NSArray<SMBGameLevelGeneratorSet*>*)gameLevelGeneratorSets
 {
 	NSMutableArray<SMBGameLevelGeneratorSet*>* const gameLevelGeneratorSets = [NSMutableArray<SMBGameLevelGeneratorSet*> array];
-	[gameLevelGeneratorSets addObject:[SMBGameLevelGeneratorSet smb_userSet_1]];
+	[gameLevelGeneratorSets addObject:[SMBGameLevelGeneratorSet smb_forcedRedirectsAndWalls]];
+	[gameLevelGeneratorSets addObject:[SMBGameLevelGeneratorSet smb_rotatesAndDeathBlocks]];
 
 	return [NSArray<SMBGameLevelGeneratorSet*> arrayWithArray:gameLevelGeneratorSets];
 }

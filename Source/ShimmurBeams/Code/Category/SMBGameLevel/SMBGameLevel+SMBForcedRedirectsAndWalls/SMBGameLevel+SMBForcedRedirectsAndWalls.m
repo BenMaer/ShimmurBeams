@@ -21,7 +21,7 @@
 @implementation SMBGameLevel (SMBForcedRedirectsAndWalls)
 
 #pragma mark - forcedRedirectsAndWalls
-+(nonnull instancetype)smb_forcedRedirectsAndWalls_oneForce_right
++(nonnull instancetype)smb_forcedRedirects_oneForce_right
 {
 	SMBGameBoard* const gameBoard = [[SMBGameBoard alloc] init_with_numberOfColumns:5
 																	   numberOfRows:5];
@@ -45,7 +45,7 @@
 		  usableGameBoardTileEntities:[NSArray<SMBGameBoardTileEntity*> arrayWithArray:gameBoardTileEntity]];
 }
 
-+(nonnull instancetype)smb_forcedRedirectsAndWalls_twoForces_leftThenDown
++(nonnull instancetype)smb_forcedRedirects_twoForces_leftThenDown
 {
 	SMBGameBoard* const gameBoard = [[SMBGameBoard alloc] init_with_numberOfColumns:5
 																	   numberOfRows:5];

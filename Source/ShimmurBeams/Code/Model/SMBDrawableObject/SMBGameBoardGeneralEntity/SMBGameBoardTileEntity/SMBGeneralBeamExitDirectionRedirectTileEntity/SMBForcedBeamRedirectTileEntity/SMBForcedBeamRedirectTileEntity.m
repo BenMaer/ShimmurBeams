@@ -30,6 +30,27 @@
 
 @implementation SMBForcedBeamRedirectTileEntity
 
+#pragma mark - NSObject
+-(instancetype)init
+{
+	kRUConditionalReturn_ReturnValueNil(YES, YES);
+	
+	return [self init_with_forcedBeamExitDirection:SMBGameBoardTile__direction_unknown];
+}
+
+#pragma mark - init
+-(nullable instancetype)init_with_forcedBeamExitDirection:(SMBGameBoardTile__direction)forcedBeamExitDirection
+{
+	kRUConditionalReturn_ReturnValueNil(SMBGameBoardTile__direction__isInRange_or_none(forcedBeamExitDirection) == false, YES);
+	
+	if (self = [super init])
+	{
+		_forcedBeamExitDirection = forcedBeamExitDirection;
+	}
+	
+	return self;
+}
+
 #pragma mark - SMBGameBoardGeneralEntity: draw
 -(void)draw_in_rect:(CGRect)rect
 {
@@ -65,27 +86,6 @@
 	CGRect const rect_inset = UIEdgeInsetsInsetRect(rect, RU_UIEdgeInsetsMakeAll(arrow_inset_from_side));
 
 	CoreGraphics_SMBDrawArrow(context, rect_inset);
-}
-
-#pragma mark - NSObject
--(instancetype)init
-{
-	kRUConditionalReturn_ReturnValueNil(YES, YES);
-
-	return [self init_with_forcedBeamExitDirection:SMBGameBoardTile__direction_unknown];
-}
-
-#pragma mark - init
--(nullable instancetype)init_with_forcedBeamExitDirection:(SMBGameBoardTile__direction)forcedBeamExitDirection
-{
-	kRUConditionalReturn_ReturnValueNil(SMBGameBoardTile__direction__isInRange_or_none(forcedBeamExitDirection) == false, YES);
-
-	if (self = [super init])
-	{
-		_forcedBeamExitDirection = forcedBeamExitDirection;
-	}
-
-	return self;
 }
 
 #pragma mark - SMBGeneralBeamExitDirectionRedirectTileEntity

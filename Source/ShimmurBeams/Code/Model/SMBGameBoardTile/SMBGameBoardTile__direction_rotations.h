@@ -37,6 +37,7 @@ static inline SMBGameBoardTile__direction SMBGameBoardTile__direction_rotation_d
 	switch (direction)
 	{
 		case SMBGameBoardTile__direction_unknown:
+		case SMBGameBoardTile__direction_none:
 			break;
 			
 		case SMBGameBoardTile__direction_up:
@@ -64,6 +65,7 @@ static inline SMBGameBoardTile__direction SMBGameBoardTile__direction_rotation_d
 	switch (direction)
 	{
 		case SMBGameBoardTile__direction_unknown:
+		case SMBGameBoardTile__direction_none:
 			break;
 			
 		case SMBGameBoardTile__direction_up:

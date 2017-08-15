@@ -9,6 +9,7 @@
 #import "SMBGameLevelGeneratorSet+SMBUserSets.h"
 #import "SMBGameLevelGenerator.h"
 #import "SMBGameLevel+SMBForcedRedirectsAndWalls.h"
+#import "SMBGameLevel+SMBRotatesAndDeathBlocks.h"
 
 #import <ResplendentUtilities/NSMutableArray+RUAddObjectIfNotNil.h>
 
@@ -19,17 +20,17 @@
 @implementation SMBGameLevelGeneratorSet (SMBUserSets)
 
 #pragma mark - userSet_1
-+(nonnull instancetype)smb_userSet_1
++(nonnull instancetype)smb_forcedRedirectsAndWalls
 {
 	NSMutableArray<SMBGameLevelGenerator*>* const gameLevelGenerators = [NSMutableArray<SMBGameLevelGenerator*> array];
 
 	[gameLevelGenerators addObject:[[SMBGameLevelGenerator alloc] init_with_generateLevelBlock:^SMBGameLevel * _Nonnull{
-		return [SMBGameLevel smb_forcedRedirectsAndWalls_oneForce_right];
+		return [SMBGameLevel smb_forcedRedirects_oneForce_right];
 	}
 																						  name:@"One force right"]];
 
 	[gameLevelGenerators addObject:[[SMBGameLevelGenerator alloc] init_with_generateLevelBlock:^SMBGameLevel * _Nonnull{
-		return [SMBGameLevel smb_forcedRedirectsAndWalls_twoForces_leftThenDown];
+		return [SMBGameLevel smb_forcedRedirects_twoForces_leftThenDown];
 	}
 																						  name:@"Two forces"]];
 
@@ -61,7 +62,27 @@
 
 	return
 	[[self alloc] init_with_gameLevelGenerators:[NSArray<SMBGameLevelGenerator*> arrayWithArray:gameLevelGenerators]
-										   name:@"1) Forced Redirects and Walls"];
+										   name:@"Forced Redirects and Walls"];
+}
+
+#pragma mark - rotatesAndDeathBlocks
++(nonnull instancetype)smb_rotatesAndDeathBlocks
+{
+	NSMutableArray<SMBGameLevelGenerator*>* const gameLevelGenerators = [NSMutableArray<SMBGameLevelGenerator*> array];
+	
+	[gameLevelGenerators addObject:[[SMBGameLevelGenerator alloc] init_with_generateLevelBlock:^SMBGameLevel * _Nonnull{
+		return [SMBGameLevel smb_rotates_oneRotate_right];
+	}
+																						  name:@"One rotate right"]];
+
+	[gameLevelGenerators addObject:[[SMBGameLevelGenerator alloc] init_with_generateLevelBlock:^SMBGameLevel * _Nonnull{
+		return [SMBGameLevel smb_rotates_twoLefts_right];
+	}
+																						  name:@"Two rotates left"]];
+
+	return
+	[[self alloc] init_with_gameLevelGenerators:[NSArray<SMBGameLevelGenerator*> arrayWithArray:gameLevelGenerators]
+										   name:@"Rotates and Death Blocks"];
 }
 
 @end

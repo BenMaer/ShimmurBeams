@@ -12,6 +12,7 @@
 
 #import <ResplendentUtilities/RUConditionalReturn.h>
 #import <ResplendentUtilities/NSString+RUMacros.h>
+#import <ResplendentUtilities/RUConstants.h>
 
 
 
@@ -104,8 +105,11 @@
 	 [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:tableViewCell_dequeIdentifier]
 	);
 
-	SMBGameLevelGeneratorSet* const gameLevelGeneratorSet = [self gameLevelGeneratorSet_at_index:[self gameLevelGeneratorSet_index_for_indexPathSection:indexPath.section]];
-	[tableViewCell.textLabel setText:gameLevelGeneratorSet.name];
+	NSUInteger const gameLevelGeneratorSet_index = [self gameLevelGeneratorSet_index_for_indexPathSection:indexPath.section];
+	SMBGameLevelGeneratorSet* const gameLevelGeneratorSet = [self gameLevelGeneratorSet_at_index:gameLevelGeneratorSet_index];
+	[tableViewCell.textLabel setText:RUStringWithFormat(@"%lu)\t%@",
+														(unsigned long)gameLevelGeneratorSet_index + 1,
+														gameLevelGeneratorSet.name)];
 
 	return tableViewCell;
 }

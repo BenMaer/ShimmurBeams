@@ -245,7 +245,7 @@
 
 	NSUInteger const gameLevelGenerator_index = [self gameLevelGenerator_index_for_indexPathSection:indexPath.section];
 	SMBGameLevelGenerator* const gameLevelGenerator = [self gameLevelGenerator_at_index:gameLevelGenerator_index];
-	[tableViewCell.textLabel setText:RUStringWithFormat(@"%lu) %@",
+	[tableViewCell.textLabel setText:RUStringWithFormat(@"%lu)\t%@",
 														(unsigned long)gameLevelGenerator_index + 1,
 														gameLevelGenerator.name)];
 
