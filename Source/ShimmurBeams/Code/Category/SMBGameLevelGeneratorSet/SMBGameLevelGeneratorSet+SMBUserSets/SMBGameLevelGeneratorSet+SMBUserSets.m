@@ -99,11 +99,16 @@
 	}
 																						  name:@"Surrounded"]];
 
+	[gameLevelGenerators addObject:[[SMBGameLevelGenerator alloc]init_with_generateLevelBlock:^SMBGameLevel * _Nonnull{
+		return [SMBGameLevel smb_rotates_deathBlocks_blackAnglesMatter];
+	}
+																						 name:@"Black Angles Matter"]];
+
 	[gameLevelGenerators addObject:[[SMBGameLevelGenerator alloc] init_with_generateLevelBlock:^SMBGameLevel * _Nonnull{
 		return [SMBGameLevel smb_rotates_deathBlocks_scattered];
 	}
 																						  name:@"Scattered"]];
-
+	
 	return
 	[[self alloc] init_with_gameLevelGenerators:[NSArray<SMBGameLevelGenerator*> arrayWithArray:gameLevelGenerators]
 										   name:@"Rotates and Death Blocks"];
