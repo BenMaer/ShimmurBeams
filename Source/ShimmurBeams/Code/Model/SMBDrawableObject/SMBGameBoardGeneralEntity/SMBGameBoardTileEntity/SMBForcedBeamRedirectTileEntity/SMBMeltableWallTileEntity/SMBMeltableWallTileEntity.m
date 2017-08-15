@@ -8,6 +8,8 @@
 
 #import "SMBMeltableWallTileEntity.h"
 #import "SMBGameBoardTile.h"
+#import "CoreGraphics+SMBRotation.h"
+#import "SMBGameBoardTile__directions_to_CoreGraphics_SMBRotation__orientations_utilities.h"
 
 #import <ResplendentUtilities/RUConditionalReturn.h>
 
@@ -28,6 +30,13 @@ static void* kSMBMeltableWallTileEntity__KVOContext = &kSMBMeltableWallTileEntit
 
 #pragma mark - meltAction
 -(void)meltAction_attempt;
+
+#pragma mark - square
+-(void)squares_draw_in_rect:(CGRect)rect;
+
+-(void)square_draw_in_rect:(CGRect)rect
+				 direction:(SMBGameBoardTile__direction)direction
+   inset_fromEdgeAndCenter:(CGFloat)inset_fromEdgeAndCenter;
 
 @end
 
@@ -66,12 +75,12 @@ static void* kSMBMeltableWallTileEntity__KVOContext = &kSMBMeltableWallTileEntit
 -(void)draw_in_rect:(CGRect)rect
 {
 	[super draw_in_rect:rect];
-	
-	[self square_draw_in_rect:rect];
+
+	[self squares_draw_in_rect:rect];
 }
 
-#pragma mark - arrow
--(void)square_draw_in_rect:(CGRect)rect
+#pragma mark - square
+-(void)squares_draw_in_rect:(CGRect)rect
 {
 	CGContextRef const context = UIGraphicsGetCurrentContext();
 
@@ -79,55 +88,61 @@ static void* kSMBMeltableWallTileEntity__KVOContext = &kSMBMeltableWallTileEntit
 
 	CGContextSetStrokeColorWithColor(context, [UIColor blackColor].CGColor);
 	CGContextSetLineWidth(context, 1.0f);
-	
+
+	CGFloat const inset_fromEdgeAndCenter = CGRectGetWidth(rect) / 10.0f;
+
 	for (SMBGameBoardTile__direction direction = SMBGameBoardTile__direction__first;
 		 direction <= SMBGameBoardTile__direction__last;
 		 direction = direction << 1)
 	{
-		CGContextSaveGState(context);
-		
 		[self square_draw_in_rect:rect
-						direction:direction];
-		
-		CGContextRestoreGState(context);
+						direction:direction
+		  inset_fromEdgeAndCenter:inset_fromEdgeAndCenter];
 	}
+
+	CGFloat const square_inner_dimension_length = (inset_fromEdgeAndCenter * 2.0f);
+	CGRect const squareRect_inner = (CGRect){
+		.origin.x		= CGRectGetMidX(rect) - inset_fromEdgeAndCenter,
+		.origin.y		= CGRectGetMidY(rect) - inset_fromEdgeAndCenter,
+		.size.width		= square_inner_dimension_length,
+		.size.height	= square_inner_dimension_length,
+	};
+
+	CGContextSetFillColorWithColor(context, [UIColor brownColor].CGColor);
+	CGContextFillRect(context, squareRect_inner);
 
 	CGContextRestoreGState(context);
 }
 
 -(void)square_draw_in_rect:(CGRect)rect
-				direction:(SMBGameBoardTile__direction)direction
+				 direction:(SMBGameBoardTile__direction)direction
+   inset_fromEdgeAndCenter:(CGFloat)inset_fromEdgeAndCenter
 {
 	kRUConditionalReturn(direction == SMBGameBoardTile__direction_none, NO);
 	
 	CGContextRef const context = UIGraphicsGetCurrentContext();
-	
-	CGFloat const inset_fromEdge = 5.0f;
+
+	CGContextSaveGState(context);
+
+	CoreGraphics_SMBRotation__rotateCTM(context, rect, CoreGraphics_SMBRotation__orientation_for_direction(direction));
+
 	CGFloat const dimension_length =
 	((CGRectGetWidth(rect) / 2.0f)
 	 -
-	 (2.0f * inset_fromEdge));
+	 (2.0f * inset_fromEdgeAndCenter));
 
 	CGRect const squareRect = (CGRect){
-		.origin.x		= inset_fromEdge,
-		.origin.y		= inset_fromEdge,
+		.origin.x		= CGRectGetMinX(rect) + inset_fromEdgeAndCenter,
+		.origin.y		= CGRectGetMinY(rect) + inset_fromEdgeAndCenter,
 		.size.width		= dimension_length,
 		.size.height	= dimension_length,
 	};
 
-//	CGContextRect
 	CGContextAddRect(context, squareRect);
+
 	CGContextStrokePath(context);
-//	CoreGraphics_SMBRotation__rotateCTM(context, rect, CoreGraphics_SMBRotation__orientation_for_direction(direction));
-//	
-//	CGRect const arrow_rect = (CGRect){
-//		.origin.x		= CGRectGetMinX(rect) + CGRectGetHorizontallyAlignedXCoordForWidthOnWidth(dimension_length, CGRectGetWidth(rect)),
-//		.origin.y		= CGRectGetMinY(rect) + inset_large,
-//		.size.width		= dimension_length,
-//		.size.height	= dimension_length,
-//	};
-//	
-//	CoreGraphics_SMBDrawArrow(context, arrow_rect);
+
+	CGContextRestoreGState(context);
 }
 
 #pragma mark - gameBoardTile
