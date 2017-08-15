@@ -7,7 +7,7 @@
 //
 
 #import "SMBGameLevel+SMBGameLevelMirros.h"
-#import "SMBMirrorBoardTileEntity.h"
+#import "SMBDiagonalMirrorTileEntity.h"
 #import "SMBGameBoardTilePosition.h"
 #import "SMBBeamCreatorTileEntity.h"
 #import "SMBGameBoard.h"
@@ -39,7 +39,7 @@
 													row:beamCreatorEntity.gameBoardTile.gameBoardTilePosition.row - 2]];
 	
 	NSMutableArray<SMBGameBoardTileEntity*>* const gameBoardTileEntity = [NSMutableArray<SMBGameBoardTileEntity*> array];
-	[gameBoardTileEntity addObject:[[SMBMirrorBoardTileEntity alloc] init_with_startingPosition:SMBMirrorBoardTileEntity_startingPosition_bottomLeft]];
+	[gameBoardTileEntity addObject:[[SMBDiagonalMirrorTileEntity alloc] init_with_startingPosition:SMBDiagonalMirrorTileEntity_startingPosition_bottomLeft]];
 	
 	return
 	[[self alloc] init_with_gameBoard:gameBoard
@@ -58,17 +58,17 @@
 									  to_gameBoardTilePosition:[[SMBGameBoardTilePosition alloc] init_with_column:2
 																											  row:3]];
 	
-	[gameBoard gameBoardTileEntity_for_beamInteractions_set:[[SMBMirrorBoardTileEntity alloc]init_with_startingPosition:SMBMirrorBoardTileEntity_startingPosition_bottomLeft]
+	[gameBoard gameBoardTileEntity_for_beamInteractions_set:[[SMBDiagonalMirrorTileEntity alloc]init_with_startingPosition:SMBDiagonalMirrorTileEntity_startingPosition_bottomLeft]
 								   to_gameBoardTilePosition:[[SMBGameBoardTilePosition alloc]
 															 init_with_column:beamCreatorEntity.gameBoardTile.gameBoardTilePosition.column
 															 row:beamCreatorEntity.gameBoardTile.gameBoardTilePosition.row - 1]];
 	
-	[gameBoard gameBoardTileEntity_for_beamInteractions_set:[[SMBMirrorBoardTileEntity alloc]init_with_startingPosition:SMBMirrorBoardTileEntity_startingPosition_topLeft]
+	[gameBoard gameBoardTileEntity_for_beamInteractions_set:[[SMBDiagonalMirrorTileEntity alloc]init_with_startingPosition:SMBDiagonalMirrorTileEntity_startingPosition_topLeft]
 								   to_gameBoardTilePosition:[[SMBGameBoardTilePosition alloc]
 															 init_with_column:gameBoard.gameBoardTiles_numberOfColumns - 1
 															 row:beamCreatorEntity.gameBoardTile.gameBoardTilePosition.row - 3]];
 	
-	[gameBoard gameBoardTileEntity_for_beamInteractions_set:[[SMBMirrorBoardTileEntity alloc]init_with_startingPosition:SMBMirrorBoardTileEntity_startingPosition_bottomLeft]
+	[gameBoard gameBoardTileEntity_for_beamInteractions_set:[[SMBDiagonalMirrorTileEntity alloc]init_with_startingPosition:SMBDiagonalMirrorTileEntity_startingPosition_bottomLeft]
 								   to_gameBoardTilePosition:[[SMBGameBoardTilePosition alloc]
 															 init_with_column:0
 															 row:0]];
@@ -113,7 +113,7 @@
 													row:beamCreatorEntity.gameBoardTile.gameBoardTilePosition.row - 2]];
 	
 	NSMutableArray<SMBGameBoardTileEntity*>* const gameBoardTileEntity = [NSMutableArray<SMBGameBoardTileEntity*> array];
-	[gameBoardTileEntity addObject:[[SMBMirrorBoardTileEntity alloc] init_with_startingPosition:SMBMirrorBoardTileEntity_startingPosition_bottomLeft]];
+	[gameBoardTileEntity addObject:[[SMBDiagonalMirrorTileEntity alloc] init_with_startingPosition:SMBDiagonalMirrorTileEntity_startingPosition_bottomLeft]];
 	
 	return
 	[[self alloc] init_with_gameBoard:gameBoard

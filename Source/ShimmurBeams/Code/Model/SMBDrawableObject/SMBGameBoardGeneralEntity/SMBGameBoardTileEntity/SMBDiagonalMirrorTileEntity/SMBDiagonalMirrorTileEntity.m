@@ -1,18 +1,18 @@
 //
-//  SMBMirrorBoardTileEntity.m
+//  SMBDiagonalMirrorTileEntity.m
 //  ShimmurBeams
 //
 //  Created by Jordan Langsam on 8/15/17.
 //  Copyright © 2017 Shimmur. All rights reserved.
 //
 
-#import "SMBMirrorBoardTileEntity.h"
+#import "SMBDiagonalMirrorTileEntity.h"
 
 
 
 
 
-@interface SMBMirrorBoardTileEntity ()
+@interface SMBDiagonalMirrorTileEntity ()
 
 #pragma mark - draw_startingPoint
 -(CGFloat)draw_startingPoint_x_forFrame:(CGRect)frame;
@@ -34,7 +34,7 @@
 
 
 
-@implementation SMBMirrorBoardTileEntity
+@implementation SMBDiagonalMirrorTileEntity
 
 #pragma mark - SMBGameBoardGeneralEntity: draw
 -(void)draw_in_rect:(CGRect)rect
@@ -49,11 +49,11 @@
 {
 	kRUConditionalReturn_ReturnValueNil(YES, YES);
 	
-	return [self init_with_startingPosition:SMBMirrorBoardTileEntity_startingPosition_topLeft];
+	return [self init_with_startingPosition:SMBDiagonalMirrorTileEntity_startingPosition_topLeft];
 }
 
 #pragma mark - init
--(nullable instancetype)init_with_startingPosition:(SMBMirrorBoardTileEntity_startingPosition)startingPosition
+-(nullable instancetype)init_with_startingPosition:(SMBDiagonalMirrorTileEntity_startingPosition)startingPosition
 {
 	if (self = [super init])
 	{
@@ -105,7 +105,7 @@
 -(CGFloat)draw_startingPoint_y_forFrame:(CGRect)frame
 {
 	CGFloat const padding = [[self class]paddingFromEdge_forRect:frame];
-	return (self.startingPosition == SMBMirrorBoardTileEntity_startingPosition_topLeft ? CGRectGetMinY(frame) + padding : CGRectGetMaxY(frame) - padding);
+	return (self.startingPosition == SMBDiagonalMirrorTileEntity_startingPosition_topLeft ? CGRectGetMinY(frame) + padding : CGRectGetMaxY(frame) - padding);
 }
 
 #pragma mark - draw_endingPoint
@@ -117,14 +117,14 @@
 -(CGFloat)draw_endingPoint_y_forFrame:(CGRect)frame
 {
 	CGFloat const padding = [[self class]paddingFromEdge_forRect:frame];
-	return (self.startingPosition == SMBMirrorBoardTileEntity_startingPosition_topLeft ? CGRectGetMaxY(frame) - padding : CGRectGetMinY(frame) + padding);
+	return (self.startingPosition == SMBDiagonalMirrorTileEntity_startingPosition_topLeft ? CGRectGetMaxY(frame) - padding : CGRectGetMinY(frame) + padding);
 }
 
 #pragma SMBGeneralBeamExitDirectionRedirectTileEntity
 -(SMBGameBoardTile__direction)beamExitDirection_for_beamEnterDirection:(SMBGameBoardTile__direction)beamEnterDirection
 {
 	SMBGameBoardTile__direction const enterDirection = beamEnterDirection;
-	BOOL const topLeftToBottomRight = (self.startingPosition == SMBMirrorBoardTileEntity_startingPosition_topLeft);
+	BOOL const topLeftToBottomRight = (self.startingPosition == SMBDiagonalMirrorTileEntity_startingPosition_topLeft);
 	
 	switch (enterDirection)
 	{
