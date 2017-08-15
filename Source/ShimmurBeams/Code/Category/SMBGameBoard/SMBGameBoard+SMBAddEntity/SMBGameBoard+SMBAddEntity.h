@@ -24,26 +24,19 @@
 @interface SMBGameBoard (SMBAddEntity)
 
 #pragma mark - gameBoardTileEntity
--(void)gameBoardTileEntities_add:(nonnull SMBGameBoardTileEntity*)gameBoardTileEntity
-					  entityType:(SMBGameBoardTile__entityType)entityType
-		   gameBoardTilePosition:(nonnull SMBGameBoardTilePosition*)gameBoardTilePosition;
+-(void)gameBoardTileEntity_add:(nonnull SMBGameBoardTileEntity*)gameBoardTileEntity
+					entityType:(SMBGameBoardTile__entityType)entityType
+	  to_gameBoardTilePosition:(nonnull SMBGameBoardTilePosition*)gameBoardTilePosition;
 
 -(void)gameBoardTileEntities_add:(nonnull SMBGameBoard_addEntity_createTileEntityAtPosition_block)createTileEntityAtPosition_block
 					  entityType:(SMBGameBoardTile__entityType)entityType
 		  gameBoardTilePositions:(nonnull NSArray<SMBGameBoardTilePosition*>*)gameBoardTilePositions;
 
 -(void)gameBoardTileEntity_add:(nonnull SMBGameBoardTileEntity*)gameBoardTileEntity
-					entityType:(SMBGameBoardTile__entityType)entityType
-					 to_column:(NSUInteger)column
-						   row:(NSUInteger)row;
-
--(void)gameBoardTileEntity_add:(nonnull SMBGameBoardTileEntity*)gameBoardTileEntity
-					 to_column:(NSUInteger)column
-						   row:(NSUInteger)row;
+	  to_gameBoardTilePosition:(nonnull SMBGameBoardTilePosition*)gameBoardTilePosition;
 
 -(void)gameBoardTileEntity_for_beamInteractions_set:(nonnull SMBGameBoardTileEntity*)gameBoardTileEntity
-										  to_column:(NSUInteger)column
-												row:(NSUInteger)row;
+						   to_gameBoardTilePosition:(nonnull SMBGameBoardTilePosition*)gameBoardTilePosition;
 
 -(void)gameBoardTileEntities_add:(nonnull SMBGameBoard_addEntity_createTileEntityAtPosition_block)createTileEntityAtPosition_block
 					  entityType:(SMBGameBoardTile__entityType)entityType
@@ -52,11 +45,9 @@
 							rows:(NSRange)rows;
 
 #pragma mark - levelExit
--(void)gameBoardTileEntity_add_levelExit_to_column:(NSUInteger)column
-											   row:(NSUInteger)row;
+-(void)gameBoardTileEntity_add_levelExit_to_gameBoardTilePosition:(nonnull SMBGameBoardTilePosition*)gameBoardTilePosition;
 
 #pragma mark - wall
--(void)gameBoardTileEntity_add_wall_to_column:(NSUInteger)column
-										  row:(NSUInteger)row;
+-(void)gameBoardTileEntity_add_wall_to_gameBoardTilePosition:(nonnull SMBGameBoardTilePosition*)gameBoardTilePosition;
 
 @end
