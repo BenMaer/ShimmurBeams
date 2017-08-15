@@ -89,33 +89,6 @@
 }
 #endif
 
-//-(void)gameBoardTile_removeFromRelationship:(nonnull SMBGameBoardTile*)gameBoardTile
-//{
-//	kRUConditionalReturn(gameBoardTile == nil, YES);
-//
-//	if (gameBoardTile.gameBoardTileEntity_for_beamInteractions == self)
-//	{
-//		[gameBoardTile setGameBoardTileEntity_for_beamInteractions:nil];
-//	}
-//	else if ([gameBoardTile.gameBoardTileEntities containsObject:self])
-//	{
-//		[gameBoardTile gameBoardTileEntities_remove:self];
-//	}
-//}
-//
-//-(void)gameBoardTile_add:(nonnull SMBGameBoardTile*)gameBoardTile
-//{
-//	kRUConditionalReturn(gameBoardTile == nil, YES);
-//
-//	if ((gameBoardTile.gameBoardTileEntity_for_beamInteractions != self)
-//		&&
-//		([gameBoardTile.gameBoardTileEntities containsObject:self] == false)
-//		)
-//	{
-//		[gameBoardTile gameBoardTileEntities_add:self];
-//	}
-//}
-
 @end
 
 
