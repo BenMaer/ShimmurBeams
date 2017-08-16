@@ -48,7 +48,8 @@
 	[gameLevelGenerators addObject:[[SMBGameLevelGenerator alloc] init_with_generateLevelBlock:^SMBGameLevel * _Nonnull{
 		return [SMBGameLevel smb_forcedRedirects_oneForceNotMovable];
 	}
-																						  name:@"Already placed"]];
+																						  name:@"Already placed"
+																						  hint:@"When an entity starts on the board, you cannot move it."]];
 
 	[gameLevelGenerators addObject:[[SMBGameLevelGenerator alloc] init_with_generateLevelBlock:^SMBGameLevel * _Nonnull{
 		return [SMBGameLevel smb_forcedRedirects_wallsAndForces_threeForcesNotMovable];
@@ -133,7 +134,8 @@
 	[gameLevelGenerators addObject:[[SMBGameLevelGenerator alloc] init_with_generateLevelBlock:^SMBGameLevel * _Nonnull{
 		return [SMBGameLevel smb_meltableWall_introduction];
 	}
-																						  name:@"Meltable Wall Introduction"]];
+																						  name:@"Meltable Wall Introduction"
+																						  hint:@"Focus your beam on the meltable wall for a couple seconds to destroy it."]];
 
 	return
 	[[self alloc] init_with_gameLevelGenerators:[NSArray<SMBGameLevelGenerator*> arrayWithArray:gameLevelGenerators]

@@ -19,9 +19,16 @@
 #pragma mark - name
 @property (nonatomic, readonly, copy, nullable) NSString* name;
 
+#pragma mark - hint
+@property (nonatomic, readonly, copy, nullable) NSString* hint;
+
 #pragma mark - init
 -(nullable instancetype)init_with_generateLevelBlock:(nonnull SMBGameLevelGenerator__generateLevelBlock)generateLevelBlock
-												name:(nonnull NSString*)name NS_DESIGNATED_INITIALIZER;
+												name:(nonnull NSString*)name
+												hint:(nullable NSString*)hint NS_DESIGNATED_INITIALIZER;
+
+-(nullable instancetype)init_with_generateLevelBlock:(nonnull SMBGameLevelGenerator__generateLevelBlock)generateLevelBlock
+												name:(nonnull NSString*)name;
 
 #pragma mark - gameLevel
 -(nullable SMBGameLevel*)gameLevel_generate;

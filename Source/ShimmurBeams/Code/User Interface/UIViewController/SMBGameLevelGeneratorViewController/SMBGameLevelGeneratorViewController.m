@@ -34,6 +34,11 @@ static void* kSMBGameLevelGeneratorViewController__KVOContext = &kSMBGameLevelGe
 -(void)gameLevelGenerator_gameLevel_didComplete;
 -(void)gameLevelGenerator_gameLevel_setKVORegistered:(BOOL)registered;
 
+#pragma mark - hintLabel
+@property (nonatomic, readonly, strong, nullable) UILabel* hintLabel;
+-(CGRect)hintLabel_frame;
+-(void)hintLabel_text_update;
+
 #pragma mark - gameLevelView
 @property (nonatomic, readonly, strong, nullable) SMBGameLevelView* gameLevelView;
 -(CGRect)gameLevelView_frame;
@@ -62,9 +67,18 @@ static void* kSMBGameLevelGeneratorViewController__KVOContext = &kSMBGameLevelGe
 {
 	[super viewDidLoad];
 
+	[self setEdgesForExtendedLayout:UIRectEdgeNone];
 	[self setAutomaticallyAdjustsScrollViewInsets:NO];
 
 	[self.view setBackgroundColor:[UIColor whiteColor]];
+
+	_hintLabel = [UILabel new];
+	[self.hintLabel setFont:[UIFont systemFontOfSize:18.0f]];
+	[self.hintLabel setTextColor:[UIColor darkTextColor]];
+	[self.hintLabel setBackgroundColor:[UIColor clearColor]];
+	[self.hintLabel setNumberOfLines:0];
+	[self.view addSubview:self.hintLabel];
+	[self hintLabel_text_update];
 
 	_gameLevelView = [SMBGameLevelView new];
 	[self.view addSubview:self.gameLevelView];
@@ -77,6 +91,8 @@ static void* kSMBGameLevelGeneratorViewController__KVOContext = &kSMBGameLevelGe
 {
 	[super viewWillLayoutSubviews];
 
+	[self.hintLabel setFrame:[self hintLabel_frame]];
+
 	[self.gameLevelView setFrame:[self gameLevelView_frame]];
 }
 
@@ -87,6 +103,7 @@ static void* kSMBGameLevelGeneratorViewController__KVOContext = &kSMBGameLevelGe
 
 	_gameLevelGenerator = gameLevelGenerator;
 
+	[self hintLabel_text_update];
 	[self navigationItem_title_update];
 	[self gameLevelGenerator_gameLevel_update];
 }
@@ -163,6 +180,29 @@ static void* kSMBGameLevelGeneratorViewController__KVOContext = &kSMBGameLevelGe
 	[self gameLevelGenerator_gameLevel_update];
 }
 
+#pragma mark - hintLabel
+-(CGRect)hintLabel_frame
+{
+	CGFloat const inset_horizontal = 12.0f;
+
+	return
+	CGRectCeilOrigin(UIEdgeInsetsInsetRect((CGRect){
+		.origin.y		= 20.0f,
+		.size.width		= CGRectGetWidth(self.view.bounds),
+		.size.height	= 50.0f,
+	},
+										   (UIEdgeInsets)
+	{
+		.left	= inset_horizontal,
+		.right	= inset_horizontal,
+	}));
+}
+
+-(void)hintLabel_text_update
+{
+	[self.hintLabel setText:self.gameLevelGenerator.hint];
+}
+
 #pragma mark - gameLevelView
 -(CGRect)gameLevelView_frame
 {
@@ -170,7 +210,7 @@ static void* kSMBGameLevelGeneratorViewController__KVOContext = &kSMBGameLevelGe
 
 	return CGRectCeilOrigin((CGRect){
 		.origin.x	= CGRectGetHorizontallyAlignedXCoordForWidthOnWidth(size.width, CGRectGetWidth(self.view.bounds)),
-		.origin.y	= CGRectGetVerticallyAlignedYCoordForHeightOnHeight(size.height, CGRectGetHeight(self.view.bounds)),
+		.origin.y	= CGRectGetMaxY([self hintLabel_frame]) + 20.0f,
 		.size		= size,
 	});
 }

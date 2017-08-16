@@ -22,6 +22,9 @@
 #pragma mark - name
 @property (nonatomic, copy, nullable) NSString* name;
 
+#pragma mark - hint
+@property (nonatomic, copy, nullable) NSString* hint;
+
 @end
 
 
@@ -38,13 +41,15 @@
 #pragma clang diagnostic push
 #pragma clang diagnostic ignored "-Wno-nullability-completeness"
 	return [self init_with_generateLevelBlock:nil
-										 name:nil];
+										 name:nil
+										 hint:nil];
 #pragma clang diagnostic pop
 }
 
 #pragma mark - init
 -(nullable instancetype)init_with_generateLevelBlock:(nonnull SMBGameLevelGenerator__generateLevelBlock)generateLevelBlock
 												name:(nonnull NSString*)name
+												hint:(nullable NSString*)hint
 {
 	kRUConditionalReturn_ReturnValueNil(generateLevelBlock == nil, YES);
 
@@ -52,9 +57,19 @@
 	{
 		_generateLevelBlock = generateLevelBlock;
 		[self setName:name];
+		[self setHint:hint];
 	}
 
 	return self;
+}
+
+-(nullable instancetype)init_with_generateLevelBlock:(nonnull SMBGameLevelGenerator__generateLevelBlock)generateLevelBlock
+												name:(nonnull NSString*)name
+{
+	return
+	[self init_with_generateLevelBlock:generateLevelBlock
+								  name:name
+								  hint:nil];
 }
 
 #pragma mark - gameLevel
