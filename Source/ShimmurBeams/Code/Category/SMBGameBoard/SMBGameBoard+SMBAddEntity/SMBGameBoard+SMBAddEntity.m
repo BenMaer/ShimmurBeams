@@ -45,7 +45,10 @@
 	kRUConditionalReturn(gameBoardTilePositions == nil, YES);
 
 	[gameBoardTilePositions enumerateObjectsUsingBlock:^(SMBGameBoardTilePosition * _Nonnull gameBoardTilePosition, NSUInteger idx, BOOL * _Nonnull stop) {
-		[self gameBoardTileEntity_add:createTileEntityAtPosition_block(gameBoardTilePosition)
+		SMBGameBoardTileEntity* const gameBoardTileEntity = createTileEntityAtPosition_block(gameBoardTilePosition);
+		kRUConditionalReturn(gameBoardTileEntity == nil, NO);
+
+		[self gameBoardTileEntity_add:gameBoardTileEntity
 						   entityType:entityType
 			 to_gameBoardTilePosition:gameBoardTilePosition];
 	}];

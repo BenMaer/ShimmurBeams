@@ -114,6 +114,9 @@
 		updateRelationship:(BOOL)hasRelationship
 {
 	kRUConditionalReturn(gameBoardTileEntity == nil, YES);
+	kRUConditionalReturn((hasRelationship == false)
+						 &&
+						 (gameBoardTileEntity.gameBoardTile != self), NO);
 
 	[gameBoardTileEntity setGameBoardTile:(hasRelationship ? self : nil)];
 }
