@@ -118,9 +118,9 @@ typedef NS_ENUM(NSInteger, SMBBeamEntity__drawingPiece) {
 	NSArray<SMBBeamEntityTileNode*>* beamEntityTileNode_mappedDataCollection_removedObjects = nil;
 	NSArray<SMBBeamEntityTileNode*>* beamEntityTileNode_mappedDataCollection_newObjects = nil;
 	[SMBMappedDataCollection<SMBBeamEntityTileNode*> changes_from_mappedDataCollection:beamEntityTileNode_mappedDataCollection_old
-																	   to_mappedDataCollection:self.beamEntityTileNode_mappedDataCollection
-																			 removedObjects:&beamEntityTileNode_mappedDataCollection_removedObjects
-																				 newObjects:&beamEntityTileNode_mappedDataCollection_newObjects];
+															   to_mappedDataCollection:self.beamEntityTileNode_mappedDataCollection
+																		removedObjects:&beamEntityTileNode_mappedDataCollection_removedObjects
+																			newObjects:&beamEntityTileNode_mappedDataCollection_newObjects];
 
 	[beamEntityTileNode_mappedDataCollection_removedObjects enumerateObjectsUsingBlock:^(SMBBeamEntityTileNode * _Nonnull beamEntityTileNode, NSUInteger idx, BOOL * _Nonnull stop) {
 		
