@@ -96,7 +96,6 @@
 
 @implementation SMBGameBoardTileEntity_PropertiesForKVO
 
-+(nonnull NSString*)gameBoardEntity{return NSStringFromSelector(_cmd);}
 +(nonnull NSString*)needsRedraw{return NSStringFromSelector(_cmd);}
-
++(nonnull NSString*)gameBoardTile{return NSStringFromSelector(_cmd);}
 @end

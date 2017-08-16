@@ -8,6 +8,7 @@
 
 #import "SMBGameBoardTileEntityPickerView.h"
 #import "SMBGameBoardTileEntityPickerViewCollectionViewCell.h"
+#import "SMBGameBoardTileEntity.h"
 
 #import <ResplendentUtilities/RUConditionalReturn.h>
 #import <ResplendentUtilities/NSString+RUMacros.h>
@@ -66,7 +67,7 @@ kRUDefineNSStringConstant(SMBGameBoardTileEntityPickerView__cellIdentifier_SMBGa
 		[self.collectionView registerClass:[SMBGameBoardTileEntityPickerViewCollectionViewCell class] forCellWithReuseIdentifier:SMBGameBoardTileEntityPickerView__cellIdentifier_SMBGameBoardTileEntityPickerViewCollectionViewCell];
 		[self addSubview:self.collectionView];
 	}
-	
+
 	return self;
 }
 
