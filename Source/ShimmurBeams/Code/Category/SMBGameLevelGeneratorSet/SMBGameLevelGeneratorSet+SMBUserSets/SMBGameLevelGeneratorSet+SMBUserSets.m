@@ -29,7 +29,7 @@
 		return [SMBGameLevel smb_forcedRedirects_oneForce_right];
 	}
 																						  name:@"One force right"
-																						  hint:@"Select an entity from the bottom, and then tap an empty tile on the board to place it."]];
+																						  hint:@"Select an entity from the bottom, and then tap an empty tile on the board to place it.\nGet the beam to the exit."]];
 
 	[gameLevelGenerators addObject:[[SMBGameLevelGenerator alloc] init_with_generateLevelBlock:^SMBGameLevel * _Nonnull{
 		return [SMBGameLevel smb_forcedRedirects_twoForces_leftThenDown];

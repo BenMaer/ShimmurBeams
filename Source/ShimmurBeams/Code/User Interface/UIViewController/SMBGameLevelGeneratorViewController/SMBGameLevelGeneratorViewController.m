@@ -187,9 +187,9 @@ static void* kSMBGameLevelGeneratorViewController__KVOContext = &kSMBGameLevelGe
 
 	return
 	CGRectCeilOrigin(UIEdgeInsetsInsetRect((CGRect){
-		.origin.y		= 20.0f,
+		.origin.y		= 4.0f,
 		.size.width		= CGRectGetWidth(self.view.bounds),
-		.size.height	= 50.0f,
+		.size.height	= 70.0f,
 	},
 										   (UIEdgeInsets)
 	{
