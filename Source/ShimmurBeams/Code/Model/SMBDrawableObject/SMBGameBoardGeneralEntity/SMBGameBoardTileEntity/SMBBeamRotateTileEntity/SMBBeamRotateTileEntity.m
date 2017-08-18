@@ -83,9 +83,9 @@
 
 	CGFloat const beamRotateTileEntity_draw_point_final_xCoord_offsetFromCenter_scalar = [self beamRotateTileEntity_draw_point_final_xCoord_offsetFromCenter_scalar];
 
-	CGFloat const inset_FromCenter_scaled = CGRectGetMidX(rect) + (beamRotateTileEntity_draw_point_final_xCoord_offsetFromCenter_scalar * inset_FromCenter);
+	CGFloat const inset_FromCenter_scaled = (beamRotateTileEntity_draw_point_final_xCoord_offsetFromCenter_scalar * inset_FromCenter);
 	CGPoint const point_start = (CGPoint){
-		.x	= inset_FromCenter_scaled,
+		.x	= CGRectGetMidX(rect) + inset_FromCenter_scaled,
 		.y	= CGRectGetMidY(rect) + point_distanceFromCenter,
 	};
 
@@ -109,7 +109,7 @@
 						   point_end.y,
 						   circle_radius);
 
-	CGFloat const arrow_length = point_distanceFromCenter_scaled / 4.0f;
+	CGFloat const arrow_length = inset_FromCenter_scaled;
 
 	CGContextMoveToPoint(context,
 						 point_end.x - arrow_length,
