@@ -8,6 +8,8 @@
 
 #import "SMBBeamRotateTileEntity.h"
 #import "SMBBeamEntityTileNode.h"
+#import "CoreGraphics+SMBRotation.h"
+#import "SMBGameBoardTile__directions_to_CoreGraphics_SMBRotation__orientations_utilities.h"
 
 #import <ResplendentUtilities/RUConditionalReturn.h>
 
@@ -19,7 +21,11 @@
 
 #pragma mark - beamRotateTileEntity_draw
 -(void)beamRotateTileEntity_draw_in_rect:(CGRect)rect;
--(CGFloat)beamRotateTileEntity_draw_point_final_xCoord_offsetFromCenter_with_point_distanceFromCenter:(CGFloat)point_distanceFromCenter;
+-(void)beamRotateTileEntity_draw_in_rect:(CGRect)rect
+							   direction:(SMBGameBoardTile__direction)direction
+								   color:(nonnull UIColor*)color;
+-(CGFloat)beamRotateTileEntity_draw_point_final_xCoord_offsetFromCenter_scalar;
+-(nullable UIColor*)beamRotateTileEntity_draw_color_for_direction_rotation:(SMBGameBoardTile__direction_rotation)direction_rotation;
 
 @end
 
@@ -40,24 +46,56 @@
 #pragma mark - beamRotateTileEntity_draw
 -(void)beamRotateTileEntity_draw_in_rect:(CGRect)rect
 {
+	for (SMBGameBoardTile__direction direction = SMBGameBoardTile__direction__first;
+		 direction <= SMBGameBoardTile__direction__last;
+		 direction = direction << 1)
+	{
+		[self beamRotateTileEntity_draw_in_rect:rect
+									  direction:direction
+		 color:
+		 (direction == SMBGameBoardTile__direction__first
+		  ?
+		  [self beamRotateTileEntity_draw_color_for_direction_rotation:self.direction_rotation]
+		  :
+		  [UIColor blackColor]
+		 )];
+	}
+}
+
+-(void)beamRotateTileEntity_draw_in_rect:(CGRect)rect
+							   direction:(SMBGameBoardTile__direction)direction
+								   color:(nonnull UIColor*)color
+{
+	kRUConditionalReturn(color == nil, YES);
+
 	CGContextRef const context = UIGraphicsGetCurrentContext();
 
 	CGContextSaveGState(context);
-	
-	CGContextSetStrokeColorWithColor(context, [UIColor blackColor].CGColor);
+
+	CoreGraphics_SMBRotation__rotateCTM(context, rect, CoreGraphics_SMBRotation__orientation_for_direction(direction));
+
+	CGContextSetStrokeColorWithColor(context, color.CGColor);
 	CGContextSetLineWidth(context, 1.0f);
 
-	CGFloat const point_distanceFromCenter = CGRectGetWidth(rect) / 4.0f;
+	CGFloat const inset_FromCenter = 3.0f;
+	CGFloat const circle_radius = (CGRectGetWidth(rect) / 4.0f);
+	CGFloat const point_distanceFromCenter = inset_FromCenter + circle_radius;
 
+	CGFloat const beamRotateTileEntity_draw_point_final_xCoord_offsetFromCenter_scalar = [self beamRotateTileEntity_draw_point_final_xCoord_offsetFromCenter_scalar];
+
+	CGFloat const inset_FromCenter_scaled = CGRectGetMidX(rect) + (beamRotateTileEntity_draw_point_final_xCoord_offsetFromCenter_scalar * inset_FromCenter);
 	CGPoint const point_start = (CGPoint){
-		.x	= CGRectGetMidX(rect),
+		.x	= inset_FromCenter_scaled,
 		.y	= CGRectGetMidY(rect) + point_distanceFromCenter,
 	};
 
-	CGFloat const point_final_xCoord_offsetFromCenter = [self beamRotateTileEntity_draw_point_final_xCoord_offsetFromCenter_with_point_distanceFromCenter:point_distanceFromCenter];
+	CGFloat const point_distanceFromCenter_scaled = (beamRotateTileEntity_draw_point_final_xCoord_offsetFromCenter_scalar * point_distanceFromCenter);
 	CGPoint const point_end = (CGPoint){
-		.x	= CGRectGetMidX(rect) + point_final_xCoord_offsetFromCenter,
-		.y	= CGRectGetMidY(rect),
+		.x	=
+		CGRectGetMidX(rect)
+		+
+		point_distanceFromCenter_scaled,
+		.y	= CGRectGetMidY(rect) + inset_FromCenter,
 	};
 
 	CGContextMoveToPoint(context,
@@ -65,13 +103,13 @@
 						 point_start.y);
 
 	CGContextAddArcToPoint(context,
-						   CGRectGetMidX(rect),
-						   CGRectGetMidY(rect),
+						   point_start.x,
+						   point_end.y,
 						   point_end.x,
 						   point_end.y,
-						   point_distanceFromCenter);
+						   circle_radius);
 
-	CGFloat const arrow_length = point_final_xCoord_offsetFromCenter / 4.0f;
+	CGFloat const arrow_length = point_distanceFromCenter_scaled / 4.0f;
 
 	CGContextMoveToPoint(context,
 						 point_end.x - arrow_length,
@@ -90,7 +128,7 @@
 	CGContextRestoreGState(context);
 }
 
--(CGFloat)beamRotateTileEntity_draw_point_final_xCoord_offsetFromCenter_with_point_distanceFromCenter:(CGFloat)point_distanceFromCenter
+-(CGFloat)beamRotateTileEntity_draw_point_final_xCoord_offsetFromCenter_scalar
 {
 	SMBGameBoardTile__direction_rotation const direction_rotation = self.direction_rotation;
 	switch (direction_rotation)
@@ -100,16 +138,37 @@
 			break;
 
 		case SMBGameBoardTile__direction_rotation_left:
-			return -point_distanceFromCenter;
+			return -1.0f;
 			break;
 
 		case SMBGameBoardTile__direction_rotation_right:
-			return point_distanceFromCenter;
+			return 1.0f;
 			break;
 	}
 
 	NSAssert(false, @"unhandled direction_rotation %li",(long)direction_rotation);
 	return 0.0f;
+}
+
+-(nullable UIColor*)beamRotateTileEntity_draw_color_for_direction_rotation:(SMBGameBoardTile__direction_rotation)direction_rotation
+{
+	switch (direction_rotation)
+	{
+		case SMBGameBoardTile__direction_rotation_unknown:
+		case SMBGameBoardTile__direction_rotation_none:
+			break;
+			
+		case SMBGameBoardTile__direction_rotation_left:
+			return [UIColor magentaColor];
+			break;
+			
+		case SMBGameBoardTile__direction_rotation_right:
+			return [UIColor redColor];
+			break;
+	}
+	
+	NSAssert(false, @"unhandled direction_rotation %li",(long)direction_rotation);
+	return nil;
 }
 
 #pragma mark - NSObject

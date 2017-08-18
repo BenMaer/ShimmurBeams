@@ -82,7 +82,7 @@ static void* kSMBGameBoardView__KVOContext = &kSMBGameBoardView__KVOContext;
 {
 	if (self = [super initWithFrame:frame])
 	{
-		[self setBackgroundColor:[UIColor cyanColor]];
+		[self setBackgroundColor:[UIColor colorWithWhite:0.9f alpha:1.0f]];
 
 		[self.layer setCornerRadius:[UIView smb_commonFraming_cornerRadius_general]];
 		[self.layer setMasksToBounds:YES];
