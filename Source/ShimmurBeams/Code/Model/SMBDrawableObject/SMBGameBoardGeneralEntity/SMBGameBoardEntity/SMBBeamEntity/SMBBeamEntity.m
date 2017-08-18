@@ -46,6 +46,9 @@ typedef NS_ENUM(NSInteger, SMBBeamEntity__drawingPiece) {
 		 setKVORegistered:(BOOL)registered;
 -(void)beamEntityTileNode_mappedDataCollection_update;
 -(nullable SMBMappedDataCollection<SMBBeamEntityTileNode*>*)beamEntityTileNode_mappedDataCollection_generate;
+@property (nonatomic, assign) BOOL beamEntityTileNode_mappedDataCollection_node_next_needsUpdate;
+@property (nonatomic, assign) BOOL beamEntityTileNode_mappedDataCollection_node_next_isUpdating;
+-(void)beamEntityTileNode_mappedDataCollection_node_next_update_if_needed;
 
 @end
 
@@ -80,7 +83,7 @@ typedef NS_ENUM(NSInteger, SMBBeamEntity__drawingPiece) {
 	{
 		_beamEntityTileNode_initial =
 		[[SMBBeamEntityTileNode alloc] init_with_beamEntity:self
-											  node_previous:nil];
+										 beamEnterDirection:SMBGameBoardTile__direction_none];
 		[gameBoardTile gameBoardTileEntities_many_add:self.beamEntityTileNode_initial];
 
 		[self beamEntityTileNode_mappedDataCollection_update];
@@ -123,9 +126,9 @@ typedef NS_ENUM(NSInteger, SMBBeamEntity__drawingPiece) {
 																			newObjects:&beamEntityTileNode_mappedDataCollection_newObjects];
 
 	[beamEntityTileNode_mappedDataCollection_removedObjects enumerateObjectsUsingBlock:^(SMBBeamEntityTileNode * _Nonnull beamEntityTileNode, NSUInteger idx, BOOL * _Nonnull stop) {
-		
+
 		[beamEntityTileNode setState_finished];
-		
+
 	}];
 
 	[beamEntityTileNode_mappedDataCollection_newObjects enumerateObjectsUsingBlock:^(SMBBeamEntityTileNode * _Nonnull beamEntityTileNode, NSUInteger idx, BOOL * _Nonnull stop) {
@@ -153,6 +156,7 @@ typedef NS_ENUM(NSInteger, SMBBeamEntity__drawingPiece) {
 
 	NSMutableArray<NSString*>* const propertiesToObserve = [NSMutableArray<NSString*> array];
 	[propertiesToObserve addObject:[SMBBeamEntityTileNode_PropertiesForKVO node_next]];
+	[propertiesToObserve addObject:[SMBBeamEntityTileNode_PropertiesForKVO node_next_gameTilePosition]];
 
 	[propertiesToObserve enumerateObjectsUsingBlock:^(NSString * _Nonnull propertyToObserve, NSUInteger idx, BOOL * _Nonnull stop) {
 		if (registered)
@@ -232,6 +236,62 @@ typedef NS_ENUM(NSInteger, SMBBeamEntity__drawingPiece) {
 	return [NSArray<SMBBeamEntityTileNode*> arrayWithArray:beamEntityTileNodes_contained];
 }
 
+-(void)setBeamEntityTileNode_mappedDataCollection_node_next_needsUpdate:(BOOL)beamEntityTileNode_mappedDataCollection_node_next_needsUpdate
+{
+	kRUConditionalReturn(self.beamEntityTileNode_mappedDataCollection_node_next_needsUpdate == beamEntityTileNode_mappedDataCollection_node_next_needsUpdate, NO);
+
+	_beamEntityTileNode_mappedDataCollection_node_next_needsUpdate = beamEntityTileNode_mappedDataCollection_node_next_needsUpdate;
+
+	if ((self.beamEntityTileNode_mappedDataCollection_node_next_needsUpdate == true)
+		&&
+		(self.beamEntityTileNode_mappedDataCollection_node_next_isUpdating == false))
+	{
+		[self beamEntityTileNode_mappedDataCollection_node_next_update_if_needed];
+	}
+}
+
+-(void)setBeamEntityTileNode_mappedDataCollection_node_next_isUpdating:(BOOL)beamEntityTileNode_mappedDataCollection_node_next_isUpdating
+{
+	kRUConditionalReturn(self.beamEntityTileNode_mappedDataCollection_node_next_isUpdating == beamEntityTileNode_mappedDataCollection_node_next_isUpdating, NO);
+
+	_beamEntityTileNode_mappedDataCollection_node_next_isUpdating = beamEntityTileNode_mappedDataCollection_node_next_isUpdating;
+
+	if ((self.beamEntityTileNode_mappedDataCollection_node_next_isUpdating == false)
+		&&
+		(self.beamEntityTileNode_mappedDataCollection_node_next_needsUpdate == true))
+	{
+		[self beamEntityTileNode_mappedDataCollection_node_next_update_if_needed];
+	}
+}
+
+-(void)beamEntityTileNode_mappedDataCollection_node_next_update_if_needed
+{
+	kRUConditionalReturn(self.beamEntityTileNode_mappedDataCollection_node_next_needsUpdate == false, YES);
+	kRUConditionalReturn(self.beamEntityTileNode_mappedDataCollection_node_next_isUpdating == YES, NO);
+
+	[self setBeamEntityTileNode_mappedDataCollection_node_next_isUpdating:YES];
+	[self setBeamEntityTileNode_mappedDataCollection_node_next_needsUpdate:NO];
+
+	SMBBeamEntityTileNode* const beamEntityTileNode_initial = self.beamEntityTileNode_initial;
+	kRUConditionalReturn(beamEntityTileNode_initial == nil, YES);
+
+	for (SMBBeamEntityTileNode* beamEntityTileNode = beamEntityTileNode_initial;
+		 beamEntityTileNode != nil;
+		 beamEntityTileNode = beamEntityTileNode.node_next)
+	{
+		if (self.beamEntityTileNode_mappedDataCollection_node_next_needsUpdate)
+		{
+			break;
+		}
+
+		[beamEntityTileNode node_next_update_if_needed];
+	}
+
+	[self setBeamEntityTileNode_mappedDataCollection_node_next_isUpdating:NO];
+
+	[self beamEntityTileNode_mappedDataCollection_update];
+}
+
 #pragma mark - KVO
 -(void)observeValueForKeyPath:(nullable NSString*)keyPath ofObject:(nullable id)object change:(nullable NSDictionary*)change context:(nullable void*)context
 {
@@ -242,6 +302,10 @@ typedef NS_ENUM(NSInteger, SMBBeamEntity__drawingPiece) {
 			if ([keyPath isEqualToString:[SMBBeamEntityTileNode_PropertiesForKVO node_next]])
 			{
 				[self beamEntityTileNode_mappedDataCollection_update];
+			}
+			else if ([keyPath isEqualToString:[SMBBeamEntityTileNode_PropertiesForKVO node_next_gameTilePosition]])
+			{
+				[self setBeamEntityTileNode_mappedDataCollection_node_next_needsUpdate:YES];
 			}
 			else
 			{

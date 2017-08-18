@@ -273,7 +273,7 @@
 	SMBBeamCreatorTileEntity* const beamCreatorEntity = [SMBBeamCreatorTileEntity new];
 	[beamCreatorEntity setBeamDirection:SMBGameBoardTile__direction_up];
 	[gameBoard gameBoardTileEntity_for_beamInteractions_set:beamCreatorEntity
-									  to_gameBoardTilePosition:
+								   to_gameBoardTilePosition:
 	 [[SMBGameBoardTilePosition alloc] init_with_column:floor((CGFloat)[gameBoard gameBoardTiles_numberOfColumns] / 2.0f)
 													row:[gameBoard gameBoardTiles_numberOfRows] - 3]];
 

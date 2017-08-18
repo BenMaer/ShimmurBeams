@@ -14,11 +14,19 @@
 #import "SMBBeamBlockerTileEntity.h"
 #import "SMBGameBoardTileEntity_PowerProvider.h"
 #import "UIColor+SMBColors.h"
+#import "SMBGameBoardTileEntity_PowerProvider_PropertiesForKVO.h"
 
 #import <ResplendentUtilities/RUConditionalReturn.h>
 #import <ResplendentUtilities/NSMutableArray+RUAddObjectIfNotNil.h>
 #import <ResplendentUtilities/RUConstants.h>
 #import <ResplendentUtilities/UIGeometry+RUUtility.h>
+#import <ResplendentUtilities/RUClassOrNilUtil.h>
+
+
+
+
+
+static void* kSMBGameBoardTile__KVOContext = &kSMBGameBoardTile__KVOContext;
 
 
 
@@ -35,16 +43,14 @@
 @property (nonatomic, readonly, strong, nullable) SMBMutableMappedDataCollection<SMBGameBoardTileEntity<SMBGameBoardTileEntity_PowerProvider>*>* gameBoardTileEntities_many_powerProviders_mappedDataCollection;
 -(void)gameBoardTileEntities_many_powerProviders_mappedDataCollection_add:(nonnull SMBGameBoardTileEntity<SMBGameBoardTileEntity_PowerProvider>*)gameBoardTileEntity;
 -(void)gameBoardTileEntities_many_powerProviders_mappedDataCollection_remove:(nonnull SMBGameBoardTileEntity<SMBGameBoardTileEntity_PowerProvider>*)gameBoardTileEntity;
+-(void)gameBoardTileEntity:(nonnull SMBGameBoardTileEntity<SMBGameBoardTileEntity_PowerProvider>*)gameBoardTileEntity
+		  setKVORegistered:(BOOL)registered;
 
-//#pragma mark - gameBoardTileEntities_many_beamBlockers
-//@property (nonatomic, strong, nullable) SMBMutableMappedDataCollection<SMBGameBoardTileEntity<SMBBeamBlockerTileEntity>*>* gameBoardTileEntities_many_beamBlockers_mappedDataCollection;
-//-(void)gameBoardTileEntities_many_beamBlockers_mappedDataCollection_add:(nonnull SMBGameBoardTileEntity<SMBBeamBlockerTileEntity>*)gameBoardTileEntity;
-//-(void)gameBoardTileEntities_many_beamBlockers_mappedDataCollection_remove:(nonnull SMBGameBoardTileEntity<SMBBeamBlockerTileEntity>*)gameBoardTileEntity;
-
-//#pragma mark - beamDirectionsBlocked
-//@property (nonatomic, assign) SMBGameBoardTile__direction beamDirectionsBlocked;
-//-(void)beamDirectionsBlocked_update;
-//-(SMBGameBoardTile__direction)beamDirectionsBlocked_generate;
+#pragma mark - gameBoardTileEntities_many_powerProviders_providesPower_mappedDataCollection
+@property (nonatomic, readonly, strong, nullable) SMBMutableMappedDataCollection<SMBGameBoardTileEntity<SMBGameBoardTileEntity_PowerProvider>*>* gameBoardTileEntities_many_powerProviders_providesPower_mappedDataCollection;
+-(void)gameBoardTileEntities_many_powerProviders_providesPower_mappedDataCollection_add:(nonnull SMBGameBoardTileEntity<SMBGameBoardTileEntity_PowerProvider>*)gameBoardTileEntity;
+-(void)gameBoardTileEntities_many_powerProviders_providesPower_mappedDataCollection_remove:(nonnull SMBGameBoardTileEntity<SMBGameBoardTileEntity_PowerProvider>*)gameBoardTileEntity;
+-(void)gameBoardTileEntities_many_powerProviders_providesPower_mappedDataCollection_add_ifProvidesPower_else_remove:(nonnull SMBGameBoardTileEntity<SMBGameBoardTileEntity_PowerProvider>*)gameBoardTileEntity;
 
 #pragma mark - isPowered
 @property (nonatomic, assign) BOOL isPowered;
@@ -103,7 +109,7 @@
 
 		_gameBoardTileEntities_many_mappedDataCollection = [SMBMutableMappedDataCollection<SMBGameBoardTileEntity*> new];
 		_gameBoardTileEntities_many_powerProviders_mappedDataCollection = [SMBMutableMappedDataCollection<SMBGameBoardTileEntity<SMBGameBoardTileEntity_PowerProvider>*> new];
-//		_gameBoardTileEntities_many_beamBlockers_mappedDataCollection = [SMBMutableMappedDataCollection<SMBGameBoardTileEntity<SMBBeamBlockerTileEntity>*> new];
+		_gameBoardTileEntities_many_powerProviders_providesPower_mappedDataCollection = [SMBMutableMappedDataCollection<SMBGameBoardTileEntity<SMBGameBoardTileEntity_PowerProvider>*> new];
 	}
 
 	return self;
@@ -137,6 +143,11 @@
 
 	if (self.gameBoardTileEntity_for_beamInteractions)
 	{
+		if (self.gameBoardTileEntity_for_beamInteractions.gameBoardTile)
+		{
+			[self.gameBoardTileEntity_for_beamInteractions.gameBoardTile gameBoardTileEntities_remove:self.gameBoardTileEntity_for_beamInteractions];
+		}
+
 		[self gameBoardTileEntity:self.gameBoardTileEntity_for_beamInteractions
 			   updateRelationship:YES];
 	}
@@ -195,7 +206,7 @@
 		case SMBGameBoardTile__entityType_many:
 			[self gameBoardTileEntities_many_add:gameBoardTileEntity];
 			break;
-			
+
 		case SMBGameBoardTile__entityType_beamInteractions:
 			[self setGameBoardTileEntity_for_beamInteractions:gameBoardTileEntity];
 			break;
@@ -214,7 +225,7 @@
 		case SMBGameBoardTile__entityType_many:
 			[self gameBoardTileEntities_many_remove:gameBoardTileEntity];
 			break;
-			
+
 		case SMBGameBoardTile__entityType_beamInteractions:
 		{
 			kRUConditionalReturn(self.gameBoardTileEntity_for_beamInteractions != gameBoardTileEntity, YES);
@@ -250,96 +261,102 @@
 -(void)gameBoardTileEntities_many_powerProviders_mappedDataCollection_add:(nonnull SMBGameBoardTileEntity<SMBGameBoardTileEntity_PowerProvider>*)gameBoardTileEntity
 {
 	kRUConditionalReturn(gameBoardTileEntity == nil, YES);
-	kRUConditionalReturn([gameBoardTileEntity smb_providesPower] == false, YES);
+	kRUConditionalReturn([self.gameBoardTileEntities_many_mappedDataCollection mappableObject_exists:gameBoardTileEntity] == false, YES);
 
 	[self.gameBoardTileEntities_many_powerProviders_mappedDataCollection mappableObject_add:gameBoardTileEntity];
 
-	[self isPowered_update];
+	[self gameBoardTileEntity:gameBoardTileEntity
+			 setKVORegistered:YES];
 }
 
 -(void)gameBoardTileEntities_many_powerProviders_mappedDataCollection_remove:(nonnull SMBGameBoardTileEntity<SMBGameBoardTileEntity_PowerProvider>*)gameBoardTileEntity
 {
 	kRUConditionalReturn(gameBoardTileEntity == nil, YES);
-	kRUConditionalReturn([gameBoardTileEntity smb_providesPower] == false, YES);
+	kRUConditionalReturn([self.gameBoardTileEntities_many_mappedDataCollection mappableObject_exists:gameBoardTileEntity], YES);
+
+	BOOL const gameBoardTileEntity_providesPower = [gameBoardTileEntity smb_providesPower];
+	[self gameBoardTileEntity:gameBoardTileEntity
+			 setKVORegistered:NO];
 
 	[self.gameBoardTileEntities_many_powerProviders_mappedDataCollection mappableObject_remove:gameBoardTileEntity];
+
+	if (gameBoardTileEntity_providesPower)
+	{
+		[self gameBoardTileEntities_many_powerProviders_providesPower_mappedDataCollection_remove:gameBoardTileEntity];
+	}
+}
+
+-(void)gameBoardTileEntity:(nonnull SMBGameBoardTileEntity<SMBGameBoardTileEntity_PowerProvider>*)gameBoardTileEntity
+		  setKVORegistered:(BOOL)registered
+{
+	kRUConditionalReturn(gameBoardTileEntity == nil, YES);
+
+	NSMutableArray<NSString*>* const propertiesToObserve_observe_old_and_initial = [NSMutableArray<NSString*> array];
+	[propertiesToObserve_observe_old_and_initial addObject:[SMBGameBoardTileEntity_PowerProvider_PropertiesForKVO providesPower]];
+
+	NSMutableDictionary<NSNumber*,NSMutableArray<NSString*>*>* const KVOOptions_to_propertiesToObserve_mapping = [NSMutableDictionary<NSNumber*,NSMutableArray<NSString*>*> dictionary];
+	[KVOOptions_to_propertiesToObserve_mapping setObject:propertiesToObserve_observe_old_and_initial forKey:@(NSKeyValueObservingOptionInitial)];
+
+	[KVOOptions_to_propertiesToObserve_mapping enumerateKeysAndObjectsUsingBlock:^(NSNumber * _Nonnull KVOOptions_number, NSMutableArray<NSString *> * _Nonnull propertiesToObserve, BOOL * _Nonnull stop) {
+		[propertiesToObserve enumerateObjectsUsingBlock:^(NSString * _Nonnull propertyToObserve, NSUInteger idx, BOOL * _Nonnull stop) {
+			if (registered)
+			{
+				[gameBoardTileEntity addObserver:self
+									  forKeyPath:propertyToObserve
+										 options:(KVOOptions_number.unsignedIntegerValue)
+										 context:&kSMBGameBoardTile__KVOContext];
+			}
+			else
+			{
+				[gameBoardTileEntity removeObserver:self
+										 forKeyPath:propertyToObserve
+											context:&kSMBGameBoardTile__KVOContext];
+			}
+		}];
+	}];
+}
+
+-(void)gameBoardTileEntities_many_powerProviders_providesPower_mappedDataCollection_add:(nonnull SMBGameBoardTileEntity<SMBGameBoardTileEntity_PowerProvider>*)gameBoardTileEntity
+{
+	kRUConditionalReturn(gameBoardTileEntity == nil, YES);
+	kRUConditionalReturn(([gameBoardTileEntity smb_providesPower] == false)
+						 ||
+						 ([self.gameBoardTileEntities_many_powerProviders_mappedDataCollection mappableObject_exists:gameBoardTileEntity] == false), YES);
+
+	[self.gameBoardTileEntities_many_powerProviders_providesPower_mappedDataCollection mappableObject_add:gameBoardTileEntity];
 
 	[self isPowered_update];
 }
 
-//#pragma mark - gameBoardTileEntities_many_beamBlockers
-//-(void)gameBoardTileEntities_many_beamBlockers_mappedDataCollection_add:(nonnull SMBGameBoardTileEntity<SMBBeamBlockerTileEntity>*)gameBoardTileEntity
-//{
-//	kRUConditionalReturn(gameBoardTileEntity == nil, YES);
-//	kRUConditionalReturn([gameBoardTileEntity smb_beamBlocker] == false, YES);
-//
-//	[self.gameBoardTileEntities_many_powerProviders_mappedDataCollection mappableObject_add:gameBoardTileEntity];
-//
-//	[self beamDirectionsBlocked_update];
-//}
-//
-//-(void)gameBoardTileEntities_many_beamBlockers_mappedDataCollection_remove:(nonnull SMBGameBoardTileEntity<SMBBeamBlockerTileEntity>*)gameBoardTileEntity
-//{
-//	kRUConditionalReturn(gameBoardTileEntity == nil, YES);
-//	kRUConditionalReturn([gameBoardTileEntity smb_beamBlocker] == false, YES);
-//
-//	[self.gameBoardTileEntities_many_powerProviders_mappedDataCollection mappableObject_remove:gameBoardTileEntity];
-//
-//	[self beamDirectionsBlocked_update];
-//}
+-(void)gameBoardTileEntities_many_powerProviders_providesPower_mappedDataCollection_remove:(nonnull SMBGameBoardTileEntity<SMBGameBoardTileEntity_PowerProvider>*)gameBoardTileEntity
+{
+	kRUConditionalReturn(gameBoardTileEntity == nil, YES);
+	kRUConditionalReturn([self.gameBoardTileEntities_many_powerProviders_mappedDataCollection mappableObject_exists:gameBoardTileEntity], YES);
 
-//#pragma mark - beamDirectionsBlocked
-//-(void)setBeamDirectionsBlocked:(SMBGameBoardTile__direction)beamDirectionsBlocked
-//{
-//	kRUConditionalReturn(self.beamDirectionsBlocked == beamDirectionsBlocked, NO);
-//
-//	_beamDirectionsBlocked = beamDirectionsBlocked;
-//}
-//
-//-(void)beamDirectionsBlocked_update
-//{
-//	[self setBeamDirectionsBlocked:[self beamDirectionsBlocked_generate]];
-//}
-//
-//-(SMBGameBoardTile__direction)beamDirectionsBlocked_generate
-//{
-//	NSMutableIndexSet* const directions_unblocked = [NSMutableIndexSet indexSet];
-//
-//	for (SMBGameBoardTile__direction direction = SMBGameBoardTile__direction__first;
-//		 direction <= SMBGameBoardTile__direction__last;
-//		 direction = direction << 1)
-//	{
-//		[directions_unblocked addIndex:direction];
-//	}
-//
-//	[[self.gameBoardTileEntities_many_mappedDataCollection mappableObjects] enumerateObjectsUsingBlock:^(SMBGameBoardTileEntity<SMBMappedDataCollection_MappableObject>* _Nonnull gameBoardTileEntity, NSUInteger idx, BOOL * _Nonnull stop) {
-//
-//		SMBGameBoardTileEntity<SMBBeamBlockerTileEntity>* const gameBoardTileEntity_beamBlocker = [gameBoardTileEntity smb_beamBlocker_selfOrNull];
-//		kRUConditionalReturn(gameBoardTileEntity_beamBlocker == nil, NO);
-//
-//		NSIndexSet* const directions_unblocked_copy = [[NSIndexSet alloc] initWithIndexSet:directions_unblocked];
-//		[directions_unblocked_copy enumerateIndexesUsingBlock:^(NSUInteger idx, BOOL * _Nonnull stop) {
-//			SMBGameBoardTile__direction direction = idx;
-//			if ([gameBoardTileEntity_beamBlocker beamEnterDirection_isBlocked:direction])
-//			{
-//				[directions_unblocked removeIndex:idx];
-//			}
-//		}];
-//	}];
-//
-//	SMBGameBoardTile__direction beamDirectionsBlocked = 0;
-//	for (SMBGameBoardTile__direction direction = SMBGameBoardTile__direction__first;
-//		 direction <= SMBGameBoardTile__direction__last;
-//		 direction = direction << 1)
-//	{
-//		if ([directions_unblocked containsIndex:direction] == false)
-//		{
-//			beamDirectionsBlocked |= direction;
-//		}
-//	}
-//
-//	return beamDirectionsBlocked;
-//}
+	[self.gameBoardTileEntities_many_powerProviders_providesPower_mappedDataCollection mappableObject_remove:gameBoardTileEntity];
+
+	[self isPowered_update];
+}
+
+-(void)gameBoardTileEntities_many_powerProviders_providesPower_mappedDataCollection_add_ifProvidesPower_else_remove:(nonnull SMBGameBoardTileEntity<SMBGameBoardTileEntity_PowerProvider>*)gameBoardTileEntity
+{
+	kRUConditionalReturn(gameBoardTileEntity == nil, YES);
+
+	BOOL const providesPower = [gameBoardTileEntity smb_providesPower];
+	kRUConditionalReturn(providesPower
+						 ==
+						 ([[self.gameBoardTileEntities_many_powerProviders_providesPower_mappedDataCollection mappableObjects] containsObject:gameBoardTileEntity]),
+						 NO);
+
+	if (providesPower)
+	{
+		[self gameBoardTileEntities_many_powerProviders_providesPower_mappedDataCollection_add:gameBoardTileEntity];
+	}
+	else
+	{
+		[self gameBoardTileEntities_many_powerProviders_providesPower_mappedDataCollection_remove:gameBoardTileEntity];
+	}
+}
 
 #pragma mark - gameBoardTile
 -(nullable SMBGameBoardTile*)gameBoardTile_next_with_direction:(SMBGameBoardTile__direction)direction
@@ -354,7 +371,7 @@
 #pragma mark - isPowered
 -(void)isPowered_update
 {
-	[self setIsPowered:([self.gameBoardTileEntities_many_powerProviders_mappedDataCollection mappableObjects].count > 0)];
+	[self setIsPowered:([self.gameBoardTileEntities_many_powerProviders_providesPower_mappedDataCollection mappableObjects].count > 0)];
 }
 
 #pragma mark - isHighlighted
@@ -392,6 +409,33 @@
 		CGContextStrokePath(context);
 
 		CGContextRestoreGState(context);
+	}
+}
+
+#pragma mark - KVO
+-(void)observeValueForKeyPath:(nullable NSString*)keyPath ofObject:(nullable id)object change:(nullable NSDictionary*)change context:(nullable void*)context
+{
+	if (context == kSMBGameBoardTile__KVOContext)
+	{
+		if ([[self.gameBoardTileEntities_many_powerProviders_mappedDataCollection mappableObjects] containsObject:object])
+		{
+			if ([keyPath isEqualToString:[SMBGameBoardTileEntity_PowerProvider_PropertiesForKVO providesPower]])
+			{
+				[self gameBoardTileEntities_many_powerProviders_providesPower_mappedDataCollection_add_ifProvidesPower_else_remove:[object smb_providesPower_selfOrNull]];
+			}
+			else
+			{
+				NSAssert(false, @"unhandled keyPath %@",keyPath);
+			}
+		}
+		else
+		{
+			NSAssert(false, @"unhandled object %@",object);
+		}
+	}
+	else
+	{
+		[super observeValueForKeyPath:keyPath ofObject:object change:change context:context];
 	}
 }
 

@@ -19,7 +19,10 @@
 #pragma mark - providesPower
 -(BOOL)smb_providesPower
 {
-	return ([self smb_providesPower_selfOrNull] != nil);
+	SMBGameBoardTileEntity<SMBGameBoardTileEntity_PowerProvider>* const smb_providesPower_selfOrNull = self.smb_providesPower_selfOrNull;
+	kRUConditionalReturn_ReturnValueFalse(smb_providesPower_selfOrNull == nil, NO);
+
+	return smb_providesPower_selfOrNull.providesPower;
 }
 
 -(nullable SMBGameBoardTileEntity<SMBGameBoardTileEntity_PowerProvider>*)smb_providesPower_selfOrNull

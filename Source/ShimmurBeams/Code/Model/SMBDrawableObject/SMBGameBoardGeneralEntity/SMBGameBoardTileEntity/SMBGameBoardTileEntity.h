@@ -33,6 +33,10 @@
 @interface SMBGameBoardTileEntity : SMBGameBoardGeneralEntity
 
 #pragma mark - gameBoardTile
+/**
+ When this is set to a non nil value, it should already be added to the game board tile.
+ When this is set to a nil value, it should already be removed from the game board tile.
+ */
 @property (nonatomic, assign, nullable) SMBGameBoardTile* gameBoardTile;
 
 @end
