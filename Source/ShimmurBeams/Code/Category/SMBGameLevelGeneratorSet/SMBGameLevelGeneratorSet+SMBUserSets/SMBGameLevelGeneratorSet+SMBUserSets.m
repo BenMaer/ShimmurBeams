@@ -77,7 +77,8 @@
 	[gameLevelGenerators addObject:[[SMBGameLevelGenerator alloc] init_with_generateLevelBlock:^SMBGameLevel * _Nonnull{
 		return [SMBGameLevel smb_rotates_oneRotate_right];
 	}
-																						  name:@"One rotate right"]];
+																						  name:@"One rotate right"
+																						  hint:@"Rotate blocks change the direction of the beam based on the direction the beam enters."]];
 
 	[gameLevelGenerators addObject:[[SMBGameLevelGenerator alloc] init_with_generateLevelBlock:^SMBGameLevel * _Nonnull{
 		return [SMBGameLevel smb_rotates_two_left];
@@ -85,9 +86,9 @@
 																						  name:@"Two rotates left"]];
 
 	[gameLevelGenerators addObject:[[SMBGameLevelGenerator alloc] init_with_generateLevelBlock:^SMBGameLevel * _Nonnull{
-		return [SMBGameLevel smb_rotates_oneLeft_forced_oneLeft];
+		return [SMBGameLevel smb_rotates_oneRight_forced_oneRight];
 	}
-																						  name:@"Rotate and forced left"]];
+																						  name:@"Rotate and forced right"]];
 	[gameLevelGenerators addObject:[[SMBGameLevelGenerator alloc] init_with_generateLevelBlock:^SMBGameLevel * _Nonnull{
 		return [SMBGameLevel smb_rotates_oneLeft_twoRight_wall_oneCenter];
 	}
@@ -96,7 +97,8 @@
 	[gameLevelGenerators addObject:[[SMBGameLevelGenerator alloc] init_with_generateLevelBlock:^SMBGameLevel * _Nonnull{
 		return [SMBGameLevel smb_rotates_twoRight_deathBlock_one];
 	}
-																						  name:@"Thorn"]];
+																						  name:@"Thorn"
+																						  hint:@"Avoid letting your beam hit a death block."]];
 
 	[gameLevelGenerators addObject:[[SMBGameLevelGenerator alloc] init_with_generateLevelBlock:^SMBGameLevel * _Nonnull{
 		return [SMBGameLevel smb_rotates_twoRight_twoLeft_deathBlocks_surrounded_and_someBlocking];

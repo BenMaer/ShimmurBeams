@@ -76,7 +76,7 @@
 }
 
 #pragma mark - rotates and forced
-+(nonnull instancetype)smb_rotates_oneLeft_forced_oneLeft
++(nonnull instancetype)smb_rotates_oneRight_forced_oneRight
 {
 	SMBGameBoard* const gameBoard = [[SMBGameBoard alloc] init_with_numberOfColumns:5
 																	   numberOfRows:5];
@@ -85,18 +85,18 @@
 	[beamCreatorEntity setBeamDirection:SMBGameBoardTile__direction_up];
 	[gameBoard gameBoardTileEntity_for_beamInteractions_set:beamCreatorEntity
 								   to_gameBoardTilePosition:
-	 [[SMBGameBoardTilePosition alloc] init_with_column:[gameBoard gameBoardTiles_numberOfColumns] - 2
+	 [[SMBGameBoardTilePosition alloc] init_with_column:1
 													row:[gameBoard gameBoardTiles_numberOfRows] - 2]];
 
 	[gameBoard gameBoardTileEntity_add_levelExit_to_gameBoardTilePosition:
-	 [[SMBGameBoardTilePosition alloc] init_with_column:beamCreatorEntity.gameBoardTile.gameBoardTilePosition.column - 2
+	 [[SMBGameBoardTilePosition alloc] init_with_column:[gameBoard gameBoardTiles_numberOfColumns] - 2
 													row:beamCreatorEntity.gameBoardTile.gameBoardTilePosition.row]];
 
 	NSMutableArray<SMBGameBoardTileEntity*>* const gameBoardTileEntities = [NSMutableArray<SMBGameBoardTileEntity*> array];
 
-	[gameBoardTileEntities addObject:[[SMBBeamRotateTileEntity alloc] init_with_direction_rotation:SMBGameBoardTile__direction_rotation_left]];
+	[gameBoardTileEntities addObject:[[SMBBeamRotateTileEntity alloc] init_with_direction_rotation:SMBGameBoardTile__direction_rotation_right]];
 
-	[gameBoardTileEntities addObject:[[SMBForcedBeamRedirectTileEntity alloc] init_with_forcedBeamExitDirection:SMBGameBoardTile__direction_left]];
+	[gameBoardTileEntities addObject:[[SMBForcedBeamRedirectTileEntity alloc] init_with_forcedBeamExitDirection:SMBGameBoardTile__direction_right]];
 
 	return
 	[[self alloc] init_with_gameBoard:gameBoard
@@ -238,6 +238,10 @@
 	[gameBoard gameBoardTileEntity_for_beamInteractions_set:beamCreatorEntity
 									  to_gameBoardTilePosition:[[SMBGameBoardTilePosition alloc] init_with_column:0
 																											  row:0]];
+
+	[gameBoard gameBoardTileEntity_add_wall_to_gameBoardTilePosition:
+	 [[SMBGameBoardTilePosition alloc] init_with_column:[gameBoard gameBoardTiles_numberOfColumns] - 1
+													row:0]];
 
 	[gameBoard gameBoardTileEntity_add_levelExit_to_gameBoardTilePosition:
 	 [[SMBGameBoardTilePosition alloc] init_with_column:beamCreatorEntity.gameBoardTile.gameBoardTilePosition.column
