@@ -45,9 +45,6 @@
 #pragma mark - beamEntity
 @property (nonatomic, readonly, assign, nullable) SMBBeamEntity* beamEntity;
 
-//#pragma mark - node_previous
-//@property (nonatomic, readonly, assign, nullable) SMBBeamEntityTileNode* node_previous;
-
 #pragma mark - node_next
 @property (nonatomic, readonly, strong, nullable) SMBBeamEntityTileNode* node_next;
 -(void)node_next_update_if_needed;
@@ -76,7 +73,6 @@
 @interface SMBBeamEntityTileNode_PropertiesForKVO : NSObject
 
 +(nonnull NSString*)node_next;
-//+(nonnull NSString*)beamEnterDirection;
 +(nonnull NSString*)node_next_gameTilePosition;
 
 @end

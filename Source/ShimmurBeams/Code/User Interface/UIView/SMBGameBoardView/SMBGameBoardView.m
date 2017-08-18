@@ -397,20 +397,22 @@ static void* kSMBGameBoardView__KVOContext = &kSMBGameBoardView__KVOContext;
 
 -(void)gameBoardEntityView_mappedDataCollection_update
 {
-	SMBMutableMappedDataCollection<SMBGameBoardGeneralEntityView*>* const gameBoardEntityView_mappedDataCollection_new = [[SMBMutableMappedDataCollection<SMBGameBoardGeneralEntityView*> alloc] init_with_mappedDataCollection:self.gameBoardEntityView_mappedDataCollection];
+	SMBMutableMappedDataCollection<SMBGameBoardGeneralEntityView*>* const gameBoardEntityView_mappedDataCollection_new = [SMBMutableMappedDataCollection<SMBGameBoardGeneralEntityView*> new];
+	SMBMappedDataCollection<SMBGameBoardGeneralEntityView*>* const gameBoardEntityView_mappedDataCollection_old = self.gameBoardEntityView_mappedDataCollection;
 
 	[self.gameBoard.gameBoardEntities enumerateObjectsUsingBlock:^(SMBGameBoardEntity * _Nonnull gameBoardEntity, NSUInteger idx, BOOL * _Nonnull stop) {
 		NSString* const uniqueKey = [gameBoardEntity smb_uniqueKey];
 
-		if ([gameBoardEntityView_mappedDataCollection_new mappableObject_for_uniqueKey:uniqueKey] == nil)
-		{
-			SMBGameBoardGeneralEntityView* const gameBoardGeneralEntityView =
-			[[SMBGameBoardGeneralEntityView alloc] init_with_gameBoardGeneralEntity:gameBoardEntity];
+		SMBGameBoardGeneralEntityView* const gameBoardGeneralEntityView =
+		(
+		 [gameBoardEntityView_mappedDataCollection_old mappableObject_for_uniqueKey:uniqueKey]
+		 ?:
+		 [[SMBGameBoardGeneralEntityView alloc] init_with_gameBoardGeneralEntity:gameBoardEntity]
+		 );
 
-			[gameBoardGeneralEntityView setUserInteractionEnabled:NO];
-
-			[gameBoardEntityView_mappedDataCollection_new mappableObject_add:gameBoardGeneralEntityView];
-		}
+		[gameBoardGeneralEntityView setUserInteractionEnabled:NO];
+		
+		[gameBoardEntityView_mappedDataCollection_new mappableObject_add:gameBoardGeneralEntityView];
 	}];
 
 	[self setGameBoardEntityView_mappedDataCollection:[gameBoardEntityView_mappedDataCollection_new copy]];

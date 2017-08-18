@@ -71,7 +71,6 @@
 
 +(nonnull NSString*)gameBoardTileEntity_for_beamInteractions;
 +(nonnull NSString*)gameBoardTileEntities_many;
-//+(nonnull NSString*)beamDirectionsBlocked;
 +(nonnull NSString*)isPowered;
 
 @end

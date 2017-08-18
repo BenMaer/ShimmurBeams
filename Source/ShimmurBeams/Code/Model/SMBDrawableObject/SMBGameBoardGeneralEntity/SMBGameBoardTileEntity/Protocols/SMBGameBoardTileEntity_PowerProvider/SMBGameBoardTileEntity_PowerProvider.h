@@ -14,4 +14,7 @@
 
 @protocol SMBGameBoardTileEntity_PowerProvider <NSObject>
 
+#pragma mark - providesPower
+@property (nonatomic, assign) BOOL providesPower;
+
 @end
