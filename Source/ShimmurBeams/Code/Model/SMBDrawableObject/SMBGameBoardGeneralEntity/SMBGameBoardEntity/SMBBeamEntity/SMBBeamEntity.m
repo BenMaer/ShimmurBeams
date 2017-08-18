@@ -156,7 +156,7 @@ typedef NS_ENUM(NSInteger, SMBBeamEntity__drawingPiece) {
 
 	NSMutableArray<NSString*>* const propertiesToObserve = [NSMutableArray<NSString*> array];
 	[propertiesToObserve addObject:[SMBBeamEntityTileNode_PropertiesForKVO node_next]];
-	[propertiesToObserve addObject:[SMBBeamEntityTileNode_PropertiesForKVO node_next_gameTile]];
+	[propertiesToObserve addObject:[SMBBeamEntityTileNode_PropertiesForKVO node_next_gameTilePosition]];
 
 	[propertiesToObserve enumerateObjectsUsingBlock:^(NSString * _Nonnull propertyToObserve, NSUInteger idx, BOOL * _Nonnull stop) {
 		if (registered)
@@ -303,7 +303,7 @@ typedef NS_ENUM(NSInteger, SMBBeamEntity__drawingPiece) {
 			{
 				[self beamEntityTileNode_mappedDataCollection_update];
 			}
-			else if ([keyPath isEqualToString:[SMBBeamEntityTileNode_PropertiesForKVO node_next_gameTile]])
+			else if ([keyPath isEqualToString:[SMBBeamEntityTileNode_PropertiesForKVO node_next_gameTilePosition]])
 			{
 				[self setBeamEntityTileNode_mappedDataCollection_node_next_needsUpdate:YES];
 			}

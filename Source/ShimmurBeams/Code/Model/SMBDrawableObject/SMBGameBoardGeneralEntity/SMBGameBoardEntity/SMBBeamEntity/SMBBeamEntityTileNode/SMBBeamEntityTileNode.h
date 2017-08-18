@@ -77,6 +77,6 @@
 
 +(nonnull NSString*)node_next;
 //+(nonnull NSString*)beamEnterDirection;
-+(nonnull NSString*)node_next_gameTile;
++(nonnull NSString*)node_next_gameTilePosition;
 
 @end
