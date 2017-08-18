@@ -61,7 +61,7 @@ static void* kSMBGameBoardTileEntityPickerViewCollectionViewCell__KVOContext = &
 {
 	if (self = [super initWithFrame:frame])
 	{
-		[self.layer setBorderWidth:2.0f];
+		[self.layer setBorderWidth:1.0f];
 		[self layer_borderColor_update];
 
 		[self.layer setCornerRadius:[UIView smb_commonFraming_cornerRadius_general]];

@@ -43,9 +43,18 @@ static void* kSMBGameLevelView__KVOContext = &kSMBGameLevelView__KVOContext;
 @property (nonatomic, readonly, strong, nullable) SMBGameBoardTileEntityPickerView* gameBoardTileEntityPickerView;
 -(CGRect)gameBoardTileEntityPickerView_frame;
 -(CGRect)gameBoardTileEntityPickerView_frame_with_boundingSize:(CGSize)boundingSize;
-
-#pragma mark - gameBoardTileEntity_toMove
 -(void)gameBoardTileEntityPickerView_selectedGameBoardTileEntity_move_to_tile:(nonnull SMBGameBoardTile*)gameBoardTile;
+
+#pragma mark - gameBoardTileEntityPickerView_borderColorView
+@property (nonatomic, readonly, strong, nullable) UIView* gameBoardTileEntityPickerView_borderColorView;
+-(CGRect)gameBoardTileEntityPickerView_borderColorView_frame;
+
+@property (nonatomic, strong, nullable) NSObject* gameBoardTileEntityPickerView_borderColorView_animationPointer;
+-(void)gameBoardTileEntityPickerView_borderColorView_animate;
+-(void)gameBoardTileEntityPickerView_borderColorView_animate_to_highlightedColor_with_animationPointer:(nonnull NSObject*)animationPointer;
+-(void)gameBoardTileEntityPickerView_borderColorView_animate_back_with_animationPointer:(nonnull NSObject*)animationPointer;
+-(void)gameBoardTileEntityPickerView_borderColorView_animate_cancel;
+-(void)gameBoardTileEntityPickerView_borderColorView_alpha_update_selected:(BOOL)selected;
 
 #pragma mark - gameBoardTile
 @property (nonatomic, strong, nullable) SMBGameBoardTile* gameBoardTile_selected;
@@ -74,8 +83,17 @@ static void* kSMBGameLevelView__KVOContext = &kSMBGameLevelView__KVOContext;
 		[self setBackgroundColor:[UIColor clearColor]];
 
 		_gameBoardTileEntityPickerView = [SMBGameBoardTileEntityPickerView new];
+		[self.gameBoardTileEntityPickerView setBackgroundColor:[UIColor clearColor]];
 		[self gameBoardTileEntityPickerView_setKVORegistered:YES];
 		[self addSubview:self.gameBoardTileEntityPickerView];
+
+		_gameBoardTileEntityPickerView_borderColorView = [UIView new];
+		[self.gameBoardTileEntityPickerView_borderColorView setBackgroundColor:[UIColor clearColor]];
+		[self.gameBoardTileEntityPickerView_borderColorView setUserInteractionEnabled:NO];
+		[self.gameBoardTileEntityPickerView_borderColorView.layer setBorderWidth:2.0f];
+		[self gameBoardTileEntityPickerView_borderColorView_alpha_update_selected:NO];
+		[self.gameBoardTileEntityPickerView_borderColorView.layer setBorderColor:[UIColor redColor].CGColor];
+		[self.gameBoardTileEntityPickerView addSubview:self.gameBoardTileEntityPickerView_borderColorView];
 
 		_gameBoardView = [SMBGameBoardView new];
 		[self.gameBoardView setTileTapDelegate:self];
@@ -90,6 +108,7 @@ static void* kSMBGameLevelView__KVOContext = &kSMBGameLevelView__KVOContext;
 	[super layoutSubviews];
 
 	[self.gameBoardTileEntityPickerView setFrame:[self gameBoardTileEntityPickerView_frame]];
+	[self.gameBoardTileEntityPickerView_borderColorView setFrame:[self gameBoardTileEntityPickerView_borderColorView_frame]];
 
 	[self.gameBoardView setFrame:[self gameBoardView_frame]];
 }
@@ -181,6 +200,74 @@ static void* kSMBGameLevelView__KVOContext = &kSMBGameLevelView__KVOContext;
 	[self.gameBoardTileEntityPickerView setSelectedGameBoardTileEntity:nil];
 }
 
+#pragma mark - gameBoardTileEntityPickerView_borderColorView
+-(CGRect)gameBoardTileEntityPickerView_borderColorView_frame
+{
+	return (CGRect){
+		.size	= [self gameBoardTileEntityPickerView_frame].size,
+	};
+}
+
+-(void)gameBoardTileEntityPickerView_borderColorView_animate
+{
+	[self gameBoardTileEntityPickerView_borderColorView_animate_cancel];
+
+	NSObject* const gameBoardTileEntityPickerView_borderColorView_animationPointer = self.gameBoardTileEntityPickerView_borderColorView_animationPointer;
+	[self setGameBoardTileEntityPickerView_borderColorView_animationPointer:gameBoardTileEntityPickerView_borderColorView_animationPointer];
+
+	[self gameBoardTileEntityPickerView_borderColorView_animate_to_highlightedColor_with_animationPointer:gameBoardTileEntityPickerView_borderColorView_animationPointer];
+}
+
+-(void)gameBoardTileEntityPickerView_borderColorView_animate_to_highlightedColor_with_animationPointer:(nonnull NSObject*)animationPointer
+{
+	kRUConditionalReturn(self.gameBoardTileEntityPickerView_borderColorView_animationPointer != animationPointer, NO);
+
+	__weak typeof(self) const self_weak = self;
+	[UIView animateWithDuration:0.25
+					 animations:
+	 ^{
+		kRUConditionalReturn(self_weak.gameBoardTileEntityPickerView_borderColorView_animationPointer != animationPointer, NO);
+
+		 [self_weak gameBoardTileEntityPickerView_borderColorView_alpha_update_selected:YES];
+	}
+		completion:
+	 ^(BOOL finished) {
+		 [self_weak gameBoardTileEntityPickerView_borderColorView_animate_back_with_animationPointer:animationPointer];
+	 }];
+}
+
+-(void)gameBoardTileEntityPickerView_borderColorView_animate_back_with_animationPointer:(nonnull NSObject*)animationPointer
+{
+	kRUConditionalReturn(self.gameBoardTileEntityPickerView_borderColorView_animationPointer != animationPointer, NO);
+
+	__weak typeof(self) const self_weak = self;
+	[UIView animateWithDuration:0.25
+						  delay:0.5f
+						options:(0)
+					 animations:
+	 ^{
+		 kRUConditionalReturn(self_weak.gameBoardTileEntityPickerView_borderColorView_animationPointer != animationPointer, NO);
+
+		 [self_weak gameBoardTileEntityPickerView_borderColorView_alpha_update_selected:NO];
+	 }
+					 completion:
+	 ^(BOOL finished) {
+		 kRUConditionalReturn(self_weak.gameBoardTileEntityPickerView_borderColorView_animationPointer != animationPointer, NO);
+
+		 [self_weak setGameBoardTileEntityPickerView_borderColorView_animationPointer:nil];
+	 }];
+}
+
+-(void)gameBoardTileEntityPickerView_borderColorView_animate_cancel
+{
+	[self setGameBoardTileEntityPickerView_borderColorView_animationPointer:nil];
+}
+
+-(void)gameBoardTileEntityPickerView_borderColorView_alpha_update_selected:(BOOL)selected
+{
+	[self.gameBoardTileEntityPickerView_borderColorView setAlpha:(selected ? 1.0f : 0.0f)];
+}
+
 #pragma mark - gameBoardView
 -(CGRect)gameBoardView_frame
 {
@@ -209,6 +296,9 @@ static void* kSMBGameLevelView__KVOContext = &kSMBGameLevelView__KVOContext;
 -(void)gameBoardView:(nonnull SMBGameBoardView*)gameBoardView
 	  tile_wasTapped:(nonnull SMBGameBoardTile*)gameBoardTile
 {
+	/**
+	 If we are tapping a game board tile, and `gameBoardTileEntityPickerView` has a non nil `selectedGameBoardTileEntity`, let's move that `selectedGameBoardTileEntity` to the game board tile.
+	 */
 	if (self.gameBoardTileEntityPickerView.selectedGameBoardTileEntity)
 	{
 		[self gameBoardTileEntityPickerView_selectedGameBoardTileEntity_move_to_tile:gameBoardTile];
@@ -216,8 +306,13 @@ static void* kSMBGameLevelView__KVOContext = &kSMBGameLevelView__KVOContext;
 	}
 
 	SMBGameBoardTileEntity* const gameBoardTileEntity = gameBoardTile.gameBoardTileEntity_for_beamInteractions;
-	kRUConditionalReturn(gameBoardTileEntity == nil, NO);
-	kRUConditionalReturn([self.gameLevel.usableGameBoardTileEntities containsObject:gameBoardTileEntity] == false, NO);
+	if ((gameBoardTileEntity == nil)
+		||
+		([self.gameLevel.usableGameBoardTileEntities containsObject:gameBoardTileEntity] == false))
+	{
+		[self gameBoardTileEntityPickerView_borderColorView_animate];
+		return;
+	}
 
 	[self.gameBoardTileEntityPickerView setSelectedGameBoardTileEntity:gameBoardTileEntity];
 }
