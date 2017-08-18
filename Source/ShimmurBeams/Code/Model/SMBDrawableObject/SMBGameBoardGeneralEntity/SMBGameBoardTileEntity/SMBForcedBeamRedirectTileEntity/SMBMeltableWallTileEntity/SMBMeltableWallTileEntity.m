@@ -246,7 +246,11 @@ static void* kSMBMeltableWallTileEntity__KVOContext = &kSMBMeltableWallTileEntit
 #pragma mark - SMBTimer__timerDidFireDelegate
 -(void)timer_didFire:(nonnull SMBTimer*)timer
 {
-	[self setGameBoardTile:nil];
+	SMBGameBoardTile* const gameBoardTile = self.gameBoardTile;
+	kRUConditionalReturn(gameBoardTile == nil, YES);
+
+	[gameBoardTile gameBoardTileEntities_remove:self entityType:SMBGameBoardTile__entityType_beamInteractions];
+	NSAssert(self.gameBoardTile == nil, @"should be cleared");
 }
 
 @end
