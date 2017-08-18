@@ -470,6 +470,8 @@ typedef NS_ENUM(NSInteger, SMBBeamEntityTileNode__state) {
 	SMBGameBoardTileEntity* const gameBoardTileEntity = gameBoardTile.gameBoardTileEntity_for_beamInteractions;
 	kRUConditionalReturn_ReturnValueTrue((gameBoardTileEntity != nil)
 										 &&
+										 SMBGameBoardTile__direction__isInRange(self.beamEnterDirection)
+										 &&
 										 ([gameBoardTileEntity smb_beamBlocker_and_beamEnterDirection_isBlocked:self.beamEnterDirection]), NO);
 
 	return NO;

@@ -47,7 +47,6 @@
 
 @interface SMBGameBoardTileEntity_PropertiesForKVO : NSObject
 
-+(nonnull NSString*)needsRedraw;
 +(nonnull NSString*)gameBoardTile;
 
 @end

@@ -8,6 +8,7 @@
 
 #import "SMBGameBoardTileEntity.h"
 #import "SMBGameBoardTile__directions.h"
+#import "SMBBeamBlockerTileEntity.h"
 
 
 
@@ -19,12 +20,15 @@
 
 
 
-@interface SMBBeamCreatorTileEntity : SMBGameBoardTileEntity
+@interface SMBBeamCreatorTileEntity : SMBGameBoardTileEntity <SMBBeamBlockerTileEntity>
 
 #pragma mark - beamEntity
 @property (nonatomic, readonly, strong, nullable) SMBBeamEntity* beamEntity;
 
 #pragma mark - beamDirection
 @property (nonatomic, assign) SMBGameBoardTile__direction beamDirection;
+
+#pragma mark - requiresExternalPowerForBeam
+@property (nonatomic, assign) BOOL requiresExternalPowerForBeam;
 
 @end

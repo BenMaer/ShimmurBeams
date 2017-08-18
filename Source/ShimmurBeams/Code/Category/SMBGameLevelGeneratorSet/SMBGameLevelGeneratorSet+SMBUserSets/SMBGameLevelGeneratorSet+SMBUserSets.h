@@ -20,7 +20,10 @@
 #pragma mark - rotatesAndDeathBlocks
 +(nonnull instancetype)smb_rotatesAndDeathBlocks;
 
-#pragma mark - mirrorsIntroduction
-+(nonnull instancetype)smb_mirrors_introduction;
+#pragma mark - mirrorsAndMeltableBlocks
++(nonnull instancetype)smb_mirrorsAndMeltableBlocks_introduction;
+
+#pragma mark - powerButtonsAndSwitches
++(nonnull instancetype)smb_powerButtonsAndSwitches_introduction;
 
 @end

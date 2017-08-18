@@ -11,6 +11,7 @@
 #import "SMBGameLevel+SMBForcedRedirectsAndWalls.h"
 #import "SMBGameLevel+SMBRotatesAndDeathBlocks.h"
 #import "SMBGameLevel+SMBMirrorsAndMeltableBlocks.h"
+#import "SMBGameLevel+SMBPowerButtonsAndSwitches.h"
 
 #import <ResplendentUtilities/NSMutableArray+RUAddObjectIfNotNil.h>
 
@@ -62,7 +63,7 @@
 		return [SMBGameLevel smb_forcedRedirectsAndWalls_wallsAndForces_twoForcesNotMovable_tricky];
 	}
 																						  name:@"Tricky"]];
-	
+
 
 	return
 	[[self alloc] init_with_gameLevelGenerators:[NSArray<SMBGameLevelGenerator*> arrayWithArray:gameLevelGenerators]
@@ -73,7 +74,7 @@
 +(nonnull instancetype)smb_rotatesAndDeathBlocks
 {
 	NSMutableArray<SMBGameLevelGenerator*>* const gameLevelGenerators = [NSMutableArray<SMBGameLevelGenerator*> array];
-	
+
 	[gameLevelGenerators addObject:[[SMBGameLevelGenerator alloc] init_with_generateLevelBlock:^SMBGameLevel * _Nonnull{
 		return [SMBGameLevel smb_rotates_oneRotate_right];
 	}
@@ -114,22 +115,22 @@
 		return [SMBGameLevel smb_rotates_deathBlocks_scattered];
 	}
 																						  name:@"Scattered"]];
-	
+
 	return
 	[[self alloc] init_with_gameLevelGenerators:[NSArray<SMBGameLevelGenerator*> arrayWithArray:gameLevelGenerators]
 										   name:@"Rotates and Death Blocks"];
 }
 
 #pragma mark - mirrorsIntroduction
-+(nonnull instancetype)smb_mirrors_introduction
++(nonnull instancetype)smb_mirrorsAndMeltableBlocks_introduction
 {
 	NSMutableArray<SMBGameLevelGenerator*>* const gameLevelGenerators = [NSMutableArray<SMBGameLevelGenerator*> array];
-	
+
 	[gameLevelGenerators addObject:[[SMBGameLevelGenerator alloc] init_with_generateLevelBlock:^SMBGameLevel * _Nonnull{
 		return [SMBGameLevel smb_mirrors_introduction];
 	}
 																						  name:@"Mirror Introduction"]];
-	
+
 	[gameLevelGenerators addObject:[[SMBGameLevelGenerator alloc] init_with_generateLevelBlock:^SMBGameLevel * _Nonnull{
 		return [SMBGameLevel smb_mirror_man_in_the_mirror];
 	}
@@ -144,6 +145,21 @@
 	return
 	[[self alloc] init_with_gameLevelGenerators:[NSArray<SMBGameLevelGenerator*> arrayWithArray:gameLevelGenerators]
 										   name:@"Mirrors and Meltable Walls"];
+}
+
+#pragma mark - powerButtonsAndSwitches
++(nonnull instancetype)smb_powerButtonsAndSwitches_introduction
+{
+	NSMutableArray<SMBGameLevelGenerator*>* const gameLevelGenerators = [NSMutableArray<SMBGameLevelGenerator*> array];
+
+	[gameLevelGenerators addObject:[[SMBGameLevelGenerator alloc] init_with_generateLevelBlock:^SMBGameLevel * _Nonnull{
+		return [SMBGameLevel smb_button_introduction];
+	}
+																						  name:@"Button Introduction"]];
+
+	return
+	[[self alloc] init_with_gameLevelGenerators:[NSArray<SMBGameLevelGenerator*> arrayWithArray:gameLevelGenerators]
+										   name:@"Power buttons and switches"];
 }
 
 @end

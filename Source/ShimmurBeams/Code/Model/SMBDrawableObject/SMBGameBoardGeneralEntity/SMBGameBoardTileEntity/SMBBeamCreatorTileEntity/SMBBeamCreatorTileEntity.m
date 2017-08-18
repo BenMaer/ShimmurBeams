@@ -17,11 +17,23 @@
 #import <CoreGraphics/CoreGraphics.h>
 
 #import <ResplendentUtilities/RUConditionalReturn.h>
+#import <ResplendentUtilities/UIView+RUUtility.h>
+
+
+
+
+
+static void* kSMBBeamCreatorTileEntity__KVOContext = &kSMBBeamCreatorTileEntity__KVOContext;
+
 
 
 
 
 @interface SMBBeamCreatorTileEntity ()
+
+#pragma mark - gameBoardTile
+-(BOOL)SMBBeamCreatorTileEntity_gameBoardTile_requiresKVO;
+-(void)SMBBeamCreatorTileEntity_gameBoardTile_setKVORegistered:(BOOL)registered;
 
 #pragma mark - beamEntity
 @property (nonatomic, strong, nullable) SMBBeamEntity* beamEntity;
@@ -35,6 +47,12 @@
 
 
 @implementation SMBBeamCreatorTileEntity
+
+#pragma mark - NSObject
+-(void)dealloc
+{
+	[self SMBBeamCreatorTileEntity_gameBoardTile_setKVORegistered:NO];
+}
 
 #pragma mark - draw
 -(void)draw_in_rect:(CGRect)rect
@@ -71,16 +89,109 @@
 	CGContextAddLineToPoint(context, CGRectGetMaxX(rect), CGRectGetMaxY(rect)); /* Bottom right */
 
 	CGContextStrokePath(context);
+
+	/**
+	 Power indicator
+	 */
+	if (self.requiresExternalPowerForBeam)
+	{
+		CGFloat const powerIndicator_width = ((CGRectGetWidth(rect) / 2.0f) - box_inset_from_side) / 2.0f;
+
+		UIColor* const color =
+		(self.beamEntity
+		 ?
+		 [UIColor greenColor]
+		 :
+		 [UIColor redColor]
+		);
+		CGContextSetFillColorWithColor(context, color.CGColor);
+		
+		CGRect const powerIndicator_frame = (CGRect){
+			.origin.x		= CGRectGetMinX(rect) + CGRectGetHorizontallyAlignedXCoordForWidthOnWidth(powerIndicator_width, CGRectGetWidth(rect)),
+			.origin.y		= CGRectGetMaxY(rect) - powerIndicator_width,
+			.size.width		= powerIndicator_width,
+			.size.height	= powerIndicator_width,
+		};
+		
+		CGContextFillRect(context, powerIndicator_frame);
+	}
 }
 
+#pragma mark - SMBGameBoardTileEntity: gameBoardTile
 -(void)setGameBoardTile:(nullable SMBGameBoardTile*)gameBoardTile
 {
 	SMBGameBoardTile* const gameBoardTile_old = self.gameBoardTile;
+
+	[self SMBBeamCreatorTileEntity_gameBoardTile_setKVORegistered:NO];
+
 	[super setGameBoardTile:gameBoardTile];
+
+	[self SMBBeamCreatorTileEntity_gameBoardTile_setKVORegistered:YES];
 
 	kRUConditionalReturn(gameBoardTile_old == self.gameBoardTile, NO);
 
 	[self beamEntity_update];
+}
+
+#pragma mark - gameBoardTile
+-(BOOL)SMBBeamCreatorTileEntity_gameBoardTile_requiresKVO
+{
+	return self.requiresExternalPowerForBeam;
+}
+
+-(void)SMBBeamCreatorTileEntity_gameBoardTile_setKVORegistered:(BOOL)registered
+{
+	kRUConditionalReturn([self SMBBeamCreatorTileEntity_gameBoardTile_requiresKVO] == false, NO);
+
+	typeof(self.gameBoardTile) const gameBoardTile = self.gameBoardTile;
+	kRUConditionalReturn(gameBoardTile == nil, NO);
+	
+	NSMutableArray<NSString*>* const propertiesToObserve = [NSMutableArray<NSString*> array];
+	[propertiesToObserve addObject:[SMBGameBoardTile_PropertiesForKVO isPowered]];
+	
+	[propertiesToObserve enumerateObjectsUsingBlock:^(NSString * _Nonnull propertyToObserve, NSUInteger idx, BOOL * _Nonnull stop) {
+		if (registered)
+		{
+			[gameBoardTile addObserver:self
+							forKeyPath:propertyToObserve
+							   options:(0)
+							   context:&kSMBBeamCreatorTileEntity__KVOContext];
+		}
+		else
+		{
+			[gameBoardTile removeObserver:self
+							   forKeyPath:propertyToObserve
+								  context:&kSMBBeamCreatorTileEntity__KVOContext];
+		}
+	}];
+}
+
+#pragma mark - KVO
+-(void)observeValueForKeyPath:(nullable NSString*)keyPath ofObject:(nullable id)object change:(nullable NSDictionary*)change context:(nullable void*)context
+{
+	if (context == kSMBBeamCreatorTileEntity__KVOContext)
+	{
+		if (object == self.gameBoardTile)
+		{
+			if ([keyPath isEqualToString:[SMBGameBoardTile_PropertiesForKVO isPowered]])
+			{
+				NSAssert([self SMBBeamCreatorTileEntity_gameBoardTile_requiresKVO], @"should require KVO is changing");
+				[self beamEntity_update];
+			}
+			else
+			{
+				NSAssert(false, @"unhandled keyPath %@",keyPath);
+			}
+		}
+		else
+		{
+			NSAssert(false, @"unhandled object %@",object);
+		}
+	}
+	else
+	{
+		[super observeValueForKeyPath:keyPath ofObject:object change:change context:context];
+	}
 }
 
 #pragma mark - beamEntity
@@ -99,6 +210,8 @@
 	{
 		[self.gameBoardTile.gameBoard gameBoardEntity_add:self.beamEntity];
 	}
+
+	[self setNeedsRedraw:YES];
 }
 
 -(void)beamEntity_update
@@ -111,6 +224,10 @@
 	SMBGameBoardTile* const gameBoardTile = self.gameBoardTile;
 	kRUConditionalReturn_ReturnValueNil(gameBoardTile == nil, NO);
 
+	kRUConditionalReturn_ReturnValueNil((self.requiresExternalPowerForBeam == YES)
+										&&
+										(gameBoardTile.isPowered == false), NO);
+
 	return [[SMBBeamEntity alloc] init_with_gameBoardTile:gameBoardTile];
 }
 
@@ -122,6 +239,26 @@
 	_beamDirection = beamDirection;
 
 	[self beamEntity_update];
+}
+
+#pragma mark - requiresExternalPowerForBeam
+-(void)setRequiresExternalPowerForBeam:(BOOL)requiresExternalPowerForBeam
+{
+	kRUConditionalReturn(self.requiresExternalPowerForBeam == requiresExternalPowerForBeam, NO);
+
+	[self SMBBeamCreatorTileEntity_gameBoardTile_setKVORegistered:NO];
+
+	_requiresExternalPowerForBeam = requiresExternalPowerForBeam;
+
+	[self SMBBeamCreatorTileEntity_gameBoardTile_setKVORegistered:YES];
+
+	[self beamEntity_update];
+}
+
+#pragma mark - SMBBeamBlockerTileEntity
+-(BOOL)beamEnterDirection_isBlocked:(SMBGameBoardTile__direction)beamEnterDirection
+{
+	return YES;
 }
 
 @end

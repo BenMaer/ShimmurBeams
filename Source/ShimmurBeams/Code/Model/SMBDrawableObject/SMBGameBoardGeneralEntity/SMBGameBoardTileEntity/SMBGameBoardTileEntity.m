@@ -63,21 +63,6 @@
 
 	_gameBoardTile = gameBoardTile;
 
-//	SMBGameBoardTile* const gameBoardTile_old = self.gameBoardTile;
-//	_gameBoardTile = gameBoardTile;
-//
-//	if (gameBoardTile_old)
-//	{
-//		[gameBoardTile_old gameBoardTileEntities_remove:self];
-//	}
-//
-//#if kSMBGameBoardTileEntity_gameBoardTileOwnership_validation_enabled
-//	NSAssert((gameBoardTile_old == nil)
-//			 ||
-//			 ([self belongsTo_gameBoardTile:gameBoardTile_old] == false),
-//			 @"shouldn't belong to game tile anymore");
-//#endif
-
 #if kSMBGameBoardTileEntity_gameBoardTileOwnership_validation_enabled
 	NSAssert((self.gameBoardTile == nil)
 			 ||
@@ -105,6 +90,6 @@
 
 @implementation SMBGameBoardTileEntity_PropertiesForKVO
 
-+(nonnull NSString*)needsRedraw{return NSStringFromSelector(_cmd);}
 +(nonnull NSString*)gameBoardTile{return NSStringFromSelector(_cmd);}
+
 @end
