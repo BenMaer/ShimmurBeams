@@ -25,26 +25,32 @@
 
 
 /**
- Setup sets:
+ Usage steps:
  1) init
- 2) set game tile
- 3) call `setState_ready`.
+ 2) prepare:
+  - KVO on `node_next_gameTile`
+  - set game tile
+ 3) make ready (prepare steps must be done by this point):
+ - call `setState_ready`.
+ 4) while ready:
+ - when `node_next_gameTile` changes, call `node_next_update_if_needed`.
 
  Finish steps:
- 1) remove from game tile.
- 
- Whoever 
+ - un KVO on `node_next_gameTile`.
+ - call `setState_finished`.
+ - Ensure it's been removed from the previous node, if it had one.
  */
 @interface SMBBeamEntityTileNode : SMBGameBoardTileEntity <SMBGameBoardTileEntity_PowerProvider>
 
 #pragma mark - beamEntity
 @property (nonatomic, readonly, assign, nullable) SMBBeamEntity* beamEntity;
 
-#pragma mark - node_previous
-@property (nonatomic, readonly, assign, nullable) SMBBeamEntityTileNode* node_previous;
+//#pragma mark - node_previous
+//@property (nonatomic, readonly, assign, nullable) SMBBeamEntityTileNode* node_previous;
 
 #pragma mark - node_next
 @property (nonatomic, readonly, strong, nullable) SMBBeamEntityTileNode* node_next;
+-(void)node_next_update_if_needed;
 
 #pragma mark - beamExitDirection
 @property (nonatomic, readonly, assign) SMBGameBoardTile__direction beamExitDirection;
@@ -59,11 +65,7 @@
 
 #pragma mark - init
 -(nullable instancetype)init_with_beamEntity:(nonnull SMBBeamEntity*)beamEntity
-							   node_previous:(nullable SMBBeamEntityTileNode*)node_previous NS_DESIGNATED_INITIALIZER;
-
-//-(nullable instancetype)init_with_gameBoardTile:(nonnull SMBGameBoardTile*)gameBoardTile
-//									 beamEntity:(nonnull SMBBeamEntity*)beamEntity
-//								  node_previous:(nullable SMBBeamEntityTileNode*)node_previous NS_DESIGNATED_INITIALIZER;
+						  beamEnterDirection:(SMBGameBoardTile__direction)beamEnterDirection NS_DESIGNATED_INITIALIZER;
 
 @end
 
@@ -74,6 +76,7 @@
 @interface SMBBeamEntityTileNode_PropertiesForKVO : NSObject
 
 +(nonnull NSString*)node_next;
-+(nonnull NSString*)beamEnterDirection;
+//+(nonnull NSString*)beamEnterDirection;
++(nonnull NSString*)node_next_gameTile;
 
 @end

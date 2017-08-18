@@ -54,20 +54,29 @@
 {
 	kRUConditionalReturn(self.gameBoardTile == gameBoardTile, NO);
 
-	SMBGameBoardTile* const gameBoardTile_old = self.gameBoardTile;
-	_gameBoardTile = gameBoardTile;
-
-	if (gameBoardTile_old)
-	{
-		[gameBoardTile_old gameBoardTileEntities_remove:self];
-	}
-
 #if kSMBGameBoardTileEntity_gameBoardTileOwnership_validation_enabled
-	NSAssert((gameBoardTile_old == nil)
+	NSAssert((self.gameBoardTile == nil)
 			 ||
-			 ([self belongsTo_gameBoardTile:gameBoardTile_old] == false),
+			 ([self belongsTo_gameBoardTile:self.gameBoardTile] == false),
 			 @"shouldn't belong to game tile anymore");
 #endif
+
+	_gameBoardTile = gameBoardTile;
+
+//	SMBGameBoardTile* const gameBoardTile_old = self.gameBoardTile;
+//	_gameBoardTile = gameBoardTile;
+//
+//	if (gameBoardTile_old)
+//	{
+//		[gameBoardTile_old gameBoardTileEntities_remove:self];
+//	}
+//
+//#if kSMBGameBoardTileEntity_gameBoardTileOwnership_validation_enabled
+//	NSAssert((gameBoardTile_old == nil)
+//			 ||
+//			 ([self belongsTo_gameBoardTile:gameBoardTile_old] == false),
+//			 @"shouldn't belong to game tile anymore");
+//#endif
 
 #if kSMBGameBoardTileEntity_gameBoardTileOwnership_validation_enabled
 	NSAssert((self.gameBoardTile == nil)

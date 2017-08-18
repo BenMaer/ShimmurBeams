@@ -137,6 +137,11 @@
 
 	if (self.gameBoardTileEntity_for_beamInteractions)
 	{
+		if (self.gameBoardTileEntity_for_beamInteractions.gameBoardTile)
+		{
+			[self.gameBoardTileEntity_for_beamInteractions.gameBoardTile gameBoardTileEntities_remove:self.gameBoardTileEntity_for_beamInteractions];
+		}
+
 		[self gameBoardTileEntity:self.gameBoardTileEntity_for_beamInteractions
 			   updateRelationship:YES];
 	}
