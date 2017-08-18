@@ -219,6 +219,7 @@ typedef NS_ENUM(NSInteger, SMBBeamEntityTileNode__state) {
 #pragma mark - beamExitDirection
 -(void)setBeamExitDirection:(SMBGameBoardTile__direction)beamExitDirection
 {
+	kRUConditionalReturn(SMBGameBoardTile__direction__isInRange_or_none(beamExitDirection) == false, YES);
 	kRUConditionalReturn(self.beamExitDirection == beamExitDirection, NO);
 
 	_beamExitDirection = beamExitDirection;
@@ -230,7 +231,6 @@ typedef NS_ENUM(NSInteger, SMBBeamEntityTileNode__state) {
 -(void)beamExitDirection_update
 {
 	[self setBeamExitDirection:[self beamExitDirection_generate]];
-	kRUConditionalReturn(self.beamExitDirection == SMBGameBoardTile__direction_unknown, YES);
 }
 
 -(SMBGameBoardTile__direction)beamExitDirection_generate
@@ -238,7 +238,7 @@ typedef NS_ENUM(NSInteger, SMBBeamEntityTileNode__state) {
 	SMBGameBoardTile__direction const direction_error = SMBGameBoardTile__direction_unknown;
 
 	SMBGameBoardTile* const gameBoardTile = self.gameBoardTile;
-	kRUConditionalReturn_ReturnValue(gameBoardTile == nil, YES, direction_error);
+	kRUConditionalReturn_ReturnValue(gameBoardTile == nil, NO, SMBGameBoardTile__direction_none);
 
 	SMBGameBoardTileEntity* const gameBoardTileEntity_for_beamInteractions = gameBoardTile.gameBoardTileEntity_for_beamInteractions;
 

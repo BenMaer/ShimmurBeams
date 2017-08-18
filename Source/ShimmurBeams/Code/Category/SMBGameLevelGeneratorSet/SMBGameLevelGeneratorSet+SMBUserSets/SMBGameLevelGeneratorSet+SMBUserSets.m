@@ -28,12 +28,14 @@
 	[gameLevelGenerators addObject:[[SMBGameLevelGenerator alloc] init_with_generateLevelBlock:^SMBGameLevel * _Nonnull{
 		return [SMBGameLevel smb_forcedRedirects_oneForce_right];
 	}
-																						  name:@"One force right"]];
+																						  name:@"One force right"
+																						  hint:@"Select an entity from the bottom, and then tap an empty tile on the board to place it."]];
 
 	[gameLevelGenerators addObject:[[SMBGameLevelGenerator alloc] init_with_generateLevelBlock:^SMBGameLevel * _Nonnull{
 		return [SMBGameLevel smb_forcedRedirects_twoForces_leftThenDown];
 	}
-																						  name:@"Two forces"]];
+																						  name:@"Two forces"
+																						  hint:@"Any piece that you placed on the board, can be selected again by tapping it on the board."]];
 
 	[gameLevelGenerators addObject:[[SMBGameLevelGenerator alloc] init_with_generateLevelBlock:^SMBGameLevel * _Nonnull{
 		return [SMBGameLevel smb_forcedRedirectsAndWalls_oneWall_threeForces];
