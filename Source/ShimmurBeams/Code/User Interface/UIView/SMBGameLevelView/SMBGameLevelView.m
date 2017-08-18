@@ -155,7 +155,7 @@ static void* kSMBGameLevelView__KVOContext = &kSMBGameLevelView__KVOContext;
 
 -(CGRect)gameBoardTileEntityPickerView_frame_with_boundingSize:(CGSize)boundingSize
 {
-	CGFloat const height = 30.0f;
+	CGFloat const height = 50.0f;
 
 	return CGRectCeilOrigin((CGRect){
 		.origin.y		= CGRectGetMaxY([self gameBoardView_frame_with_boundingSize:boundingSize]) + 20.0f,
