@@ -68,6 +68,8 @@ static void* kSMBGameBoardTile__KVOContext = &kSMBGameBoardTile__KVOContext;
 -(void)dealloc
 {
 	[[self.gameBoardTileEntities_many_mappedDataCollection mappableObjects] enumerateObjectsUsingBlock:^(SMBGameBoardTileEntity<SMBMappedDataCollection_MappableObject>*  _Nonnull gameBoardTileEntity, NSUInteger idx, BOOL * _Nonnull stop) {
+		kRUConditionalReturn(gameBoardTileEntity.gameBoardTile == nil, NO);
+
 		[self gameBoardTileEntities_many_remove:gameBoardTileEntity];
 	}];
 
