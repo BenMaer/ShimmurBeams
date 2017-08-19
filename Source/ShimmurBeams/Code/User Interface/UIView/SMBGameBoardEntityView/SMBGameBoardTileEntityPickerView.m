@@ -55,7 +55,7 @@ kRUDefineNSStringConstant(SMBGameBoardTileEntityPickerView__cellIdentifier_SMBGa
 		[self setBackgroundColor:[UIColor clearColor]];
 
 		_collectionViewFlowLayout = [UICollectionViewFlowLayout new];
-		[self.collectionViewFlowLayout setMinimumLineSpacing:0.0f];
+		[self.collectionViewFlowLayout setMinimumLineSpacing:10.0f];
 		[self.collectionViewFlowLayout setMinimumInteritemSpacing:0.0f];
 		[self.collectionViewFlowLayout setScrollDirection:UICollectionViewScrollDirectionHorizontal];
 
@@ -134,17 +134,12 @@ kRUDefineNSStringConstant(SMBGameBoardTileEntityPickerView__cellIdentifier_SMBGa
 }
 
 #pragma marl - UICollectionViewDelegate, UICollectionViewDataSource
-- (NSInteger)collectionView:(nonnull UICollectionView*)collectionView numberOfItemsInSection:(NSInteger)section
+-(NSInteger)collectionView:(nonnull UICollectionView*)collectionView numberOfItemsInSection:(NSInteger)section
 {
 	return self.gameBoardTileEntities.count;
 }
 
--(NSInteger)numberOfSectionsInCollectionView:(nonnull UICollectionView*)collectionView
-{
-	return 1;
-}
-
-- (nonnull UICollectionViewCell*)collectionView:(nonnull UICollectionView*)collectionView cellForItemAtIndexPath:(nonnull NSIndexPath*)indexPath
+-(nonnull UICollectionViewCell*)collectionView:(nonnull UICollectionView*)collectionView cellForItemAtIndexPath:(nonnull NSIndexPath*)indexPath
 {
 	SMBGameBoardTileEntityPickerViewCollectionViewCell* const gameBoardTileEntityPickerViewCollectionViewCell =
 	[collectionView dequeueReusableCellWithReuseIdentifier:SMBGameBoardTileEntityPickerView__cellIdentifier_SMBGameBoardTileEntityPickerViewCollectionViewCell forIndexPath:indexPath];
