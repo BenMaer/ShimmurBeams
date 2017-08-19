@@ -11,6 +11,7 @@
 
 #import <ResplendentUtilities/RUConditionalReturn.h>
 #import <ResplendentUtilities/RUClassOrNilUtil.h>
+#import <ResplendentUtilities/RUOrderedDictionary.h>
 
 
 
@@ -19,7 +20,7 @@
 @interface SMBMappedDataCollection ()
 
 #pragma mark - uniqueKey_to_mappableObject_mapping
-@property (nonatomic, copy, nullable) NSDictionary<NSString*,id<SMBMappedDataCollection_MappableObject>>* uniqueKey_to_mappableObject_mapping;
+@property (nonatomic, copy, nullable) RUOrderedDictionary<NSString*,id<SMBMappedDataCollection_MappableObject>>* uniqueKey_to_mappableObject_mapping;
 
 @end
 
@@ -30,7 +31,7 @@
 @implementation SMBMappedDataCollection
 
 #pragma mark - init
--(nonnull instancetype)init_with_uniqueKey_to_mappableObject_mapping:(nullable NSDictionary<NSString*,id<SMBMappedDataCollection_MappableObject>>*)uniqueKey_to_mappableObject_mapping
+-(nonnull instancetype)init_with_uniqueKey_to_mappableObject_mapping:(nullable RUOrderedDictionary<NSString*,id<SMBMappedDataCollection_MappableObject>>*)uniqueKey_to_mappableObject_mapping
 {
 	if (self = [self init])
 	{
@@ -55,7 +56,7 @@
 {
 	kRUConditionalReturn_ReturnValueNil(uniqueKey == nil, YES);
 
-	NSDictionary<NSString*,id<SMBMappedDataCollection_MappableObject>>* const uniqueKey_to_mappableObject_mapping = self.uniqueKey_to_mappableObject_mapping;
+	RUOrderedDictionary<NSString*,id<SMBMappedDataCollection_MappableObject>>* const uniqueKey_to_mappableObject_mapping = self.uniqueKey_to_mappableObject_mapping;
 	kRUConditionalReturn_ReturnValueFalse(uniqueKey_to_mappableObject_mapping == nil, NO);
 
 	return [uniqueKey_to_mappableObject_mapping objectForKey:uniqueKey];
@@ -130,6 +131,23 @@
 	}];
 
 	*newObjects = [NSArray<id> arrayWithArray:newObjects_mutable];
+}
+
+#pragma mark - uniqueKey_to_mappableObject_mapping
+@synthesize uniqueKey_to_mappableObject_mapping = _uniqueKey_to_mappableObject_mapping;
+-(void)setUniqueKey_to_mappableObject_mapping:(RUOrderedDictionary<NSString*,id<SMBMappedDataCollection_MappableObject>>*)uniqueKey_to_mappableObject_mapping
+{
+	kRUConditionalReturn((self.uniqueKey_to_mappableObject_mapping == uniqueKey_to_mappableObject_mapping)
+						 ||
+						 [self.uniqueKey_to_mappableObject_mapping isEqual:uniqueKey_to_mappableObject_mapping], NO);
+	
+	_uniqueKey_to_mappableObject_mapping =
+	(uniqueKey_to_mappableObject_mapping
+	 ?
+	 [uniqueKey_to_mappableObject_mapping copy]
+	 :
+	 nil
+	 );
 }
 
 @end

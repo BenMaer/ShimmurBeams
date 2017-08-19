@@ -237,6 +237,7 @@ typedef NS_ENUM(NSInteger, SMBBeamEntity__drawingPiece) {
 		}
 	}];
 
+
 	return [NSArray<SMBBeamEntityTileNode*> arrayWithArray:beamEntityTileNodes_contained];
 }
 

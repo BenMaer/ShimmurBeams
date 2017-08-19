@@ -14,6 +14,7 @@
 
 
 
+@class RUOrderedDictionary<KeyType, ObjectType>;
 @class SMBMutableMappedDataCollection<ObjectType>;
 
 
@@ -25,7 +26,7 @@
 : NSObject
 
 #pragma mark - uniqueKey_to_mappableObject_mapping
-@property (nonatomic, readonly, copy, nullable) NSDictionary<NSString*,ObjectType<SMBMappedDataCollection_MappableObject>>* uniqueKey_to_mappableObject_mapping;
+@property (nonatomic, readonly, copy, nullable) RUOrderedDictionary<NSString*,ObjectType<SMBMappedDataCollection_MappableObject>>* uniqueKey_to_mappableObject_mapping;
 
 #pragma mark - mappableObjects
 -(nullable NSArray<ObjectType<SMBMappedDataCollection_MappableObject>>*)mappableObjects;
@@ -34,7 +35,7 @@
 -(nullable NSString*)mappableObject_uniqueKey:(nonnull ObjectType<SMBMappedDataCollection_MappableObject>)mappableObject;
 
 #pragma mark - init
--(nonnull instancetype)init_with_uniqueKey_to_mappableObject_mapping:(nullable NSDictionary<NSString*,ObjectType<SMBMappedDataCollection_MappableObject>>*)uniqueKey_to_mappableObject_mapping;
+-(nonnull instancetype)init_with_uniqueKey_to_mappableObject_mapping:(nullable RUOrderedDictionary<NSString*,ObjectType<SMBMappedDataCollection_MappableObject>>*)uniqueKey_to_mappableObject_mapping;
 -(nonnull instancetype)init_with_mappedDataCollection:(nullable SMBMappedDataCollection<ObjectType>*)mappedDataCollection;
 
 #pragma mark - copy
