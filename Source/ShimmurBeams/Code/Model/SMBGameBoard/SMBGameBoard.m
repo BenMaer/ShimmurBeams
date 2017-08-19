@@ -53,6 +53,11 @@ static void* kSMBGameBoard__KVOContext = &kSMBGameBoard__KVOContext;
 #pragma mark - gameBoardEntities
 @property (nonatomic, copy, nullable) NSArray<SMBGameBoardEntity*>* gameBoardEntities;
 
+#if DEBUG
+#pragma mark - deallocWasCalled
+@property (nonatomic, assign) BOOL deallocWasCalled;
+#endif
+
 @end
 
 
@@ -64,6 +69,10 @@ static void* kSMBGameBoard__KVOContext = &kSMBGameBoard__KVOContext;
 #pragma mark - NSObject
 -(void)dealloc
 {
+#if DEBUG
+	[self setDeallocWasCalled:YES];
+#endif
+
 	[self gameBoardTiles_setKVORegistered:NO];
 }
 
@@ -112,7 +121,7 @@ static void* kSMBGameBoard__KVOContext = &kSMBGameBoard__KVOContext;
 	[self.gameBoardTiles enumerateObjectsUsingBlock:^(NSArray<SMBGameBoardTile *> * _Nonnull gameBoardTiles_column, NSUInteger column, BOOL * _Nonnull stop_column) {
 		[gameBoardTiles_column enumerateObjectsUsingBlock:^(SMBGameBoardTile * _Nonnull gameBoardTile, NSUInteger row, BOOL * _Nonnull stop_row) {
 			BOOL stop = false;
-			
+
 			block(gameBoardTile, column, row, &stop);
 
 			*stop_column = stop;
@@ -368,7 +377,7 @@ static void* kSMBGameBoard__KVOContext = &kSMBGameBoard__KVOContext;
 			{
 				SMBGameBoardTile* const gameBoardTile = kRUClassOrNil(object, SMBGameBoardTile);
 				kRUConditionalReturn(gameBoardTile == nil, YES);
-				
+
 				NSArray<SMBGameBoardTileEntity*>* const gameBoardTileEntities_old = kRUClassOrNil([change objectForKey:NSKeyValueChangeOldKey], NSArray<SMBBeamEntityTileNode*>);
 				NSArray<SMBGameBoardTileEntity*>* const gameBoardTileEntities = gameBoardTile.gameBoardTileEntities_many;
 
@@ -434,7 +443,8 @@ static void* kSMBGameBoard__KVOContext = &kSMBGameBoard__KVOContext;
 	kRUConditionalReturn(gameBoardEntity == nil, YES);
 
 	NSArray<SMBGameBoardEntity*>* const gameBoardEntities_old = self.gameBoardEntities;
-	kRUConditionalReturn(gameBoardEntities_old == nil, YES);
+	kRUConditionalReturn(gameBoardEntities_old == nil,
+						 (self.deallocWasCalled == false));
 
 	NSInteger const gameBoardEntity_index = [gameBoardEntities_old indexOfObject:gameBoardEntity];
 	kRUConditionalReturn(gameBoardEntity_index == NSNotFound, YES);
