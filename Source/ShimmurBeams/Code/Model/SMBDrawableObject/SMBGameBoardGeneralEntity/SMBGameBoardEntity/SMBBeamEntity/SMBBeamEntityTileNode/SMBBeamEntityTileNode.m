@@ -416,17 +416,7 @@ typedef NS_ENUM(NSInteger, SMBBeamEntityTileNode__state) {
 										([beamEntityTileNodes_at_samePosition containsObject:self] == false),
 										YES);
 
-	__block BOOL alreadyHaveNextNode = NO;
-	[beamEntityTileNodes_at_samePosition enumerateObjectsUsingBlock:^(SMBBeamEntityTileNode * _Nonnull beamEntityTileNode, NSUInteger idx, BOOL * _Nonnull stop) {
-		if ((beamEntityTileNode != self)
-			&&
-			beamEntityTileNode.node_next != nil)
-		{
-			alreadyHaveNextNode = YES;
-			*stop = YES;
-		}
-	}];
-	kRUConditionalReturn_ReturnValueNil(alreadyHaveNextNode, NO);
+	kRUConditionalReturn_ReturnValueNil(beamEntityTileNodes_at_samePosition.firstObject != self, NO)
 
 	return gameBoardTile_next.gameBoardTilePosition;
 }
