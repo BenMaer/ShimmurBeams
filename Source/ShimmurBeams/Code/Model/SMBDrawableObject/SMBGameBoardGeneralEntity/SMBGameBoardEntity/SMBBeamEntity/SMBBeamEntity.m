@@ -288,8 +288,6 @@ typedef NS_ENUM(NSInteger, SMBBeamEntity__drawingPiece) {
 	}
 
 	[self setBeamEntityTileNode_mappedDataCollection_node_next_isUpdating:NO];
-
-	[self beamEntityTileNode_mappedDataCollection_update];
 }
 
 #pragma mark - KVO
