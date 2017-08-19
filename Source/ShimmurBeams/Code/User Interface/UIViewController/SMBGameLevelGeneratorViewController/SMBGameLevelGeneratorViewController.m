@@ -282,6 +282,8 @@ static void* kSMBGameLevelGeneratorViewController__KVOContext = &kSMBGameLevelGe
 #pragma mark - navigationItem_resetButton
 -(void)navigationItem_resetButton_action_didFire
 {
+	[self.view setUserInteractionEnabled:YES];
+
 	[self gameLevelGenerator_gameLevel_update];
 }
 
