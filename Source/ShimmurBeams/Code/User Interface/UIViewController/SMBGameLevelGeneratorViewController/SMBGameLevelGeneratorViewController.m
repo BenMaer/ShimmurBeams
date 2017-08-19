@@ -48,6 +48,9 @@ static void* kSMBGameLevelGeneratorViewController__KVOContext = &kSMBGameLevelGe
 -(void)navigationItem_title_update;
 -(nullable NSString*)navigationItem_title_generate;
 
+#pragma mark - navigationItem_resetButton
+-(void)navigationItem_resetButton_action_didFire;
+
 @end
 
 
@@ -85,6 +88,12 @@ static void* kSMBGameLevelGeneratorViewController__KVOContext = &kSMBGameLevelGe
 	[self gameLevelView_level_update];
 
 	[self navigationItem_title_update];
+
+	[self.navigationItem setRightBarButtonItem:
+	 [[UIBarButtonItem alloc] initWithTitle:@"Reset"
+									  style:UIBarButtonItemStylePlain
+									 target:self
+									 action:@selector(navigationItem_resetButton_action_didFire)]];
 }
 
 -(void)viewWillLayoutSubviews
@@ -268,6 +277,12 @@ static void* kSMBGameLevelGeneratorViewController__KVOContext = &kSMBGameLevelGe
 	{
 		[super observeValueForKeyPath:keyPath ofObject:object change:change context:context];
 	}
+}
+
+#pragma mark - navigationItem_resetButton
+-(void)navigationItem_resetButton_action_didFire
+{
+	[self gameLevelGenerator_gameLevel_update];
 }
 
 @end
