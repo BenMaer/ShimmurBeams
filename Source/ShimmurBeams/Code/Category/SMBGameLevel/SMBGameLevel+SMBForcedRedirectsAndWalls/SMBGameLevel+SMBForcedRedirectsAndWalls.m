@@ -209,7 +209,15 @@
 													row:0]];
 
 	[gameBoard gameBoardTileEntity_add_wall_to_gameBoardTilePosition:
+	 [[SMBGameBoardTilePosition alloc] init_with_column:1
+													row:0]];
+
+	[gameBoard gameBoardTileEntity_add_wall_to_gameBoardTilePosition:
 	 [[SMBGameBoardTilePosition alloc] init_with_column:[gameBoard gameBoardTiles_numberOfColumns] - 1
+													row:0]];
+
+	[gameBoard gameBoardTileEntity_add_wall_to_gameBoardTilePosition:
+	 [[SMBGameBoardTilePosition alloc] init_with_column:[gameBoard gameBoardTiles_numberOfColumns] - 2
 													row:0]];
 
 	[gameBoard gameBoardTileEntity_for_beamInteractions_set:[[SMBForcedBeamRedirectTileEntity alloc] init_with_forcedBeamExitDirection:SMBGameBoardTile__direction_left]
