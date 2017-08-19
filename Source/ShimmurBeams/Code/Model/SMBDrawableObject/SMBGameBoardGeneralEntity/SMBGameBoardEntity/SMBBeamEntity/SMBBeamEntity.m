@@ -39,6 +39,9 @@ typedef NS_ENUM(NSInteger, SMBBeamEntity__drawingPiece) {
 
 @interface SMBBeamEntity ()
 
+#pragma mark - beamEntityTileNode_initial
+-(void)beamEntityTileNode_initial_removeFromTile;
+
 #pragma mark - beamEntityTileNode_mappedDataCollection
 @property (nonatomic, copy, nullable) SMBMappedDataCollection<SMBBeamEntityTileNode*>* beamEntityTileNode_mappedDataCollection;
 -(void)beamEntityTileNode_mappedDataCollection_setKVORegistered:(BOOL)registered;
@@ -61,6 +64,7 @@ typedef NS_ENUM(NSInteger, SMBBeamEntity__drawingPiece) {
 #pragma mark - NSObject
 -(void)dealloc
 {
+	[self beamEntityTileNode_initial_removeFromTile];
 	[self beamEntityTileNode_mappedDataCollection_setKVORegistered:NO];
 }
 
@@ -99,7 +103,7 @@ typedef NS_ENUM(NSInteger, SMBBeamEntity__drawingPiece) {
 	kRUConditionalReturn(beamEntityTileNode_initial == nil, YES);
 
 	SMBGameBoardTile* const gameBoardTile = beamEntityTileNode_initial.gameBoardTile;
-	kRUConditionalReturn(gameBoardTile == nil, YES);
+	kRUConditionalReturn(gameBoardTile == nil, NO);
 
 	[gameBoardTile gameBoardTileEntities_many_remove:beamEntityTileNode_initial];
 }
