@@ -9,10 +9,12 @@
 #import "SMBGameBoardTileEntityPickerView.h"
 #import "SMBGameBoardTileEntityPickerViewCollectionViewCell.h"
 #import "SMBGameBoardTileEntity.h"
+#import "SMBGameBoardTile.h"
 
 #import <ResplendentUtilities/RUConditionalReturn.h>
 #import <ResplendentUtilities/NSString+RUMacros.h>
 #import <ResplendentUtilities/RUClassOrNilUtil.h>
+#import <ResplendentUtilities/UIView+RUUtility.h>
 
 
 
@@ -38,6 +40,11 @@ kRUDefineNSStringConstant(SMBGameBoardTileEntityPickerView__cellIdentifier_SMBGa
 @property (nonatomic, strong, nullable) UICollectionView* collectionView;
 -(CGRect)collectionView_frame;
 -(void)collectionView_visibleCells_gameBoardTileEntityPickerViewCollectionViewCell_gameBoardTileEntity_isSelected_update;
+
+#pragma mark - trashButton
+@property (nonatomic, readonly, strong, nullable) UIButton* trashButton;
+-(CGRect)trashButton_frame;
+-(void)trashButton_did_touchUpInside;
 
 @end
 
@@ -66,6 +73,16 @@ kRUDefineNSStringConstant(SMBGameBoardTileEntityPickerView__cellIdentifier_SMBGa
 		[self.collectionView setScrollEnabled:YES];
 		[self.collectionView registerClass:[SMBGameBoardTileEntityPickerViewCollectionViewCell class] forCellWithReuseIdentifier:SMBGameBoardTileEntityPickerView__cellIdentifier_SMBGameBoardTileEntityPickerViewCollectionViewCell];
 		[self addSubview:self.collectionView];
+
+		_trashButton = [UIButton buttonWithType:UIButtonTypeCustom];
+		[self.trashButton setBackgroundColor:[UIColor clearColor]];
+		[self.trashButton addTarget:self action:@selector(trashButton_did_touchUpInside) forControlEvents:UIControlEventTouchUpInside];
+		[self.trashButton setTitle:@"Clear" forState:UIControlStateNormal];
+		[self.trashButton setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
+		[self.trashButton.titleLabel setFont:[UIFont systemFontOfSize:16.0f]];
+		[self.trashButton.layer setBorderWidth:2.0f];
+		[self.trashButton.layer setBorderColor:[UIColor blackColor].CGColor];
+		[self addSubview:self.trashButton];
 	}
 
 	return self;
@@ -77,6 +94,8 @@ kRUDefineNSStringConstant(SMBGameBoardTileEntityPickerView__cellIdentifier_SMBGa
 
 	[self.collectionViewFlowLayout setItemSize:[self collectionViewFlowLayout_itemSize]];
 	[self.collectionView setFrame:[self collectionView_frame]];
+
+	[self.trashButton setFrame:[self trashButton_frame]];
 }
 
 #pragma mark - gameBoardTileEntities
@@ -120,7 +139,10 @@ kRUDefineNSStringConstant(SMBGameBoardTileEntityPickerView__cellIdentifier_SMBGa
 #pragma mark - collectionView
 -(CGRect)collectionView_frame
 {
-	return self.bounds;
+	return CGRectCeilOrigin((CGRect){
+		.size.width		= CGRectGetMinX([self trashButton_frame]) - 10.0f,
+		.size.height	= CGRectGetHeight(self.bounds),
+	});
 }
 
 -(void)collectionView_visibleCells_gameBoardTileEntityPickerViewCollectionViewCell_gameBoardTileEntity_isSelected_update
@@ -169,6 +191,28 @@ kRUDefineNSStringConstant(SMBGameBoardTileEntityPickerView__cellIdentifier_SMBGa
 	_selectedGameBoardTileEntity = selectedGameBoardTileEntity;
 
 	[self collectionView_visibleCells_gameBoardTileEntityPickerViewCollectionViewCell_gameBoardTileEntity_isSelected_update];
+}
+
+#pragma mark - trashButton
+-(CGRect)trashButton_frame
+{
+	CGFloat const height = CGRectGetHeight(self.bounds);
+
+	return CGRectCeilOrigin((CGRect){
+		.origin.x		= CGRectGetWidth(self.bounds) - height,
+		.size.width		= height,
+		.size.height	= height,
+	});
+}
+
+-(void)trashButton_did_touchUpInside
+{
+	[self.gameBoardTileEntities enumerateObjectsUsingBlock:^(SMBGameBoardTileEntity * _Nonnull gameBoardTileEntity, NSUInteger idx, BOOL * _Nonnull stop) {
+		SMBGameBoardTile* const gameBoardTile = gameBoardTileEntity.gameBoardTile;
+		kRUConditionalReturn(gameBoardTile == nil, NO);
+
+		[gameBoardTile gameBoardTileEntities_remove:gameBoardTileEntity entityType:SMBGameBoardTile__entityType_beamInteractions];
+	}];
 }
 
 @end

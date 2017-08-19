@@ -198,6 +198,11 @@
 		  }]];
 
 		[alertController addAction:
+		 [UIAlertAction actionWithTitle:@"View"
+								  style:UIAlertActionStyleDefault
+								handler:nil]];
+
+		[alertController addAction:
 		 [UIAlertAction actionWithTitle:@"Quit"
 								  style:UIAlertActionStyleDefault
 								handler:
@@ -223,6 +228,11 @@
 			  [self_weak.navigationController popToViewController:self_weak animated:YES];
 		  }]];
 
+		[alertController addAction:
+		 [UIAlertAction actionWithTitle:@"View"
+								  style:UIAlertActionStyleDefault
+								handler:nil]];
+
 		[self.navigationController presentViewController:alertController animated:YES completion:nil];
 	}
 }
@@ -235,6 +245,8 @@
 
 	SMBGameLevelCompletion* const gameLevelCompletion = gameLevel.completion;
 	kRUConditionalReturn(gameLevelCompletion == nil, YES);
+
+	[gameLevelGeneratorViewController.view setUserInteractionEnabled:NO];
 
 	NSString* const failureReason = gameLevelCompletion.failureReason;
 	if (failureReason != nil)
@@ -253,7 +265,12 @@
 		  ^(UIAlertAction * _Nonnull action) {
 			  [self_weak gameLevelGeneratorViewController_regenerateLevel];
 		  }]];
-		
+
+		[alertController addAction:
+		 [UIAlertAction actionWithTitle:@"View"
+								  style:UIAlertActionStyleDefault
+								handler:nil]];
+
 		[alertController addAction:
 		 [UIAlertAction actionWithTitle:@"Quit"
 								  style:UIAlertActionStyleDefault
