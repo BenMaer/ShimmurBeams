@@ -152,6 +152,8 @@ static void* kSMBGameLevelGeneratorViewController__KVOContext = &kSMBGameLevelGe
 	SMBGameLevel* const gameLevelGenerator_gameLevel = self.gameLevelGenerator_gameLevel;
 	kRUConditionalReturn(gameLevelGenerator_gameLevel == nil, YES);
 
+	[self.view setUserInteractionEnabled:NO];
+
 	[gameLevelDidCompleteDelegate gameLevelGeneratorViewController:self
 											  gameLevelDidComplete:gameLevelGenerator_gameLevel];
 }
@@ -232,6 +234,7 @@ static void* kSMBGameLevelGeneratorViewController__KVOContext = &kSMBGameLevelGe
 
 	if ([self isViewLoaded])
 	{
+		[self.view setUserInteractionEnabled:YES];
 		[self.view setNeedsLayout];
 	}
 }
@@ -282,8 +285,6 @@ static void* kSMBGameLevelGeneratorViewController__KVOContext = &kSMBGameLevelGe
 #pragma mark - navigationItem_resetButton
 -(void)navigationItem_resetButton_action_didFire
 {
-	[self.view setUserInteractionEnabled:YES];
-
 	[self gameLevelGenerator_gameLevel_update];
 }
 

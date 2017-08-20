@@ -246,8 +246,6 @@
 	SMBGameLevelCompletion* const gameLevelCompletion = gameLevel.completion;
 	kRUConditionalReturn(gameLevelCompletion == nil, YES);
 
-	[gameLevelGeneratorViewController.view setUserInteractionEnabled:NO];
-
 	NSString* const failureReason = gameLevelCompletion.failureReason;
 	if (failureReason != nil)
 	{
