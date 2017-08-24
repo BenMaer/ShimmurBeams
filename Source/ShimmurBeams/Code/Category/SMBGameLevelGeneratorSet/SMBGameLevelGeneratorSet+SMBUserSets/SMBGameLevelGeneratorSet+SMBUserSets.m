@@ -155,7 +155,19 @@
 	[gameLevelGenerators addObject:[[SMBGameLevelGenerator alloc] init_with_generateLevelBlock:^SMBGameLevel * _Nonnull{
 		return [SMBGameLevel smb_button_introduction];
 	}
-																						  name:@"Button Introduction"]];
+																						  name:@"Button Introduction"
+																						  hint:@"Power up a button to turn it on. A powered button will power another tile on the board."]];
+
+	[gameLevelGenerators addObject:[[SMBGameLevelGenerator alloc] init_with_generateLevelBlock:^SMBGameLevel * _Nonnull{
+		return [SMBGameLevel smb_buttons_3choices];
+	}
+																						  name:@"Button Choices"
+																						  hint:@"Determine which button powers which tile."]];
+
+	[gameLevelGenerators addObject:[[SMBGameLevelGenerator alloc] init_with_generateLevelBlock:^SMBGameLevel * _Nonnull{
+		return [SMBGameLevel smb_buttons_usableGameBoardTileEntities_choices];
+	}
+																						  name:@"Too Easy"]];
 
 	return
 	[[self alloc] init_with_gameLevelGenerators:[NSArray<SMBGameLevelGenerator*> arrayWithArray:gameLevelGenerators]

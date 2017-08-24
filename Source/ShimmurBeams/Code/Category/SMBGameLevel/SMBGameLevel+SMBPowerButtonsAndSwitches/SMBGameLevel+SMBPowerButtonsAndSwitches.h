@@ -16,5 +16,7 @@
 
 #pragma mark - button
 +(nonnull instancetype)smb_button_introduction;
++(nonnull instancetype)smb_buttons_3choices;
++(nonnull instancetype)smb_buttons_usableGameBoardTileEntities_choices;
 
 @end

@@ -128,14 +128,17 @@ static void* kSMBGameBoardView__KVOContext = &kSMBGameBoardView__KVOContext;
 -(void)setGameBoard:(nullable SMBGameBoard*)gameBoard
 {
 	kRUConditionalReturn(self.gameBoard == gameBoard, NO);
-
+	
 	[self gameBoard_setKVORegistered:NO];
 
+//	SMBGameBoard* const gameBoard_old = self.gameBoard;
 	_gameBoard = gameBoard;
-
+	
 	[self gameBoard_setKVORegistered:YES];
-
+	
 	[self grid_shapeLayer_path_update];
+
+//	if (gameBoard_old) {}
 }
 
 -(void)gameBoard_setKVORegistered:(BOOL)registered

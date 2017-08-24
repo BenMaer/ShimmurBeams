@@ -38,7 +38,7 @@
 -(instancetype)initWithFrame:(CGRect)frame
 {
 	kRUConditionalReturn_ReturnValueNil(YES, YES);
-	
+
 #pragma clang diagnostic push
 #pragma clang diagnostic ignored "-Wno-nullability-completeness"
 	return [self init_with_gameBoardTile:nil];
@@ -48,18 +48,25 @@
 -(instancetype)initWithCoder:(nonnull NSCoder*)aDecoder
 {
 	kRUConditionalReturn_ReturnValueNil(YES, YES);
-	
+
 #pragma clang diagnostic push
 #pragma clang diagnostic ignored "-Wno-nullability-completeness"
 	return [self init_with_gameBoardTile:nil];
 #pragma clang diagnostic pop
 }
 
+-(void)layoutSubviews
+{
+	[super layoutSubviews];
+
+	[self.drawableObjectView setFrame:[self drawableObjectView_frame]];
+}
+
 #pragma mark - init
 -(nullable instancetype)init_with_gameBoardTile:(nonnull SMBGameBoardTile*)gameBoardTile
 {
 	kRUConditionalReturn_ReturnValueNil(gameBoardTile == nil, YES);
-	
+
 	if (self = [super initWithFrame:CGRectZero])
 	{
 		_gameBoardTile = gameBoardTile;
@@ -71,15 +78,8 @@
 		_tapGestureRecognizer = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(tapGestureRecognizer_action_didFire)];
 		[self addGestureRecognizer:self.tapGestureRecognizer];
 	}
-	
-	return self;
-}
 
--(void)layoutSubviews
-{
-	[super layoutSubviews];
-	
-	[self.drawableObjectView setFrame:[self drawableObjectView_frame]];
+	return self;
 }
 
 #pragma mark - drawableObjectView
