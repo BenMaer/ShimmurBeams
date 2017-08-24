@@ -30,7 +30,7 @@
 @property (nonatomic, readonly, strong, nullable) SMBGameBoardTilePosition* gameBoardTilePosition;
 
 #pragma mark - gameBoard
-@property (nonatomic, readonly, assign, nullable) SMBGameBoard* gameBoard;
+@property (nonatomic, readonly, weak, nullable) SMBGameBoard* gameBoard;
 
 #pragma mark - gameBoardTileEntity_for_beamInteractions
 @property (nonatomic, strong, nullable) SMBGameBoardTileEntity* gameBoardTileEntity_for_beamInteractions;
