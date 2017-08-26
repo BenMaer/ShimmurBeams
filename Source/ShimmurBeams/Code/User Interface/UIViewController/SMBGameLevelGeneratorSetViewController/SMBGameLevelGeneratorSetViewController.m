@@ -21,7 +21,7 @@
 
 
 
-@interface SMBGameLevelGeneratorSetViewController () <SMBGameLevelGeneratorViewController_gameLevelDidCompleteDelegate, UITableViewDataSource, UITableViewDelegate>
+@interface SMBGameLevelGeneratorSetViewController () <SMBGameLevelGeneratorViewController_gameLevelDidCompleteDelegate, UITableViewDataSource, UITableViewDelegate, SMBGameLevelGeneratorViewController_levelCompletionBarButtonItemDelegate>
 
 #pragma mark - gameLevelGeneratorViewController
 @property (nonatomic, weak, nullable) SMBGameLevelGeneratorViewController* gameLevelGeneratorViewController;
@@ -29,13 +29,15 @@
 -(void)gameLevelGeneratorViewController_gameLevelGenerator_updateExisting;
 -(void)gameLevelGeneratorViewController_regenerateLevel;
 
+-(void)gameLevelGeneratorViewController_levelCompletionBarButtonItem_action_didFire;
+
 #pragma mark - gameLevelGenerator
 @property (nonatomic, assign) BOOL gameLevelGenerator_appropriate_disable;
 -(nullable SMBGameLevelGenerator*)gameLevelGenerator_appropriate;
 
 #pragma mark - gameLevelGeneratorSet
 @property (nonatomic, assign) NSUInteger gameLevelGeneratorSet_levelIndex;
--(void)gameLevelGeneratorSet_levelIndex_increment_attempt;
+-(void)gameLevelGeneratorSet_levelIndex_increment_attempt_with_alertControllers:(BOOL)alertControllers;
 
 #pragma mark - tableView
 @property (nonatomic, readonly, strong, nullable) UITableView* tableView;
@@ -100,6 +102,7 @@
 
 	SMBGameLevelGeneratorViewController* const gameLevelGeneratorViewController = [SMBGameLevelGeneratorViewController new];
 	[gameLevelGeneratorViewController setGameLevelDidCompleteDelegate:self];
+	[gameLevelGeneratorViewController setLevelCompletionBarButtonItemDelegate:self];
 
 	[self setGameLevelGeneratorViewController:gameLevelGeneratorViewController];
 	kRUConditionalReturn(self.gameLevelGeneratorViewController == nil, YES);
@@ -124,6 +127,11 @@
 	kRUConditionalReturn(gameLevelGeneratorViewController == nil, YES);
 
 	[gameLevelGeneratorViewController gameLevelGenerator_gameLevel_regenerate];
+}
+
+-(void)gameLevelGeneratorViewController_levelCompletionBarButtonItem_action_didFire
+{
+	[self gameLevelGeneratorSet_levelIndex_increment_attempt_with_alertControllers:NO];
 }
 
 #pragma mark - gameLevelGenerator
@@ -169,7 +177,7 @@
 	[self gameLevelGeneratorViewController_gameLevelGenerator_updateExisting];
 }
 
--(void)gameLevelGeneratorSet_levelIndex_increment_attempt
+-(void)gameLevelGeneratorSet_levelIndex_increment_attempt_with_alertControllers:(BOOL)alertControllers
 {
 	SMBGameLevelGeneratorSet* const gameLevelGeneratorSet = self.gameLevelGeneratorSet;
 	kRUConditionalReturn(gameLevelGeneratorSet == nil, YES);
@@ -183,57 +191,79 @@
 
 	if (gameLevelGeneratorSet_levelIndex_new < gameLevelGenerators.count)
 	{
-		UIAlertController* const alertController =
-		[UIAlertController alertControllerWithTitle:@"Congratulations!"
-											message:RUStringWithFormat(@"You beat level %lu! Continue to the next level?",gameLevelGeneratorSet_levelIndex + 1)
-									 preferredStyle:UIAlertControllerStyleAlert];
-
 		__weak typeof(self) const self_weak = self;
-		[alertController addAction:
-		 [UIAlertAction actionWithTitle:@"Yes"
-								  style:UIAlertActionStyleDefault
-								handler:
-		  ^(UIAlertAction * _Nonnull action) {
-			  [self_weak setGameLevelGeneratorSet_levelIndex:gameLevelGeneratorSet_levelIndex_new];
-		  }]];
+		void (^actionBlock)() = ^(){
+			[self_weak setGameLevelGeneratorSet_levelIndex:gameLevelGeneratorSet_levelIndex_new];
+		};
 
-		[alertController addAction:
-		 [UIAlertAction actionWithTitle:@"View"
-								  style:UIAlertActionStyleDefault
-								handler:nil]];
-
-		[alertController addAction:
-		 [UIAlertAction actionWithTitle:@"Quit"
-								  style:UIAlertActionStyleDefault
-								handler:
-		  ^(UIAlertAction * _Nonnull action) {
-			  [self_weak.navigationController popToViewController:self_weak animated:YES];
-		  }]];
-
-		[self.navigationController presentViewController:alertController animated:YES completion:nil];
+		if (alertControllers == YES)
+		{
+			UIAlertController* const alertController =
+			[UIAlertController alertControllerWithTitle:@"Congratulations!"
+												message:RUStringWithFormat(@"You beat level %lu! Continue to the next level?",gameLevelGeneratorSet_levelIndex + 1)
+										 preferredStyle:UIAlertControllerStyleAlert];
+			
+			[alertController addAction:
+			 [UIAlertAction actionWithTitle:@"Yes"
+									  style:UIAlertActionStyleDefault
+									handler:
+			  ^(UIAlertAction * _Nonnull action) {
+				  actionBlock();
+			  }]];
+			
+			[alertController addAction:
+			 [UIAlertAction actionWithTitle:@"View"
+									  style:UIAlertActionStyleDefault
+									handler:nil]];
+			
+			[alertController addAction:
+			 [UIAlertAction actionWithTitle:@"Quit"
+									  style:UIAlertActionStyleDefault
+									handler:
+			  ^(UIAlertAction * _Nonnull action) {
+				  [self_weak.navigationController popToViewController:self_weak animated:YES];
+			  }]];
+			
+			[self.navigationController presentViewController:alertController animated:YES completion:nil];
+		}
+		else
+		{
+			actionBlock();
+		}
 	}
 	else
 	{
-		UIAlertController* const alertController =
-		[UIAlertController alertControllerWithTitle:@"Congratulations!"
-											message:@"You have beaten the last level in this set!"
-									 preferredStyle:UIAlertControllerStyleAlert];
-
 		__weak typeof(self) const self_weak = self;
-		[alertController addAction:
-		 [UIAlertAction actionWithTitle:@"Awesome!"
-								  style:UIAlertActionStyleDefault
-								handler:
-		  ^(UIAlertAction * _Nonnull action) {
-			  [self_weak.navigationController popToViewController:self_weak animated:YES];
-		  }]];
+		void (^actionBlock)() = ^(){
+			[self_weak.navigationController popToViewController:self_weak animated:YES];
+		};
 
-		[alertController addAction:
-		 [UIAlertAction actionWithTitle:@"View"
-								  style:UIAlertActionStyleDefault
-								handler:nil]];
-
-		[self.navigationController presentViewController:alertController animated:YES completion:nil];
+		if (alertControllers == YES)
+		{
+			UIAlertController* const alertController =
+			[UIAlertController alertControllerWithTitle:@"Congratulations!"
+												message:@"You have beaten the last level in this set!"
+										 preferredStyle:UIAlertControllerStyleAlert];
+			
+			[alertController addAction:
+			 [UIAlertAction actionWithTitle:@"Awesome!"
+									  style:UIAlertActionStyleDefault
+									handler:
+			  ^(UIAlertAction * _Nonnull action) {
+				  actionBlock();
+			  }]];
+			
+			[alertController addAction:
+			 [UIAlertAction actionWithTitle:@"View"
+									  style:UIAlertActionStyleDefault
+									handler:nil]];
+			
+			[self.navigationController presentViewController:alertController animated:YES completion:nil];
+		}
+		else
+		{
+			actionBlock();
+		}
 	}
 }
 
@@ -281,7 +311,7 @@
 		return;
 	}
 
-	[self gameLevelGeneratorSet_levelIndex_increment_attempt];
+	[self gameLevelGeneratorSet_levelIndex_increment_attempt_with_alertControllers:YES];
 }
 
 #pragma mark - UITableViewDataSource
@@ -361,6 +391,22 @@
 -(nullable NSString*)navigationItem_title_generate
 {
 	return self.gameLevelGeneratorSet.name;
+}
+
+#pragma mark - SMBGameLevelGeneratorViewController_levelCompletionBarButtonItemDelegate
+-(nonnull UIBarButtonItem*)gameLevelGeneratorViewController_levelCompletionBarButtonItem:(nonnull SMBGameLevelGeneratorViewController*)gameLevelGeneratorViewController
+{
+	kRUConditionalReturn_ReturnValueNil(gameLevelGeneratorViewController == nil, YES);
+
+	SMBGameLevelGenerator* const gameLevelGenerator = gameLevelGeneratorViewController.gameLevelGenerator;
+	kRUConditionalReturn_ReturnValueNil(gameLevelGenerator == nil, YES);
+
+	BOOL const isDone = (self.gameLevelGeneratorSet.gameLevelGenerators.lastObject == gameLevelGenerator);
+	return
+	[[UIBarButtonItem alloc] initWithTitle:(isDone ? @"Done" : @"Next")
+									 style:UIBarButtonItemStylePlain
+									target:self
+									action:@selector(gameLevelGeneratorViewController_levelCompletionBarButtonItem_action_didFire)];
 }
 
 @end

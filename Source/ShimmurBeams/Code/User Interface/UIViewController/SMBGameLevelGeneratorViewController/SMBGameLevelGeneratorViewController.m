@@ -14,6 +14,7 @@
 #import <ResplendentUtilities/RUConditionalReturn.h>
 #import <ResplendentUtilities/UIView+RUUtility.h>
 #import <ResplendentUtilities/RUConstants.h>
+#import <ResplendentUtilities/NSMutableArray+RUAddObjectIfNotNil.h>
 
 
 
@@ -48,8 +49,20 @@ static void* kSMBGameLevelGeneratorViewController__KVOContext = &kSMBGameLevelGe
 -(void)navigationItem_title_update;
 -(nullable NSString*)navigationItem_title_generate;
 
+#pragma mark - navigationItem_rightBarButtonItems
+-(void)navigationItem_rightBarButtonItems_update;
+-(nullable NSArray<UIBarButtonItem*>*)navigationItem_rightBarButtonItems_generate;
+
 #pragma mark - navigationItem_resetButton
 -(void)navigationItem_resetButton_action_didFire;
+
+#pragma mark - levelCompletionBarButtonItem
+@property (nonatomic, strong, nullable) UIBarButtonItem* levelCompletionBarButtonItem;
+-(void)levelCompletionBarButtonItem_update;
+-(nullable UIBarButtonItem*)levelCompletionBarButtonItem_generate;
+
+#pragma mark - levelCompletionBarButtonItem
+@property (nonatomic, readonly, strong, nullable) UIBarButtonItem* resetBarButtonItem;
 
 @end
 
@@ -89,11 +102,13 @@ static void* kSMBGameLevelGeneratorViewController__KVOContext = &kSMBGameLevelGe
 
 	[self navigationItem_title_update];
 
-	[self.navigationItem setRightBarButtonItem:
-	 [[UIBarButtonItem alloc] initWithTitle:@"Reset"
-									  style:UIBarButtonItemStylePlain
-									 target:self
-									 action:@selector(navigationItem_resetButton_action_didFire)]];
+	_resetBarButtonItem =
+	[[UIBarButtonItem alloc] initWithTitle:@"Reset"
+									 style:UIBarButtonItemStylePlain
+									target:self
+									action:@selector(navigationItem_resetButton_action_didFire)];
+
+	[self navigationItem_rightBarButtonItems_update];
 }
 
 -(void)viewWillLayoutSubviews
@@ -126,9 +141,9 @@ static void* kSMBGameLevelGeneratorViewController__KVOContext = &kSMBGameLevelGe
 
 	_gameLevelGenerator_gameLevel = gameLevelGenerator_gameLevel;
 
-	[self gameLevelView_level_update];
-
 	[self gameLevelGenerator_gameLevel_setKVORegistered:YES];
+
+	[self gameLevelView_level_update];
 }
 
 -(void)gameLevelGenerator_gameLevel_update
@@ -259,6 +274,8 @@ static void* kSMBGameLevelGeneratorViewController__KVOContext = &kSMBGameLevelGe
 		{
 			if ([keyPath isEqualToString:[SMBGameLevel_PropertiesForKVO completion]])
 			{
+				[self levelCompletionBarButtonItem_update];
+
 				SMBGameLevel* const gameLevelGenerator_gameLevel = self.gameLevelGenerator_gameLevel;
 				kRUConditionalReturn(gameLevelGenerator_gameLevel == nil, YES);
 
@@ -282,10 +299,53 @@ static void* kSMBGameLevelGeneratorViewController__KVOContext = &kSMBGameLevelGe
 	}
 }
 
+#pragma mark - navigationItem_rightBarButtonItems
+-(void)navigationItem_rightBarButtonItems_update
+{
+	[self.navigationItem setRightBarButtonItems:[self navigationItem_rightBarButtonItems_generate]];
+}
+
+-(nullable NSArray<UIBarButtonItem*>*)navigationItem_rightBarButtonItems_generate
+{
+	NSMutableArray<UIBarButtonItem*>* const navigationItem_rightBarButtonItems = [NSMutableArray<UIBarButtonItem*> array];
+	[navigationItem_rightBarButtonItems ru_addObjectIfNotNil:self.resetBarButtonItem];
+	[navigationItem_rightBarButtonItems ru_addObjectIfNotNil:self.levelCompletionBarButtonItem];
+
+	return [NSArray<UIBarButtonItem*> arrayWithArray:navigationItem_rightBarButtonItems];
+}
+
 #pragma mark - navigationItem_resetButton
 -(void)navigationItem_resetButton_action_didFire
 {
 	[self gameLevelGenerator_gameLevel_update];
+}
+
+#pragma mark - levelCompletionBarButtonItem
+-(void)setLevelCompletionBarButtonItem:(nullable UIBarButtonItem*)levelCompletionBarButtonItem
+{
+	kRUConditionalReturn(self.levelCompletionBarButtonItem == levelCompletionBarButtonItem, NO);
+
+	_levelCompletionBarButtonItem = levelCompletionBarButtonItem;
+
+	[self navigationItem_rightBarButtonItems_update];
+}
+
+-(void)levelCompletionBarButtonItem_update
+{
+	[self setLevelCompletionBarButtonItem:[self levelCompletionBarButtonItem_generate]];
+}
+
+-(nullable UIBarButtonItem*)levelCompletionBarButtonItem_generate
+{
+	SMBGameLevel* const gameLevelGenerator_gameLevel = self.gameLevelGenerator_gameLevel;
+	kRUConditionalReturn_ReturnValueNil(gameLevelGenerator_gameLevel == nil, NO);
+
+	kRUConditionalReturn_ReturnValueNil(gameLevelGenerator_gameLevel.completion == NO, NO);
+
+	id<SMBGameLevelGeneratorViewController_levelCompletionBarButtonItemDelegate> const levelCompletionBarButtonItemDelegate = self.levelCompletionBarButtonItemDelegate;
+	kRUConditionalReturn_ReturnValueNil(levelCompletionBarButtonItemDelegate == nil, YES);
+
+	return [levelCompletionBarButtonItemDelegate gameLevelGeneratorViewController_levelCompletionBarButtonItem:self];
 }
 
 @end

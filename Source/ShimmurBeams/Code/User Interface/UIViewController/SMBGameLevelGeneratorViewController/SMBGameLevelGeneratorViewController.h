@@ -31,4 +31,7 @@
 #pragma mark - gameLevelDidCompleteDelegate
 @property (nonatomic, assign, nullable) id<SMBGameLevelGeneratorViewController_gameLevelDidCompleteDelegate> gameLevelDidCompleteDelegate;
 
+#pragma mark - levelCompletionBarButtonItemDelegate
+@property (nonatomic, assign, nullable) id<SMBGameLevelGeneratorViewController_levelCompletionBarButtonItemDelegate> levelCompletionBarButtonItemDelegate;
+
 @end

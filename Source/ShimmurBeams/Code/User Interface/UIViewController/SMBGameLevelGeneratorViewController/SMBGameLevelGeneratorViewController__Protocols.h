@@ -14,6 +14,7 @@
 
 @class SMBGameLevelGeneratorViewController;
 @class SMBGameLevel;
+@class UIBarButtonItem;
 
 
 
@@ -23,5 +24,15 @@
 
 -(void)gameLevelGeneratorViewController:(nonnull SMBGameLevelGeneratorViewController*)gameLevelGeneratorViewController
 				   gameLevelDidComplete:(nonnull SMBGameLevel*)gameLevel;
+
+@end
+
+
+
+
+
+@protocol SMBGameLevelGeneratorViewController_levelCompletionBarButtonItemDelegate <NSObject>
+
+-(nonnull UIBarButtonItem*)gameLevelGeneratorViewController_levelCompletionBarButtonItem:(nonnull SMBGameLevelGeneratorViewController*)gameLevelGeneratorViewController;
 
 @end
