@@ -327,149 +327,206 @@
 	};
 
 	/*
-	 Power buttons and powered entities for cell 1x1
+	 + Un-powered beam creators.
 	 */
-	SMBBeamCreatorTileEntity* const beamCreatorEntity_unpowered_from_1x1_to_1x2 = [SMBBeamCreatorTileEntity new];
-	[beamCreatorEntity_unpowered_from_1x1_to_1x2 setRequiresExternalPowerForBeam:YES];
-	[beamCreatorEntity_unpowered_from_1x1_to_1x2 setBeamDirection:SMBGameBoardTile__direction_up];
-	[gameBoard gameBoardTileEntity_for_beamInteractions_set:beamCreatorEntity_unpowered_from_1x1_to_1x2
+
+	SMBBeamCreatorTileEntity* const beamCreatorEntity_unpowered_1x2_bottom = [SMBBeamCreatorTileEntity new];
+	[beamCreatorEntity_unpowered_1x2_bottom setRequiresExternalPowerForBeam:YES];
+	[beamCreatorEntity_unpowered_1x2_bottom setBeamDirection:SMBGameBoardTile__direction_up];
+	[gameBoard gameBoardTileEntity_for_beamInteractions_set:beamCreatorEntity_unpowered_1x2_bottom
 								   to_gameBoardTilePosition:[[SMBGameBoardTilePosition alloc] init_with_column:column_for_cellXIndex(0, 1)
 																										   row:row_for_rowXIndex(1, 2)]];
+
+	SMBBeamCreatorTileEntity* const beamCreatorEntity_unpowered_2x2_right = [SMBBeamCreatorTileEntity new];
+	[beamCreatorEntity_unpowered_2x2_right setRequiresExternalPowerForBeam:YES];
+	[beamCreatorEntity_unpowered_2x2_right setBeamDirection:SMBGameBoardTile__direction_left];
+	[gameBoard gameBoardTileEntity_for_beamInteractions_set:beamCreatorEntity_unpowered_2x2_right
+								   to_gameBoardTilePosition:[[SMBGameBoardTilePosition alloc] init_with_column:column_for_cellXIndex(1, 2)
+																										   row:row_for_rowXIndex(1, 1)]];
+
+	SMBBeamCreatorTileEntity* const beamCreatorEntity_unpowered_2x1_left = [SMBBeamCreatorTileEntity new];
+	[beamCreatorEntity_unpowered_2x1_left setRequiresExternalPowerForBeam:YES];
+	[beamCreatorEntity_unpowered_2x1_left setBeamDirection:SMBGameBoardTile__direction_right];
+	[gameBoard gameBoardTileEntity_for_beamInteractions_set:beamCreatorEntity_unpowered_2x1_left
+								   to_gameBoardTilePosition:[[SMBGameBoardTilePosition alloc] init_with_column:column_for_cellXIndex(1, 0)
+																										   row:row_for_rowXIndex(0, 1)]];
+
+	SMBBeamCreatorTileEntity* const beamCreatorEntity_unpowered_3x3_bottomRight = [SMBBeamCreatorTileEntity new];
+	[beamCreatorEntity_unpowered_3x3_bottomRight setRequiresExternalPowerForBeam:YES];
+	[beamCreatorEntity_unpowered_3x3_bottomRight setBeamDirection:SMBGameBoardTile__direction_left];
+	[gameBoard gameBoardTileEntity_for_beamInteractions_set:beamCreatorEntity_unpowered_3x3_bottomRight
+								   to_gameBoardTilePosition:[[SMBGameBoardTilePosition alloc] init_with_column:column_for_cellXIndex(2, 2)
+																										   row:row_for_rowXIndex(2, 2)]];
+
+	SMBBeamCreatorTileEntity* const beamCreatorEntity_unpowered_1x1_bottom = [SMBBeamCreatorTileEntity new];
+	[beamCreatorEntity_unpowered_1x1_bottom setRequiresExternalPowerForBeam:YES];
+	[beamCreatorEntity_unpowered_1x1_bottom setBeamDirection:SMBGameBoardTile__direction_up];
+	[gameBoard gameBoardTileEntity_for_beamInteractions_set:beamCreatorEntity_unpowered_1x1_bottom
+								   to_gameBoardTilePosition:[[SMBGameBoardTilePosition alloc] init_with_column:column_for_cellXIndex(0, 1)
+																										   row:row_for_rowXIndex(0, 2)]];
+
+	SMBBeamCreatorTileEntity* const beamCreatorEntity_unpowered_2x1_right = [SMBBeamCreatorTileEntity new];
+	[beamCreatorEntity_unpowered_2x1_right setRequiresExternalPowerForBeam:YES];
+	[beamCreatorEntity_unpowered_2x1_right setBeamDirection:SMBGameBoardTile__direction_left];
+	[gameBoard gameBoardTileEntity_for_beamInteractions_set:beamCreatorEntity_unpowered_2x1_right
+								   to_gameBoardTilePosition:[[SMBGameBoardTilePosition alloc] init_with_column:column_for_cellXIndex(1, 2)
+																										   row:row_for_rowXIndex(0, 1)]];
+
+	SMBBeamCreatorTileEntity* const beamCreatorEntity_unpowered_1x3_right = [SMBBeamCreatorTileEntity new];
+	[beamCreatorEntity_unpowered_1x3_right setRequiresExternalPowerForBeam:YES];
+	[beamCreatorEntity_unpowered_1x3_right setBeamDirection:SMBGameBoardTile__direction_left];
+	[gameBoard gameBoardTileEntity_for_beamInteractions_set:beamCreatorEntity_unpowered_1x3_right
+								   to_gameBoardTilePosition:[[SMBGameBoardTilePosition alloc] init_with_column:column_for_cellXIndex(0, 2)
+																										   row:row_for_rowXIndex(2, 1)]];
+
 	
-	[gameBoard gameBoardTileEntity_add_powerButtonTileEntity_with_gameBoardTilePosition_toPower:beamCreatorEntity_unpowered_from_1x1_to_1x2.gameBoardTile.gameBoardTilePosition
+	SMBBeamCreatorTileEntity* const beamCreatorEntity_unpowered_3x3_right = [SMBBeamCreatorTileEntity new];
+	[beamCreatorEntity_unpowered_3x3_right setRequiresExternalPowerForBeam:YES];
+	[beamCreatorEntity_unpowered_3x3_right setBeamDirection:SMBGameBoardTile__direction_right];
+	[gameBoard gameBoardTileEntity_for_beamInteractions_set:beamCreatorEntity_unpowered_3x3_right
+								   to_gameBoardTilePosition:[[SMBGameBoardTilePosition alloc] init_with_column:column_for_cellXIndex(2, 0)
+																										   row:row_for_rowXIndex(2, 1)]];
+
+	SMBBeamCreatorTileEntity* const beamCreatorEntity_unpowered_3x2_bottom = [SMBBeamCreatorTileEntity new];
+	[beamCreatorEntity_unpowered_3x2_bottom setRequiresExternalPowerForBeam:YES];
+	[beamCreatorEntity_unpowered_3x2_bottom setBeamDirection:SMBGameBoardTile__direction_up];
+	[gameBoard gameBoardTileEntity_for_beamInteractions_set:beamCreatorEntity_unpowered_3x2_bottom
+								   to_gameBoardTilePosition:[[SMBGameBoardTilePosition alloc] init_with_column:column_for_cellXIndex(2, 1)
+																										   row:row_for_rowXIndex(1, 2)]];
+
+	SMBBeamCreatorTileEntity* const beamCreatorEntity_unpowered_2x2_left = [SMBBeamCreatorTileEntity new];
+	[beamCreatorEntity_unpowered_2x2_left setRequiresExternalPowerForBeam:YES];
+	[beamCreatorEntity_unpowered_2x2_left setBeamDirection:SMBGameBoardTile__direction_right];
+	[gameBoard gameBoardTileEntity_for_beamInteractions_set:beamCreatorEntity_unpowered_2x2_left
+								   to_gameBoardTilePosition:[[SMBGameBoardTilePosition alloc] init_with_column:column_for_cellXIndex(1, 0)
+																										   row:row_for_rowXIndex(1, 1)]];
+
+	SMBBeamCreatorTileEntity* const beamCreatorEntity_unpowered_1x3_bottomLeft = [SMBBeamCreatorTileEntity new];
+	[beamCreatorEntity_unpowered_1x3_bottomLeft setRequiresExternalPowerForBeam:YES];
+	[beamCreatorEntity_unpowered_1x3_bottomLeft setBeamDirection:SMBGameBoardTile__direction_right];
+	[gameBoard gameBoardTileEntity_for_beamInteractions_set:beamCreatorEntity_unpowered_1x3_bottomLeft
+								   to_gameBoardTilePosition:[[SMBGameBoardTilePosition alloc] init_with_column:column_for_cellXIndex(0, 0)
+																										   row:row_for_rowXIndex(2, 2)]];
+
+	SMBBeamCreatorTileEntity* const beamCreatorEntity_unpowered_3x1_bottom = [SMBBeamCreatorTileEntity new];
+	[beamCreatorEntity_unpowered_3x1_bottom setRequiresExternalPowerForBeam:YES];
+	[beamCreatorEntity_unpowered_3x1_bottom setBeamDirection:SMBGameBoardTile__direction_up];
+	[gameBoard gameBoardTileEntity_for_beamInteractions_set:beamCreatorEntity_unpowered_3x1_bottom
+								   to_gameBoardTilePosition:[[SMBGameBoardTilePosition alloc] init_with_column:column_for_cellXIndex(2, 1)
+																										   row:row_for_rowXIndex(0, 2)]];
+
+	/*
+	 - Un-powered beam creators.
+	 */
+
+	/*
+	 + Power buttons.
+	 */
+
+	/* 1x1 top to 1x2 bottom */
+	[gameBoard gameBoardTileEntity_add_powerButtonTileEntity_with_gameBoardTilePosition_toPower:beamCreatorEntity_unpowered_1x2_bottom.gameBoardTile.gameBoardTilePosition
 																	   to_gameBoardTilePosition:
 	 [[SMBGameBoardTilePosition alloc] init_with_column:column_for_cellXIndex(0, 1)
 													row:row_for_rowXIndex(0, 0)]];
 
-	/*
-	 Power buttons and powered entities for cell 1x2
-	 */
-	SMBBeamCreatorTileEntity* const beamCreatorEntity_unpowered_from_1x2_to_2x2 = [SMBBeamCreatorTileEntity new];
-	[beamCreatorEntity_unpowered_from_1x2_to_2x2 setRequiresExternalPowerForBeam:YES];
-	[beamCreatorEntity_unpowered_from_1x2_to_2x2 setBeamDirection:SMBGameBoardTile__direction_left];
-	[gameBoard gameBoardTileEntity_for_beamInteractions_set:beamCreatorEntity_unpowered_from_1x2_to_2x2
-								   to_gameBoardTilePosition:[[SMBGameBoardTilePosition alloc] init_with_column:column_for_cellXIndex(1, 2)
-																										   row:row_for_rowXIndex(1, 1)]];
-	
-	[gameBoard gameBoardTileEntity_add_powerButtonTileEntity_with_gameBoardTilePosition_toPower:beamCreatorEntity_unpowered_from_1x2_to_2x2.gameBoardTile.gameBoardTilePosition
+	/* 1x1 left to 3x1 bottom */
+	[gameBoard gameBoardTileEntity_add_powerButtonTileEntity_with_gameBoardTilePosition_toPower:beamCreatorEntity_unpowered_3x1_bottom.gameBoardTile.gameBoardTilePosition
+																	   to_gameBoardTilePosition:
+	 [[SMBGameBoardTilePosition alloc] init_with_column:column_for_cellXIndex(0, 0)
+													row:row_for_rowXIndex(0, 1)]];
+
+	/* 1x1 right to 2x2 left */
+	[gameBoard gameBoardTileEntity_add_powerButtonTileEntity_with_gameBoardTilePosition_toPower:beamCreatorEntity_unpowered_2x2_left.gameBoardTile.gameBoardTilePosition
+																	   to_gameBoardTilePosition:
+	 [[SMBGameBoardTilePosition alloc] init_with_column:column_for_cellXIndex(0, 2)
+													row:row_for_rowXIndex(0, 1)]];
+
+	/* 1x2 top to 2x2 right */
+	[gameBoard gameBoardTileEntity_add_powerButtonTileEntity_with_gameBoardTilePosition_toPower:beamCreatorEntity_unpowered_2x2_right.gameBoardTile.gameBoardTilePosition
 																	   to_gameBoardTilePosition:
 	 [[SMBGameBoardTilePosition alloc] init_with_column:column_for_cellXIndex(0, 1)
 													row:row_for_rowXIndex(1, 0)]];
 
-	/*
-	 Power buttons and powered entities for cell 1x3
-	 */
-	SMBBeamCreatorTileEntity* const beamCreatorEntity_unpowered_from_1x3_to_3x3 = [SMBBeamCreatorTileEntity new];
-	[beamCreatorEntity_unpowered_from_1x3_to_3x3 setRequiresExternalPowerForBeam:YES];
-	[beamCreatorEntity_unpowered_from_1x3_to_3x3 setBeamDirection:SMBGameBoardTile__direction_left];
-	[gameBoard gameBoardTileEntity_for_beamInteractions_set:beamCreatorEntity_unpowered_from_1x3_to_3x3
-								   to_gameBoardTilePosition:[[SMBGameBoardTilePosition alloc] init_with_column:column_for_cellXIndex(2, 2)
-																										   row:row_for_rowXIndex(2, 2)]];
-	
-	[gameBoard gameBoardTileEntity_add_powerButtonTileEntity_with_gameBoardTilePosition_toPower:beamCreatorEntity_unpowered_from_1x3_to_3x3.gameBoardTile.gameBoardTilePosition
+	/* 1x2 left to 2x1 left */
+	[gameBoard gameBoardTileEntity_add_powerButtonTileEntity_with_gameBoardTilePosition_toPower:beamCreatorEntity_unpowered_2x1_left.gameBoardTile.gameBoardTilePosition
+																	   to_gameBoardTilePosition:
+	 [[SMBGameBoardTilePosition alloc] init_with_column:column_for_cellXIndex(0, 0)
+													row:row_for_rowXIndex(1, 1)]];
+
+	/* 1x3 left to 3x3 bottom right */
+	[gameBoard gameBoardTileEntity_add_powerButtonTileEntity_with_gameBoardTilePosition_toPower:beamCreatorEntity_unpowered_3x3_bottomRight.gameBoardTile.gameBoardTilePosition
 																	   to_gameBoardTilePosition:
 	 [[SMBGameBoardTilePosition alloc] init_with_column:column_for_cellXIndex(0, 0)
 													row:row_for_rowXIndex(2, 1)]];
-	
-	SMBBeamCreatorTileEntity* const beamCreatorEntity_unpowered_from_1x3_to_1x1 = [SMBBeamCreatorTileEntity new];
-	[beamCreatorEntity_unpowered_from_1x3_to_1x1 setRequiresExternalPowerForBeam:YES];
-	[beamCreatorEntity_unpowered_from_1x3_to_1x1 setBeamDirection:SMBGameBoardTile__direction_up];
-	[gameBoard gameBoardTileEntity_for_beamInteractions_set:beamCreatorEntity_unpowered_from_1x3_to_1x1
-								   to_gameBoardTilePosition:[[SMBGameBoardTilePosition alloc] init_with_column:column_for_cellXIndex(0, 1)
-																										   row:row_for_rowXIndex(0, 2)]];
-	
-	[gameBoard gameBoardTileEntity_add_powerButtonTileEntity_with_gameBoardTilePosition_toPower:beamCreatorEntity_unpowered_from_1x3_to_1x1.gameBoardTile.gameBoardTilePosition
+
+	/* 1x3 top to 1x1 bottom */
+	[gameBoard gameBoardTileEntity_add_powerButtonTileEntity_with_gameBoardTilePosition_toPower:beamCreatorEntity_unpowered_1x1_bottom.gameBoardTile.gameBoardTilePosition
 																	   to_gameBoardTilePosition:
 	 [[SMBGameBoardTilePosition alloc] init_with_column:column_for_cellXIndex(0, 1)
 													row:row_for_rowXIndex(2, 0)]];
 
-	/*
-	 Power buttons and powered entities for cell 2x3
-	 */
-	SMBBeamCreatorTileEntity* const beamCreatorEntity_unpowered_from_2x3_to_1x3 = [SMBBeamCreatorTileEntity new];
-	[beamCreatorEntity_unpowered_from_2x3_to_1x3 setRequiresExternalPowerForBeam:YES];
-	[beamCreatorEntity_unpowered_from_2x3_to_1x3 setBeamDirection:SMBGameBoardTile__direction_left];
-	[gameBoard gameBoardTileEntity_for_beamInteractions_set:beamCreatorEntity_unpowered_from_2x3_to_1x3
-								   to_gameBoardTilePosition:[[SMBGameBoardTilePosition alloc] init_with_column:column_for_cellXIndex(0, 2)
-																										   row:row_for_rowXIndex(2, 1)]];
-	
-	[gameBoard gameBoardTileEntity_add_powerButtonTileEntity_with_gameBoardTilePosition_toPower:beamCreatorEntity_unpowered_from_2x3_to_1x3.gameBoardTile.gameBoardTilePosition
+	/* 2x2 top to 2x1 right */
+	[gameBoard gameBoardTileEntity_add_powerButtonTileEntity_with_gameBoardTilePosition_toPower:beamCreatorEntity_unpowered_2x1_right.gameBoardTile.gameBoardTilePosition
+																	   to_gameBoardTilePosition:
+	 [[SMBGameBoardTilePosition alloc] init_with_column:column_for_cellXIndex(1, 1)
+													row:row_for_rowXIndex(1, 0)]];
+
+	/* 2x3 left to 1x3 right */
+	[gameBoard gameBoardTileEntity_add_powerButtonTileEntity_with_gameBoardTilePosition_toPower:beamCreatorEntity_unpowered_1x3_right.gameBoardTile.gameBoardTilePosition
 																	   to_gameBoardTilePosition:
 	 [[SMBGameBoardTilePosition alloc] init_with_column:column_for_cellXIndex(1, 0)
 													row:row_for_rowXIndex(2, 1)]];
 
-	SMBBeamCreatorTileEntity* const beamCreatorEntity_unpowered_from_2x3_to_3x3 = [SMBBeamCreatorTileEntity new];
-	[beamCreatorEntity_unpowered_from_2x3_to_3x3 setRequiresExternalPowerForBeam:YES];
-	[beamCreatorEntity_unpowered_from_2x3_to_3x3 setBeamDirection:SMBGameBoardTile__direction_right];
-	[gameBoard gameBoardTileEntity_for_beamInteractions_set:beamCreatorEntity_unpowered_from_2x3_to_3x3
-								   to_gameBoardTilePosition:[[SMBGameBoardTilePosition alloc] init_with_column:column_for_cellXIndex(2, 0)
-																										   row:row_for_rowXIndex(2, 1)]];
-
-	[gameBoard gameBoardTileEntity_add_powerButtonTileEntity_with_gameBoardTilePosition_toPower:beamCreatorEntity_unpowered_from_2x3_to_3x3.gameBoardTile.gameBoardTilePosition
+	/* 2x3 right to 3x3 left */
+	[gameBoard gameBoardTileEntity_add_powerButtonTileEntity_with_gameBoardTilePosition_toPower:beamCreatorEntity_unpowered_3x3_right.gameBoardTile.gameBoardTilePosition
 																	   to_gameBoardTilePosition:
 	 [[SMBGameBoardTilePosition alloc] init_with_column:column_for_cellXIndex(1, 2)
 													row:row_for_rowXIndex(2, 1)]];
 
-	/*
-	 Power buttons and powered entities for cell 3x1
-	 */
-	SMBBeamCreatorTileEntity* const beamCreatorEntity_unpowered_from_3x1_to_3x2 = [SMBBeamCreatorTileEntity new];
-	[beamCreatorEntity_unpowered_from_3x1_to_3x2 setRequiresExternalPowerForBeam:YES];
-	[beamCreatorEntity_unpowered_from_3x1_to_3x2 setBeamDirection:SMBGameBoardTile__direction_up];
-	[gameBoard gameBoardTileEntity_for_beamInteractions_set:beamCreatorEntity_unpowered_from_3x1_to_3x2
-								   to_gameBoardTilePosition:[[SMBGameBoardTilePosition alloc] init_with_column:column_for_cellXIndex(2, 1)
-																										   row:row_for_rowXIndex(1, 2)]];
-	
-	[gameBoard gameBoardTileEntity_add_powerButtonTileEntity_with_gameBoardTilePosition_toPower:beamCreatorEntity_unpowered_from_3x1_to_3x2.gameBoardTile.gameBoardTilePosition
+	/* 3x1 top to 3x2 bottom */
+	[gameBoard gameBoardTileEntity_add_powerButtonTileEntity_with_gameBoardTilePosition_toPower:beamCreatorEntity_unpowered_3x2_bottom.gameBoardTile.gameBoardTilePosition
 																	   to_gameBoardTilePosition:
 	 [[SMBGameBoardTilePosition alloc] init_with_column:column_for_cellXIndex(2, 1)
 													row:row_for_rowXIndex(0, 0)]];
 
-	/*
-	 Power buttons and powered entities for cell 3x2
-	 */
-	SMBBeamCreatorTileEntity* const beamCreatorEntity_unpowered_from_3x2_to_2x2 = [SMBBeamCreatorTileEntity new];
-	[beamCreatorEntity_unpowered_from_3x2_to_2x2 setRequiresExternalPowerForBeam:YES];
-	[beamCreatorEntity_unpowered_from_3x2_to_2x2 setBeamDirection:SMBGameBoardTile__direction_right];
-	[gameBoard gameBoardTileEntity_for_beamInteractions_set:beamCreatorEntity_unpowered_from_3x2_to_2x2
-								   to_gameBoardTilePosition:[[SMBGameBoardTilePosition alloc] init_with_column:column_for_cellXIndex(1, 0)
-																										   row:row_for_rowXIndex(1, 1)]];
-	
-	[gameBoard gameBoardTileEntity_add_powerButtonTileEntity_with_gameBoardTilePosition_toPower:beamCreatorEntity_unpowered_from_3x2_to_2x2.gameBoardTile.gameBoardTilePosition
+	/* 3x1 right to 1x1 bottom */
+	[gameBoard gameBoardTileEntity_add_powerButtonTileEntity_with_gameBoardTilePosition_toPower:beamCreatorEntity_unpowered_1x1_bottom.gameBoardTile.gameBoardTilePosition
+																	   to_gameBoardTilePosition:
+	 [[SMBGameBoardTilePosition alloc] init_with_column:column_for_cellXIndex(2, 2)
+													row:row_for_rowXIndex(0, 1)]];
+
+	/* 3x1 left to 2x2 left */
+	[gameBoard gameBoardTileEntity_add_powerButtonTileEntity_with_gameBoardTilePosition_toPower:beamCreatorEntity_unpowered_2x2_left.gameBoardTile.gameBoardTilePosition
+																	   to_gameBoardTilePosition:
+	 [[SMBGameBoardTilePosition alloc] init_with_column:column_for_cellXIndex(2, 0)
+													row:row_for_rowXIndex(0, 1)]];
+
+	/* 3x2 right to 2x2 left */
+	[gameBoard gameBoardTileEntity_add_powerButtonTileEntity_with_gameBoardTilePosition_toPower:beamCreatorEntity_unpowered_2x2_left.gameBoardTile.gameBoardTilePosition
+																	   to_gameBoardTilePosition:
+	 [[SMBGameBoardTilePosition alloc] init_with_column:column_for_cellXIndex(2, 2)
+													row:row_for_rowXIndex(1, 1)]];
+
+	/* 3x2 top to 2x2 left */
+	[gameBoard gameBoardTileEntity_add_powerButtonTileEntity_with_gameBoardTilePosition_toPower:beamCreatorEntity_unpowered_2x2_left.gameBoardTile.gameBoardTilePosition
 																	   to_gameBoardTilePosition:
 	 [[SMBGameBoardTilePosition alloc] init_with_column:column_for_cellXIndex(2, 1)
 													row:row_for_rowXIndex(1, 0)]];
-	
 
-	/*
-	 Power buttons and powered entities for cell 3x3
-	 */
-	SMBBeamCreatorTileEntity* const beamCreatorEntity_unpowered_from_3x3_to_1x3 = [SMBBeamCreatorTileEntity new];
-	[beamCreatorEntity_unpowered_from_3x3_to_1x3 setRequiresExternalPowerForBeam:YES];
-	[beamCreatorEntity_unpowered_from_3x3_to_1x3 setBeamDirection:SMBGameBoardTile__direction_right];
-	[gameBoard gameBoardTileEntity_for_beamInteractions_set:beamCreatorEntity_unpowered_from_3x3_to_1x3
-								   to_gameBoardTilePosition:[[SMBGameBoardTilePosition alloc] init_with_column:column_for_cellXIndex(0, 0)
-																										   row:row_for_rowXIndex(2, 2)]];
-	
-	[gameBoard gameBoardTileEntity_add_powerButtonTileEntity_with_gameBoardTilePosition_toPower:beamCreatorEntity_unpowered_from_3x3_to_1x3.gameBoardTile.gameBoardTilePosition
+	/* 3x3 right to 1x3 bottom left */
+	[gameBoard gameBoardTileEntity_add_powerButtonTileEntity_with_gameBoardTilePosition_toPower:beamCreatorEntity_unpowered_1x3_bottomLeft.gameBoardTile.gameBoardTilePosition
 																	   to_gameBoardTilePosition:
 	 [[SMBGameBoardTilePosition alloc] init_with_column:column_for_cellXIndex(2, 2)
 													row:row_for_rowXIndex(2, 1)]];
 
-	SMBBeamCreatorTileEntity* const beamCreatorEntity_unpowered_from_3x3_to_3x1 = [SMBBeamCreatorTileEntity new];
-	[beamCreatorEntity_unpowered_from_3x3_to_3x1 setRequiresExternalPowerForBeam:YES];
-	[beamCreatorEntity_unpowered_from_3x3_to_3x1 setBeamDirection:SMBGameBoardTile__direction_up];
-	[gameBoard gameBoardTileEntity_for_beamInteractions_set:beamCreatorEntity_unpowered_from_3x3_to_3x1
-								   to_gameBoardTilePosition:[[SMBGameBoardTilePosition alloc] init_with_column:column_for_cellXIndex(2, 1)
-																										   row:row_for_rowXIndex(0, 2)]];
-	
-	[gameBoard gameBoardTileEntity_add_powerButtonTileEntity_with_gameBoardTilePosition_toPower:beamCreatorEntity_unpowered_from_3x3_to_3x1.gameBoardTile.gameBoardTilePosition
+	/* 3x3 top to 3x1 bottom */
+	[gameBoard gameBoardTileEntity_add_powerButtonTileEntity_with_gameBoardTilePosition_toPower:beamCreatorEntity_unpowered_3x1_bottom.gameBoardTile.gameBoardTilePosition
 																	   to_gameBoardTilePosition:
 	 [[SMBGameBoardTilePosition alloc] init_with_column:column_for_cellXIndex(2, 1)
 													row:row_for_rowXIndex(2, 0)]];
 
 	/*
-	 Finished with power buttons and powered entities for cells
+	 - Power buttons.
 	 */
 
 	[gameBoard gameBoardTileEntity_add_levelExit_to_gameBoardTilePosition:
@@ -480,7 +537,7 @@
 	[gameBoardTileEntities addObject:[[SMBForcedBeamRedirectTileEntity alloc] init_with_forcedBeamExitDirection:SMBGameBoardTile__direction_left]];
 	[gameBoardTileEntities addObject:[[SMBForcedBeamRedirectTileEntity alloc] init_with_forcedBeamExitDirection:SMBGameBoardTile__direction_right]];
 	[gameBoardTileEntities addObject:[[SMBForcedBeamRedirectTileEntity alloc] init_with_forcedBeamExitDirection:SMBGameBoardTile__direction_up]];
-	[gameBoardTileEntities addObject:[SMBWallTileEntity new]];
+	[gameBoardTileEntities addObject:[[SMBForcedBeamRedirectTileEntity alloc] init_with_forcedBeamExitDirection:SMBGameBoardTile__direction_up]];
 
 	return
 	[[self alloc] init_with_gameBoard:gameBoard
