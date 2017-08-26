@@ -16,7 +16,7 @@
 @interface SMBGameBoardTileEntity (SMBProvidesPower)
 
 #pragma mark - providesPower
--(BOOL)smb_providesPower;
--(nullable SMBGameBoardTileEntity<SMBGameBoardTileEntity_PowerProvider>*)smb_providesPower_selfOrNull;
+-(BOOL)smb_powerProvider_providesPower;
+-(nullable SMBGameBoardTileEntity<SMBGameBoardTileEntity_PowerProvider>*)smb_powerProvider_selfOrNull;
 
 @end

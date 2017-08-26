@@ -17,15 +17,15 @@
 @implementation SMBGameBoardTileEntity (SMBProvidesPower)
 
 #pragma mark - providesPower
--(BOOL)smb_providesPower
+-(BOOL)smb_powerProvider_providesPower
 {
-	SMBGameBoardTileEntity<SMBGameBoardTileEntity_PowerProvider>* const smb_providesPower_selfOrNull = self.smb_providesPower_selfOrNull;
-	kRUConditionalReturn_ReturnValueFalse(smb_providesPower_selfOrNull == nil, NO);
+	SMBGameBoardTileEntity<SMBGameBoardTileEntity_PowerProvider>* const smb_powerProvider_selfOrNull = self.smb_powerProvider_selfOrNull;
+	kRUConditionalReturn_ReturnValueFalse(smb_powerProvider_selfOrNull == nil, NO);
 
-	return smb_providesPower_selfOrNull.providesPower;
+	return smb_powerProvider_selfOrNull.providesPower;
 }
 
--(nullable SMBGameBoardTileEntity<SMBGameBoardTileEntity_PowerProvider>*)smb_providesPower_selfOrNull
+-(nullable SMBGameBoardTileEntity<SMBGameBoardTileEntity_PowerProvider>*)smb_powerProvider_selfOrNull
 {
 	kRUConditionalReturn_ReturnValueNil([self conformsToProtocol:@protocol(SMBGameBoardTileEntity_PowerProvider)] == false, NO);
 

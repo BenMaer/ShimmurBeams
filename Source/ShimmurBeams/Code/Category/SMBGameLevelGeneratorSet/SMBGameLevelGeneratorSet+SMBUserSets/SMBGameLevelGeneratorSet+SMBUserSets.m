@@ -169,6 +169,11 @@
 	}
 																						  name:@"Too Easy"]];
 
+	[gameLevelGenerators addObject:[[SMBGameLevelGenerator alloc] init_with_generateLevelBlock:^SMBGameLevel * _Nonnull{
+		return [SMBGameLevel smb_buttons_windows_3x3];
+	}
+																						  name:@"Windows"]];
+
 	return
 	[[self alloc] init_with_gameLevelGenerators:[NSArray<SMBGameLevelGenerator*> arrayWithArray:gameLevelGenerators]
 										   name:@"Power buttons and switches"];

@@ -19,6 +19,8 @@
 #import <ResplendentUtilities/RUConditionalReturn.h>
 #import <ResplendentUtilities/RUClassOrNilUtil.h>
 #import <ResplendentUtilities/RUProtocolOrNil.h>
+#import <ResplendentUtilities/NSMutableArray+RUAddObjectIfNotNil.h>
+#import <ResplendentUtilities/RUConstants.h>
 
 
 
@@ -76,10 +78,10 @@ typedef NS_ENUM(NSInteger, SMBBeamEntityTileNode__state) {
 -(nullable SMBGameBoardTilePosition*)node_next_gameTilePosition_appropriate;
 -(nullable SMBGameBoardTile*)node_next_gameTile_for_position;
 
-#pragma mark - gameBoardTile_blocks_beamEnterDirection
-@property (nonatomic, assign) BOOL gameBoardTile_blocks_beamEnterDirection;
--(void)gameBoardTile_blocks_beamEnterDirection_update;
--(BOOL)gameBoardTile_blocks_beamEnterDirection_appropriate;
+#pragma mark - gameBoardTile_allows_beamEnterDirection
+@property (nonatomic, assign) BOOL gameBoardTile_allows_beamEnterDirection;
+-(void)gameBoardTile_allows_beamEnterDirection_update;
+-(BOOL)gameBoardTile_allows_beamEnterDirection_appropriate;
 
 #pragma mark - draw
 -(void)draw_half_line_in_rect:(CGRect)rect
@@ -130,6 +132,17 @@ typedef NS_ENUM(NSInteger, SMBBeamEntityTileNode__state) {
 #pragma clang diagnostic pop
 }
 
+-(nonnull NSString*)description
+{
+	NSMutableArray<NSString*>* const description_lines = [NSMutableArray<NSString*> array];
+	[description_lines ru_addObjectIfNotNil:[super description]];
+	[description_lines ru_addObjectIfNotNil:RUStringWithFormat(@"self.node_next_gameTilePosition: %@",self.node_next_gameTilePosition)];
+	[description_lines ru_addObjectIfNotNil:RUStringWithFormat(@"self.beamEnterDirection: %lu",(unsigned long)self.beamEnterDirection)];
+	[description_lines ru_addObjectIfNotNil:RUStringWithFormat(@"self.beamExitDirection: %lu",(unsigned long)self.beamExitDirection)];
+	
+	return [description_lines componentsJoinedByString:@"\n"];
+}
+
 #pragma mark - init
 -(nullable instancetype)init_with_beamEntity:(nonnull SMBBeamEntity*)beamEntity
 						  beamEnterDirection:(SMBGameBoardTile__direction)beamEnterDirection
@@ -145,6 +158,8 @@ typedef NS_ENUM(NSInteger, SMBBeamEntityTileNode__state) {
 		[self providesPower_update];
 
 		[self setState:SMBBeamEntityTileNode__state_created];
+
+		[self gameBoardTile_allows_beamEnterDirection_update];
 	}
 
 	return self;
@@ -174,6 +189,7 @@ typedef NS_ENUM(NSInteger, SMBBeamEntityTileNode__state) {
 	kRUConditionalReturn(gameBoardTile == gameBoardTile_old, NO);
 
 	[self node_next_gameTilePosition_update];
+	[self gameBoardTile_allows_beamEnterDirection_update];
 }
 
 -(BOOL)gameBoardTile_validateNew:(nullable SMBGameBoardTile*)gameBoardTile
@@ -213,7 +229,7 @@ typedef NS_ENUM(NSInteger, SMBBeamEntityTileNode__state) {
 -(void)gameBoardTile_gameBoardTileEntity_for_beamInteractions_did_change_updates
 {
 	[self beamExitDirection_update];
-	[self gameBoardTile_blocks_beamEnterDirection_update];
+	[self gameBoardTile_allows_beamEnterDirection_update];
 }
 
 #pragma mark - beamExitDirection
@@ -235,6 +251,8 @@ typedef NS_ENUM(NSInteger, SMBBeamEntityTileNode__state) {
 
 -(SMBGameBoardTile__direction)beamExitDirection_generate
 {
+	kRUConditionalReturn_ReturnValue(self.gameBoardTile_allows_beamEnterDirection == false, NO, SMBGameBoardTile__direction_none);
+
 	SMBGameBoardTile__direction const direction_error = SMBGameBoardTile__direction_unknown;
 
 	SMBGameBoardTile* const gameBoardTile = self.gameBoardTile;
@@ -389,7 +407,6 @@ typedef NS_ENUM(NSInteger, SMBBeamEntityTileNode__state) {
 -(nullable SMBGameBoardTilePosition*)node_next_gameTilePosition_appropriate
 {
 	kRUConditionalReturn_ReturnValueNil(self.state != SMBBeamEntityTileNode__state_ready, NO);
-	kRUConditionalReturn_ReturnValueNil(self.gameBoardTile_blocks_beamEnterDirection == YES, NO);
 
 	SMBGameBoardTile* const gameBoardTile = self.gameBoardTile;
 	kRUConditionalReturn_ReturnValueNil(gameBoardTile == nil, NO);
@@ -435,36 +452,36 @@ typedef NS_ENUM(NSInteger, SMBBeamEntityTileNode__state) {
 	return [gameBoard gameBoardTile_at_position:node_next_gameTilePosition];
 }
 
-#pragma mark - gameBoardTile_blocks_beamEnterDirection
--(void)setGameBoardTile_blocks_beamEnterDirection:(BOOL)gameBoardTile_blocks_beamEnterDirection
+#pragma mark - gameBoardTile_allows_beamEnterDirection
+-(void)setGameBoardTile_allows_beamEnterDirection:(BOOL)gameBoardTile_allows_beamEnterDirection
 {
-	kRUConditionalReturn(self.gameBoardTile_blocks_beamEnterDirection == gameBoardTile_blocks_beamEnterDirection, NO);
+	kRUConditionalReturn(self.gameBoardTile_allows_beamEnterDirection == gameBoardTile_allows_beamEnterDirection, NO);
 
-	_gameBoardTile_blocks_beamEnterDirection = gameBoardTile_blocks_beamEnterDirection;
+	_gameBoardTile_allows_beamEnterDirection = gameBoardTile_allows_beamEnterDirection;
 
+	[self beamExitDirection_update];
 	[self providesPower_update];
-	[self node_next_gameTilePosition_update];
 	[self setNeedsRedraw:YES];
 }
 
--(void)gameBoardTile_blocks_beamEnterDirection_update
+-(void)gameBoardTile_allows_beamEnterDirection_update
 {
-	[self setGameBoardTile_blocks_beamEnterDirection:[self gameBoardTile_blocks_beamEnterDirection_appropriate]];
+	[self setGameBoardTile_allows_beamEnterDirection:[self gameBoardTile_allows_beamEnterDirection_appropriate]];
 }
 
--(BOOL)gameBoardTile_blocks_beamEnterDirection_appropriate
+-(BOOL)gameBoardTile_allows_beamEnterDirection_appropriate
 {
 	SMBGameBoardTile* const gameBoardTile = self.gameBoardTile;
 	kRUConditionalReturn_ReturnValueFalse(gameBoardTile == nil, NO);
 
 	SMBGameBoardTileEntity* const gameBoardTileEntity = gameBoardTile.gameBoardTileEntity_for_beamInteractions;
-	kRUConditionalReturn_ReturnValueTrue((gameBoardTileEntity != nil)
+	kRUConditionalReturn_ReturnValueFalse((gameBoardTileEntity != nil)
 										 &&
 										 SMBGameBoardTile__direction__isInRange(self.beamEnterDirection)
 										 &&
 										 ([gameBoardTileEntity smb_beamBlocker_and_beamEnterDirection_isBlocked:self.beamEnterDirection]), NO);
 
-	return NO;
+	return YES;
 }
 
 #pragma mark - beamEnterDirection
@@ -478,7 +495,7 @@ typedef NS_ENUM(NSInteger, SMBBeamEntityTileNode__state) {
 {
 	[super draw_in_rect:rect];
 
-	if (self.gameBoardTile_blocks_beamEnterDirection == false)
+	if (self.gameBoardTile_allows_beamEnterDirection)
 	{
 		CGContextRef const context = UIGraphicsGetCurrentContext();
 
@@ -699,9 +716,9 @@ typedef NS_ENUM(NSInteger, SMBBeamEntityTileNode__state) {
 
 -(BOOL)providesPower_appropriate
 {
-	SMBGameBoardTile__direction const beamEnterDirection = self.beamEnterDirection;
+	kRUConditionalReturn_ReturnValueFalse(self.gameBoardTile_allows_beamEnterDirection == false, NO);
 
-	return SMBGameBoardTile__direction__isInRange(beamEnterDirection);
+	return SMBGameBoardTile__direction__isInRange(self.beamEnterDirection);
 }
 
 @end

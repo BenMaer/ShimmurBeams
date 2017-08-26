@@ -18,5 +18,6 @@
 +(nonnull instancetype)smb_button_introduction;
 +(nonnull instancetype)smb_buttons_3choices;
 +(nonnull instancetype)smb_buttons_usableGameBoardTileEntities_choices;
++(nonnull instancetype)smb_buttons_windows_3x3;
 
 @end

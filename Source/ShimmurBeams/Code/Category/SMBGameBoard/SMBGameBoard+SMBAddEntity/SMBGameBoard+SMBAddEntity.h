@@ -50,4 +50,8 @@
 #pragma mark - wall
 -(void)gameBoardTileEntity_add_wall_to_gameBoardTilePosition:(nonnull SMBGameBoardTilePosition*)gameBoardTilePosition;
 
+#pragma mark - powerButtonTileEntity
+-(void)gameBoardTileEntity_add_powerButtonTileEntity_with_gameBoardTilePosition_toPower:(nonnull SMBGameBoardTilePosition*)gameBoardTilePosition_toPower
+															   to_gameBoardTilePosition:(nonnull SMBGameBoardTilePosition*)gameBoardTilePosition;
+
 @end
