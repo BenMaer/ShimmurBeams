@@ -167,9 +167,9 @@ static void* kSMBGameBoardTile__KVOContext = &kSMBGameBoardTile__KVOContext;
 
 	[self.gameBoardTileEntities_many_mappedDataCollection mappableObject_add:gameBoardTileEntity];
 
-	if ([gameBoardTileEntity smb_providesPower_selfOrNull])
+	if ([gameBoardTileEntity smb_powerProvider_selfOrNull])
 	{
-		[self gameBoardTileEntities_many_powerProviders_mappedDataCollection_add:[gameBoardTileEntity smb_providesPower_selfOrNull]];
+		[self gameBoardTileEntities_many_powerProviders_mappedDataCollection_add:[gameBoardTileEntity smb_powerProvider_selfOrNull]];
 	}
 
 	[self gameBoardTileEntities_many_update];
@@ -184,9 +184,9 @@ static void* kSMBGameBoardTile__KVOContext = &kSMBGameBoardTile__KVOContext;
 
 	[self.gameBoardTileEntities_many_mappedDataCollection mappableObject_remove:gameBoardTileEntity];
 
-	if ([gameBoardTileEntity smb_providesPower_selfOrNull])
+	if ([gameBoardTileEntity smb_powerProvider_selfOrNull])
 	{
-		[self gameBoardTileEntities_many_powerProviders_mappedDataCollection_remove:[gameBoardTileEntity smb_providesPower_selfOrNull]];
+		[self gameBoardTileEntities_many_powerProviders_mappedDataCollection_remove:[gameBoardTileEntity smb_powerProvider_selfOrNull]];
 	}
 
 	[self gameBoardTileEntities_many_update];
@@ -276,7 +276,7 @@ static void* kSMBGameBoardTile__KVOContext = &kSMBGameBoardTile__KVOContext;
 	kRUConditionalReturn(gameBoardTileEntity == nil, YES);
 	kRUConditionalReturn([self.gameBoardTileEntities_many_mappedDataCollection mappableObject_exists:gameBoardTileEntity], YES);
 
-	BOOL const gameBoardTileEntity_providesPower = [gameBoardTileEntity smb_providesPower];
+	BOOL const gameBoardTileEntity_providesPower = [gameBoardTileEntity smb_powerProvider_providesPower];
 	[self gameBoardTileEntity:gameBoardTileEntity
 			 setKVORegistered:NO];
 
@@ -321,7 +321,7 @@ static void* kSMBGameBoardTile__KVOContext = &kSMBGameBoardTile__KVOContext;
 -(void)gameBoardTileEntities_many_powerProviders_providesPower_mappedDataCollection_add:(nonnull SMBGameBoardTileEntity<SMBGameBoardTileEntity_PowerProvider>*)gameBoardTileEntity
 {
 	kRUConditionalReturn(gameBoardTileEntity == nil, YES);
-	kRUConditionalReturn(([gameBoardTileEntity smb_providesPower] == false)
+	kRUConditionalReturn(([gameBoardTileEntity smb_powerProvider_providesPower] == false)
 						 ||
 						 ([self.gameBoardTileEntities_many_powerProviders_mappedDataCollection mappableObject_exists:gameBoardTileEntity] == false), YES);
 
@@ -335,7 +335,7 @@ static void* kSMBGameBoardTile__KVOContext = &kSMBGameBoardTile__KVOContext;
 	kRUConditionalReturn(gameBoardTileEntity == nil, YES);
 	kRUConditionalReturn([self.gameBoardTileEntities_many_powerProviders_mappedDataCollection mappableObject_exists:gameBoardTileEntity]
 						 &&
-						 [gameBoardTileEntity smb_providesPower], YES);
+						 [gameBoardTileEntity smb_powerProvider_providesPower], YES);
 
 	[self.gameBoardTileEntities_many_powerProviders_providesPower_mappedDataCollection mappableObject_remove:gameBoardTileEntity];
 
@@ -346,7 +346,7 @@ static void* kSMBGameBoardTile__KVOContext = &kSMBGameBoardTile__KVOContext;
 {
 	kRUConditionalReturn(gameBoardTileEntity == nil, YES);
 
-	BOOL const providesPower = [gameBoardTileEntity smb_providesPower];
+	BOOL const providesPower = [gameBoardTileEntity smb_powerProvider_providesPower];
 	kRUConditionalReturn(providesPower
 						 ==
 						 ([[self.gameBoardTileEntities_many_powerProviders_providesPower_mappedDataCollection mappableObjects] containsObject:gameBoardTileEntity]),
@@ -425,7 +425,7 @@ static void* kSMBGameBoardTile__KVOContext = &kSMBGameBoardTile__KVOContext;
 		{
 			if ([keyPath isEqualToString:[SMBGameBoardTileEntity_PowerProvider_PropertiesForKVO providesPower]])
 			{
-				[self gameBoardTileEntities_many_powerProviders_providesPower_mappedDataCollection_add_ifProvidesPower_else_remove:[object smb_providesPower_selfOrNull]];
+				[self gameBoardTileEntities_many_powerProviders_providesPower_mappedDataCollection_add_ifProvidesPower_else_remove:[object smb_powerProvider_selfOrNull]];
 			}
 			else
 			{
