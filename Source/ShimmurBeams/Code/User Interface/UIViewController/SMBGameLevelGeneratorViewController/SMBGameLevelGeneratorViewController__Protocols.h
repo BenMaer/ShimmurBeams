@@ -31,8 +31,8 @@
 
 
 
-@protocol SMBGameLevelGeneratorViewController_levelCompletionBarButtonItemDelegate <NSObject>
+@protocol SMBGameLevelGeneratorViewController_levelSuccessBarButtonItemDelegate <NSObject>
 
--(nonnull UIBarButtonItem*)gameLevelGeneratorViewController_levelCompletionBarButtonItem:(nonnull SMBGameLevelGeneratorViewController*)gameLevelGeneratorViewController;
+-(nonnull UIBarButtonItem*)gameLevelGeneratorViewController_levelSuccessBarButtonItem:(nonnull SMBGameLevelGeneratorViewController*)gameLevelGeneratorViewController;
 
 @end

@@ -21,7 +21,7 @@
 
 
 
-@interface SMBGameLevelGeneratorSetViewController () <SMBGameLevelGeneratorViewController_gameLevelDidCompleteDelegate, UITableViewDataSource, UITableViewDelegate, SMBGameLevelGeneratorViewController_levelCompletionBarButtonItemDelegate>
+@interface SMBGameLevelGeneratorSetViewController () <SMBGameLevelGeneratorViewController_gameLevelDidCompleteDelegate, UITableViewDataSource, UITableViewDelegate, SMBGameLevelGeneratorViewController_levelSuccessBarButtonItemDelegate>
 
 #pragma mark - gameLevelGeneratorViewController
 @property (nonatomic, weak, nullable) SMBGameLevelGeneratorViewController* gameLevelGeneratorViewController;
@@ -29,7 +29,7 @@
 -(void)gameLevelGeneratorViewController_gameLevelGenerator_updateExisting;
 -(void)gameLevelGeneratorViewController_regenerateLevel;
 
--(void)gameLevelGeneratorViewController_levelCompletionBarButtonItem_action_didFire;
+-(void)gameLevelGeneratorViewController_levelSuccessBarButtonItem_action_didFire;
 
 #pragma mark - gameLevelGenerator
 @property (nonatomic, assign) BOOL gameLevelGenerator_appropriate_disable;
@@ -102,7 +102,7 @@
 
 	SMBGameLevelGeneratorViewController* const gameLevelGeneratorViewController = [SMBGameLevelGeneratorViewController new];
 	[gameLevelGeneratorViewController setGameLevelDidCompleteDelegate:self];
-	[gameLevelGeneratorViewController setLevelCompletionBarButtonItemDelegate:self];
+	[gameLevelGeneratorViewController setLevelSuccessBarButtonItemDelegate:self];
 
 	[self setGameLevelGeneratorViewController:gameLevelGeneratorViewController];
 	kRUConditionalReturn(self.gameLevelGeneratorViewController == nil, YES);
@@ -129,7 +129,7 @@
 	[gameLevelGeneratorViewController gameLevelGenerator_gameLevel_regenerate];
 }
 
--(void)gameLevelGeneratorViewController_levelCompletionBarButtonItem_action_didFire
+-(void)gameLevelGeneratorViewController_levelSuccessBarButtonItem_action_didFire
 {
 	[self gameLevelGeneratorSet_levelIndex_increment_attempt_with_alertControllers:NO];
 }
@@ -393,8 +393,8 @@
 	return self.gameLevelGeneratorSet.name;
 }
 
-#pragma mark - SMBGameLevelGeneratorViewController_levelCompletionBarButtonItemDelegate
--(nonnull UIBarButtonItem*)gameLevelGeneratorViewController_levelCompletionBarButtonItem:(nonnull SMBGameLevelGeneratorViewController*)gameLevelGeneratorViewController
+#pragma mark - SMBGameLevelGeneratorViewController_levelSuccessBarButtonItemDelegate
+-(nonnull UIBarButtonItem*)gameLevelGeneratorViewController_levelSuccessBarButtonItem:(nonnull SMBGameLevelGeneratorViewController*)gameLevelGeneratorViewController
 {
 	kRUConditionalReturn_ReturnValueNil(gameLevelGeneratorViewController == nil, YES);
 
@@ -406,7 +406,7 @@
 	[[UIBarButtonItem alloc] initWithTitle:(isDone ? @"Done" : @"Next")
 									 style:UIBarButtonItemStylePlain
 									target:self
-									action:@selector(gameLevelGeneratorViewController_levelCompletionBarButtonItem_action_didFire)];
+									action:@selector(gameLevelGeneratorViewController_levelSuccessBarButtonItem_action_didFire)];
 }
 
 @end

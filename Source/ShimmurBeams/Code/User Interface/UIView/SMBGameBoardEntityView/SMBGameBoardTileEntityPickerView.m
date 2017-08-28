@@ -22,6 +22,15 @@
 
 kRUDefineNSStringConstant(SMBGameBoardTileEntityPickerView__cellIdentifier_SMBGameBoardTileEntityPickerViewCollectionViewCell);
 
+typedef NS_ENUM(NSInteger, SMBGameBoardTileEntityPickerView__trashButton_type) {
+	SMBGameBoardTileEntityPickerView__trashButton_type_none,
+	SMBGameBoardTileEntityPickerView__trashButton_type_clear,
+	SMBGameBoardTileEntityPickerView__trashButton_type_remove,
+
+	SMBGameBoardTileEntityPickerView__trashButton_type__first	= SMBGameBoardTileEntityPickerView__trashButton_type_clear,
+	SMBGameBoardTileEntityPickerView__trashButton_type__last	= SMBGameBoardTileEntityPickerView__trashButton_type_remove,
+};
+
 
 
 
@@ -31,6 +40,11 @@ kRUDefineNSStringConstant(SMBGameBoardTileEntityPickerView__cellIdentifier_SMBGa
 #pragma mark - gameBoardTileEntities
 -(nullable SMBGameBoardTileEntity*)gameBoardTileEntity_at_index:(NSUInteger)gameBoardTileEntity_index;
 -(NSUInteger)gameBoardTileEntity_index_for_indexPathRow:(NSInteger)indexPathRow;
+-(void)gameBoardTileEntities_removeFromTiles_and_deselect;
+-(void)gameBoardTileEntity_removeFromTile:(nonnull SMBGameBoardTileEntity*)gameBoardTileEntity;
+
+#pragma mark - selectedGameBoardTileEntity
+-(void)selectedGameBoardTileEntity_removeFromTile_and_deselect;
 
 #pragma mark - collectionView
 @property (nonatomic, readonly, strong, nullable) UICollectionViewFlowLayout* collectionViewFlowLayout;
@@ -45,6 +59,12 @@ kRUDefineNSStringConstant(SMBGameBoardTileEntityPickerView__cellIdentifier_SMBGa
 @property (nonatomic, readonly, strong, nullable) UIButton* trashButton;
 -(CGRect)trashButton_frame;
 -(void)trashButton_did_touchUpInside;
+-(void)trashButton_title_update;
+-(nullable NSString*)trashButton_title_appropriate;
+
+#pragma mark - trashButton_type
+@property (nonatomic, assign) SMBGameBoardTileEntityPickerView__trashButton_type trashButton_type;
+-(void)trashButton_type_update;
 
 @end
 
@@ -77,12 +97,13 @@ kRUDefineNSStringConstant(SMBGameBoardTileEntityPickerView__cellIdentifier_SMBGa
 		_trashButton = [UIButton buttonWithType:UIButtonTypeCustom];
 		[self.trashButton setBackgroundColor:[UIColor clearColor]];
 		[self.trashButton addTarget:self action:@selector(trashButton_did_touchUpInside) forControlEvents:UIControlEventTouchUpInside];
-		[self.trashButton setTitle:@"Clear" forState:UIControlStateNormal];
 		[self.trashButton setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
 		[self.trashButton.titleLabel setFont:[UIFont systemFontOfSize:16.0f]];
 		[self.trashButton.layer setBorderWidth:2.0f];
 		[self.trashButton.layer setBorderColor:[UIColor blackColor].CGColor];
 		[self addSubview:self.trashButton];
+
+		[self trashButton_type_update];
 	}
 
 	return self;
@@ -121,6 +142,23 @@ kRUDefineNSStringConstant(SMBGameBoardTileEntityPickerView__cellIdentifier_SMBGa
 -(NSUInteger)gameBoardTileEntity_index_for_indexPathRow:(NSInteger)indexPathRow
 {
 	return indexPathRow;
+}
+
+-(void)gameBoardTileEntities_removeFromTiles_and_deselect
+{
+	[self.gameBoardTileEntities enumerateObjectsUsingBlock:^(SMBGameBoardTileEntity * _Nonnull gameBoardTileEntity, NSUInteger idx, BOOL * _Nonnull stop) {
+		[self gameBoardTileEntity_removeFromTile:gameBoardTileEntity];
+	}];
+
+	[self setSelectedGameBoardTileEntity:nil];
+}
+
+-(void)gameBoardTileEntity_removeFromTile:(nonnull SMBGameBoardTileEntity*)gameBoardTileEntity
+{
+	SMBGameBoardTile* const gameBoardTile = gameBoardTileEntity.gameBoardTile;
+	kRUConditionalReturn(gameBoardTile == nil, NO);
+
+	[gameBoardTile gameBoardTileEntities_remove:gameBoardTileEntity entityType:SMBGameBoardTile__entityType_beamInteractions];
 }
 
 #pragma mark - collectionView
@@ -191,6 +229,17 @@ kRUDefineNSStringConstant(SMBGameBoardTileEntityPickerView__cellIdentifier_SMBGa
 	_selectedGameBoardTileEntity = selectedGameBoardTileEntity;
 
 	[self collectionView_visibleCells_gameBoardTileEntityPickerViewCollectionViewCell_gameBoardTileEntity_isSelected_update];
+	[self trashButton_type_update];
+}
+
+-(void)selectedGameBoardTileEntity_removeFromTile_and_deselect
+{
+	SMBGameBoardTileEntity* const selectedGameBoardTileEntity = self.selectedGameBoardTileEntity;
+	kRUConditionalReturn(selectedGameBoardTileEntity == nil, YES);
+
+	[self gameBoardTileEntity_removeFromTile:selectedGameBoardTileEntity];
+
+	[self setSelectedGameBoardTileEntity:nil];
 }
 
 #pragma mark - trashButton
@@ -207,12 +256,68 @@ kRUDefineNSStringConstant(SMBGameBoardTileEntityPickerView__cellIdentifier_SMBGa
 
 -(void)trashButton_did_touchUpInside
 {
-	[self.gameBoardTileEntities enumerateObjectsUsingBlock:^(SMBGameBoardTileEntity * _Nonnull gameBoardTileEntity, NSUInteger idx, BOOL * _Nonnull stop) {
-		SMBGameBoardTile* const gameBoardTile = gameBoardTileEntity.gameBoardTile;
-		kRUConditionalReturn(gameBoardTile == nil, NO);
+	switch (self.trashButton_type)
+	{
+		case SMBGameBoardTileEntityPickerView__trashButton_type_none:
+			NSAssert(false, @"unhandled trashButton_type %li",(long)self.trashButton_type);
+			break;
 
-		[gameBoardTile gameBoardTileEntities_remove:gameBoardTileEntity entityType:SMBGameBoardTile__entityType_beamInteractions];
-	}];
+		case SMBGameBoardTileEntityPickerView__trashButton_type_clear:
+			[self gameBoardTileEntities_removeFromTiles_and_deselect];
+			break;
+
+		case SMBGameBoardTileEntityPickerView__trashButton_type_remove:
+			[self selectedGameBoardTileEntity_removeFromTile_and_deselect];
+			break;
+	}
+}
+
+-(void)trashButton_title_update
+{
+	[self.trashButton setTitle:[self trashButton_title_appropriate]
+					  forState:UIControlStateNormal];
+}
+
+-(nullable NSString*)trashButton_title_appropriate
+{
+	SMBGameBoardTileEntityPickerView__trashButton_type const trashButton_type = self.trashButton_type;
+	switch (trashButton_type)
+	{
+		case SMBGameBoardTileEntityPickerView__trashButton_type_none:
+			break;
+
+		case SMBGameBoardTileEntityPickerView__trashButton_type_clear:
+			return @"Clear";
+			break;
+
+		case SMBGameBoardTileEntityPickerView__trashButton_type_remove:
+			return @"Remove";
+			break;
+	}
+
+	NSAssert(false, @"unhandled trashButton_type %li",(long)trashButton_type);
+	return nil;
+}
+
+#pragma mark - trashButton_type
+-(void)setTrashButton_type:(SMBGameBoardTileEntityPickerView__trashButton_type)trashButton_type
+{
+	kRUConditionalReturn(self.trashButton_type == trashButton_type, NO);
+
+	_trashButton_type = trashButton_type;
+
+	[self trashButton_title_update];
+}
+
+-(void)trashButton_type_update
+{
+	[self setTrashButton_type:
+	 ((self.selectedGameBoardTileEntity == nil)
+	  ?
+	  SMBGameBoardTileEntityPickerView__trashButton_type_clear
+	  :
+	  SMBGameBoardTileEntityPickerView__trashButton_type_remove
+	 )];
 }
 
 @end
