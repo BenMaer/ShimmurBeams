@@ -336,8 +336,7 @@ static void* kSMBGameBoardView__KVOContext = &kSMBGameBoardView__KVOContext;
 {
 	kRUConditionalReturn_ReturnValue(gameBoardTileEntity == nil, YES, CGRectZero);
 
-	SMBGameBoardTilePosition* const gameBoardTilePosition = gameBoardTileEntity.gameBoardTile.gameBoardTilePosition;
-	return [self gameBoardTilePosition_frame:gameBoardTilePosition];
+	return [self gameBoardTilePosition_frame:gameBoardTileEntity.gameBoardTile.gameBoardTilePosition];
 }
 
 -(CGSize)gameBoardTileEntityView_size_with_boundingSize:(CGSize)boundingSize

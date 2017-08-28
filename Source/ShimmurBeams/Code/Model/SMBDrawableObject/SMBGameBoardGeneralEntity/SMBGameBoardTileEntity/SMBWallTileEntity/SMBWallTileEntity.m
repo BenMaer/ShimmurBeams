@@ -21,8 +21,12 @@
 
 	CGContextRef const context = UIGraphicsGetCurrentContext();
 
+	CGContextSaveGState(context);
+
 	CGContextSetFillColorWithColor(context, [UIColor darkGrayColor].CGColor);
 	CGContextFillRect(context, rect);
+
+	CGContextRestoreGState(context);
 }
 
 #pragma mark - SMBBeamBlockerTileEntity

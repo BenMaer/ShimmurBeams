@@ -33,12 +33,10 @@
 @property (nonatomic, readonly, weak, nullable) SMBGameBoard* gameBoard;
 
 #pragma mark - gameBoardTileEntity_for_beamInteractions
-@property (nonatomic, strong, nullable) SMBGameBoardTileEntity* gameBoardTileEntity_for_beamInteractions;
+@property (nonatomic, readonly, strong, nullable) SMBGameBoardTileEntity* gameBoardTileEntity_for_beamInteractions;
 
 #pragma mark - gameBoardTileEntities_many
 @property (nonatomic, readonly, copy, nullable) NSArray<SMBGameBoardTileEntity*>* gameBoardTileEntities_many;
--(void)gameBoardTileEntities_many_add:(nonnull SMBGameBoardTileEntity*)gameBoardTileEntity;
--(void)gameBoardTileEntities_many_remove:(nonnull SMBGameBoardTileEntity*)gameBoardTileEntity;
 
 #pragma mark - gameBoardTileEntities
 -(void)gameBoardTileEntities_add:(nonnull SMBGameBoardTileEntity*)gameBoardTileEntity
@@ -58,6 +56,9 @@
 #pragma mark - isPowered
 @property (nonatomic, readonly, assign) BOOL isPowered;
 
+#pragma mark - beamEnterDirections_blocked
+@property (nonatomic, assign) SMBGameBoardTile__direction beamEnterDirections_blocked;
+
 #pragma mark - isHighlighted
 @property (nonatomic, assign) BOOL isHighlighted;
 
@@ -72,5 +73,6 @@
 +(nonnull NSString*)gameBoardTileEntity_for_beamInteractions;
 +(nonnull NSString*)gameBoardTileEntities_many;
 +(nonnull NSString*)isPowered;
++(nonnull NSString*)beamEnterDirections_blocked;
 
 @end

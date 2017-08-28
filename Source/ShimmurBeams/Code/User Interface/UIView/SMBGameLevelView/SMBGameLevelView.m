@@ -195,7 +195,8 @@ static void* kSMBGameLevelView__KVOContext = &kSMBGameLevelView__KVOContext;
 						 &&
 						 ([self.gameBoardTileEntityPickerView.gameBoardTileEntities containsObject:gameBoardTileEntity_for_beamInteractions_old] == false), NO);
 
-	[gameBoardTile setGameBoardTileEntity_for_beamInteractions:gameBoardTileEntityPickerView_selectedGameBoardTileEntity];
+	[gameBoardTile gameBoardTileEntities_add:gameBoardTileEntityPickerView_selectedGameBoardTileEntity
+								  entityType:SMBGameBoardTile__entityType_beamInteractions];
 
 	[self.gameBoardTileEntityPickerView setSelectedGameBoardTileEntity:nil];
 }

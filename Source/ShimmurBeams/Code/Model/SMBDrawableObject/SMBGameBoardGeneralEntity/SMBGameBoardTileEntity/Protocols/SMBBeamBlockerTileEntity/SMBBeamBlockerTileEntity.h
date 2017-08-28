@@ -14,6 +14,9 @@
 
 
 
+/**
+ Right now, beam blocking is only considered when set as the `gameBoardTileEntity_for_beamInteractions` property on `SMBGameBoardTile`.
+ */
 @protocol SMBBeamBlockerTileEntity <NSObject>
 
 -(BOOL)beamEnterDirection_isBlocked:(SMBGameBoardTile__direction)beamEnterDirection;

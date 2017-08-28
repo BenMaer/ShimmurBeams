@@ -1,12 +1,12 @@
 //
-//  SMBGameLevel+SMBPowerButtonsAndSwitches.m
+//  SMBGameLevel+SMBPowerButtonsAndDoors.m
 //  ShimmurBeams
 //
 //  Created by Benjamin Maer on 8/18/17.
 //  Copyright © 2017 Shimmur. All rights reserved.
 //
 
-#import "SMBGameLevel+SMBPowerButtonsAndSwitches.h"
+#import "SMBGameLevel+SMBPowerButtonsAndDoors.h"
 #import "SMBGameBoard.h"
 #import "SMBBeamCreatorTileEntity.h"
 #import "SMBGameBoardTilePosition.h"
@@ -21,7 +21,7 @@
 
 
 
-@implementation SMBGameLevel (SMBPowerButtonsAndSwitches)
+@implementation SMBGameLevel (SMBPowerButtonsAndDoors)
 
 #pragma mark - button
 +(nonnull instancetype)smb_button_introduction

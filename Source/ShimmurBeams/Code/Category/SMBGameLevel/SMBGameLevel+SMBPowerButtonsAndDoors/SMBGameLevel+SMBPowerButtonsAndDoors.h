@@ -1,5 +1,5 @@
 //
-//  SMBGameLevel+SMBPowerButtonsAndSwitches.h
+//  SMBGameLevel+SMBPowerButtonsAndDoors.h
 //  ShimmurBeams
 //
 //  Created by Benjamin Maer on 8/18/17.
@@ -12,7 +12,7 @@
 
 
 
-@interface SMBGameLevel (SMBPowerButtonsAndSwitches)
+@interface SMBGameLevel (SMBPowerButtonsAndDoors)
 
 #pragma mark - button
 +(nonnull instancetype)smb_button_introduction;

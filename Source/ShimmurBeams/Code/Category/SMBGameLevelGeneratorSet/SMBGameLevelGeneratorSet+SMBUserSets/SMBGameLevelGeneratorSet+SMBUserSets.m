@@ -11,7 +11,7 @@
 #import "SMBGameLevel+SMBForcedRedirectsAndWalls.h"
 #import "SMBGameLevel+SMBRotatesAndDeathBlocks.h"
 #import "SMBGameLevel+SMBMirrorsAndMeltableBlocks.h"
-#import "SMBGameLevel+SMBPowerButtonsAndSwitches.h"
+#import "SMBGameLevel+SMBPowerButtonsAndDoors.h"
 
 #import <ResplendentUtilities/NSMutableArray+RUAddObjectIfNotNil.h>
 

@@ -88,7 +88,8 @@ typedef NS_ENUM(NSInteger, SMBBeamEntity__drawingPiece) {
 		_beamEntityTileNode_initial =
 		[[SMBBeamEntityTileNode alloc] init_with_beamEntity:self
 										 beamEnterDirection:SMBGameBoardTile__direction_none];
-		[gameBoardTile gameBoardTileEntities_many_add:self.beamEntityTileNode_initial];
+		[gameBoardTile gameBoardTileEntities_add:self.beamEntityTileNode_initial
+									  entityType:SMBGameBoardTile__entityType_many];
 
 		[self beamEntityTileNode_mappedDataCollection_update];
 	}
@@ -105,7 +106,8 @@ typedef NS_ENUM(NSInteger, SMBBeamEntity__drawingPiece) {
 	SMBGameBoardTile* const gameBoardTile = beamEntityTileNode_initial.gameBoardTile;
 	kRUConditionalReturn(gameBoardTile == nil, NO);
 
-	[gameBoardTile gameBoardTileEntities_many_remove:beamEntityTileNode_initial];
+	[gameBoardTile gameBoardTileEntities_remove:beamEntityTileNode_initial
+									 entityType:SMBGameBoardTile__entityType_many];
 }
 
 #pragma mark - beamEntityTileNode_mappedDataCollection

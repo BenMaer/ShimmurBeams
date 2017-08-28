@@ -156,10 +156,9 @@ typedef NS_ENUM(NSInteger, SMBBeamEntityTileNode__state) {
 
 		_beamEnterDirection = beamEnterDirection;
 		[self providesPower_update];
+		[self gameBoardTile_allows_beamEnterDirection_update];
 
 		[self setState:SMBBeamEntityTileNode__state_created];
-
-		[self gameBoardTile_allows_beamEnterDirection_update];
 	}
 
 	return self;
@@ -189,7 +188,6 @@ typedef NS_ENUM(NSInteger, SMBBeamEntityTileNode__state) {
 	kRUConditionalReturn(gameBoardTile == gameBoardTile_old, NO);
 
 	[self node_next_gameTilePosition_update];
-	[self gameBoardTile_allows_beamEnterDirection_update];
 }
 
 -(BOOL)gameBoardTile_validateNew:(nullable SMBGameBoardTile*)gameBoardTile
@@ -208,6 +206,7 @@ typedef NS_ENUM(NSInteger, SMBBeamEntityTileNode__state) {
 
 	NSMutableArray<NSString*>* const propertiesToObserve = [NSMutableArray<NSString*> array];
 	[propertiesToObserve addObject:[SMBGameBoardTile_PropertiesForKVO gameBoardTileEntity_for_beamInteractions]];
+	[propertiesToObserve addObject:[SMBGameBoardTile_PropertiesForKVO beamEnterDirections_blocked]];
 
 	[propertiesToObserve enumerateObjectsUsingBlock:^(NSString * _Nonnull propertyToObserve, NSUInteger idx, BOOL * _Nonnull stop) {
 		if (registered)
@@ -229,7 +228,6 @@ typedef NS_ENUM(NSInteger, SMBBeamEntityTileNode__state) {
 -(void)gameBoardTile_gameBoardTileEntity_for_beamInteractions_did_change_updates
 {
 	[self beamExitDirection_update];
-	[self gameBoardTile_allows_beamEnterDirection_update];
 }
 
 #pragma mark - beamExitDirection
@@ -251,17 +249,15 @@ typedef NS_ENUM(NSInteger, SMBBeamEntityTileNode__state) {
 
 -(SMBGameBoardTile__direction)beamExitDirection_generate
 {
-	kRUConditionalReturn_ReturnValue(self.gameBoardTile_allows_beamEnterDirection == false, NO, SMBGameBoardTile__direction_none);
-
 	SMBGameBoardTile__direction const direction_error = SMBGameBoardTile__direction_unknown;
 
 	SMBGameBoardTile* const gameBoardTile = self.gameBoardTile;
 	kRUConditionalReturn_ReturnValue(gameBoardTile == nil, NO, SMBGameBoardTile__direction_none);
 
-	SMBGameBoardTileEntity* const gameBoardTileEntity_for_beamInteractions = gameBoardTile.gameBoardTileEntity_for_beamInteractions;
-
 	SMBGameBoardTile__direction const beamEnterDirection = self.beamEnterDirection;
-	kRUConditionalReturn_ReturnValue(SMBGameBoardTile__direction__isInRange_or_none(beamEnterDirection) == false, YES, SMBGameBoardTile__direction_unknown);
+	kRUConditionalReturn_ReturnValue(SMBGameBoardTile__direction__isInRange_or_none(beamEnterDirection) == false, YES, direction_error);
+
+	SMBGameBoardTileEntity* const gameBoardTileEntity_for_beamInteractions = gameBoardTile.gameBoardTileEntity_for_beamInteractions;
 
 	if (beamEnterDirection == SMBGameBoardTile__direction_none)
 	{
@@ -279,6 +275,8 @@ typedef NS_ENUM(NSInteger, SMBBeamEntityTileNode__state) {
 
 		return beamCreatorTileEntity.beamDirection;
 	}
+
+	kRUConditionalReturn_ReturnValue(self.gameBoardTile_allows_beamEnterDirection == false, NO, SMBGameBoardTile__direction_none);
 
 	if (gameBoardTileEntity_for_beamInteractions)
 	{
@@ -302,6 +300,10 @@ typedef NS_ENUM(NSInteger, SMBBeamEntityTileNode__state) {
 			if ([keyPath isEqualToString:[SMBGameBoardTile_PropertiesForKVO gameBoardTileEntity_for_beamInteractions]])
 			{
 				[self gameBoardTile_gameBoardTileEntity_for_beamInteractions_did_change_updates];
+			}
+			else if ([keyPath isEqualToString:[SMBGameBoardTile_PropertiesForKVO beamEnterDirections_blocked]])
+			{
+				[self gameBoardTile_allows_beamEnterDirection_update];
 			}
 			else
 			{
@@ -474,12 +476,9 @@ typedef NS_ENUM(NSInteger, SMBBeamEntityTileNode__state) {
 	SMBGameBoardTile* const gameBoardTile = self.gameBoardTile;
 	kRUConditionalReturn_ReturnValueFalse(gameBoardTile == nil, NO);
 
-	SMBGameBoardTileEntity* const gameBoardTileEntity = gameBoardTile.gameBoardTileEntity_for_beamInteractions;
-	kRUConditionalReturn_ReturnValueFalse((gameBoardTileEntity != nil)
-										 &&
-										 SMBGameBoardTile__direction__isInRange(self.beamEnterDirection)
-										 &&
-										 ([gameBoardTileEntity smb_beamBlocker_and_beamEnterDirection_isBlocked:self.beamEnterDirection]), NO);
+	SMBGameBoardTile__direction const beamEnterDirection = self.beamEnterDirection;
+	kRUConditionalReturn_ReturnValueFalse(SMBGameBoardTile__direction__isInRange(self.beamEnterDirection) == false, NO);
+	kRUConditionalReturn_ReturnValueFalse((gameBoardTile.beamEnterDirections_blocked & beamEnterDirection), NO);
 
 	return YES;
 }
@@ -495,29 +494,33 @@ typedef NS_ENUM(NSInteger, SMBBeamEntityTileNode__state) {
 {
 	[super draw_in_rect:rect];
 
+	CGContextRef const context = UIGraphicsGetCurrentContext();
+
+	CGContextSaveGState(context);
+
+	CGContextSetStrokeColorWithColor(context, [UIColor redColor].CGColor);
+	CGContextSetLineWidth(context, 1.0f);
+
 	if (self.gameBoardTile_allows_beamEnterDirection)
 	{
-		CGContextRef const context = UIGraphicsGetCurrentContext();
-
-		CGContextSetStrokeColorWithColor(context, [UIColor redColor].CGColor);
-		CGContextSetLineWidth(context, 1.0f);
-
 		SMBGameBoardTile__direction const beamEnterDirection = self.beamEnterDirection;
 		if (SMBGameBoardTile__direction__isInRange(beamEnterDirection))
 		{
 			[self draw_half_line_in_rect:rect
 							   direction:beamEnterDirection];
 		}
-
-		SMBGameBoardTile__direction const beamExitDirection = self.beamExitDirection;
-		if (SMBGameBoardTile__direction__isInRange(beamExitDirection))
-		{
-			[self draw_half_line_in_rect:rect
-							   direction:beamExitDirection];
-		}
-
-		CGContextStrokePath(context);
 	}
+	
+	SMBGameBoardTile__direction const beamExitDirection = self.beamExitDirection;
+	if (SMBGameBoardTile__direction__isInRange(beamExitDirection))
+	{
+		[self draw_half_line_in_rect:rect
+						   direction:beamExitDirection];
+	}
+	
+	CGContextStrokePath(context);
+
+	CGContextRestoreGState(context);
 }
 
 #pragma mark - draw
@@ -678,7 +681,9 @@ typedef NS_ENUM(NSInteger, SMBBeamEntityTileNode__state) {
 		kRUConditionalReturn(node_next_gameTile_for_position == nil, YES);
 
 		NSAssert(beamEntityTileNode.gameBoardTile == nil, @"Should be");
-		[node_next_gameTile_for_position gameBoardTileEntities_many_add:beamEntityTileNode];
+		[node_next_gameTile_for_position gameBoardTileEntities_add:beamEntityTileNode
+														entityType:SMBGameBoardTile__entityType_many];
+
 		NSAssert(beamEntityTileNode.gameBoardTile == node_next_gameTile_for_position, @"Should be");
 	}
 	else
@@ -700,7 +705,8 @@ typedef NS_ENUM(NSInteger, SMBBeamEntityTileNode__state) {
 							 (self.state != SMBBeamEntityTileNode__state_finished));
 
 		NSAssert(beamEntityTileNode.gameBoardTile == beamEntityTileNode_gameTile, @"Should be");
-		[beamEntityTileNode_gameTile gameBoardTileEntities_many_remove:beamEntityTileNode];
+		[beamEntityTileNode_gameTile gameBoardTileEntities_remove:beamEntityTileNode
+													   entityType:SMBGameBoardTile__entityType_many];
 		NSAssert(beamEntityTileNode.gameBoardTile == nil, @"Should be");
 	}
 }
