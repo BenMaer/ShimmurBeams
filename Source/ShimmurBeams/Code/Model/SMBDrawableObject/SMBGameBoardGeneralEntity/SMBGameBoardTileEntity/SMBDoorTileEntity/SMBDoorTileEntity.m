@@ -23,6 +23,11 @@ static void* kSMBDoorTileEntity__KVOContext = &kSMBDoorTileEntity__KVOContext;
 
 @interface SMBDoorTileEntity ()
 
+#pragma mark - doorIsOpen
+@property (nonatomic, assign) BOOL doorIsOpen;
+-(void)doorIsOpen_update;
+-(BOOL)doorIsOpen_appropriate;
+
 #pragma mark - gameBoardTile
 -(void)SMBDoorTileEntity_gameBoardTile_setKVORegistered:(BOOL)registered;
 
@@ -48,6 +53,7 @@ static void* kSMBDoorTileEntity__KVOContext = &kSMBDoorTileEntity__KVOContext;
 {
 	if (self = [super init])
 	{
+		[self doorIsOpen_update];
 		[self beamEnterDirections_blocked_update];
 	}
 
@@ -67,13 +73,41 @@ static void* kSMBDoorTileEntity__KVOContext = &kSMBDoorTileEntity__KVOContext;
 	CGContextSaveGState(context);
 
 	CGContextSetFillColorWithColor(context, [UIColor darkGrayColor].CGColor);
-	CGContextFillRect(context,
-					  UIEdgeInsetsInsetRect(rect,
-											(UIEdgeInsets){
-												.left	= padding_fromEdge_horizontal,
-												.right	= padding_fromEdge_horizontal,
-												.top	= padding_fromTop,
-											}));
+
+	if (self.doorIsOpen)
+	{
+		CGFloat const padding_from_spine_ratio = 10.0f;
+		CGFloat const padding_horizontal_from_spine = CGRectGetWidth(rect) / padding_from_spine_ratio;
+		CGFloat const padding_vertical_from_spine = CGRectGetHeight(rect) / padding_from_spine_ratio;
+
+		CGFloat const inset_top = (CGRectGetHeight(rect) / 2.0f) + padding_vertical_from_spine;
+		CGFloat const inset_horizontal_from_furtherSide = (CGRectGetHeight(rect) / 2.0f) + padding_horizontal_from_spine;
+		CGContextFillRect(context,
+						  UIEdgeInsetsInsetRect(rect,
+												(UIEdgeInsets){
+													.left	= padding_fromEdge_horizontal,
+													.right	= inset_horizontal_from_furtherSide,
+													.top	= inset_top,
+												}));
+
+		CGContextFillRect(context,
+						  UIEdgeInsetsInsetRect(rect,
+												(UIEdgeInsets){
+													.left	= inset_horizontal_from_furtherSide,
+													.right	= padding_fromEdge_horizontal,
+													.top	= inset_top,
+												}));
+	}
+	else
+	{
+		CGContextFillRect(context,
+						  UIEdgeInsetsInsetRect(rect,
+												(UIEdgeInsets){
+													.left	= padding_fromEdge_horizontal,
+													.right	= padding_fromEdge_horizontal,
+													.top	= padding_fromTop,
+												}));
+	}
 
 	CGContextRestoreGState(context);
 }
@@ -105,6 +139,33 @@ static void* kSMBDoorTileEntity__KVOContext = &kSMBDoorTileEntity__KVOContext;
 	[super setGameBoardTile:gameBoardTile];
 	
 	[self SMBDoorTileEntity_gameBoardTile_setKVORegistered:YES];
+}
+
+#pragma mark - doorIsOpen
+-(void)setDoorIsOpen:(BOOL)doorIsOpen
+{
+	kRUConditionalReturn(self.doorIsOpen == doorIsOpen, NO);
+
+	_doorIsOpen = doorIsOpen;
+
+	[self beamEnterDirections_blocked_update];
+	[self setNeedsRedraw:YES];
+}
+
+-(void)doorIsOpen_update
+{
+	[self setDoorIsOpen:[self doorIsOpen_appropriate]];
+}
+
+-(BOOL)doorIsOpen_appropriate
+{
+	BOOL const doorIsOpen_default = NO;
+
+	SMBGameBoardTile* const gameBoardTile = self.gameBoardTile;
+	kRUConditionalReturn_ReturnValue(gameBoardTile == nil, NO, doorIsOpen_default);
+	kRUConditionalReturn_ReturnValue(gameBoardTile.isPowered_notByBeam == false, NO, doorIsOpen_default);
+
+	return YES;
 }
 
 #pragma mark - gameBoardTile
@@ -142,7 +203,7 @@ static void* kSMBDoorTileEntity__KVOContext = &kSMBDoorTileEntity__KVOContext;
 		{
 			if ([keyPath isEqualToString:[SMBGameBoardTile_PropertiesForKVO isPowered_notByBeam]])
 			{
-				[self beamEnterDirections_blocked_update];
+				[self doorIsOpen_update];
 			}
 			else
 			{
