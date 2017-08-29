@@ -92,7 +92,7 @@ static void* kSMBDoorTileEntity__KVOContext = &kSMBDoorTileEntity__KVOContext;
 	SMBGameBoardTile__direction const beamEnterDirections_blocked_default = SMBGameBoardTile__directions_all();
 	SMBGameBoardTile* const gameBoardTile = self.gameBoardTile;
 	kRUConditionalReturn_ReturnValue(gameBoardTile == nil, NO, beamEnterDirections_blocked_default);
-	kRUConditionalReturn_ReturnValue(gameBoardTile.isPowered == false, NO, beamEnterDirections_blocked_default);
+	kRUConditionalReturn_ReturnValue(gameBoardTile.isPowered_notByBeam == false, NO, beamEnterDirections_blocked_default);
 
 	return SMBGameBoardTile__direction_none;
 }
@@ -114,7 +114,7 @@ static void* kSMBDoorTileEntity__KVOContext = &kSMBDoorTileEntity__KVOContext;
 	kRUConditionalReturn(gameBoardTile == nil, NO);
 	
 	NSMutableArray<NSString*>* const propertiesToObserve = [NSMutableArray<NSString*> array];
-	[propertiesToObserve addObject:[SMBGameBoardTile_PropertiesForKVO isPowered]];
+	[propertiesToObserve addObject:[SMBGameBoardTile_PropertiesForKVO isPowered_notByBeam]];
 	
 	[propertiesToObserve enumerateObjectsUsingBlock:^(NSString * _Nonnull propertyToObserve, NSUInteger idx, BOOL * _Nonnull stop) {
 		if (registered)
@@ -140,7 +140,7 @@ static void* kSMBDoorTileEntity__KVOContext = &kSMBDoorTileEntity__KVOContext;
 	{
 		if (object == self.gameBoardTile)
 		{
-			if ([keyPath isEqualToString:[SMBGameBoardTile_PropertiesForKVO isPowered]])
+			if ([keyPath isEqualToString:[SMBGameBoardTile_PropertiesForKVO isPowered_notByBeam]])
 			{
 				[self beamEnterDirections_blocked_update];
 			}

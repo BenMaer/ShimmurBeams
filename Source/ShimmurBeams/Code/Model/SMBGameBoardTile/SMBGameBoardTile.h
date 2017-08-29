@@ -56,6 +56,9 @@
 #pragma mark - isPowered
 @property (nonatomic, readonly, assign) BOOL isPowered;
 
+#pragma mark - isPowered_notByBeam
+@property (nonatomic, readonly, assign) BOOL isPowered_notByBeam;
+
 #pragma mark - beamEnterDirections_blocked
 @property (nonatomic, assign) SMBGameBoardTile__direction beamEnterDirections_blocked;
 
@@ -73,6 +76,7 @@
 +(nonnull NSString*)gameBoardTileEntity_for_beamInteractions;
 +(nonnull NSString*)gameBoardTileEntities_many;
 +(nonnull NSString*)isPowered;
++(nonnull NSString*)isPowered_notByBeam;
 +(nonnull NSString*)beamEnterDirections_blocked;
 
 @end

@@ -19,6 +19,7 @@
 #import "NSArray+SMBChanges.h"
 #import "SMBGameBoardTileEntity+SMBBeamBlocker.h"
 #import "SMBBeamBlockerTileEntity_PropertiesForKVO.h"
+#import "SMBBeamEntityTileNode.h"
 
 #import <ResplendentUtilities/RUConditionalReturn.h>
 #import <ResplendentUtilities/NSMutableArray+RUAddObjectIfNotNil.h>
@@ -72,6 +73,11 @@ static void* kSMBGameBoardTile__KVOContext = &kSMBGameBoardTile__KVOContext;
 #pragma mark - isPowered
 @property (nonatomic, assign) BOOL isPowered;
 -(void)isPowered_update;
+
+#pragma mark - isPowered_notByBeam
+@property (nonatomic, assign) BOOL isPowered_notByBeam;
+-(void)isPowered_notByBeam_update;
+-(BOOL)isPowered_notByBeam_appropriate;
 
 #pragma mark - gameBoardTileEntities_beamBlockers_mappedDataCollection
 @property (nonatomic, readonly, strong, nullable) SMBMutableMappedDataCollection<SMBGameBoardTileEntity<SMBBeamBlockerTileEntity>*>* gameBoardTileEntities_beamBlockers_mappedDataCollection;
@@ -461,6 +467,7 @@ static void* kSMBGameBoardTile__KVOContext = &kSMBGameBoardTile__KVOContext;
 	[self.gameBoardTileEntities_many_powerProviders_providesPower_mappedDataCollection mappableObject_add:gameBoardTileEntity];
 
 	[self isPowered_update];
+	[self isPowered_notByBeam_update];
 }
 
 -(void)gameBoardTileEntities_many_powerProviders_providesPower_mappedDataCollection_remove:(nonnull SMBGameBoardTileEntity<SMBGameBoardTileEntity_PowerProvider>*)gameBoardTileEntity
@@ -471,6 +478,7 @@ static void* kSMBGameBoardTile__KVOContext = &kSMBGameBoardTile__KVOContext;
 	[self.gameBoardTileEntities_many_powerProviders_providesPower_mappedDataCollection mappableObject_remove:gameBoardTileEntity];
 
 	[self isPowered_update];
+	[self isPowered_notByBeam_update];
 }
 
 -(void)gameBoardTileEntities_many_powerProviders_providesPower_mappedDataCollection_add_ifProvidesPower_else_remove:(nonnull SMBGameBoardTileEntity<SMBGameBoardTileEntity_PowerProvider>*)gameBoardTileEntity
@@ -507,6 +515,27 @@ static void* kSMBGameBoardTile__KVOContext = &kSMBGameBoardTile__KVOContext;
 -(void)isPowered_update
 {
 	[self setIsPowered:([self.gameBoardTileEntities_many_powerProviders_providesPower_mappedDataCollection mappableObjects].count > 0)];
+}
+
+#pragma mark - isPowered_notByBeam
+-(void)isPowered_notByBeam_update
+{
+	[self setIsPowered_notByBeam:[self isPowered_notByBeam_appropriate]];
+}
+
+-(BOOL)isPowered_notByBeam_appropriate
+{
+	__block BOOL isPowered_notByBeam_appropriate = NO;
+
+	[[self.gameBoardTileEntities_many_powerProviders_providesPower_mappedDataCollection mappableObjects] enumerateObjectsUsingBlock:^(SMBGameBoardTileEntity<SMBGameBoardTileEntity_PowerProvider>* _Nonnull gameBoardTileEntity_PowerProvider, NSUInteger idx, BOOL * _Nonnull stop) {
+		if (kRUClassOrNil(gameBoardTileEntity_PowerProvider, SMBBeamEntityTileNode) == nil)
+		{
+			isPowered_notByBeam_appropriate = YES;
+			*stop = YES;
+		}
+	}];
+
+	return isPowered_notByBeam_appropriate;
 }
 
 #pragma mark - isHighlighted
@@ -686,6 +715,7 @@ static void* kSMBGameBoardTile__KVOContext = &kSMBGameBoardTile__KVOContext;
 +(nonnull NSString*)gameBoardTileEntity_for_beamInteractions{return NSStringFromSelector(_cmd);}
 +(nonnull NSString*)gameBoardTileEntities_many{return NSStringFromSelector(_cmd);}
 +(nonnull NSString*)isPowered{return NSStringFromSelector(_cmd);}
++(nonnull NSString*)isPowered_notByBeam{return NSStringFromSelector(_cmd);}
 +(nonnull NSString*)beamEnterDirections_blocked{return NSStringFromSelector(_cmd);}
 
 @end
