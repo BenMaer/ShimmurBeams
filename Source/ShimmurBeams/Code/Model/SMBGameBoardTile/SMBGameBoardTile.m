@@ -204,26 +204,6 @@ static void* kSMBGameBoardTile__KVOContext = &kSMBGameBoardTile__KVOContext;
 	}
 
 	[self gameBoardTileEntities_all_update];
-
-//	SMBGameBoardTileEntity* const gameBoardTileEntity_for_beamInteractions_old = self.gameBoardTileEntity_for_beamInteractions;
-//	_gameBoardTileEntity_for_beamInteractions = gameBoardTileEntity_for_beamInteractions;
-//
-//	if (gameBoardTileEntity_for_beamInteractions_old)
-//	{
-//		[self gameBoardTileEntity:gameBoardTileEntity_for_beamInteractions_old
-//			   updateRelationship:NO];
-//	}
-//
-//	if (self.gameBoardTileEntity_for_beamInteractions)
-//	{
-//		if (self.gameBoardTileEntity_for_beamInteractions.gameBoardTile)
-//		{
-//			[self.gameBoardTileEntity_for_beamInteractions.gameBoardTile gameBoardTileEntities_remove:self.gameBoardTileEntity_for_beamInteractions];
-//		}
-//
-//		[self gameBoardTileEntity:self.gameBoardTileEntity_for_beamInteractions
-//			   updateRelationship:YES];
-//	}
 }
 
 #pragma mark - gameBoardTileEntities_many
@@ -592,7 +572,6 @@ static void* kSMBGameBoardTile__KVOContext = &kSMBGameBoardTile__KVOContext;
 				NSAssert(false, @"unhandled keyPath %@",keyPath);
 			}
 		}
-		
 		else if ([[self.gameBoardTileEntities_beamBlockers_mappedDataCollection mappableObjects] containsObject:object])
 		{
 			if ([keyPath isEqualToString:[SMBBeamBlockerTileEntity_PropertiesForKVO beamEnterDirections_blocked]])
