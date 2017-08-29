@@ -232,11 +232,18 @@ static void* kSMBGameLevelGeneratorViewController__KVOContext = &kSMBGameLevelGe
 #pragma mark - gameLevelView
 -(CGRect)gameLevelView_frame
 {
-	CGSize const size = [self.gameLevelView sizeThatFits:self.view.bounds.size];
+	CGFloat const yCoord = CGRectGetMaxY([self hintLabel_frame]);
+	CGSize const gameLevelView_boundingSize =
+	UIEdgeInsetsInsetRect(self.view.bounds,
+						  (UIEdgeInsets){
+							  .top	= yCoord,
+						  }).size;
+
+	CGSize const size = [self.gameLevelView sizeThatFits:gameLevelView_boundingSize];
 
 	return CGRectCeilOrigin((CGRect){
-		.origin.x	= CGRectGetHorizontallyAlignedXCoordForWidthOnWidth(size.width, CGRectGetWidth(self.view.bounds)),
-		.origin.y	= CGRectGetMaxY([self hintLabel_frame]),
+		.origin.x	= CGRectGetHorizontallyAlignedXCoordForWidthOnWidth(size.width, gameLevelView_boundingSize.width),
+		.origin.y	= yCoord,
 		.size		= size,
 	});
 }
