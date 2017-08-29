@@ -61,23 +61,13 @@ static void* kSMBPowerButtonTileEntity__KVOContext = &kSMBPowerButtonTileEntity_
 #pragma clang diagnostic pop
 }
 
-#pragma mark - SMBForcedBeamRedirectTileEntity: init
--(nullable instancetype)init_with_forcedBeamExitDirection:(SMBGameBoardTile__direction)forcedBeamExitDirection
-{
-	kRUConditionalReturn_ReturnValueNil(YES, YES);
-	
-	return [self init];
-}
-
 #pragma mark - init
 -(nullable instancetype)init_with_gameBoardTilePosition_toPower:(nonnull SMBGameBoardTilePosition*)gameBoardTilePosition_toPower
 {
 	kRUConditionalReturn_ReturnValueNil(gameBoardTilePosition_toPower == nil, YES);
 	
-	if (self = [super init_with_forcedBeamExitDirection:SMBGameBoardTile__direction_none])
+	if (self = [super init])
 	{
-		[self setForcedBeamRedirectArrow_drawing_disable:YES];
-
 		_gameBoardTilePosition_toPower = gameBoardTilePosition_toPower;
 
 		_powerOutputTileEntity = [SMBPowerOutputTileEntity new];

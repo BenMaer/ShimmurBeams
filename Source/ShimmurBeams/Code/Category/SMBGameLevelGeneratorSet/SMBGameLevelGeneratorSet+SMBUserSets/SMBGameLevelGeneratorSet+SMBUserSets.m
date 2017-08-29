@@ -174,9 +174,14 @@
 	}
 																						  name:@"Windows"]];
 
+	[gameLevelGenerators addObject:[[SMBGameLevelGenerator alloc] init_with_generateLevelBlock:^SMBGameLevel * _Nonnull{
+		return [SMBGameLevel smb_button_and_door_introduction];
+	}
+																						  name:@"Door Introduction"]];
+
 	return
 	[[self alloc] init_with_gameLevelGenerators:[NSArray<SMBGameLevelGenerator*> arrayWithArray:gameLevelGenerators]
-										   name:@"Power buttons and switches"];
+										   name:@"Power buttons and doors"];
 }
 
 @end

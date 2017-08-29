@@ -14,6 +14,17 @@
 
 @implementation SMBWallTileEntity
 
+#pragma mark - NSObject
+-(instancetype)init
+{
+	if (self = [super init])
+	{
+		[self setBeamEnterDirections_blocked:SMBGameBoardTile__directions_all()];
+	}
+
+	return self;
+}
+
 #pragma mark - SMBGameBoardGeneralEntity: draw
 -(void)draw_in_rect:(CGRect)rect
 {
@@ -30,9 +41,6 @@
 }
 
 #pragma mark - SMBBeamBlockerTileEntity
--(BOOL)beamEnterDirection_isBlocked:(SMBGameBoardTile__direction)beamEnterDirection
-{
-	return YES;
-}
+@synthesize beamEnterDirections_blocked = _beamEnterDirections_blocked;
 
 @end

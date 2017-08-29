@@ -18,6 +18,7 @@
 #import "SMBGameBoardTileEntity_PowerProvider_PropertiesForKVO.h"
 #import "NSArray+SMBChanges.h"
 #import "SMBGameBoardTileEntity+SMBBeamBlocker.h"
+#import "SMBBeamBlockerTileEntity_PropertiesForKVO.h"
 
 #import <ResplendentUtilities/RUConditionalReturn.h>
 #import <ResplendentUtilities/NSMutableArray+RUAddObjectIfNotNil.h>
@@ -76,6 +77,8 @@ static void* kSMBGameBoardTile__KVOContext = &kSMBGameBoardTile__KVOContext;
 @property (nonatomic, readonly, strong, nullable) SMBMutableMappedDataCollection<SMBGameBoardTileEntity<SMBBeamBlockerTileEntity>*>* gameBoardTileEntities_beamBlockers_mappedDataCollection;
 -(void)gameBoardTileEntities_beamBlockers_mappedDataCollection_add:(nonnull SMBGameBoardTileEntity<SMBBeamBlockerTileEntity>*)gameBoardTileEntity;
 -(void)gameBoardTileEntities_beamBlockers_mappedDataCollection_remove:(nonnull SMBGameBoardTileEntity<SMBBeamBlockerTileEntity>*)gameBoardTileEntity;
+-(void)gameBoardTileEntity_beamBlockers:(nonnull SMBGameBoardTileEntity<SMBBeamBlockerTileEntity>*)gameBoardTileEntity_beamBlocker
+					   setKVORegistered:(BOOL)registered;
 
 #pragma mark - beamEnterDirections_blocked
 -(void)beamEnterDirections_blocked_update;
@@ -560,6 +563,18 @@ static void* kSMBGameBoardTile__KVOContext = &kSMBGameBoardTile__KVOContext;
 				NSAssert(false, @"unhandled keyPath %@",keyPath);
 			}
 		}
+		
+		else if ([[self.gameBoardTileEntities_beamBlockers_mappedDataCollection mappableObjects] containsObject:object])
+		{
+			if ([keyPath isEqualToString:[SMBBeamBlockerTileEntity_PropertiesForKVO beamEnterDirections_blocked]])
+			{
+				[self beamEnterDirections_blocked_update];
+			}
+			else
+			{
+				NSAssert(false, @"unhandled keyPath %@",keyPath);
+			}
+		}
 		else
 		{
 			NSAssert(false, @"unhandled object %@",object);
@@ -580,7 +595,8 @@ static void* kSMBGameBoardTile__KVOContext = &kSMBGameBoardTile__KVOContext;
 
 	[self.gameBoardTileEntities_beamBlockers_mappedDataCollection mappableObject_add:gameBoardTileEntity];
 
-	[self beamEnterDirections_blocked_update];
+	[self gameBoardTileEntity_beamBlockers:gameBoardTileEntity
+						  setKVORegistered:YES];
 }
 
 -(void)gameBoardTileEntities_beamBlockers_mappedDataCollection_remove:(nonnull SMBGameBoardTileEntity<SMBBeamBlockerTileEntity>*)gameBoardTileEntity
@@ -588,10 +604,43 @@ static void* kSMBGameBoardTile__KVOContext = &kSMBGameBoardTile__KVOContext;
 	kRUConditionalReturn(gameBoardTileEntity == nil, YES);
 	kRUConditionalReturn(self.gameBoardTileEntity_for_beamInteractions == gameBoardTileEntity, YES);
 	kRUConditionalReturn([self.gameBoardTileEntities_beamBlockers_mappedDataCollection mappableObject_exists:gameBoardTileEntity] == false, YES);
-	
+
+	[self gameBoardTileEntity_beamBlockers:gameBoardTileEntity
+						  setKVORegistered:NO];
+
 	[self.gameBoardTileEntities_beamBlockers_mappedDataCollection mappableObject_remove:gameBoardTileEntity];
 
 	[self beamEnterDirections_blocked_update];
+}
+
+-(void)gameBoardTileEntity_beamBlockers:(nonnull SMBGameBoardTileEntity<SMBBeamBlockerTileEntity>*)gameBoardTileEntity_beamBlocker
+					   setKVORegistered:(BOOL)registered
+{
+	kRUConditionalReturn(gameBoardTileEntity_beamBlocker == nil, YES);
+
+	NSMutableArray<NSString*>* const propertiesToObserve_observe_old_and_initial = [NSMutableArray<NSString*> array];
+	[propertiesToObserve_observe_old_and_initial addObject:[SMBBeamBlockerTileEntity_PropertiesForKVO beamEnterDirections_blocked]];
+
+	NSMutableDictionary<NSNumber*,NSMutableArray<NSString*>*>* const KVOOptions_to_propertiesToObserve_mapping = [NSMutableDictionary<NSNumber*,NSMutableArray<NSString*>*> dictionary];
+	[KVOOptions_to_propertiesToObserve_mapping setObject:propertiesToObserve_observe_old_and_initial forKey:@(NSKeyValueObservingOptionInitial)];
+
+	[KVOOptions_to_propertiesToObserve_mapping enumerateKeysAndObjectsUsingBlock:^(NSNumber * _Nonnull KVOOptions_number, NSMutableArray<NSString *> * _Nonnull propertiesToObserve, BOOL * _Nonnull stop) {
+		[propertiesToObserve enumerateObjectsUsingBlock:^(NSString * _Nonnull propertyToObserve, NSUInteger idx, BOOL * _Nonnull stop) {
+			if (registered)
+			{
+				[gameBoardTileEntity_beamBlocker addObserver:self
+												  forKeyPath:propertyToObserve
+													 options:(KVOOptions_number.unsignedIntegerValue)
+													 context:&kSMBGameBoardTile__KVOContext];
+			}
+			else
+			{
+				[gameBoardTileEntity_beamBlocker removeObserver:self
+													 forKeyPath:propertyToObserve
+														context:&kSMBGameBoardTile__KVOContext];
+			}
+		}];
+	}];
 }
 
 #pragma mark - beamEnterDirections_blocked
@@ -603,20 +652,20 @@ static void* kSMBGameBoardTile__KVOContext = &kSMBGameBoardTile__KVOContext;
 -(SMBGameBoardTile__direction)beamEnterDirections_blocked_generate
 {
 	__block SMBGameBoardTile__direction beamEnterDirections_blocked = 0;
-	SMBMutableMappedDataCollection<SMBGameBoardTileEntity<SMBBeamBlockerTileEntity>*>* const gameBoardTileEntities_beamBlockers_mappedDataCollection = self.gameBoardTileEntities_beamBlockers_mappedDataCollection;
-	for (SMBGameBoardTile__direction direction = SMBGameBoardTile__direction__first;
-		 direction <= SMBGameBoardTile__direction__last;
-		 direction = direction << 1)
-	{
-		[[gameBoardTileEntities_beamBlockers_mappedDataCollection mappableObjects] enumerateObjectsUsingBlock:^(SMBGameBoardTileEntity<SMBBeamBlockerTileEntity>*  _Nonnull gameBoardTileEntity_beamBlocker, NSUInteger idx, BOOL * _Nonnull gameBoardTileEntity_beamBlocker_stop) {
-			if ([gameBoardTileEntity_beamBlocker beamEnterDirection_isBlocked:direction])
-			{
-				beamEnterDirections_blocked = beamEnterDirections_blocked | direction;
-				*gameBoardTileEntity_beamBlocker_stop = YES;
-			}
-		}];
-	}
-	
+	SMBGameBoardTile__direction const directions_all = SMBGameBoardTile__directions_all();
+
+	[[self.gameBoardTileEntities_beamBlockers_mappedDataCollection mappableObjects] enumerateObjectsUsingBlock:^(SMBGameBoardTileEntity<SMBBeamBlockerTileEntity>*  _Nonnull gameBoardTileEntity_beamBlocker, NSUInteger idx, BOOL * _Nonnull gameBoardTileEntity_beamBlocker_stop) {
+		SMBGameBoardTile__direction const gameBoardTileEntity_beamBlocker_beamEnterDirections_blocked = gameBoardTileEntity_beamBlocker.beamEnterDirections_blocked;
+		kRUConditionalReturn(SMBGameBoardTile__direction__isInRange(gameBoardTileEntity_beamBlocker_beamEnterDirections_blocked) == false, NO);
+
+		beamEnterDirections_blocked = beamEnterDirections_blocked | gameBoardTileEntity_beamBlocker_beamEnterDirections_blocked;
+
+		if (beamEnterDirections_blocked & directions_all)
+		{
+			*gameBoardTileEntity_beamBlocker_stop = YES;
+		}
+	}];
+
 	return
 	((beamEnterDirections_blocked == 0)
 	 ?

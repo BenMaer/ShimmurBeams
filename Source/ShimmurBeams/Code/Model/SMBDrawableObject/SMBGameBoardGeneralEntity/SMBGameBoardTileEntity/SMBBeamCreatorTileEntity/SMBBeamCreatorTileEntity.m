@@ -54,6 +54,17 @@ static void* kSMBBeamCreatorTileEntity__KVOContext = &kSMBBeamCreatorTileEntity_
 	[self SMBBeamCreatorTileEntity_gameBoardTile_setKVORegistered:NO];
 }
 
+
+-(instancetype)init
+{
+	if (self = [super init])
+	{
+		[self setBeamEnterDirections_blocked:SMBGameBoardTile__directions_all()];
+	}
+	
+	return self;
+}
+
 #pragma mark - draw
 -(void)draw_in_rect:(CGRect)rect
 {
@@ -260,5 +271,8 @@ static void* kSMBBeamCreatorTileEntity__KVOContext = &kSMBBeamCreatorTileEntity_
 {
 	return YES;
 }
+
+#pragma mark - SMBBeamBlockerTileEntity
+@synthesize beamEnterDirections_blocked = _beamEnterDirections_blocked;
 
 @end

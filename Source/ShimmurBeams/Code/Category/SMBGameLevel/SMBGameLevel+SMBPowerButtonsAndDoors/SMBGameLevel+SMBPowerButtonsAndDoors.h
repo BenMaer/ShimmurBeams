@@ -20,4 +20,7 @@
 +(nonnull instancetype)smb_buttons_usableGameBoardTileEntities_choices;
 +(nonnull instancetype)smb_buttons_windows_3x3;
 
+#pragma mark - buttons and doors
++(nonnull instancetype)smb_button_and_door_introduction;
+
 @end

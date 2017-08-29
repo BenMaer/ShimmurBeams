@@ -9,8 +9,6 @@
 #ifndef SMBGameBoardTile__directions_h
 #define SMBGameBoardTile__directions_h
 
-#import <ResplendentUtilities/RUEnumIsInRangeSynthesization.h>
-
 #import <Foundation/Foundation.h>
 
 
@@ -31,7 +29,27 @@ typedef NS_ENUM(NSInteger, SMBGameBoardTile__direction) {
 	SMBGameBoardTile__direction__last	= SMBGameBoardTile__direction_left,
 };
 
-static inline RUEnumIsInRangeSynthesization_autoFirstLast(SMBGameBoardTile__direction)
+static inline SMBGameBoardTile__direction SMBGameBoardTile__directions_all(){
+	SMBGameBoardTile__direction directions_all = 0;
+	
+	for (SMBGameBoardTile__direction direction = SMBGameBoardTile__direction__first;
+		 direction <= SMBGameBoardTile__direction__last;
+		 direction = direction << 1)
+	{
+		directions_all = (directions_all | direction);
+	}
+	
+	return directions_all;
+}
+
+static inline BOOL SMBGameBoardTile__direction__isInRange(SMBGameBoardTile__direction direction){
+	return
+	((direction >= SMBGameBoardTile__direction__first)
+	 &&
+	 (direction <= SMBGameBoardTile__directions_all())
+	);
+}
+
 static inline BOOL SMBGameBoardTile__direction__isInRange_or_none(SMBGameBoardTile__direction direction){
 	return
 	(direction == SMBGameBoardTile__direction_none

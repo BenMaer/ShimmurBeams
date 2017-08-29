@@ -19,6 +19,6 @@
  */
 @protocol SMBBeamBlockerTileEntity <NSObject>
 
--(BOOL)beamEnterDirection_isBlocked:(SMBGameBoardTile__direction)beamEnterDirection;
+@property (nonatomic, assign) SMBGameBoardTile__direction beamEnterDirections_blocked;
 
 @end

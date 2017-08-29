@@ -29,12 +29,4 @@
 	return (SMBGameBoardTileEntity<SMBBeamBlockerTileEntity>*)self;
 }
 
--(BOOL)smb_beamBlocker_and_beamEnterDirection_isBlocked:(SMBGameBoardTile__direction)direction
-{
-	id<SMBBeamBlockerTileEntity> const beamBlockerTileEntity = [self smb_beamBlocker_selfOrNull];
-	kRUConditionalReturn_ReturnValueFalse(beamBlockerTileEntity == nil, NO);
-
-	return [beamBlockerTileEntity beamEnterDirection_isBlocked:direction];
-}
-
 @end

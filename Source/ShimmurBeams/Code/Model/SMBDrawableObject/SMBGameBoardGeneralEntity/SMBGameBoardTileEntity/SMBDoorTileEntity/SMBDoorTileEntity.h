@@ -15,7 +15,4 @@
 
 @interface SMBDoorTileEntity : SMBGameBoardTileEntity <SMBBeamBlockerTileEntity>
 
-#pragma mark - doorIsOpen
-@property (nonatomic, assign) BOOL doorIsOpen;
-
 @end

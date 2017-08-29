@@ -6,7 +6,7 @@
 //  Copyright © 2017 Shimmur. All rights reserved.
 //
 
-#import "SMBForcedBeamRedirectTileEntity.h"
+#import "SMBGameBoardTileEntity.h"
 
 
 
@@ -18,13 +18,10 @@
 
 
 
-@interface SMBPowerButtonTileEntity : SMBForcedBeamRedirectTileEntity
+@interface SMBPowerButtonTileEntity : SMBGameBoardTileEntity
 
 #pragma mark - gameBoardTilePosition_toPower
 @property (nonatomic, readonly, strong, nullable) SMBGameBoardTilePosition* gameBoardTilePosition_toPower;
-
-#pragma mark - SMBForcedBeamRedirectTileEntity: init
--(nullable instancetype)init_with_forcedBeamExitDirection:(SMBGameBoardTile__direction)forcedBeamExitDirection OBJC_DEPRECATED("Must use init");
 
 #pragma mark - init
 -(nullable instancetype)init_with_gameBoardTilePosition_toPower:(nonnull SMBGameBoardTilePosition*)gameBoardTilePosition_toPower NS_DESIGNATED_INITIALIZER;

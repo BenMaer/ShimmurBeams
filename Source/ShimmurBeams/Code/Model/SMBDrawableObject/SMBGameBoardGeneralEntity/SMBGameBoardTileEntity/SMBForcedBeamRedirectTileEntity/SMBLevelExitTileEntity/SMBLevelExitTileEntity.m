@@ -126,7 +126,7 @@ static void* kSMBLevelExitTileEntity__KVOContext = &kSMBLevelExitTileEntity__KVO
 	CoreGraphics_SMBDrawArrow(context, arrow_rect);
 }
 
-#pragma mark - gameBoardTile
+#pragma mark - SMBGameBoardTileEntity: gameBoardTile
 -(void)setGameBoardTile:(nullable SMBGameBoardTile*)gameBoardTile
 {
 	[self SMBLevelExitTileEntity_gameBoardTile_setKVORegistered:NO];
@@ -136,6 +136,7 @@ static void* kSMBLevelExitTileEntity__KVOContext = &kSMBLevelExitTileEntity__KVO
 	[self SMBLevelExitTileEntity_gameBoardTile_setKVORegistered:YES];
 }
 
+#pragma mark - gameBoardTile
 -(void)SMBLevelExitTileEntity_gameBoardTile_setKVORegistered:(BOOL)registered
 {
 	typeof(self.gameBoardTile) const gameBoardTile = self.gameBoardTile;
