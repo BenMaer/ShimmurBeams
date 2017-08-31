@@ -8,6 +8,12 @@
 
 /* Begin PBXBuildFile section */
 		C6F92B5CF1E1E584411CC937 /* libPods-ShimmurBeams.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 49C70CE907920FDEC9F64616 /* libPods-ShimmurBeams.a */; };
+		D733A4761F576767007A8E6F /* SMBImageDrawableObject.m in Sources */ = {isa = PBXBuildFile; fileRef = D733A4751F576767007A8E6F /* SMBImageDrawableObject.m */; };
+		D733A47D1F5769CB007A8E6F /* SMBSVGDrawableObject.m in Sources */ = {isa = PBXBuildFile; fileRef = D733A47C1F5769CB007A8E6F /* SMBSVGDrawableObject.m */; };
+		D733A4861F577166007A8E6F /* SMBSVGDrawableObject+SMBSpace.m in Sources */ = {isa = PBXBuildFile; fileRef = D733A4851F577166007A8E6F /* SMBSVGDrawableObject+SMBSpace.m */; };
+		D733A48A1F5772EE007A8E6F /* SMBBlockDrawableObject.m in Sources */ = {isa = PBXBuildFile; fileRef = D733A4891F5772EE007A8E6F /* SMBBlockDrawableObject.m */; };
+		D733A4901F5775BF007A8E6F /* SMBBlockDrawableObject+SMBDefaultBlockDrawings.m in Sources */ = {isa = PBXBuildFile; fileRef = D733A48F1F5775BF007A8E6F /* SMBBlockDrawableObject+SMBDefaultBlockDrawings.m */; };
+		D733A4931F5863EE007A8E6F /* Spaceship.svg in Resources */ = {isa = PBXBuildFile; fileRef = D733A4921F5863EE007A8E6F /* Spaceship.svg */; };
 		D73CF9901F54B376002A70EB /* SMBGameLevel+SMBPowerButtonsAndDoors.m in Sources */ = {isa = PBXBuildFile; fileRef = D73CF98F1F54B376002A70EB /* SMBGameLevel+SMBPowerButtonsAndDoors.m */; };
 		D73CF9941F54B3D2002A70EB /* SMBDoorTileEntity.m in Sources */ = {isa = PBXBuildFile; fileRef = D73CF9931F54B3D2002A70EB /* SMBDoorTileEntity.m */; };
 		D73CF9991F54D7C0002A70EB /* SMBBeamBlockerTileEntity_PropertiesForKVO.m in Sources */ = {isa = PBXBuildFile; fileRef = D73CF9981F54D7C0002A70EB /* SMBBeamBlockerTileEntity_PropertiesForKVO.m */; };
@@ -68,6 +74,18 @@
 /* Begin PBXFileReference section */
 		28F24E90A6068064B725E130 /* Pods-ShimmurBeams.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-ShimmurBeams.debug.xcconfig"; path = "Pods/Target Support Files/Pods-ShimmurBeams/Pods-ShimmurBeams.debug.xcconfig"; sourceTree = "<group>"; };
 		49C70CE907920FDEC9F64616 /* libPods-ShimmurBeams.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-ShimmurBeams.a"; sourceTree = BUILT_PRODUCTS_DIR; };
+		D733A4741F576767007A8E6F /* SMBImageDrawableObject.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SMBImageDrawableObject.h; sourceTree = "<group>"; };
+		D733A4751F576767007A8E6F /* SMBImageDrawableObject.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SMBImageDrawableObject.m; sourceTree = "<group>"; };
+		D733A47B1F5769CB007A8E6F /* SMBSVGDrawableObject.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SMBSVGDrawableObject.h; sourceTree = "<group>"; };
+		D733A47C1F5769CB007A8E6F /* SMBSVGDrawableObject.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SMBSVGDrawableObject.m; sourceTree = "<group>"; };
+		D733A4841F577166007A8E6F /* SMBSVGDrawableObject+SMBSpace.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "SMBSVGDrawableObject+SMBSpace.h"; sourceTree = "<group>"; };
+		D733A4851F577166007A8E6F /* SMBSVGDrawableObject+SMBSpace.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "SMBSVGDrawableObject+SMBSpace.m"; sourceTree = "<group>"; };
+		D733A4881F5772EE007A8E6F /* SMBBlockDrawableObject.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SMBBlockDrawableObject.h; sourceTree = "<group>"; };
+		D733A4891F5772EE007A8E6F /* SMBBlockDrawableObject.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SMBBlockDrawableObject.m; sourceTree = "<group>"; };
+		D733A48B1F5773C6007A8E6F /* SMBBlockDrawableObject__blocks.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SMBBlockDrawableObject__blocks.h; sourceTree = "<group>"; };
+		D733A48E1F5775BF007A8E6F /* SMBBlockDrawableObject+SMBDefaultBlockDrawings.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "SMBBlockDrawableObject+SMBDefaultBlockDrawings.h"; sourceTree = "<group>"; };
+		D733A48F1F5775BF007A8E6F /* SMBBlockDrawableObject+SMBDefaultBlockDrawings.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "SMBBlockDrawableObject+SMBDefaultBlockDrawings.m"; sourceTree = "<group>"; };
+		D733A4921F5863EE007A8E6F /* Spaceship.svg */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; path = Spaceship.svg; sourceTree = "<group>"; };
 		D73CF98E1F54B376002A70EB /* SMBGameLevel+SMBPowerButtonsAndDoors.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "SMBGameLevel+SMBPowerButtonsAndDoors.h"; sourceTree = "<group>"; };
 		D73CF98F1F54B376002A70EB /* SMBGameLevel+SMBPowerButtonsAndDoors.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "SMBGameLevel+SMBPowerButtonsAndDoors.m"; sourceTree = "<group>"; };
 		D73CF9921F54B3D2002A70EB /* SMBDoorTileEntity.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SMBDoorTileEntity.h; sourceTree = "<group>"; };
@@ -231,6 +249,77 @@
 			name = Frameworks;
 			sourceTree = "<group>";
 		};
+		D733A4731F57675C007A8E6F /* SMBImageDrawableObject */ = {
+			isa = PBXGroup;
+			children = (
+				D733A4741F576767007A8E6F /* SMBImageDrawableObject.h */,
+				D733A4751F576767007A8E6F /* SMBImageDrawableObject.m */,
+				D733A47A1F5769BE007A8E6F /* SMBSVGDrawableObject */,
+			);
+			path = SMBImageDrawableObject;
+			sourceTree = "<group>";
+		};
+		D733A47A1F5769BE007A8E6F /* SMBSVGDrawableObject */ = {
+			isa = PBXGroup;
+			children = (
+				D733A47B1F5769CB007A8E6F /* SMBSVGDrawableObject.h */,
+				D733A47C1F5769CB007A8E6F /* SMBSVGDrawableObject.m */,
+			);
+			path = SMBSVGDrawableObject;
+			sourceTree = "<group>";
+		};
+		D733A47E1F5770CA007A8E6F /* SMBSVGDrawableObject */ = {
+			isa = PBXGroup;
+			children = (
+				D733A4831F577166007A8E6F /* SMBSVGDrawableObject+SMBSpace */,
+			);
+			path = SMBSVGDrawableObject;
+			sourceTree = "<group>";
+		};
+		D733A4831F577166007A8E6F /* SMBSVGDrawableObject+SMBSpace */ = {
+			isa = PBXGroup;
+			children = (
+				D733A4841F577166007A8E6F /* SMBSVGDrawableObject+SMBSpace.h */,
+				D733A4851F577166007A8E6F /* SMBSVGDrawableObject+SMBSpace.m */,
+			);
+			path = "SMBSVGDrawableObject+SMBSpace";
+			sourceTree = "<group>";
+		};
+		D733A4871F5772E2007A8E6F /* SMBBlockDrawableObject */ = {
+			isa = PBXGroup;
+			children = (
+				D733A4881F5772EE007A8E6F /* SMBBlockDrawableObject.h */,
+				D733A48B1F5773C6007A8E6F /* SMBBlockDrawableObject__blocks.h */,
+				D733A4891F5772EE007A8E6F /* SMBBlockDrawableObject.m */,
+			);
+			path = SMBBlockDrawableObject;
+			sourceTree = "<group>";
+		};
+		D733A48C1F57753D007A8E6F /* SMBBlockDrawableObject */ = {
+			isa = PBXGroup;
+			children = (
+				D733A48D1F5775B9007A8E6F /* SMBBlockDrawableObject+SMBDefaultBlockDrawings */,
+			);
+			path = SMBBlockDrawableObject;
+			sourceTree = "<group>";
+		};
+		D733A48D1F5775B9007A8E6F /* SMBBlockDrawableObject+SMBDefaultBlockDrawings */ = {
+			isa = PBXGroup;
+			children = (
+				D733A48E1F5775BF007A8E6F /* SMBBlockDrawableObject+SMBDefaultBlockDrawings.h */,
+				D733A48F1F5775BF007A8E6F /* SMBBlockDrawableObject+SMBDefaultBlockDrawings.m */,
+			);
+			path = "SMBBlockDrawableObject+SMBDefaultBlockDrawings";
+			sourceTree = "<group>";
+		};
+		D733A4911F5863EE007A8E6F /* SVG */ = {
+			isa = PBXGroup;
+			children = (
+				D733A4921F5863EE007A8E6F /* Spaceship.svg */,
+			);
+			path = SVG;
+			sourceTree = "<group>";
+		};
 		D73CF98D1F54B376002A70EB /* SMBGameLevel+SMBPowerButtonsAndDoors */ = {
 			isa = PBXGroup;
 			children = (
@@ -264,10 +353,12 @@
 			isa = PBXGroup;
 			children = (
 				D761FE3A1F3AC2FF0083842A /* NSArray */,
+				D733A48C1F57753D007A8E6F /* SMBBlockDrawableObject */,
 				D761FE3E1F3AC2FF0083842A /* SMBGameBoard */,
 				D7C8C3D81F3CC7C7006D378E /* SMBGameBoardTileEntity */,
 				D761FE421F3AC2FF0083842A /* SMBGameLevel */,
 				D7E511B41F3CEC16008A6042 /* SMBGameLevelGeneratorSet */,
+				D733A47E1F5770CA007A8E6F /* SMBSVGDrawableObject */,
 				D78CD0AE1F3D746A00118FB4 /* UIColor */,
 				D7C8C3BF1F3B8A2B006D378E /* UIView */,
 			);
@@ -545,9 +636,11 @@
 		D78CD07A1F3D6DB200118FB4 /* SMBDrawableObject */ = {
 			isa = PBXGroup;
 			children = (
+				D733A4871F5772E2007A8E6F /* SMBBlockDrawableObject */,
 				D78CD07B1F3D6DB800118FB4 /* SMBDrawableObject.h */,
 				D78CD07C1F3D6DB800118FB4 /* SMBDrawableObject.m */,
 				D78CD07E1F3D6E5800118FB4 /* SMBGameBoardGeneralEntity */,
+				D733A4731F57675C007A8E6F /* SMBImageDrawableObject */,
 			);
 			path = SMBDrawableObject;
 			sourceTree = "<group>";
@@ -978,6 +1071,7 @@
 			children = (
 				D7DAF3B91F33D7B400233C39 /* Configuration */,
 				D7DAF3BB1F33D7B400233C39 /* Images */,
+				D733A4911F5863EE007A8E6F /* SVG */,
 			);
 			path = Assets;
 			sourceTree = "<group>";
@@ -1106,6 +1200,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				D7DAF3C41F33D7B400233C39 /* Assets.xcassets in Resources */,
+				D733A4931F5863EE007A8E6F /* Spaceship.svg in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1182,6 +1277,7 @@
 				D7C8C3E01F3CE26A006D378E /* SMBGameLevelGeneratorSetsViewController.m in Sources */,
 				D761FEA61F3AC2FF0083842A /* SMBGameLevelView.m in Sources */,
 				D7C8C3DC1F3CC7ED006D378E /* SMBGameBoardTileEntity+SMBProvidesPower.m in Sources */,
+				D733A4901F5775BF007A8E6F /* SMBBlockDrawableObject+SMBDefaultBlockDrawings.m in Sources */,
 				D7951D521F43BF7F00A33AB2 /* SMBDiagonalMirrorTileEntity.m in Sources */,
 				D78CD0AD1F3D715300118FB4 /* SMBGameBoardGeneralEntityView.m in Sources */,
 				D7E511CD1F3D4CFA008A6042 /* SMBGameBoardTileEntity+SMBBeamBlocker.m in Sources */,
@@ -1200,18 +1296,22 @@
 				D7951D431F43ADAC00A33AB2 /* SMBBeamCreatorTileEntity.m in Sources */,
 				D761FE931F3AC2FF0083842A /* SMBGameBoard+SMBAddEntity.m in Sources */,
 				D761FE951F3AC2FF0083842A /* SMBMappedDataCollection.m in Sources */,
+				D733A47D1F5769CB007A8E6F /* SMBSVGDrawableObject.m in Sources */,
 				D761FE921F3AC2FF0083842A /* NSArray+SMBChanges.m in Sources */,
 				D78CD0B21F3D747E00118FB4 /* UIColor+SMBColors.m in Sources */,
 				D7C8C3C31F3B8A42006D378E /* UIView+SMBCommonFraming.m in Sources */,
 				D761FEA21F3AC2FF0083842A /* SMBGameLevel.m in Sources */,
 				D7951D461F43ADAC00A33AB2 /* SMBForcedBeamRedirectTileEntity.m in Sources */,
 				D78CD0A01F3D6E5800118FB4 /* SMBGameBoardGeneralEntity.m in Sources */,
+				D733A4761F576767007A8E6F /* SMBImageDrawableObject.m in Sources */,
 				D7C8C3E81F3CE3C1006D378E /* SMBGameLevelGenerator.m in Sources */,
 				D77B86F91F47A1A900144372 /* SMBPowerButtonTileEntity.m in Sources */,
 				D7C8C3E41F3CE2A8006D378E /* SMBGameLevelGeneratorSetsNavigationController.m in Sources */,
 				D761FE961F3AC2FF0083842A /* SMBMutableMappedDataCollection.m in Sources */,
 				D7951D1F1F43950B00A33AB2 /* SMBTimer.m in Sources */,
+				D733A48A1F5772EE007A8E6F /* SMBBlockDrawableObject.m in Sources */,
 				D7951D471F43ADAC00A33AB2 /* SMBLevelExitTileEntity.m in Sources */,
+				D733A4861F577166007A8E6F /* SMBSVGDrawableObject+SMBSpace.m in Sources */,
 				D761FEA51F3AC2FF0083842A /* SMBGameBoardView.m in Sources */,
 				D73CF9991F54D7C0002A70EB /* SMBBeamBlockerTileEntity_PropertiesForKVO.m in Sources */,
 				D761FEA11F3AC2FF0083842A /* SMBGameBoardTilePosition.m in Sources */,

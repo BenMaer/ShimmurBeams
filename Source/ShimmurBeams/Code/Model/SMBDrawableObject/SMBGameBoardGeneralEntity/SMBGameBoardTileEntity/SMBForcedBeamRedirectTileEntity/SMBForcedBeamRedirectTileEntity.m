@@ -69,7 +69,7 @@
 
 	_forcedBeamRedirectArrow_drawing_disable = forcedBeamRedirectArrow_drawing_disable;
 
-	[self setNeedsRedraw:YES];
+	[self setNeedsRedraw];
 }
 
 -(void)forcedBeamRedirectArrow_draw_in_rect:(CGRect)rect

@@ -16,8 +16,17 @@
 @interface SMBDrawableObject : NSObject
 
 #pragma mark - draw
-@property (nonatomic, assign) BOOL needsRedraw;
+@property (nonatomic, readonly, assign) BOOL needsRedraw;
+-(void)setNeedsRedraw;
 -(void)draw_in_rect:(CGRect)rect;
+
+#pragma mark - subDrawableObjects
+@property (nonatomic, readonly, copy, nullable) NSArray<__kindof SMBDrawableObject*>* subDrawableObjects;
+-(void)subDrawableObjects_add:(nonnull __kindof SMBDrawableObject*)subDrawableObject;
+-(void)subDrawableObjects_remove:(nonnull __kindof SMBDrawableObject*)subDrawableObject;
+
+-(void)subDrawableObject:(nonnull __kindof SMBDrawableObject*)subDrawableObject
+			draw_in_rect:(CGRect)rect;
 
 @end
 

@@ -350,7 +350,7 @@ static void* kSMBGameBoard__KVOContext = &kSMBGameBoard__KVOContext;
 }
 
 #pragma mark - KVO
--(void)observeValueForKeyPath:(nullable NSString*)keyPath ofObject:(nullable id)object change:(nullable NSDictionary*)change context:(nullable void*)context
+-(void)observeValueForKeyPath:(nullable NSString*)keyPath ofObject:(nullable id)object change:(nullable NSDictionary<NSKeyValueChangeKey,id>*)change context:(nullable void*)context
 {
 	if (context == kSMBGameBoard__KVOContext)
 	{
@@ -382,11 +382,11 @@ static void* kSMBGameBoard__KVOContext = &kSMBGameBoard__KVOContext;
 				NSArray<SMBGameBoardTileEntity*>* const gameBoardTileEntities = gameBoardTile.gameBoardTileEntities_many;
 
 				NSArray<SMBGameBoardTileEntity*>* gameBoardTileEntities_removed = nil;
-				NSArray<SMBGameBoardTileEntity*>* gameBoardTileEntities_new = nil;
+				NSArray<SMBGameBoardTileEntity*>* gameBoardTileEntities_added = nil;
 				[NSArray<SMBGameBoardTileEntity*> smb_changes_from_objects:gameBoardTileEntities_old
 															   to_objects:gameBoardTileEntities
 														   removedObjects:&gameBoardTileEntities_removed
-															   newObjects:&gameBoardTileEntities_new];
+															   newObjects:&gameBoardTileEntities_added];
 
 				if (gameBoardTileEntities_removed)
 				{
@@ -395,9 +395,9 @@ static void* kSMBGameBoard__KVOContext = &kSMBGameBoard__KVOContext;
 					}];
 				}
 
-				if (gameBoardTileEntities_new)
+				if (gameBoardTileEntities_added)
 				{
-					[gameBoardTileEntities_new enumerateObjectsUsingBlock:^(SMBGameBoardTileEntity * _Nonnull beamEntityTileNode, NSUInteger idx, BOOL * _Nonnull stop) {
+					[gameBoardTileEntities_added enumerateObjectsUsingBlock:^(SMBGameBoardTileEntity * _Nonnull beamEntityTileNode, NSUInteger idx, BOOL * _Nonnull stop) {
 						[self gameBoardTileEntity_add:beamEntityTileNode];
 					}];
 				}

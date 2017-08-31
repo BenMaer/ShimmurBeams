@@ -60,7 +60,7 @@
 @property (nonatomic, readonly, assign) BOOL isPowered_notByBeam;
 
 #pragma mark - beamEnterDirections_blocked
-@property (nonatomic, assign) SMBGameBoardTile__direction beamEnterDirections_blocked;
+@property (nonatomic, readonly, assign) SMBGameBoardTile__direction beamEnterDirections_blocked;
 
 #pragma mark - isHighlighted
 @property (nonatomic, assign) BOOL isHighlighted;

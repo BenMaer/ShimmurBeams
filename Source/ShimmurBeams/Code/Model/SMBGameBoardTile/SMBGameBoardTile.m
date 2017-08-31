@@ -87,6 +87,7 @@ static void* kSMBGameBoardTile__KVOContext = &kSMBGameBoardTile__KVOContext;
 					   setKVORegistered:(BOOL)registered;
 
 #pragma mark - beamEnterDirections_blocked
+@property (nonatomic, assign) SMBGameBoardTile__direction beamEnterDirections_blocked;
 -(void)beamEnterDirections_blocked_update;
 -(SMBGameBoardTile__direction)beamEnterDirections_blocked_generate;
 
@@ -525,7 +526,7 @@ static void* kSMBGameBoardTile__KVOContext = &kSMBGameBoardTile__KVOContext;
 
 	_isHighlighted = isHighlighted;
 
-	[self setNeedsRedraw:YES];
+	[self setNeedsRedraw];
 }
 
 #pragma mark - SMBGameBoardGeneralEntity: draw

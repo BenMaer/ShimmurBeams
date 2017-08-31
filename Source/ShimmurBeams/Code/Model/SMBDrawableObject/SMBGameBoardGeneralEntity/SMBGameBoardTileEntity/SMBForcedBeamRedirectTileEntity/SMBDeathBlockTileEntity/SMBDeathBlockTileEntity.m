@@ -326,7 +326,7 @@ RUEnumIsInRangeSynthesization_autoFirstLast(SMBDeathBlockTileEntity__drawState);
 
 	_drawState = drawState;
 
-	[self setNeedsRedraw:YES];
+	[self setNeedsRedraw];
 }
 
 -(void)drawState_toggle

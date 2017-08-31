@@ -149,7 +149,7 @@ static void* kSMBDoorTileEntity__KVOContext = &kSMBDoorTileEntity__KVOContext;
 	_doorIsOpen = doorIsOpen;
 
 	[self beamEnterDirections_blocked_update];
-	[self setNeedsRedraw:YES];
+	[self setNeedsRedraw];
 }
 
 -(void)doorIsOpen_update

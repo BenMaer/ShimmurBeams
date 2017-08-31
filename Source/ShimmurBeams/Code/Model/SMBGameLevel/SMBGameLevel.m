@@ -8,6 +8,7 @@
 
 #import "SMBGameLevel.h"
 #import "SMBGameBoard.h"
+#import "NSArray+SMBChanges.h"
 
 #import <ResplendentUtilities/RUConditionalReturn.h>
 
@@ -29,6 +30,11 @@
 @implementation SMBGameLevel
 
 #pragma mark - NSObject
+-(void)dealloc
+{
+	[self.gameBoard setGameLevel:nil];
+}
+
 -(instancetype)init
 {
 	kRUConditionalReturn_ReturnValueNil(YES, YES);

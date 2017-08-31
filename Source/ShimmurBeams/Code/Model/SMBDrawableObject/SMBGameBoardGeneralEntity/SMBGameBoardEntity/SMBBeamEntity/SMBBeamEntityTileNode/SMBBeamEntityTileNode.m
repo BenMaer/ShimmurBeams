@@ -239,7 +239,7 @@ typedef NS_ENUM(NSInteger, SMBBeamEntityTileNode__state) {
 	_beamExitDirection = beamExitDirection;
 
 	[self node_next_gameTilePosition_update];
-	[self setNeedsRedraw:YES];
+	[self setNeedsRedraw];
 }
 
 -(void)beamExitDirection_update
@@ -463,7 +463,7 @@ typedef NS_ENUM(NSInteger, SMBBeamEntityTileNode__state) {
 
 	[self beamExitDirection_update];
 	[self providesPower_update];
-	[self setNeedsRedraw:YES];
+	[self setNeedsRedraw];
 }
 
 -(void)gameBoardTile_allows_beamEnterDirection_update
