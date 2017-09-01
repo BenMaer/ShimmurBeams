@@ -51,7 +51,8 @@
 	[gameLevelGeneratorSets addObject:[SMBGameLevelGeneratorSet smb_forcedRedirectsAndWalls]];
 	[gameLevelGeneratorSets addObject:[SMBGameLevelGeneratorSet smb_rotatesAndDeathBlocks]];
 	[gameLevelGeneratorSets addObject:[SMBGameLevelGeneratorSet smb_mirrorsAndMeltableBlocks_introduction]];
-	[gameLevelGeneratorSets addObject:[SMBGameLevelGeneratorSet smb_powerButtonsAndSwitches_introduction]];
+	[gameLevelGeneratorSets addObject:[SMBGameLevelGeneratorSet smb_powerButtonsAndDoors_introduction]];
+	[gameLevelGeneratorSets addObject:[SMBGameLevelGeneratorSet smb_powerSwitchesAndDoorGroups_introduction]];
 
 	return [NSArray<SMBGameLevelGeneratorSet*> arrayWithArray:gameLevelGeneratorSets];
 }

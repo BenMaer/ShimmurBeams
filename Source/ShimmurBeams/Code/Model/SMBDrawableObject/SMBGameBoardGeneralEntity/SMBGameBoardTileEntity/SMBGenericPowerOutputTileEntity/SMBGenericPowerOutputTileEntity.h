@@ -1,8 +1,8 @@
 //
-//  SMBPowerButtonTileEntity.h
+//  SMBGenericPowerOutputTileEntity.h
 //  ShimmurBeams
 //
-//  Created by Benjamin Maer on 8/18/17.
+//  Created by Benjamin Maer on 9/1/17.
 //  Copyright © 2017 Shimmur. All rights reserved.
 //
 
@@ -18,7 +18,10 @@
 
 
 
-@interface SMBPowerButtonTileEntity : SMBGameBoardTileEntity
+@interface SMBGenericPowerOutputTileEntity : SMBGameBoardTileEntity
+
+#pragma mark - providesOutputPower
+@property (nonatomic, assign) BOOL providesOutputPower;
 
 #pragma mark - gameBoardTilePosition_toPower
 @property (nonatomic, readonly, strong, nullable) SMBGameBoardTilePosition* gameBoardTilePosition_toPower;

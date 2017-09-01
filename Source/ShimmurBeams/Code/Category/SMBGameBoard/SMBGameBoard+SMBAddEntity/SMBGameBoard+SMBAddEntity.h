@@ -54,4 +54,8 @@
 -(void)gameBoardTileEntity_add_powerButtonTileEntity_with_gameBoardTilePosition_toPower:(nonnull SMBGameBoardTilePosition*)gameBoardTilePosition_toPower
 															   to_gameBoardTilePosition:(nonnull SMBGameBoardTilePosition*)gameBoardTilePosition;
 
+#pragma mark - powerSwitchTileEntity
+-(void)gameBoardTileEntity_add_powerSwitchTileEntity_with_gameBoardTilePosition_toPower:(nonnull SMBGameBoardTilePosition*)gameBoardTilePosition_toPower
+															   to_gameBoardTilePosition:(nonnull SMBGameBoardTilePosition*)gameBoardTilePosition;
+
 @end

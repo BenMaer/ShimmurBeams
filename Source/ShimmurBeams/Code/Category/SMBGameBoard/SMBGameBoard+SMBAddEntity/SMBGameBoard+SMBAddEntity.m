@@ -12,6 +12,7 @@
 #import "SMBLevelExitTileEntity.h"
 #import "SMBWallTileEntity.h"
 #import "SMBPowerButtonTileEntity.h"
+#import "SMBPowerSwitchTileEntity.h"
 
 #import <ResplendentUtilities/RUConditionalReturn.h>
 
@@ -138,6 +139,15 @@
 															   to_gameBoardTilePosition:(nonnull SMBGameBoardTilePosition*)gameBoardTilePosition
 {
 	[self gameBoardTileEntity_add:[[SMBPowerButtonTileEntity alloc] init_with_gameBoardTilePosition_toPower:gameBoardTilePosition_toPower]
+					   entityType:SMBGameBoardTile__entityType_beamInteractions
+		 to_gameBoardTilePosition:gameBoardTilePosition];
+}
+
+#pragma mark - powerSwitchTileEntity
+-(void)gameBoardTileEntity_add_powerSwitchTileEntity_with_gameBoardTilePosition_toPower:(nonnull SMBGameBoardTilePosition*)gameBoardTilePosition_toPower
+															   to_gameBoardTilePosition:(nonnull SMBGameBoardTilePosition*)gameBoardTilePosition
+{
+	[self gameBoardTileEntity_add:[[SMBPowerSwitchTileEntity alloc] init_with_gameBoardTilePosition_toPower:gameBoardTilePosition_toPower]
 					   entityType:SMBGameBoardTile__entityType_beamInteractions
 		 to_gameBoardTilePosition:gameBoardTilePosition];
 }

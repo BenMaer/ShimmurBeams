@@ -14,6 +14,10 @@
 		D733A48A1F5772EE007A8E6F /* SMBBlockDrawableObject.m in Sources */ = {isa = PBXBuildFile; fileRef = D733A4891F5772EE007A8E6F /* SMBBlockDrawableObject.m */; };
 		D733A4901F5775BF007A8E6F /* SMBBlockDrawableObject+SMBDefaultBlockDrawings.m in Sources */ = {isa = PBXBuildFile; fileRef = D733A48F1F5775BF007A8E6F /* SMBBlockDrawableObject+SMBDefaultBlockDrawings.m */; };
 		D733A4931F5863EE007A8E6F /* Spaceship.svg in Resources */ = {isa = PBXBuildFile; fileRef = D733A4921F5863EE007A8E6F /* Spaceship.svg */; };
+		D733A49B1F5A0C2A007A8E6F /* SMBGameLevel+SMBPowerSwitchesAndDoorGroups.m in Sources */ = {isa = PBXBuildFile; fileRef = D733A49A1F5A0C2A007A8E6F /* SMBGameLevel+SMBPowerSwitchesAndDoorGroups.m */; };
+		D733A49F1F5A1D33007A8E6F /* SMBGenericPowerOutputTileEntity.m in Sources */ = {isa = PBXBuildFile; fileRef = D733A49E1F5A1D33007A8E6F /* SMBGenericPowerOutputTileEntity.m */; };
+		D733A4A31F5A20F2007A8E6F /* SMBPowerButtonTileEntity.m in Sources */ = {isa = PBXBuildFile; fileRef = D733A4A21F5A20F2007A8E6F /* SMBPowerButtonTileEntity.m */; };
+		D733A4A71F5A211F007A8E6F /* SMBPowerSwitchTileEntity.m in Sources */ = {isa = PBXBuildFile; fileRef = D733A4A61F5A211F007A8E6F /* SMBPowerSwitchTileEntity.m */; };
 		D73CF9901F54B376002A70EB /* SMBGameLevel+SMBPowerButtonsAndDoors.m in Sources */ = {isa = PBXBuildFile; fileRef = D73CF98F1F54B376002A70EB /* SMBGameLevel+SMBPowerButtonsAndDoors.m */; };
 		D73CF9941F54B3D2002A70EB /* SMBDoorTileEntity.m in Sources */ = {isa = PBXBuildFile; fileRef = D73CF9931F54B3D2002A70EB /* SMBDoorTileEntity.m */; };
 		D73CF9991F54D7C0002A70EB /* SMBBeamBlockerTileEntity_PropertiesForKVO.m in Sources */ = {isa = PBXBuildFile; fileRef = D73CF9981F54D7C0002A70EB /* SMBBeamBlockerTileEntity_PropertiesForKVO.m */; };
@@ -29,7 +33,6 @@
 		D761FEA51F3AC2FF0083842A /* SMBGameBoardView.m in Sources */ = {isa = PBXBuildFile; fileRef = D761FE861F3AC2FF0083842A /* SMBGameBoardView.m */; };
 		D761FEA61F3AC2FF0083842A /* SMBGameLevelView.m in Sources */ = {isa = PBXBuildFile; fileRef = D761FE891F3AC2FF0083842A /* SMBGameLevelView.m */; };
 		D761FEA81F3AC2FF0083842A /* SMBUniqueStringGenerator.m in Sources */ = {isa = PBXBuildFile; fileRef = D761FE911F3AC2FF0083842A /* SMBUniqueStringGenerator.m */; };
-		D77B86F91F47A1A900144372 /* SMBPowerButtonTileEntity.m in Sources */ = {isa = PBXBuildFile; fileRef = D77B86F81F47A1A900144372 /* SMBPowerButtonTileEntity.m */; };
 		D77B86FD1F47A1D700144372 /* SMBPowerOutputTileEntity.m in Sources */ = {isa = PBXBuildFile; fileRef = D77B86FC1F47A1D700144372 /* SMBPowerOutputTileEntity.m */; };
 		D78CD07D1F3D6DB800118FB4 /* SMBDrawableObject.m in Sources */ = {isa = PBXBuildFile; fileRef = D78CD07C1F3D6DB800118FB4 /* SMBDrawableObject.m */; };
 		D78CD09D1F3D6E5800118FB4 /* SMBBeamEntity.m in Sources */ = {isa = PBXBuildFile; fileRef = D78CD0821F3D6E5800118FB4 /* SMBBeamEntity.m */; };
@@ -86,6 +89,15 @@
 		D733A48E1F5775BF007A8E6F /* SMBBlockDrawableObject+SMBDefaultBlockDrawings.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "SMBBlockDrawableObject+SMBDefaultBlockDrawings.h"; sourceTree = "<group>"; };
 		D733A48F1F5775BF007A8E6F /* SMBBlockDrawableObject+SMBDefaultBlockDrawings.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "SMBBlockDrawableObject+SMBDefaultBlockDrawings.m"; sourceTree = "<group>"; };
 		D733A4921F5863EE007A8E6F /* Spaceship.svg */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; path = Spaceship.svg; sourceTree = "<group>"; };
+		D733A4991F5A0C2A007A8E6F /* SMBGameLevel+SMBPowerSwitchesAndDoorGroups.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "SMBGameLevel+SMBPowerSwitchesAndDoorGroups.h"; sourceTree = "<group>"; };
+		D733A49A1F5A0C2A007A8E6F /* SMBGameLevel+SMBPowerSwitchesAndDoorGroups.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "SMBGameLevel+SMBPowerSwitchesAndDoorGroups.m"; sourceTree = "<group>"; };
+		D733A49D1F5A1D33007A8E6F /* SMBGenericPowerOutputTileEntity.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SMBGenericPowerOutputTileEntity.h; sourceTree = "<group>"; };
+		D733A49E1F5A1D33007A8E6F /* SMBGenericPowerOutputTileEntity.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SMBGenericPowerOutputTileEntity.m; sourceTree = "<group>"; };
+		D733A4A11F5A20F2007A8E6F /* SMBPowerButtonTileEntity.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SMBPowerButtonTileEntity.h; sourceTree = "<group>"; };
+		D733A4A21F5A20F2007A8E6F /* SMBPowerButtonTileEntity.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SMBPowerButtonTileEntity.m; sourceTree = "<group>"; };
+		D733A4A51F5A211F007A8E6F /* SMBPowerSwitchTileEntity.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SMBPowerSwitchTileEntity.h; sourceTree = "<group>"; };
+		D733A4A61F5A211F007A8E6F /* SMBPowerSwitchTileEntity.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SMBPowerSwitchTileEntity.m; sourceTree = "<group>"; };
+		D733A4A81F5A231A007A8E6F /* SMBPowerSwitchTileEntity__switchStates.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SMBPowerSwitchTileEntity__switchStates.h; sourceTree = "<group>"; };
 		D73CF98E1F54B376002A70EB /* SMBGameLevel+SMBPowerButtonsAndDoors.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "SMBGameLevel+SMBPowerButtonsAndDoors.h"; sourceTree = "<group>"; };
 		D73CF98F1F54B376002A70EB /* SMBGameLevel+SMBPowerButtonsAndDoors.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "SMBGameLevel+SMBPowerButtonsAndDoors.m"; sourceTree = "<group>"; };
 		D73CF9921F54B3D2002A70EB /* SMBDoorTileEntity.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SMBDoorTileEntity.h; sourceTree = "<group>"; };
@@ -122,8 +134,6 @@
 		D761FE891F3AC2FF0083842A /* SMBGameLevelView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SMBGameLevelView.m; sourceTree = "<group>"; };
 		D761FE901F3AC2FF0083842A /* SMBUniqueStringGenerator.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SMBUniqueStringGenerator.h; sourceTree = "<group>"; };
 		D761FE911F3AC2FF0083842A /* SMBUniqueStringGenerator.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SMBUniqueStringGenerator.m; sourceTree = "<group>"; };
-		D77B86F71F47A1A900144372 /* SMBPowerButtonTileEntity.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SMBPowerButtonTileEntity.h; sourceTree = "<group>"; };
-		D77B86F81F47A1A900144372 /* SMBPowerButtonTileEntity.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SMBPowerButtonTileEntity.m; sourceTree = "<group>"; };
 		D77B86FB1F47A1D700144372 /* SMBPowerOutputTileEntity.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SMBPowerOutputTileEntity.h; sourceTree = "<group>"; };
 		D77B86FC1F47A1D700144372 /* SMBPowerOutputTileEntity.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SMBPowerOutputTileEntity.m; sourceTree = "<group>"; };
 		D78CD07B1F3D6DB800118FB4 /* SMBDrawableObject.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SMBDrawableObject.h; sourceTree = "<group>"; };
@@ -320,6 +330,45 @@
 			path = SVG;
 			sourceTree = "<group>";
 		};
+		D733A4981F5A0BDA007A8E6F /* SMBGameLevel+SMBPowerSwitchesAndDoorGroups */ = {
+			isa = PBXGroup;
+			children = (
+				D733A4991F5A0C2A007A8E6F /* SMBGameLevel+SMBPowerSwitchesAndDoorGroups.h */,
+				D733A49A1F5A0C2A007A8E6F /* SMBGameLevel+SMBPowerSwitchesAndDoorGroups.m */,
+			);
+			path = "SMBGameLevel+SMBPowerSwitchesAndDoorGroups";
+			sourceTree = "<group>";
+		};
+		D733A49C1F5A1D1C007A8E6F /* SMBGenericPowerOutputTileEntity */ = {
+			isa = PBXGroup;
+			children = (
+				D733A49D1F5A1D33007A8E6F /* SMBGenericPowerOutputTileEntity.h */,
+				D733A49E1F5A1D33007A8E6F /* SMBGenericPowerOutputTileEntity.m */,
+				D733A4A01F5A20F2007A8E6F /* SMBPowerButtonTileEntity */,
+				D733A4A41F5A210F007A8E6F /* SMBPowerSwitchTileEntity */,
+			);
+			path = SMBGenericPowerOutputTileEntity;
+			sourceTree = "<group>";
+		};
+		D733A4A01F5A20F2007A8E6F /* SMBPowerButtonTileEntity */ = {
+			isa = PBXGroup;
+			children = (
+				D733A4A11F5A20F2007A8E6F /* SMBPowerButtonTileEntity.h */,
+				D733A4A21F5A20F2007A8E6F /* SMBPowerButtonTileEntity.m */,
+			);
+			path = SMBPowerButtonTileEntity;
+			sourceTree = "<group>";
+		};
+		D733A4A41F5A210F007A8E6F /* SMBPowerSwitchTileEntity */ = {
+			isa = PBXGroup;
+			children = (
+				D733A4A51F5A211F007A8E6F /* SMBPowerSwitchTileEntity.h */,
+				D733A4A81F5A231A007A8E6F /* SMBPowerSwitchTileEntity__switchStates.h */,
+				D733A4A61F5A211F007A8E6F /* SMBPowerSwitchTileEntity.m */,
+			);
+			path = SMBPowerSwitchTileEntity;
+			sourceTree = "<group>";
+		};
 		D73CF98D1F54B376002A70EB /* SMBGameLevel+SMBPowerButtonsAndDoors */ = {
 			isa = PBXGroup;
 			children = (
@@ -406,6 +455,7 @@
 				D7951D011F41E78E00A33AB2 /* SMBGameLevel+SMBForcedRedirectsAndWalls */,
 				D7951D531F43C06700A33AB2 /* SMBGameLevel+SMBMirrorsAndMeltableBlocks */,
 				D73CF98D1F54B376002A70EB /* SMBGameLevel+SMBPowerButtonsAndDoors */,
+				D733A4981F5A0BDA007A8E6F /* SMBGameLevel+SMBPowerSwitchesAndDoorGroups */,
 				D7951D0E1F43143F00A33AB2 /* SMBGameLevel+SMBRotatesAndDeathBlocks */,
 			);
 			path = SMBGameLevel;
@@ -615,15 +665,6 @@
 			path = SMBUniqueStringGenerator;
 			sourceTree = "<group>";
 		};
-		D77B86F61F47A18F00144372 /* SMBPowerButtonTileEntity */ = {
-			isa = PBXGroup;
-			children = (
-				D77B86F71F47A1A900144372 /* SMBPowerButtonTileEntity.h */,
-				D77B86F81F47A1A900144372 /* SMBPowerButtonTileEntity.m */,
-			);
-			path = SMBPowerButtonTileEntity;
-			sourceTree = "<group>";
-		};
 		D77B86FA1F47A1CC00144372 /* SMBPowerOutputTileEntity */ = {
 			isa = PBXGroup;
 			children = (
@@ -778,7 +819,7 @@
 				D7951D321F43ADAC00A33AB2 /* SMBForcedBeamRedirectTileEntity */,
 				D7951D3B1F43ADAC00A33AB2 /* SMBGameBoardTileEntity.h */,
 				D7951D3C1F43ADAC00A33AB2 /* SMBGameBoardTileEntity.m */,
-				D77B86F61F47A18F00144372 /* SMBPowerButtonTileEntity */,
+				D733A49C1F5A1D1C007A8E6F /* SMBGenericPowerOutputTileEntity */,
 				D77B86FA1F47A1CC00144372 /* SMBPowerOutputTileEntity */,
 				D7951D401F43ADAC00A33AB2 /* SMBWallTileEntity */,
 			);
@@ -1262,6 +1303,7 @@
 				D7C8C3B91F3B8035006D378E /* SMBGameBoardTileEntityPickerViewCollectionViewCell.m in Sources */,
 				D7951D081F41F77D00A33AB2 /* SMBGameLevelGeneratorViewController.m in Sources */,
 				D761FE971F3AC2FF0083842A /* SMBGameBoard.m in Sources */,
+				D733A4A71F5A211F007A8E6F /* SMBPowerSwitchTileEntity.m in Sources */,
 				D7DAF3A31F33D66400233C39 /* main.m in Sources */,
 				D73CF9901F54B376002A70EB /* SMBGameLevel+SMBPowerButtonsAndDoors.m in Sources */,
 				D78CD09D1F3D6E5800118FB4 /* SMBBeamEntity.m in Sources */,
@@ -1274,6 +1316,7 @@
 				D7951D561F43C06700A33AB2 /* SMBGameLevel+SMBMirrorsAndMeltableBlocks.m in Sources */,
 				D78CD07D1F3D6DB800118FB4 /* SMBDrawableObject.m in Sources */,
 				D7951D661F47473600A33AB2 /* SMBGameBoardTileEntity_PowerProvider_PropertiesForKVO.m in Sources */,
+				D733A49F1F5A1D33007A8E6F /* SMBGenericPowerOutputTileEntity.m in Sources */,
 				D7C8C3E01F3CE26A006D378E /* SMBGameLevelGeneratorSetsViewController.m in Sources */,
 				D761FEA61F3AC2FF0083842A /* SMBGameLevelView.m in Sources */,
 				D7C8C3DC1F3CC7ED006D378E /* SMBGameBoardTileEntity+SMBProvidesPower.m in Sources */,
@@ -1287,6 +1330,7 @@
 				D7951D4A1F43ADAC00A33AB2 /* SMBWallTileEntity.m in Sources */,
 				D78CD0A91F3D6EB500118FB4 /* SMBDrawableObjectView.m in Sources */,
 				D7951D441F43ADAC00A33AB2 /* SMBBeamRotateTileEntity.m in Sources */,
+				D733A4A31F5A20F2007A8E6F /* SMBPowerButtonTileEntity.m in Sources */,
 				D7951D041F41E79800A33AB2 /* SMBGameLevel+SMBForcedRedirectsAndWalls.m in Sources */,
 				D78CD09F1F3D6E5800118FB4 /* SMBGameBoardEntity.m in Sources */,
 				D77B86FD1F47A1D700144372 /* SMBPowerOutputTileEntity.m in Sources */,
@@ -1297,6 +1341,7 @@
 				D761FE931F3AC2FF0083842A /* SMBGameBoard+SMBAddEntity.m in Sources */,
 				D761FE951F3AC2FF0083842A /* SMBMappedDataCollection.m in Sources */,
 				D733A47D1F5769CB007A8E6F /* SMBSVGDrawableObject.m in Sources */,
+				D733A49B1F5A0C2A007A8E6F /* SMBGameLevel+SMBPowerSwitchesAndDoorGroups.m in Sources */,
 				D761FE921F3AC2FF0083842A /* NSArray+SMBChanges.m in Sources */,
 				D78CD0B21F3D747E00118FB4 /* UIColor+SMBColors.m in Sources */,
 				D7C8C3C31F3B8A42006D378E /* UIView+SMBCommonFraming.m in Sources */,
@@ -1305,7 +1350,6 @@
 				D78CD0A01F3D6E5800118FB4 /* SMBGameBoardGeneralEntity.m in Sources */,
 				D733A4761F576767007A8E6F /* SMBImageDrawableObject.m in Sources */,
 				D7C8C3E81F3CE3C1006D378E /* SMBGameLevelGenerator.m in Sources */,
-				D77B86F91F47A1A900144372 /* SMBPowerButtonTileEntity.m in Sources */,
 				D7C8C3E41F3CE2A8006D378E /* SMBGameLevelGeneratorSetsNavigationController.m in Sources */,
 				D761FE961F3AC2FF0083842A /* SMBMutableMappedDataCollection.m in Sources */,
 				D7951D1F1F43950B00A33AB2 /* SMBTimer.m in Sources */,

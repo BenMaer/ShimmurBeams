@@ -15,13 +15,13 @@
 @interface SMBGameLevel (SMBPowerButtonsAndDoors)
 
 #pragma mark - button
-+(nonnull instancetype)smb_button_introduction;
-+(nonnull instancetype)smb_buttons_3choices;
-+(nonnull instancetype)smb_buttons_usableGameBoardTileEntities_choices;
-+(nonnull instancetype)smb_buttons_windows_3x3;
++(nonnull instancetype)smb_powerButton_introduction;
++(nonnull instancetype)smb_powerButtons_3choices;
++(nonnull instancetype)smb_powerButtons_usableGameBoardTileEntities_choices;
++(nonnull instancetype)smb_powerButtons_windows_3x3;
 
 #pragma mark - buttons and doors
-+(nonnull instancetype)smb_buttons_and_door_introduction;
-+(nonnull instancetype)smb_buttons_and_doors_choices;
++(nonnull instancetype)smb_powerButtons_and_door_introduction;
++(nonnull instancetype)smb_powerButtons_and_doors_choices;
 
 @end

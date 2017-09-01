@@ -23,7 +23,10 @@
 #pragma mark - mirrorsAndMeltableBlocks
 +(nonnull instancetype)smb_mirrorsAndMeltableBlocks_introduction;
 
-#pragma mark - powerButtonsAndSwitches
-+(nonnull instancetype)smb_powerButtonsAndSwitches_introduction;
+#pragma mark - powerButtonsAndDoors
++(nonnull instancetype)smb_powerButtonsAndDoors_introduction;
+
+#pragma mark - powerSwitchesAndDoorGroups
++(nonnull instancetype)smb_powerSwitchesAndDoorGroups_introduction;
 
 @end
