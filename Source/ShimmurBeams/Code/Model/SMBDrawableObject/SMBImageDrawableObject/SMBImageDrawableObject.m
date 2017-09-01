@@ -8,6 +8,8 @@
 
 #import "SMBImageDrawableObject.h"
 
+#import <ResplendentUtilities/UIView+RUUtility.h>
+
 
 
 
@@ -28,7 +30,12 @@
 
 		CGContextSaveGState(context);
 
-		[image drawInRect:rect];
+		CGSize const size = image.size;
+		[image drawInRect:(CGRect){
+			.origin.x	= CGRectGetMinX(rect) + CGRectGetHorizontallyAlignedXCoordForWidthOnWidth(size.width, CGRectGetWidth(rect)),
+			.origin.y	= CGRectGetMinY(rect) + CGRectGetVerticallyAlignedYCoordForHeightOnHeight(size.height, CGRectGetHeight(rect)),
+			.size		= size,
+		}];
 
 		CGContextRestoreGState(context);
 	}
