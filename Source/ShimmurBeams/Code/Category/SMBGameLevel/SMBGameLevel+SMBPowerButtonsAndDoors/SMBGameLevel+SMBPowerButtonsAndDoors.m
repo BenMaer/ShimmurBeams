@@ -698,7 +698,6 @@
 	NSRange const gameBoardTilePosition_section_1_columns_range = (NSRange){
 		.location	= gameBoardTilePosition_wall_below_section_1_columns.location,
 		.length		= section_1_width,
-//		.length		= gameBoardTilePosition_wall_between_sections_2_and_3_columns.location,
 	};
 	NSRange const gameBoardTilePosition_section_1_rows_range = (NSRange){
 		.location	= gameBoardTilePosition_wall_between_sections_2_and_3_rows.location,
@@ -709,7 +708,6 @@
 	NSRange const gameBoardTilePosition_section_2_columns_range = (NSRange){
 		.location	= gameBoardTilePosition_section_2_columns_location,
 		.length		= section_2_width,
-//		.length		= [gameBoard gameBoardTiles_numberOfColumns] - gameBoardTilePosition_section_2_columns_location,
 	};
 	NSRange const gameBoardTilePosition_section_2_rows_range = (NSRange){
 		.location	= gameBoardTilePosition_wall_between_sections_2_and_3_rows.location,
