@@ -201,6 +201,11 @@
 																						  name:@"Switch Introduction"
 																						  hint:@"Power up a switch to toggle its power. A powered switch will power another tile on the board."]];
 
+	[gameLevelGenerators addObject:[[SMBGameLevelGenerator alloc] init_with_generateLevelBlock:^SMBGameLevel * _Nonnull{
+		return [SMBGameLevel smb_powerSwitch_and_button_and_door];
+	}
+																						  name:@"Switch and Button Choice"]];
+
 	return
 	[[self alloc] init_with_gameLevelGenerators:[NSArray<SMBGameLevelGenerator*> arrayWithArray:gameLevelGenerators]
 										   name:@"Power switches and door groups"];

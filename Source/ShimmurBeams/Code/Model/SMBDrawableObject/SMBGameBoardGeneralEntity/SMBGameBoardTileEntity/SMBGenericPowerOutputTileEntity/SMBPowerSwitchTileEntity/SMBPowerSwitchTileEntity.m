@@ -95,7 +95,7 @@ static void* kSMBPowerSwitchTileEntity__KVOContext = &kSMBPowerSwitchTileEntity_
 		.size.width		= fillColor_width,
 		.size.height	= fillColor_height,
 	};
-	
+
 	CGContextSetFillColorWithColor(context,
 								   ([self draw_switch_fillColor_color]).CGColor
 								   );
@@ -103,7 +103,7 @@ static void* kSMBPowerSwitchTileEntity__KVOContext = &kSMBPowerSwitchTileEntity_
 
 	CGContextSetStrokeColorWithColor(context, [UIColor blackColor].CGColor);
 	CGContextSetLineWidth(context, 1.0f);
-	
+
 	CGContextStrokeRect(context, switch_rect);
 }
 
@@ -114,16 +114,16 @@ static void* kSMBPowerSwitchTileEntity__KVOContext = &kSMBPowerSwitchTileEntity_
 	{
 		case SMBPowerSwitchTileEntity__switchState_unknown:
 			break;
-			
+
 		case SMBPowerSwitchTileEntity__switchState_off:
 			return 0.0f;
 			break;
-			
+
 		case SMBPowerSwitchTileEntity__switchState_on:
 			return fillColor_width;
 			break;
 	}
-	
+
 	NSAssert(false, @"unhandled switchState %li",(long)switchState);
 	return 0.0f;
 }
@@ -135,16 +135,16 @@ static void* kSMBPowerSwitchTileEntity__KVOContext = &kSMBPowerSwitchTileEntity_
 	{
 		case SMBPowerSwitchTileEntity__switchState_unknown:
 			break;
-			
+
 		case SMBPowerSwitchTileEntity__switchState_off:
 			return [UIColor redColor];
 			break;
-			
+
 		case SMBPowerSwitchTileEntity__switchState_on:
 			return [UIColor greenColor];
 			break;
 	}
-	
+
 	NSAssert(false, @"unhandled switchState %li",(long)switchState);
 	return nil;
 }
@@ -153,9 +153,9 @@ static void* kSMBPowerSwitchTileEntity__KVOContext = &kSMBPowerSwitchTileEntity_
 -(void)setGameBoardTile:(nullable SMBGameBoardTile*)gameBoardTile
 {
 	[self SMBPowerButtonTileEntity_gameBoardTile_setKVORegistered:NO];
-	
+
 	[super setGameBoardTile:gameBoardTile];
-	
+
 	[self SMBPowerButtonTileEntity_gameBoardTile_setKVORegistered:YES];
 }
 
@@ -164,10 +164,10 @@ static void* kSMBPowerSwitchTileEntity__KVOContext = &kSMBPowerSwitchTileEntity_
 {
 	typeof(self.gameBoardTile) const gameBoardTile = self.gameBoardTile;
 	kRUConditionalReturn(gameBoardTile == nil, NO);
-	
+
 	NSMutableArray<NSString*>* const propertiesToObserve = [NSMutableArray<NSString*> array];
 	[propertiesToObserve addObject:[SMBGameBoardTile_PropertiesForKVO isPowered]];
-	
+
 	[propertiesToObserve enumerateObjectsUsingBlock:^(NSString * _Nonnull propertyToObserve, NSUInteger idx, BOOL * _Nonnull stop) {
 		if (registered)
 		{
@@ -266,7 +266,7 @@ static void* kSMBPowerSwitchTileEntity__KVOContext = &kSMBPowerSwitchTileEntity_
 	kRUConditionalReturn_ReturnValueFalse((gameBoardTile == nil)
 										  ||
 										  (gameBoardTile.isPowered == false), NO);
-	
+
 	return YES;
 }
 
@@ -275,9 +275,9 @@ static void* kSMBPowerSwitchTileEntity__KVOContext = &kSMBPowerSwitchTileEntity_
 {
 	BOOL const providesOutputPower_old = self.providesOutputPower;
 	[super setProvidesOutputPower:providesOutputPower];
-	
+
 	kRUConditionalReturn(providesOutputPower_old == providesOutputPower, NO);
-	
+
 	[self setNeedsRedraw];
 }
 

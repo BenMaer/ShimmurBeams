@@ -16,5 +16,6 @@
 
 #pragma mark - powerSwitches
 +(nonnull instancetype)smb_powerSwitch_introduction;
++(nonnull instancetype)smb_powerSwitch_and_button_and_door;
 
 @end

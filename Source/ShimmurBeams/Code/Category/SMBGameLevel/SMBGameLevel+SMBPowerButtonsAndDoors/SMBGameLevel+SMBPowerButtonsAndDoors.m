@@ -30,13 +30,16 @@
 {
 	/*
 	 Numbers = Sections
-	 
+
 	 Entities:
 	 BCP	Beam Creator Powered
 	 Exi	Level Exit
 	 Wal	Wall
 	 PoB	Power Button
 	 BCU	Beam Creator Unpowered
+
+	 Usable:
+	 Forced Redirect (direction: up) x2
 
 	 Sections and entities:
 	 [   ] [   ] [   ] [   ] [   ] [PoB] [   ]
@@ -74,7 +77,7 @@
 	/*
 	 Section values.
 	 */
-	
+
 	NSRange const gameBoardTilePosition_section_1_columns_range = (NSRange){
 		.location	= 0,
 		.length		= [gameBoard gameBoardTiles_numberOfColumns],
@@ -721,7 +724,7 @@
 {
 	/*
 	 Numbers = Sections
-	 
+
 	 Entities:
 	 BCP	Beam Creator Powered
 	 Exi	Level Exit
@@ -729,6 +732,13 @@
 	 PoB	Power Button
 	 BCU	Beam Creator Unpowered
 	 Dor	Door
+
+	 Usable:
+	 Beam Rotation (direction_rotation: left)
+	 Beam Rotation (direction_rotation: right)
+	 Forced Redirect (direction: right)
+	 Beam Rotation (direction_rotation: right)
+	 Diagonal Mirror (startingPosition: topLeft)
 
 	 Sections and entities:
 	 [BCU] [   ] [   ] [ 3 ] [   ] [   ] [BCU]
