@@ -262,12 +262,7 @@ static void* kSMBPowerSwitchTileEntity__KVOContext = &kSMBPowerSwitchTileEntity_
 
 -(BOOL)providesOutputPower_providesPower_appropriate
 {
-	SMBGameBoardTile* const gameBoardTile = self.gameBoardTile;
-	kRUConditionalReturn_ReturnValueFalse((gameBoardTile == nil)
-										  ||
-										  (gameBoardTile.isPowered == false), NO);
-
-	return YES;
+	return (self.switchState == SMBPowerSwitchTileEntity__switchState_on);
 }
 
 #pragma mark - SMBGenericPowerOutputTileEntity: providesOutputPower
