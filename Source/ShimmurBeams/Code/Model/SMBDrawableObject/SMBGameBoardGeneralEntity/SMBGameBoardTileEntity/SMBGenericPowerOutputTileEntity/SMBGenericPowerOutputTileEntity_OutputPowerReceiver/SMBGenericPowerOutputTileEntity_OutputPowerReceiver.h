@@ -18,6 +18,16 @@
 
 
 
+/**
+ In classes that use this, it's nice to include the following to enforce proper behavior:
+ ```
+ -(void)dealloc
+ {
+ 	NSAssert(self.outputPowerReceiver_genericPowerOutputTileEntity == nil, @"should have been set to nil externally by now.");
+ 	[self setOutputPowerReceiver_genericPowerOutputTileEntity:nil];
+ }
+ ```
+ */
 @protocol SMBGenericPowerOutputTileEntity_OutputPowerReceiver <NSObject>
 
 #pragma mark - outputPowerReceiver_isPowered

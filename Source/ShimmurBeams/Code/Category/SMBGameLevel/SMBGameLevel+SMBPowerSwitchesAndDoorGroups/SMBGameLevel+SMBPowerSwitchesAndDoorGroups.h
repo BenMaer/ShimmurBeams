@@ -18,4 +18,8 @@
 +(nonnull instancetype)smb_powerSwitch_introduction;
 +(nonnull instancetype)smb_powerSwitch_and_button_and_door;
 
+#pragma mark - doorGroups
++(nonnull instancetype)smb_doorGroup_introduction;
+//+(nonnull instancetype)smb_doorGroups_introduction;
+
 @end
