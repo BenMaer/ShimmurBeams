@@ -235,6 +235,109 @@
 	 Dor	Door
 
 	 Usable:
+	 Forced Redirect (direction: right)
+
+	 Sections and entities:
+	 [   ] [   ] [   ] [   ] [   ]
+	 [   ] [   ] [Dor] [Exi] [   ]
+	 [   ] [Dor] [   ] [   ] [   ]
+	 [   ] [   ] [   ] [PoS] [   ]
+	 [   ] [BCP] [   ] [   ] [   ]
+
+	 S[x]	Switch [x]
+	 S[x]O	Switch [x] Output
+	 D[x]	Door Group [x]
+	 D[x]O	Door Group [x] Output
+
+	 Wiring:
+	 [   ] [   ] [   ] [   ] [   ]
+	 [   ] [   ] [D1O] [   ] [   ]
+	 [   ] [D1O] [   ] [   ] [   ]
+	 [   ] [   ] [   ] [S1 ] [   ]
+	 [   ] [   ] [   ] [   ] [   ]
+
+	 S1O:
+	 - D1
+
+	 */
+
+	/* Game board. */
+
+	SMBGameBoard* const gameBoard = [[SMBGameBoard alloc] init_with_numberOfColumns:5
+																	   numberOfRows:5];
+
+	/* Initial beam creator. */
+
+	SMBBeamCreatorTileEntity* const beamCreatorEntity = [SMBBeamCreatorTileEntity new];
+	[beamCreatorEntity setBeamDirection:SMBGameBoardTile__direction_up];
+	[gameBoard gameBoardTileEntity_for_beamInteractions_set:beamCreatorEntity
+								   to_gameBoardTilePosition:
+	 [[SMBGameBoardTilePosition alloc] init_with_column:1
+													row:[gameBoard gameBoardTiles_numberOfRows] - 1]];
+
+	/* Doors */
+	SMBDoorTileEntity* const doorTileEntity_1x2 = [SMBDoorTileEntity new];
+	[gameBoard gameBoardTileEntity_add:doorTileEntity_1x2
+							entityType:SMBGameBoardTile__entityType_beamInteractions
+			  to_gameBoardTilePosition:
+	 [[SMBGameBoardTilePosition alloc] init_with_column:1
+													row:2]];
+
+	SMBDoorTileEntity* const doorTileEntity_2x1 = [SMBDoorTileEntity new];
+	[gameBoard gameBoardTileEntity_add:doorTileEntity_2x1
+							entityType:SMBGameBoardTile__entityType_beamInteractions
+			  to_gameBoardTilePosition:
+	 [[SMBGameBoardTilePosition alloc] init_with_column:2
+													row:1]];
+
+	/* Output Power Receiver Collections. */
+
+	NSMutableArray<id<SMBGenericPowerOutputTileEntity_OutputPowerReceiver>>* const doorGroup_1_outputPowerReceivers = [NSMutableArray<id<SMBGenericPowerOutputTileEntity_OutputPowerReceiver>> array];
+	[doorGroup_1_outputPowerReceivers addObject:[[SMBGenericPowerOutputTileEntity_OutputPowerReceiver_GameBoardTilePowerProvider alloc] init_with_gameBoardTilePosition_toPower:doorTileEntity_1x2.gameBoardTile.gameBoardTilePosition]];
+	[doorGroup_1_outputPowerReceivers addObject:[[SMBGenericPowerOutputTileEntity_OutputPowerReceiver_GameBoardTilePowerProvider alloc] init_with_gameBoardTilePosition_toPower:doorTileEntity_2x1.gameBoardTile.gameBoardTilePosition]];
+
+	SMBGenericPowerOutputTileEntity_OutputPowerReceiverCollection* const doorGroup_1_genericPowerOutputTileEntity_OutputPowerReceiverCollection =
+	[[SMBGenericPowerOutputTileEntity_OutputPowerReceiverCollection alloc] init_with_outputPowerReceivers:doorGroup_1_outputPowerReceivers];
+
+	/* Power Switches. */
+
+	/* 3x3 to Door Group 1 */
+	[gameBoard gameBoardTileEntity_add:[[SMBPowerSwitchTileEntity alloc] init_with_outputPowerReceiverCollection:doorGroup_1_genericPowerOutputTileEntity_OutputPowerReceiverCollection]
+							entityType:SMBGameBoardTile__entityType_beamInteractions
+			  to_gameBoardTilePosition:
+	 [[SMBGameBoardTilePosition alloc] init_with_column:3
+													row:3]];
+
+	/* Level exit. */
+
+	[gameBoard gameBoardTileEntity_add_levelExit_to_gameBoardTilePosition:
+	 [[SMBGameBoardTilePosition alloc] init_with_column:3
+													row:1]];
+
+	/* Usable game board tile entities. */
+
+	NSMutableArray<SMBGameBoardTileEntity*>* const gameBoardTileEntities = [NSMutableArray<SMBGameBoardTileEntity*> array];
+	[gameBoardTileEntities addObject:[[SMBForcedBeamRedirectTileEntity alloc] init_with_forcedBeamExitDirection:SMBGameBoardTile__direction_right]];
+
+	return
+	[[self alloc] init_with_gameBoard:gameBoard
+		  usableGameBoardTileEntities:[NSArray<SMBGameBoardTileEntity*> arrayWithArray:gameBoardTileEntities]];
+}
+
++(nonnull instancetype)smb_powerSwitch_and_doorGroup_combo
+{
+	/*
+	 Numbers = Sections
+
+	 Entities:
+	 BCP	Beam Creator Powered
+	 Exi	Level Exit
+	 Wal	Wall
+	 PoS	Power Switch
+	 BCU	Beam Creator Unpowered
+	 Dor	Door
+
+	 Usable:
 	 Forced Redirect (direction: up)
 
 	 Sections and entities:
@@ -254,7 +357,7 @@
 	 [   ] [S1O] [D1O] [D1O] [D1O] [   ] [   ]
 	 [Wal] [Wal] [Wal] [Wal] [Wal] [Wal] [Wal]
 	 [   ] [   ] [   ] [ 1 ] [S1 ] [S2 ] [   ]
-	 [   ] [BCP] [   ] [   ] [   ] [   ] [   ]
+	 [   ] [   ] [   ] [   ] [   ] [   ] [   ]
 
 	 S2O:
 	  - D1
@@ -356,7 +459,7 @@
 													row:NSMaxRange(gameBoardTilePosition_section_2_rows_range) - 1]];
 
 	/* Output Power Receiver Collections. */
-	
+
 	NSMutableArray<id<SMBGenericPowerOutputTileEntity_OutputPowerReceiver>>* const doorGroup_1_outputPowerReceivers = [NSMutableArray<id<SMBGenericPowerOutputTileEntity_OutputPowerReceiver>> array];
 	[doorGroup_1_outputPowerReceivers addObject:[[SMBGenericPowerOutputTileEntity_OutputPowerReceiver_GameBoardTilePowerProvider alloc] init_with_gameBoardTilePosition_toPower:doorTileEntity_section_2_2xminus0.gameBoardTile.gameBoardTilePosition]];
 	[doorGroup_1_outputPowerReceivers addObject:[[SMBGenericPowerOutputTileEntity_OutputPowerReceiver_GameBoardTilePowerProvider alloc] init_with_gameBoardTilePosition_toPower:doorTileEntity_section_2_3xminus0.gameBoardTile.gameBoardTilePosition]];
@@ -373,7 +476,7 @@
 	 [[SMBGameBoardTilePosition alloc] init_with_column:NSMaxRange(gameBoardTilePosition_section_1_columns_range) - 3
 													row:gameBoardTilePosition_section_1_rows_range.location]];
 
-	/* Section 1 -1x0 to Door Group 1 beamCreatorEntity_unpowered position */
+	/* Section 1 -1x0 to Door Group 1 */
 	[gameBoard gameBoardTileEntity_add:[[SMBPowerSwitchTileEntity alloc] init_with_outputPowerReceiverCollection:doorGroup_1_genericPowerOutputTileEntity_OutputPowerReceiverCollection]
 							entityType:SMBGameBoardTile__entityType_beamInteractions
 			  to_gameBoardTilePosition:

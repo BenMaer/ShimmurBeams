@@ -21,5 +21,6 @@
 #pragma mark - doorGroups
 +(nonnull instancetype)smb_doorGroup_introduction;
 //+(nonnull instancetype)smb_doorGroups_introduction;
++(nonnull instancetype)smb_powerSwitch_and_doorGroup_combo;
 
 @end
