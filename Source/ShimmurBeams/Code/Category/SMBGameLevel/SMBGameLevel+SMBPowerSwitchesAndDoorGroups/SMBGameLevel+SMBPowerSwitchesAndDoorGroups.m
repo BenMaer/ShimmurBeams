@@ -556,8 +556,8 @@
 	/* Initial constants. */
 	
 	NSUInteger const wall_between_sections_1_and_2_height = 1;
-	NSUInteger const section_1_height = 2;
-	NSUInteger const section_2_height = 2;
+	NSUInteger const section_1_height = 3;
+	NSUInteger const section_2_height = 3;
 	
 	/* Game board. */
 	
