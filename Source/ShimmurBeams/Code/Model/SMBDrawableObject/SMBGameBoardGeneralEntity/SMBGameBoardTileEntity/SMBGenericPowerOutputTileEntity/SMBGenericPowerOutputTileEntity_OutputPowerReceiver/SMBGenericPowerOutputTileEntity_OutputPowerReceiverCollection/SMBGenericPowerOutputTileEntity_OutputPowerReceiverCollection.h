@@ -16,6 +16,9 @@
 
 @interface SMBGenericPowerOutputTileEntity_OutputPowerReceiverCollection : NSObject <SMBGenericPowerOutputTileEntity_OutputPowerReceiver>
 
+#pragma mark - outputPowerReceivers_powerIsOppositeOfReceiver
+@property (nonatomic, assign) BOOL outputPowerReceivers_powerIsOppositeOfReceiver;
+
 #pragma mark - outputPowerReceiver
 @property (nonatomic, readonly, copy, nullable) NSArray<id<SMBGenericPowerOutputTileEntity_OutputPowerReceiver>>* outputPowerReceivers;
 

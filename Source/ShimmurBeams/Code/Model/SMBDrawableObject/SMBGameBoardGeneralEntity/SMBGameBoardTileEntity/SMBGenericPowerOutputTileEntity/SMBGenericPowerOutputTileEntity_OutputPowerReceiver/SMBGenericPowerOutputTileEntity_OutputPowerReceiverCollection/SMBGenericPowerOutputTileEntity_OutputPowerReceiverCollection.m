@@ -56,6 +56,8 @@
 		_outputPowerReceivers = [NSArray<id<SMBGenericPowerOutputTileEntity_OutputPowerReceiver>> arrayWithArray:outputPowerReceivers];
 
 		[self setOutputPowerReceiver_isPowered:NO];
+		[self setOutputPowerReceivers_powerIsOppositeOfReceiver:NO];
+
 		[self outputPowerReceivers_outputPowerReceiver_isPowered_update];
 	}
 
@@ -69,6 +71,16 @@
 	kRUConditionalReturn(self.outputPowerReceiver_isPowered == outputPowerReceiver_isPowered, NO);
 
 	_outputPowerReceiver_isPowered = outputPowerReceiver_isPowered;
+
+	[self outputPowerReceivers_outputPowerReceiver_isPowered_update];
+}
+
+#pragma mark - outputPowerReceivers_powerIsOppositeOfReceiver
+-(void)setOutputPowerReceivers_powerIsOppositeOfReceiver:(BOOL)outputPowerReceivers_powerIsOppositeOfReceiver
+{
+	kRUConditionalReturn(self.outputPowerReceivers_powerIsOppositeOfReceiver == outputPowerReceivers_powerIsOppositeOfReceiver, NO);
+
+	_outputPowerReceivers_powerIsOppositeOfReceiver = outputPowerReceivers_powerIsOppositeOfReceiver;
 
 	[self outputPowerReceivers_outputPowerReceiver_isPowered_update];
 }
@@ -88,8 +100,12 @@
 -(void)outputPowerReceivers_outputPowerReceiver_isPowered_update
 {
 	BOOL const providesOutputPower = self.outputPowerReceiver_isPowered;
+	BOOL const outputPowerReceivers_powerIsOppositeOfReceiver = self.outputPowerReceivers_powerIsOppositeOfReceiver;
+
+	BOOL const providesOutputPower_toReceivers = (outputPowerReceivers_powerIsOppositeOfReceiver ? !providesOutputPower : providesOutputPower);
+
 	[self.outputPowerReceivers enumerateObjectsUsingBlock:^(id<SMBGenericPowerOutputTileEntity_OutputPowerReceiver>  _Nonnull outputPowerReceiver, NSUInteger idx, BOOL * _Nonnull stop) {
-		[outputPowerReceiver setOutputPowerReceiver_isPowered:providesOutputPower];
+		[outputPowerReceiver setOutputPowerReceiver_isPowered:providesOutputPower_toReceivers];
 	}];
 }
 
