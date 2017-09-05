@@ -7,12 +7,7 @@
 //
 
 #import "SMBGameBoardTileEntity.h"
-
-
-
-
-
-@class SMBGameBoardTilePosition;
+#import "SMBGenericPowerOutputTileEntity_OutputPowerReceiver.h"
 
 
 
@@ -23,10 +18,10 @@
 #pragma mark - providesOutputPower
 @property (nonatomic, assign) BOOL providesOutputPower;
 
-#pragma mark - gameBoardTilePosition_toPower
-@property (nonatomic, readonly, strong, nullable) SMBGameBoardTilePosition* gameBoardTilePosition_toPower;
+#pragma mark - outputPowerReceiver
+@property (nonatomic, readonly, copy, nullable) NSArray<id<SMBGenericPowerOutputTileEntity_OutputPowerReceiver>>* outputPowerReceivers;
 
 #pragma mark - init
--(nullable instancetype)init_with_gameBoardTilePosition_toPower:(nonnull SMBGameBoardTilePosition*)gameBoardTilePosition_toPower NS_DESIGNATED_INITIALIZER;
+-(nullable instancetype)init_with_outputPowerReceivers:(nonnull NSArray<id<SMBGenericPowerOutputTileEntity_OutputPowerReceiver>>*)outputPowerReceivers NS_DESIGNATED_INITIALIZER;
 
 @end

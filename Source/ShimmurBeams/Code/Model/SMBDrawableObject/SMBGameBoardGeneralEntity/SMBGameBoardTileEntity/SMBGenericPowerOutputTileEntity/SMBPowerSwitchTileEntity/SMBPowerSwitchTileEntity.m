@@ -55,9 +55,9 @@ static void* kSMBPowerSwitchTileEntity__KVOContext = &kSMBPowerSwitchTileEntity_
 }
 
 #pragma mark - SMBGenericPowerOutputTileEntity: init
--(nullable instancetype)init_with_gameBoardTilePosition_toPower:(nonnull SMBGameBoardTilePosition*)gameBoardTilePosition_toPower
+-(nullable instancetype)init_with_outputPowerReceivers:(nonnull NSArray<id<SMBGenericPowerOutputTileEntity_OutputPowerReceiver>>*)outputPowerReceivers
 {
-	if (self = [super init_with_gameBoardTilePosition_toPower:gameBoardTilePosition_toPower])
+	if (self = [super init_with_outputPowerReceivers:outputPowerReceivers])
 	{
 		[self setSwitchState:SMBPowerSwitchTileEntity__switchState__first];
 	}
