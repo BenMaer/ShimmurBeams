@@ -23,4 +23,7 @@
 +(nonnull instancetype)smb_powerSwitch_and_doorGroup_combo;
 +(nonnull instancetype)smb_doorGroups_introduction;
 
+#pragma mark - powerSwitches_and_doorGroups
++(nonnull instancetype)smb_powerSwitches_and_doorGroups_beamCreatorGroup;
+
 @end

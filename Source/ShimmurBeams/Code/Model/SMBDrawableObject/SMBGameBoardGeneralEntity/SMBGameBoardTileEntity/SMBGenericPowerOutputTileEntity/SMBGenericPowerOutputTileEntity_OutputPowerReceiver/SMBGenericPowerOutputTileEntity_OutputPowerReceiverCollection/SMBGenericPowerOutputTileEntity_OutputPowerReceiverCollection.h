@@ -20,9 +20,10 @@
 @property (nonatomic, assign) BOOL outputPowerReceivers_powerIsOppositeOfReceiver;
 
 #pragma mark - outputPowerReceiver
-@property (nonatomic, readonly, copy, nullable) NSArray<id<SMBGenericPowerOutputTileEntity_OutputPowerReceiver>>* outputPowerReceivers;
+@property (nonatomic, readonly, copy, nullable) NSSet<id<SMBGenericPowerOutputTileEntity_OutputPowerReceiver>>* outputPowerReceivers;
+@property (nonatomic, copy, nullable) NSSet<id<SMBGenericPowerOutputTileEntity_OutputPowerReceiver>>* outputPowerReceivers_blacklisted;
 
 #pragma mark - init
--(nullable instancetype)init_with_outputPowerReceivers:(nonnull NSArray<id<SMBGenericPowerOutputTileEntity_OutputPowerReceiver>>*)outputPowerReceivers NS_DESIGNATED_INITIALIZER;
+-(nullable instancetype)init_with_outputPowerReceivers:(nonnull NSSet<id<SMBGenericPowerOutputTileEntity_OutputPowerReceiver>>*)outputPowerReceivers NS_DESIGNATED_INITIALIZER;
 
 @end

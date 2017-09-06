@@ -46,14 +46,14 @@
 }
 
 #pragma mark - init
--(nullable instancetype)init_with_outputPowerReceivers:(nonnull NSArray<id<SMBGenericPowerOutputTileEntity_OutputPowerReceiver>>*)outputPowerReceivers
+-(nullable instancetype)init_with_outputPowerReceivers:(nonnull NSSet<id<SMBGenericPowerOutputTileEntity_OutputPowerReceiver>>*)outputPowerReceivers
 {
 	kRUConditionalReturn_ReturnValueNil(outputPowerReceivers == nil, YES);
 	kRUConditionalReturn_ReturnValueNil(outputPowerReceivers.count == 0, YES);
 
 	if (self = [super init])
 	{
-		_outputPowerReceivers = [NSArray<id<SMBGenericPowerOutputTileEntity_OutputPowerReceiver>> arrayWithArray:outputPowerReceivers];
+		_outputPowerReceivers = [NSSet<id<SMBGenericPowerOutputTileEntity_OutputPowerReceiver>> setWithSet:outputPowerReceivers];
 
 		[self setOutputPowerReceiver_isPowered:NO];
 		[self setOutputPowerReceivers_powerIsOppositeOfReceiver:NO];
@@ -97,15 +97,40 @@
 }
 
 #pragma mark - outputPowerReceiver
+-(void)setOutputPowerReceivers_blacklisted:(nullable NSSet<id<SMBGenericPowerOutputTileEntity_OutputPowerReceiver>>*)outputPowerReceivers_blacklisted
+{
+	kRUConditionalReturn((self.outputPowerReceivers_blacklisted == outputPowerReceivers_blacklisted)
+						 ||
+						 [self.outputPowerReceivers_blacklisted isEqual:outputPowerReceivers_blacklisted], NO);
+
+	_outputPowerReceivers_blacklisted =
+	(outputPowerReceivers_blacklisted
+	 ?
+	 [NSSet<id<SMBGenericPowerOutputTileEntity_OutputPowerReceiver>> setWithSet:outputPowerReceivers_blacklisted]
+	 :
+	 nil);
+
+	[self outputPowerReceivers_outputPowerReceiver_isPowered_update];
+}
+
 -(void)outputPowerReceivers_outputPowerReceiver_isPowered_update
 {
 	BOOL const providesOutputPower = self.outputPowerReceiver_isPowered;
 	BOOL const outputPowerReceivers_powerIsOppositeOfReceiver = self.outputPowerReceivers_powerIsOppositeOfReceiver;
+	NSSet<id<SMBGenericPowerOutputTileEntity_OutputPowerReceiver>>* const outputPowerReceivers_blacklisted = self.outputPowerReceivers_blacklisted;
 
 	BOOL const providesOutputPower_toReceivers = (outputPowerReceivers_powerIsOppositeOfReceiver ? !providesOutputPower : providesOutputPower);
 
-	[self.outputPowerReceivers enumerateObjectsUsingBlock:^(id<SMBGenericPowerOutputTileEntity_OutputPowerReceiver>  _Nonnull outputPowerReceiver, NSUInteger idx, BOOL * _Nonnull stop) {
-		[outputPowerReceiver setOutputPowerReceiver_isPowered:providesOutputPower_toReceivers];
+	[self.outputPowerReceivers enumerateObjectsUsingBlock:^(id<SMBGenericPowerOutputTileEntity_OutputPowerReceiver>  _Nonnull outputPowerReceiver, BOOL * _Nonnull stop) {
+		BOOL const outputPowerReceiver_isPowered =
+		((providesOutputPower_toReceivers == true)
+		 &&
+		 ((outputPowerReceivers_blacklisted == nil)
+		  ||
+		  ([outputPowerReceivers_blacklisted containsObject:outputPowerReceiver] == false))
+		 );
+
+		[outputPowerReceiver setOutputPowerReceiver_isPowered:outputPowerReceiver_isPowered];
 	}];
 }
 
@@ -113,7 +138,7 @@
 {
 	SMBGenericPowerOutputTileEntity* const outputPowerReceiver_genericPowerOutputTileEntity = self.outputPowerReceiver_genericPowerOutputTileEntity;
 
-	[self.outputPowerReceivers enumerateObjectsUsingBlock:^(id<SMBGenericPowerOutputTileEntity_OutputPowerReceiver>  _Nonnull outputPowerReceiver, NSUInteger idx, BOOL * _Nonnull stop) {
+	[self.outputPowerReceivers enumerateObjectsUsingBlock:^(id<SMBGenericPowerOutputTileEntity_OutputPowerReceiver>  _Nonnull outputPowerReceiver, BOOL * _Nonnull stop) {
 		kRUConditionalReturn(outputPowerReceiver.outputPowerReceiver_genericPowerOutputTileEntity == outputPowerReceiver_genericPowerOutputTileEntity, YES);
 
 		[outputPowerReceiver setOutputPowerReceiver_genericPowerOutputTileEntity:outputPowerReceiver_genericPowerOutputTileEntity];

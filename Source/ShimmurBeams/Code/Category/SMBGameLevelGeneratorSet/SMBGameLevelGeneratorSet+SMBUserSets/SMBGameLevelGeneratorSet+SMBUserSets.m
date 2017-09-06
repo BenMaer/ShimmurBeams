@@ -221,6 +221,11 @@
 	}
 																						  name:@"Up and Down"]];
 
+	[gameLevelGenerators addObject:[[SMBGameLevelGenerator alloc] init_with_generateLevelBlock:^SMBGameLevel * _Nonnull{
+		return [SMBGameLevel smb_powerSwitches_and_doorGroups_beamCreatorGroup];
+	}
+																						  name:@"Beam Creator Group Toggle"]];
+
 	return
 	[[self alloc] init_with_gameLevelGenerators:[NSArray<SMBGameLevelGenerator*> arrayWithArray:gameLevelGenerators]
 										   name:@"Power switches and door groups"];
