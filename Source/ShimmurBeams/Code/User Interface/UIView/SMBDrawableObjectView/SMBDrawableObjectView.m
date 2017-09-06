@@ -126,15 +126,15 @@ static void* kSMBDrawableObjectView__KVOContext = &kSMBDrawableObjectView__KVOCo
 		if (registered)
 		{
 			[drawableObject addObserver:self
-									 forKeyPath:propertyToObserve
-										options:(NSKeyValueObservingOptionInitial)
-										context:&kSMBDrawableObjectView__KVOContext];
+							 forKeyPath:propertyToObserve
+								options:(NSKeyValueObservingOptionInitial)
+								context:&kSMBDrawableObjectView__KVOContext];
 		}
 		else
 		{
 			[drawableObject removeObserver:self
-										forKeyPath:propertyToObserve
-										   context:&kSMBDrawableObjectView__KVOContext];
+								forKeyPath:propertyToObserve
+								   context:&kSMBDrawableObjectView__KVOContext];
 		}
 	}];
 }

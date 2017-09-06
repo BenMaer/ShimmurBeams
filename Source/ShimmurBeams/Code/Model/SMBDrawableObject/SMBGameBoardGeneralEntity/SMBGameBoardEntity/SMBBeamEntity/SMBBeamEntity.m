@@ -12,8 +12,15 @@
 #import "SMBGameBoardTile.h"
 #import "SMBGameBoardView.h"
 #import "SMBGameBoardTilePosition.h"
+#import "SMBBeamCreatorTileEntity.h"
+#import "SMBBeamEntityManager.h"
 
 #import <ResplendentUtilities/RUConditionalReturn.h>
+#import <ResplendentUtilities/RUClassOrNilUtil.h>
+#import <ResplendentUtilities/RUOrderedDictionary.h>
+#import <ResplendentUtilities/RUProtocolOrNil.h>
+#import <ResplendentUtilities/NSMutableArray+RUAddObjectIfNotNil.h>
+#import <ResplendentUtilities/RUConstants.h>
 
 
 
@@ -53,6 +60,19 @@ typedef NS_ENUM(NSInteger, SMBBeamEntity__drawingPiece) {
 @property (nonatomic, assign) BOOL beamEntityTileNode_mappedDataCollection_node_next_isUpdating;
 -(void)beamEntityTileNode_mappedDataCollection_node_next_update_if_needed;
 
+#pragma mark - beamCreatorTileEntity
+-(nullable SMBBeamCreatorTileEntity*)beamCreatorTileEntity_from_beamEntityTileNode_initial;
+
+#pragma mark - beamEntityTileNode_mappedDataCollection_toMarkReady
+@property (nonatomic, copy, nullable) SMBMappedDataCollection<SMBBeamEntityTileNode*>* beamEntityTileNode_mappedDataCollection_toMarkReady;
+-(void)beamEntityTileNode_mappedDataCollection_toMarkReady_markReadyAndClear;
+
+#pragma mark - beamEntityManager_KVORegistered
+@property (nonatomic, assign) BOOL beamEntityManager_KVORegistered;
+
+#pragma mark - beamEntityTileNode_initial
+-(nullable SMBBeamEntityTileNode*)node_last;
+
 @end
 
 
@@ -66,6 +86,7 @@ typedef NS_ENUM(NSInteger, SMBBeamEntity__drawingPiece) {
 {
 	[self beamEntityTileNode_initial_removeFromTile];
 	[self beamEntityTileNode_mappedDataCollection_setKVORegistered:NO];
+	[self setBeamEntityManager_KVORegistered:NO];
 }
 
 -(instancetype)init
@@ -76,6 +97,16 @@ typedef NS_ENUM(NSInteger, SMBBeamEntity__drawingPiece) {
 #pragma clang diagnostic ignored "-Wno-nullability-completeness"
 	return [self init_with_gameBoardTile:nil];
 #pragma clang diagnostic pop
+}
+
+-(nonnull NSString*)description
+{
+	NSMutableArray<NSString*>* const description_lines = [NSMutableArray<NSString*> array];
+	[description_lines ru_addObjectIfNotNil:[super description]];
+	[description_lines ru_addObjectIfNotNil:RUStringWithFormat(@"self.beamEntityTileNode_initial: %@",self.beamEntityTileNode_initial)];
+	[description_lines ru_addObjectIfNotNil:RUStringWithFormat(@"[self node_last]: %@",[self node_last])];
+
+	return [description_lines componentsJoinedByString:@"\n"];
 }
 
 #pragma mark - init
@@ -115,7 +146,7 @@ typedef NS_ENUM(NSInteger, SMBBeamEntity__drawingPiece) {
 {
 	kRUConditionalReturn((self.beamEntityTileNode_mappedDataCollection == beamEntityTileNode_mappedDataCollection)
 						 ||
-						 [self.beamEntityTileNode_mappedDataCollection isEqual_to_mappedDataCollection:beamEntityTileNode_mappedDataCollection], NO);
+						 [self.beamEntityTileNode_mappedDataCollection isEqual:beamEntityTileNode_mappedDataCollection], NO);
 
 	[self beamEntityTileNode_mappedDataCollection_setKVORegistered:NO];
 
@@ -137,11 +168,13 @@ typedef NS_ENUM(NSInteger, SMBBeamEntity__drawingPiece) {
 
 	}];
 
-	[beamEntityTileNode_mappedDataCollection_newObjects enumerateObjectsUsingBlock:^(SMBBeamEntityTileNode * _Nonnull beamEntityTileNode, NSUInteger idx, BOOL * _Nonnull stop) {
+	SMBMutableMappedDataCollection<SMBBeamEntityTileNode*>* const beamEntityTileNode_mappedDataCollection_toMarkReady_new = [SMBMutableMappedDataCollection<SMBBeamEntityTileNode*> new];
 
-		[beamEntityTileNode setState_ready];
-
+	[beamEntityTileNode_mappedDataCollection_newObjects enumerateObjectsUsingBlock:^(SMBBeamEntityTileNode * _Nonnull beamEntityTileNodes, NSUInteger idx, BOOL * _Nonnull stop) {
+		[beamEntityTileNode_mappedDataCollection_toMarkReady_new mappableObject_add:beamEntityTileNodes];
 	}];
+
+	[self setBeamEntityTileNode_mappedDataCollection_toMarkReady:beamEntityTileNode_mappedDataCollection_toMarkReady_new];
 }
 
 -(void)beamEntityTileNode_mappedDataCollection_setKVORegistered:(BOOL)registered
@@ -301,7 +334,25 @@ typedef NS_ENUM(NSInteger, SMBBeamEntity__drawingPiece) {
 {
 	if (context == kSMBBeamEntity__KVOContext)
 	{
-		if ([self.beamEntityTileNode_mappedDataCollection mappableObject_exists:object])
+		if (object == [SMBBeamEntityManager sharedInstance])
+		{
+			if ([keyPath isEqualToString:[SMBBeamEntityManager_PropertiesForKVO beamEntity_forMarkingNodesReady]])
+			{
+				if ([SMBBeamEntityManager sharedInstance].beamEntity_forMarkingNodesReady == self)
+				{
+					[self beamEntityTileNode_mappedDataCollection_toMarkReady_markReadyAndClear];
+				}
+			}
+			else
+			{
+				NSAssert(false, @"unhandled keyPath %@",keyPath);
+			}
+		}
+		else if ((kRUClassOrNil(object, SMBBeamEntityTileNode) != nil)
+				 &&
+				 (kRUProtocolOrNil(object, SMBMappedDataCollection_MappableObject) != nil)
+				 &&
+				 [self.beamEntityTileNode_mappedDataCollection mappableObject_exists:object])
 		{
 			if ([keyPath isEqualToString:[SMBBeamEntityTileNode_PropertiesForKVO node_next]])
 			{
@@ -335,6 +386,123 @@ typedef NS_ENUM(NSInteger, SMBBeamEntity__drawingPiece) {
 	kRUConditionalReturn_ReturnValueTrue([self.beamEntityTileNode_mappedDataCollection mappableObject_exists:beamEntityTileNode], NO);
 
 	return NO;
+}
+
+#pragma mark - beamCreatorTileEntity
+-(nullable SMBBeamCreatorTileEntity*)beamCreatorTileEntity_from_beamEntityTileNode_initial
+{
+	SMBBeamEntityTileNode* const beamEntityTileNode_initial = self.beamEntityTileNode_initial;
+	kRUConditionalReturn_ReturnValueNil(beamEntityTileNode_initial == nil, YES);
+
+	SMBGameBoardTile* const gameBoardTile = beamEntityTileNode_initial.gameBoardTile;
+	kRUConditionalReturn_ReturnValueNil(gameBoardTile == nil, YES);
+
+	SMBGameBoardTileEntity* const gameBoardTileEntity_for_beamInteractions = gameBoardTile.gameBoardTileEntity_for_beamInteractions;
+	kRUConditionalReturn_ReturnValueNil(gameBoardTileEntity_for_beamInteractions == nil, YES);
+
+	SMBBeamCreatorTileEntity* const beamCreatorTileEntity = kRUClassOrNil(gameBoardTileEntity_for_beamInteractions, SMBBeamCreatorTileEntity);
+	kRUConditionalReturn_ReturnValueNil(gameBoardTileEntity_for_beamInteractions == nil, YES);
+
+	return beamCreatorTileEntity;
+}
+
+#pragma mark - beamEntityTileNode_mappedDataCollection_toMarkReady
+-(void)setBeamEntityTileNode_mappedDataCollection_toMarkReady:(nullable SMBMappedDataCollection<SMBBeamEntityTileNode*>*)beamEntityTileNode_mappedDataCollection_toMarkReady
+{
+	kRUConditionalReturn((self.beamEntityTileNode_mappedDataCollection_toMarkReady == beamEntityTileNode_mappedDataCollection_toMarkReady)
+						 ||
+						 ([self.beamEntityTileNode_mappedDataCollection_toMarkReady isEqual:beamEntityTileNode_mappedDataCollection_toMarkReady]), NO);
+
+	[self setBeamEntityManager_KVORegistered:NO];
+
+	_beamEntityTileNode_mappedDataCollection_toMarkReady = (beamEntityTileNode_mappedDataCollection_toMarkReady ? [beamEntityTileNode_mappedDataCollection_toMarkReady copy] : nil);
+
+	if (self.beamEntityTileNode_mappedDataCollection_toMarkReady.uniqueKey_to_mappableObject_mapping.count > 0)
+	{
+		[self setBeamEntityManager_KVORegistered:YES];
+		[[SMBBeamEntityManager sharedInstance] beamEntity_forMarkingNodesReady_add:self];
+	}
+	else
+	{
+		[[SMBBeamEntityManager sharedInstance] beamEntity_forMarkingNodesReady_remove:self];
+	}
+}
+
+-(void)beamEntityTileNode_mappedDataCollection_toMarkReady_markReadyAndClear
+{
+	kRUConditionalReturn([SMBBeamEntityManager sharedInstance].beamEntity_forMarkingNodesReady != self, NO);
+
+	SMBMappedDataCollection<SMBBeamEntityTileNode*>* const beamEntityTileNode_mappedDataCollection_toMarkReady = self.beamEntityTileNode_mappedDataCollection_toMarkReady;
+	[[beamEntityTileNode_mappedDataCollection_toMarkReady mappableObjects] enumerateObjectsUsingBlock:^(SMBBeamEntityTileNode<SMBMappedDataCollection_MappableObject>* _Nonnull beamEntityTileNode_toMarkReady, NSUInteger idx, BOOL * _Nonnull stop) {
+		[beamEntityTileNode_toMarkReady setState_ready];
+	}];
+
+	if (self.beamEntityTileNode_mappedDataCollection_toMarkReady == beamEntityTileNode_mappedDataCollection_toMarkReady)
+	{
+		kRUConditionalReturn(self.beamEntityTileNode_mappedDataCollection_node_next_isUpdating, NO)
+
+		[self setBeamEntityTileNode_mappedDataCollection_toMarkReady:nil];
+	}
+	else
+	{
+		kRUConditionalReturn([SMBBeamEntityManager sharedInstance].beamEntity_forMarkingNodesReady != self, YES);
+
+		[self beamEntityTileNode_mappedDataCollection_toMarkReady_markReadyAndClear];
+	}
+}
+
+#pragma mark - beamEntityManager_KVORegistered
+-(void)setBeamEntityManager_KVORegistered:(BOOL)beamEntityManager_KVORegistered
+{
+	kRUConditionalReturn(self.beamEntityManager_KVORegistered == beamEntityManager_KVORegistered, NO);
+
+	_beamEntityManager_KVORegistered = beamEntityManager_KVORegistered;
+
+	[self beamEntityManager_setKVORegistered:self.beamEntityManager_KVORegistered];
+}
+
+-(void)beamEntityManager_setKVORegistered:(BOOL)registered
+{
+	kRUConditionalReturn(self.beamEntityManager_KVORegistered != registered, YES);
+
+	typeof([SMBBeamEntityManager sharedInstance]) const beamEntityManager = [SMBBeamEntityManager sharedInstance];
+	kRUConditionalReturn(beamEntityManager == nil, YES);
+	
+	NSMutableArray<NSString*>* const propertiesToObserve = [NSMutableArray<NSString*> array];
+	[propertiesToObserve addObject:[SMBBeamEntityManager_PropertiesForKVO beamEntity_forMarkingNodesReady]];
+	
+	NSMutableDictionary<NSNumber*,NSMutableArray<NSString*>*>* const KVOOptions_to_propertiesToObserve_mapping = [NSMutableDictionary<NSNumber*,NSMutableArray<NSString*>*> dictionary];
+	[KVOOptions_to_propertiesToObserve_mapping setObject:propertiesToObserve forKey:@(0)];
+	
+	[KVOOptions_to_propertiesToObserve_mapping enumerateKeysAndObjectsUsingBlock:^(NSNumber * _Nonnull KVOOptions_number, NSMutableArray<NSString *> * _Nonnull propertiesToObserve, BOOL * _Nonnull stop) {
+		[propertiesToObserve enumerateObjectsUsingBlock:^(NSString * _Nonnull propertyToObserve, NSUInteger idx, BOOL * _Nonnull stop) {
+			if (registered)
+			{
+				[beamEntityManager addObserver:self
+									forKeyPath:propertyToObserve
+									   options:(KVOOptions_number.unsignedIntegerValue)
+									   context:&kSMBBeamEntity__KVOContext];
+			}
+			else
+			{
+				[beamEntityManager removeObserver:self
+									   forKeyPath:propertyToObserve
+										  context:&kSMBBeamEntity__KVOContext];
+			}
+		}];
+	}];
+}
+
+#pragma mark - beamEntityTileNode_initial
+-(nullable SMBBeamEntityTileNode*)node_last
+{
+	SMBBeamEntityTileNode* node_last = self.beamEntityTileNode_initial;
+	while (node_last.node_next != nil)
+	{
+		node_last = node_last.node_next;
+	}
+
+	return node_last;
 }
 
 @end

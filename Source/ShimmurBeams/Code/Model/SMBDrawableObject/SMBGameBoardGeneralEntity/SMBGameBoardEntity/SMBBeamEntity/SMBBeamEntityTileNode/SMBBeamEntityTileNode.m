@@ -662,7 +662,12 @@ typedef NS_ENUM(NSInteger, SMBBeamEntityTileNode__state) {
 			break;
 
 		case SMBBeamEntityTileNode__state_finished:
-			return (self.state == SMBBeamEntityTileNode__state_ready);
+		{
+			kRUConditionalReturn_ReturnValueTrue(self.state == SMBBeamEntityTileNode__state_ready, NO);
+			kRUConditionalReturn_ReturnValueTrue(self.state == SMBBeamEntityTileNode__state_created, NO);
+
+			return NO;
+		}
 			break;
 	}
 

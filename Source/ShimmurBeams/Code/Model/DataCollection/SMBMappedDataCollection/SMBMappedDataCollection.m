@@ -30,6 +30,14 @@
 
 @implementation SMBMappedDataCollection
 
+#pragma mark - NSObject
+-(BOOL)isEqual:(id)object
+{
+	kRUConditionalReturn_ReturnValueFalse(object == nil, NO);
+
+	return [self isEqual_to_mappedDataCollection:object];
+}
+
 #pragma mark - init
 -(nonnull instancetype)init_with_uniqueKey_to_mappableObject_mapping:(nullable RUOrderedDictionary<NSString*,id<SMBMappedDataCollection_MappableObject>>*)uniqueKey_to_mappableObject_mapping
 {
