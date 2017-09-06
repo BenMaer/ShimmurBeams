@@ -1,0 +1,1 @@
+../../../ResplendentUtilities/Pod/Classes/Misc/Compatability/RUImageCompatability.h
