@@ -748,8 +748,8 @@
 	 [BCU] [   ] [   ] [ 2 ] [   ] [   ] [   ]
 	 [Wal] [Wal] [Wal] [Wal] [Wal] [Wal] [Wal]
 	 [   ] [   ] [PoS] [   ] [   ] [PoS] [   ]
-	 [   ] [   ] [PoB] [ 1 ] [   ] [   ] [   ]
-	 [   ] [BCP] [   ] [Dor] [Dor] [   ] [Dth]
+	 [   ] [   ] [   ] [ 1 ] [   ] [PoB] [   ]
+	 [   ] [BCP] [   ] [Dor] [   ] [   ] [Dth]
 
 	 B[x]	Button [x]
 	 B[x]O	Button [x] Output
@@ -776,7 +776,6 @@
 
 	 Toggle notes:
 	 - T1
-	 
 
 	 Wiring:
 	 [   ] [   ] [   ] [   ] [C1O] [   ] [   ]
@@ -784,8 +783,8 @@
 	 [C4O] [   ] [   ] [ 2 ] [   ] [   ] [   ]
 	 [Wal] [Wal] [Wal] [Wal] [Wal] [Wal] [Wal]
 	 [   ] [   ] [S1 ] [   ] [   ] [S2 ] [   ]
-	 [   ] [   ] [B1 ] [ 1 ] [   ] [   ] [   ]
-	 [   ] [   ] [   ] [C1O] [C1O] [   ] [   ]
+	 [   ] [   ] [   ] [ 1 ] [   ] [B1 ] [   ]
+	 [   ] [   ] [   ] [C1O] [   ] [   ] [   ]
 
 	 B1O:
 	 - C4
@@ -886,13 +885,6 @@
 	 [[SMBGameBoardTilePosition alloc] init_with_column:gameBoardTilePosition_section_1_columns_range.location + 3
 													row:NSMaxRange(gameBoardTilePosition_section_1_rows_range) - 1]];
 
-//	SMBDoorTileEntity* const doorTileEntity_section_1_4xminus0 = [SMBDoorTileEntity new];
-//	[gameBoard gameBoardTileEntity_add:doorTileEntity_section_1_4xminus0
-//							entityType:SMBGameBoardTile__entityType_beamInteractions
-//			  to_gameBoardTilePosition:
-//	 [[SMBGameBoardTilePosition alloc] init_with_column:gameBoardTilePosition_section_1_columns_range.location + 4
-//													row:NSMaxRange(gameBoardTilePosition_section_1_rows_range) - 1]];
-
 	SMBDoorTileEntity* const doorTileEntity_section_2_4x0 = [SMBDoorTileEntity new];
 	[gameBoard gameBoardTileEntity_add:doorTileEntity_section_2_4x0
 							entityType:SMBGameBoardTile__entityType_beamInteractions
@@ -919,7 +911,6 @@
 	NSMutableSet<id<SMBGenericPowerOutputTileEntity_OutputPowerReceiver>>* const outputPowerReceiverCollections_1_outputPowerReceivers = [NSMutableSet<id<SMBGenericPowerOutputTileEntity_OutputPowerReceiver>> set];
 	[outputPowerReceiverCollections_1_outputPowerReceivers addObject:[[SMBGenericPowerOutputTileEntity_OutputPowerReceiver_GameBoardTilePowerProvider alloc] init_with_gameBoardTilePosition_toPower:doorTileEntity_section_2_4x0.gameBoardTile.gameBoardTilePosition]];
 	[outputPowerReceiverCollections_1_outputPowerReceivers addObject:[[SMBGenericPowerOutputTileEntity_OutputPowerReceiver_GameBoardTilePowerProvider alloc] init_with_gameBoardTilePosition_toPower:doorTileEntity_section_1_3xminus0.gameBoardTile.gameBoardTilePosition]];
-//	[outputPowerReceiverCollections_1_outputPowerReceivers addObject:[[SMBGenericPowerOutputTileEntity_OutputPowerReceiver_GameBoardTilePowerProvider alloc] init_with_gameBoardTilePosition_toPower:doorTileEntity_section_1_4xminus0.gameBoardTile.gameBoardTilePosition]];
 
 	SMBGenericPowerOutputTileEntity_OutputPowerReceiverCollection* const outputPowerReceiverCollections_1_genericPowerOutputTileEntity_OutputPowerReceiverCollection =
 	[[SMBGenericPowerOutputTileEntity_OutputPowerReceiverCollection alloc] init_with_outputPowerReceivers:outputPowerReceiverCollections_1_outputPowerReceivers];
@@ -963,7 +954,7 @@
 	[[SMBGenericPowerOutputTileEntity_OutputPowerReceiverCollection alloc] init_with_outputPowerReceivers:outputPowerReceiverCollections_5_outputPowerReceivers];
 
 	/* Power Buttons. */
-	
+
 	/* Section 1 -1x1 to Power Collection 4. */
 	[gameBoard gameBoardTileEntity_add:[[SMBPowerButtonTileEntity alloc] init_with_outputPowerReceiverCollection:outputPowerReceiverCollections_4_genericPowerOutputTileEntity_OutputPowerReceiverCollection]
 							entityType:SMBGameBoardTile__entityType_beamInteractions
