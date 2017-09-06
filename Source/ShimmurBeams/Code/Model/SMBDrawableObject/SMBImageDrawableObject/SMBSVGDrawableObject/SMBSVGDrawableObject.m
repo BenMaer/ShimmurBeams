@@ -50,8 +50,11 @@
 #pragma mark - image
 -(nullable UIImage*)image_toDraw_in_rect:(CGRect)rect
 {
+	NSString* const name = self.name;
+	kRUConditionalReturn_ReturnValueNil(name == nil, YES);
+
 	UIImage* const image =
-	[UIImage imageWithSVGNamed:@"Spaceship"
+	[UIImage imageWithSVGNamed:name
 					targetSize:rect.size
 					 fillColor:[UIColor blackColor]
 						 cache:YES];
