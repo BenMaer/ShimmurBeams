@@ -210,6 +210,98 @@
 																	   numberOfRows:(section_1_height + wall_between_sections_1_and_2_height + section_2_height)];
 
 	/* @Matt @Alex I want you guys to fill this in from the above diagrams */
+    
+    /*
+     Section values.
+     */
+    
+    NSRange const gameBoardTilePosition_section_1_columns_range = (NSRange){
+        .location	= 0,
+        .length		= [gameBoard gameBoardTiles_numberOfColumns],
+    };
+    NSRange const gameBoardTilePosition_section_1_rows_range = (NSRange){
+        .location	= 0,
+        .length		= section_1_height,
+    };
+    
+    NSRange const gameBoardTilePosition_wall_between_sections_1_and_2_columns_range = (NSRange){
+        .location	= 0,
+        .length		= [gameBoard gameBoardTiles_numberOfColumns],
+    };
+    NSRange const gameBoardTilePosition_wall_between_sections_1_and_2_rows_range = (NSRange){
+        .location	= NSMaxRange(gameBoardTilePosition_section_1_rows_range),
+        .length		= wall_between_sections_1_and_2_height,
+    };
+    
+    NSRange const gameBoardTilePosition_section_2_columns_range = (NSRange){
+        .location	= 0,
+        .length		= [gameBoard gameBoardTiles_numberOfColumns],
+    };
+    NSRange const gameBoardTilePosition_section_2_rows_range = (NSRange){
+        .location	= NSMaxRange(gameBoardTilePosition_wall_between_sections_1_and_2_rows_range),
+        .length		= section_2_height,
+    };
+    
+    /* Initial beam creator. */
+    
+    SMBBeamCreatorTileEntity* const beamCreatorEntity = [SMBBeamCreatorTileEntity new];
+    [beamCreatorEntity setBeamDirection:SMBGameBoardTile__direction_right];
+    [gameBoard gameBoardTileEntity_for_beamInteractions_set:beamCreatorEntity
+                                   to_gameBoardTilePosition:
+     [[SMBGameBoardTilePosition alloc] init_with_column:gameBoardTilePosition_section_1_columns_range.location + 1
+                                                    row:NSMaxRange(gameBoardTilePosition_section_1_rows_range) - 2]];
+    
+    /* Walls. */
+    
+    [gameBoard gameBoardTileEntities_add:
+     ^SMBGameBoardTileEntity * _Nullable(SMBGameBoardTilePosition * _Nonnull position) {
+         return [SMBWallTileEntity new];
+     }
+                              entityType:SMBGameBoardTile__entityType_beamInteractions
+                                fillRect:YES
+                                 columns:gameBoardTilePosition_wall_between_sections_1_and_2_columns_range
+                                    rows:gameBoardTilePosition_wall_between_sections_1_and_2_rows_range];
+    
+    /* Un-powered beam creators. */
+    
+    SMBBeamCreatorTileEntity* const beamCreatorEntity_unpowered = [SMBBeamCreatorTileEntity new];
+    [beamCreatorEntity_unpowered setRequiresExternalPowerForBeam:YES];
+    [beamCreatorEntity_unpowered setBeamDirection:SMBGameBoardTile__direction_right];
+    [gameBoard gameBoardTileEntity_for_beamInteractions_set:beamCreatorEntity_unpowered
+                                   to_gameBoardTilePosition:
+     [[SMBGameBoardTilePosition alloc] init_with_column:gameBoardTilePosition_section_2_columns_range.location + 1
+                                                    row:NSMaxRange(gameBoardTilePosition_section_2_rows_range) - 1]];
+    
+    /* Power Switches. */
+    
+    /* Section 1 -1x0 to Section 1 beamCreatorEntity_unpowered position */
+    [gameBoard gameBoardTileEntity_add_powerSwitchTileEntity_with_gameBoardTilePosition_toPower:beamCreatorEntity_unpowered.gameBoardTile.gameBoardTilePosition
+                                                                       to_gameBoardTilePosition:
+     [[SMBGameBoardTilePosition alloc] init_with_column:NSMaxRange(gameBoardTilePosition_section_1_columns_range) - 2
+                                                    row:gameBoardTilePosition_section_1_rows_range.location]];
+    
+    
+    /* Doors. */
+    
+    SMBDoorTileEntity* const door_section_2_minus1xminus3 = [SMBDoorTileEntity new];
+    [gameBoard gameBoardTileEntity_for_beamInteractions_set:door_section_2_minus1xminus3
+                                   to_gameBoardTilePosition:
+     [[SMBGameBoardTilePosition alloc] init_with_column:NSMaxRange(gameBoardTilePosition_section_2_columns_range) - 2
+                                                    row:NSMaxRange(gameBoardTilePosition_section_2_rows_range) - 2]];
+    
+    // /* Power buttons. INPROGRESS */
+    
+    // [gameBoard gameBoardTileEntity_add_powerButtonTileEntity_with_gameBoardTilePosition_toPower:door_section_2_minus1xminus3.gameBoardTile.gameBoardTilePosition
+    //                                                                    to_gameBoardTilePosition:
+    //  [[SMBGameBoardTilePosition alloc] init_with_column:gameBoardTilePosition_section_1_columns_range.location - 1
+    //                                                 row:gameBoardTilePosition_section_1_rows_range.location - 2]];
+    
+    
+    /* Level exit. */
+    
+    [gameBoard gameBoardTileEntity_add_levelExit_to_gameBoardTilePosition:
+     [[SMBGameBoardTilePosition alloc] init_with_column:NSMaxRange(gameBoardTilePosition_section_2_columns_range) - 2
+                                                    row:gameBoardTilePosition_section_2_rows_range.location]];
 
 	/* Usable game board tile entities. */
 
