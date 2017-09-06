@@ -291,10 +291,10 @@
     
     // /* Power buttons. INPROGRESS */
     
-    // [gameBoard gameBoardTileEntity_add_powerButtonTileEntity_with_gameBoardTilePosition_toPower:door_section_2_minus1xminus3.gameBoardTile.gameBoardTilePosition
-    //                                                                    to_gameBoardTilePosition:
-    //  [[SMBGameBoardTilePosition alloc] init_with_column:gameBoardTilePosition_section_1_columns_range.location - 1
-    //                                                 row:gameBoardTilePosition_section_1_rows_range.location - 2]];
+     [gameBoard gameBoardTileEntity_add_powerButtonTileEntity_with_gameBoardTilePosition_toPower:door_section_2_minus1xminus3.gameBoardTile.gameBoardTilePosition
+                                                                        to_gameBoardTilePosition:
+      [[SMBGameBoardTilePosition alloc] init_with_column:NSMaxRange(gameBoardTilePosition_section_1_columns_range) - 1
+                                                     row:NSMaxRange(gameBoardTilePosition_section_1_rows_range) - 2]];
     
     
     /* Level exit. */
