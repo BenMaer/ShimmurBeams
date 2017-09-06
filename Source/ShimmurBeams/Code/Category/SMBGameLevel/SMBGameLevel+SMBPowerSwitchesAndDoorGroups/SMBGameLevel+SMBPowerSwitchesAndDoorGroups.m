@@ -295,6 +295,7 @@
 
 	/* Power buttons. */
 
+	/* Section 1 -0x-1 to Section 2 -1x-3 */
 	[gameBoard gameBoardTileEntity_add_powerButtonTileEntity_with_gameBoardTilePosition_toPower:door_section_2_minus1xminus3.gameBoardTile.gameBoardTilePosition
 																	   to_gameBoardTilePosition:
 	 [[SMBGameBoardTilePosition alloc] init_with_column:NSMaxRange(gameBoardTilePosition_section_1_columns_range) - 1
