@@ -837,8 +837,8 @@
 
 	 Sections and entities:
 	 [   ] [   ] [   ] [Exi] [Dor] [   ] [   ]
-	 [   ] [BCU] [   ] [Dor] [Dor] [   ] [   ]
-	 [BCU] [   ] [   ] [ 2 ] [   ] [   ] [   ]
+	 [   ] [   ] [BCU] [Dor] [   ] [   ] [   ]
+	 [   ] [BCU] [   ] [ 2 ] [   ] [   ] [   ]
 	 [Wal] [Wal] [Wal] [Wal] [Wal] [Wal] [Wal]
 	 [   ] [   ] [PoS] [   ] [   ] [PoS] [   ]
 	 [   ] [   ] [   ] [ 1 ] [   ] [PoB] [   ]
@@ -872,8 +872,8 @@
 
 	 Wiring:
 	 [   ] [   ] [   ] [   ] [C1O] [   ] [   ]
-	 [   ] [C4O] [   ] [C2O] [C2O] [   ] [   ]
-	 [C4O] [   ] [   ] [ 2 ] [   ] [   ] [   ]
+	 [   ] [   ] [C4O] [C2O] [   ] [   ] [   ]
+	 [   ] [C4O] [   ] [ 2 ] [   ] [   ] [   ]
 	 [Wal] [Wal] [Wal] [Wal] [Wal] [Wal] [Wal]
 	 [   ] [   ] [S1 ] [   ] [   ] [S2 ] [   ]
 	 [   ] [   ] [   ] [ 1 ] [   ] [B1 ] [   ]
@@ -954,20 +954,20 @@
 
 	/* Un-powered beam creators. */
 
-	SMBBeamCreatorTileEntity* const beamCreatorEntity_unpowered_section_2_1xminus1 = [SMBBeamCreatorTileEntity new];
-	[beamCreatorEntity_unpowered_section_2_1xminus1 setRequiresExternalPowerForBeam:YES];
-	[beamCreatorEntity_unpowered_section_2_1xminus1 setBeamDirection:SMBGameBoardTile__direction_right];
-	[gameBoard gameBoardTileEntity_for_beamInteractions_set:beamCreatorEntity_unpowered_section_2_1xminus1
+	SMBBeamCreatorTileEntity* const beamCreatorEntity_unpowered_section_2_2xminus1 = [SMBBeamCreatorTileEntity new];
+	[beamCreatorEntity_unpowered_section_2_2xminus1 setRequiresExternalPowerForBeam:YES];
+	[beamCreatorEntity_unpowered_section_2_2xminus1 setBeamDirection:SMBGameBoardTile__direction_right];
+	[gameBoard gameBoardTileEntity_for_beamInteractions_set:beamCreatorEntity_unpowered_section_2_2xminus1
 								   to_gameBoardTilePosition:
-	 [[SMBGameBoardTilePosition alloc] init_with_column:gameBoardTilePosition_section_2_columns_range.location + 1
+	 [[SMBGameBoardTilePosition alloc] init_with_column:gameBoardTilePosition_section_2_columns_range.location + 2
 													row:NSMaxRange(gameBoardTilePosition_section_2_rows_range) - 2]];
 
-	SMBBeamCreatorTileEntity* const beamCreatorEntity_unpowered_section_2_0xminus0 = [SMBBeamCreatorTileEntity new];
-	[beamCreatorEntity_unpowered_section_2_0xminus0 setRequiresExternalPowerForBeam:YES];
-	[beamCreatorEntity_unpowered_section_2_0xminus0 setBeamDirection:SMBGameBoardTile__direction_right];
-	[gameBoard gameBoardTileEntity_for_beamInteractions_set:beamCreatorEntity_unpowered_section_2_0xminus0
+	SMBBeamCreatorTileEntity* const beamCreatorEntity_unpowered_section_2_1xminus0 = [SMBBeamCreatorTileEntity new];
+	[beamCreatorEntity_unpowered_section_2_1xminus0 setRequiresExternalPowerForBeam:YES];
+	[beamCreatorEntity_unpowered_section_2_1xminus0 setBeamDirection:SMBGameBoardTile__direction_right];
+	[gameBoard gameBoardTileEntity_for_beamInteractions_set:beamCreatorEntity_unpowered_section_2_1xminus0
 								   to_gameBoardTilePosition:
-	 [[SMBGameBoardTilePosition alloc] init_with_column:gameBoardTilePosition_section_2_columns_range.location
+	 [[SMBGameBoardTilePosition alloc] init_with_column:gameBoardTilePosition_section_2_columns_range.location + 1
 													row:NSMaxRange(gameBoardTilePosition_section_2_rows_range) - 1]];
 
 	/* Doors */
@@ -992,13 +992,6 @@
 	 [[SMBGameBoardTilePosition alloc] init_with_column:gameBoardTilePosition_section_2_columns_range.location + 3
 													row:1]];
 
-	SMBDoorTileEntity* const doorTileEntity_section_2_4x1 = [SMBDoorTileEntity new];
-	[gameBoard gameBoardTileEntity_add:doorTileEntity_section_2_4x1
-							entityType:SMBGameBoardTile__entityType_beamInteractions
-			  to_gameBoardTilePosition:
-	 [[SMBGameBoardTilePosition alloc] init_with_column:gameBoardTilePosition_section_2_columns_range.location + 4
-													row:1]];
-
 	/* Output Power Receiver Collections. */
 
 	NSMutableSet<id<SMBGenericPowerOutputTileEntity_OutputPowerReceiver>>* const outputPowerReceiverCollections_1_outputPowerReceivers = [NSMutableSet<id<SMBGenericPowerOutputTileEntity_OutputPowerReceiver>> set];
@@ -1010,7 +1003,6 @@
 
 	NSMutableSet<id<SMBGenericPowerOutputTileEntity_OutputPowerReceiver>>* const outputPowerReceiverCollections_2_outputPowerReceivers = [NSMutableSet<id<SMBGenericPowerOutputTileEntity_OutputPowerReceiver>> set];
 	[outputPowerReceiverCollections_2_outputPowerReceivers addObject:[[SMBGenericPowerOutputTileEntity_OutputPowerReceiver_GameBoardTilePowerProvider alloc] init_with_gameBoardTilePosition_toPower:doorTileEntity_section_2_3x1.gameBoardTile.gameBoardTilePosition]];
-	[outputPowerReceiverCollections_2_outputPowerReceivers addObject:[[SMBGenericPowerOutputTileEntity_OutputPowerReceiver_GameBoardTilePowerProvider alloc] init_with_gameBoardTilePosition_toPower:doorTileEntity_section_2_4x1.gameBoardTile.gameBoardTilePosition]];
 
 	SMBGenericPowerOutputTileEntity_OutputPowerReceiverCollection* const outputPowerReceiverCollections_2_genericPowerOutputTileEntity_OutputPowerReceiverCollection =
 	[[SMBGenericPowerOutputTileEntity_OutputPowerReceiverCollection alloc] init_with_outputPowerReceivers:outputPowerReceiverCollections_2_outputPowerReceivers];
@@ -1024,10 +1016,10 @@
 	[[SMBGenericPowerOutputTileEntity_OutputPowerReceiverCollection alloc] init_with_outputPowerReceivers:outputPowerReceiverCollections_3_outputPowerReceivers];
 
 	NSMutableSet<id<SMBGenericPowerOutputTileEntity_OutputPowerReceiver>>* const outputPowerReceiverCollections_4_outputPowerReceivers = [NSMutableSet<id<SMBGenericPowerOutputTileEntity_OutputPowerReceiver>> set];
-	[outputPowerReceiverCollections_4_outputPowerReceivers addObject:[[SMBGenericPowerOutputTileEntity_OutputPowerReceiver_GameBoardTilePowerProvider alloc] init_with_gameBoardTilePosition_toPower:beamCreatorEntity_unpowered_section_2_1xminus1.gameBoardTile.gameBoardTilePosition]];
+	[outputPowerReceiverCollections_4_outputPowerReceivers addObject:[[SMBGenericPowerOutputTileEntity_OutputPowerReceiver_GameBoardTilePowerProvider alloc] init_with_gameBoardTilePosition_toPower:beamCreatorEntity_unpowered_section_2_2xminus1.gameBoardTile.gameBoardTilePosition]];
 
 	SMBGenericPowerOutputTileEntity_OutputPowerReceiver_GameBoardTilePowerProvider* const outputPowerReceiver_GameBoardTilePowerProvider_section_2_0xminus0 =
-	[[SMBGenericPowerOutputTileEntity_OutputPowerReceiver_GameBoardTilePowerProvider alloc] init_with_gameBoardTilePosition_toPower:beamCreatorEntity_unpowered_section_2_0xminus0.gameBoardTile.gameBoardTilePosition];
+	[[SMBGenericPowerOutputTileEntity_OutputPowerReceiver_GameBoardTilePowerProvider alloc] init_with_gameBoardTilePosition_toPower:beamCreatorEntity_unpowered_section_2_1xminus0.gameBoardTile.gameBoardTilePosition];
 	[outputPowerReceiverCollections_4_outputPowerReceivers addObject:outputPowerReceiver_GameBoardTilePowerProvider_section_2_0xminus0];
 
 	NSMutableSet<id<SMBGenericPowerOutputTileEntity_OutputPowerReceiver>>* const outputPowerReceiverCollections_4_outputPowerReceivers_blacklisted = [NSMutableSet<id<SMBGenericPowerOutputTileEntity_OutputPowerReceiver>> set];
