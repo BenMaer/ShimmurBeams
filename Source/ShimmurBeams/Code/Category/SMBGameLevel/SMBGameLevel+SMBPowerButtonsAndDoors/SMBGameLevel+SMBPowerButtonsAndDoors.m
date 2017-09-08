@@ -32,11 +32,11 @@
 	 Numbers = Sections
 
 	 Entities:
-	 BCP	Beam Creator Powered
+	 BcP	Beam Creator Powered
 	 Exi	Level Exit
 	 Wal	Wall
 	 PoB	Power Button
-	 BCU	Beam Creator Unpowered
+	 BcU	Beam Creator Unpowered
 
 	 Usable:
 	 Forced Redirect (direction: up) x2
@@ -44,11 +44,11 @@
 	 Sections and entities:
 	 [   ] [   ] [   ] [   ] [   ] [PoB] [   ]
 	 [   ] [   ] [   ] [ 1 ] [   ] [   ] [   ]
-	 [   ] [BCP] [   ] [   ] [   ] [   ] [   ]
+	 [   ] [BcP] [   ] [   ] [   ] [   ] [   ]
 	 [Wal] [Wal] [Wal] [Wal] [Wal] [Wal] [Wal]
 	 [   ] [   ] [   ] [   ] [   ] [Exi] [   ]
 	 [   ] [   ] [   ] [ 2 ] [   ] [   ] [   ]
-	 [   ] [BCU] [   ] [   ] [   ] [   ] [   ]
+	 [   ] [BcU] [   ] [   ] [   ] [   ] [   ]
 
 	 B[x]	Button [x]
 	 B[x]O	Button [x] Output
@@ -726,11 +726,11 @@
 	 Numbers = Sections
 
 	 Entities:
-	 BCP	Beam Creator Powered
+	 BcP	Beam Creator Powered
 	 Exi	Level Exit
 	 Wal	Wall
 	 PoB	Power Button
-	 BCU	Beam Creator Unpowered
+	 BcU	Beam Creator Unpowered
 	 Dor	Door
 
 	 Usable:
@@ -741,15 +741,15 @@
 	 Diagonal Mirror (startingPosition: topLeft)
 
 	 Sections and entities:
-	 [BCU] [   ] [   ] [ 3 ] [   ] [   ] [BCU]
+	 [BcU] [   ] [   ] [ 3 ] [   ] [   ] [BcU]
 	 [   ] [   ] [   ] [Exi] [   ] [   ] [   ]
 	 [Wal] [Wal] [Wal] [Wal] [Wal] [Wal] [Dor]
 	 [PoB] [   ] [PoB] [Wal] [   ] [   ] [   ]
 	 [   ] [PoB] [PoB] [Wal] [   ] [Pob] [   ]
 	 [   ] [ 1 ] [   ] [Wal] [   ] [Dor] [   ]
-	 [   ] [   ] [   ] [Wal] [BCU] [ 2 ] [BCU]
+	 [   ] [   ] [   ] [Wal] [BcU] [ 2 ] [BcU]
 	 [   ] [   ] [   ] [Wal] [   ] [Dor] [   ]
-	 [   ] [BCP] [   ] [Wal] [   ] [Pob] [   ]
+	 [   ] [BcP] [   ] [Wal] [   ] [Pob] [   ]
 
 	 B[x]	Button [x]
 	 B[x]O	Button [x] Output

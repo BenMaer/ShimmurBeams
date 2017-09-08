@@ -21,12 +21,15 @@
 +(nonnull instancetype)smb_rotatesAndDeathBlocks;
 
 #pragma mark - mirrorsAndMeltableBlocks
-+(nonnull instancetype)smb_mirrorsAndMeltableBlocks_introduction;
++(nonnull instancetype)smb_mirrorsAndMeltableBlocks;
 
 #pragma mark - powerButtonsAndDoors
-+(nonnull instancetype)smb_powerButtonsAndDoors_introduction;
++(nonnull instancetype)smb_powerButtonsAndDoors;
 
 #pragma mark - powerSwitchesAndDoorGroups
-+(nonnull instancetype)smb_powerSwitchesAndDoorGroups_introduction;
++(nonnull instancetype)smb_powerSwitchesAndDoorGroups;
+
+#pragma mark - unitTests
++(nonnull instancetype)smb_unitTests;
 
 @end

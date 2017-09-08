@@ -13,6 +13,7 @@
 #import "SMBGameLevel+SMBMirrorsAndMeltableBlocks.h"
 #import "SMBGameLevel+SMBPowerButtonsAndDoors.h"
 #import "SMBGameLevel+SMBPowerSwitchesAndDoorGroups.h"
+#import "SMBGameLevel+SMBUnitTestLevels.h"
 
 #import <ResplendentUtilities/NSMutableArray+RUAddObjectIfNotNil.h>
 
@@ -123,7 +124,7 @@
 }
 
 #pragma mark - mirrorsIntroduction
-+(nonnull instancetype)smb_mirrorsAndMeltableBlocks_introduction
++(nonnull instancetype)smb_mirrorsAndMeltableBlocks
 {
 	NSMutableArray<SMBGameLevelGenerator*>* const gameLevelGenerators = [NSMutableArray<SMBGameLevelGenerator*> array];
 
@@ -149,7 +150,7 @@
 }
 
 #pragma mark - powerButtonsAndDoors
-+(nonnull instancetype)smb_powerButtonsAndDoors_introduction
++(nonnull instancetype)smb_powerButtonsAndDoors
 {
 	NSMutableArray<SMBGameLevelGenerator*>* const gameLevelGenerators = [NSMutableArray<SMBGameLevelGenerator*> array];
 
@@ -191,7 +192,7 @@
 }
 
 #pragma mark - powerSwitchesAndDoorGroups
-+(nonnull instancetype)smb_powerSwitchesAndDoorGroups_introduction
++(nonnull instancetype)smb_powerSwitchesAndDoorGroups
 {
 	NSMutableArray<SMBGameLevelGenerator*>* const gameLevelGenerators = [NSMutableArray<SMBGameLevelGenerator*> array];
 
@@ -229,6 +230,22 @@
 	return
 	[[self alloc] init_with_gameLevelGenerators:[NSArray<SMBGameLevelGenerator*> arrayWithArray:gameLevelGenerators]
 										   name:@"Power switches and door groups"];
+}
+
+#pragma mark - unitTests
++(nonnull instancetype)smb_unitTests
+{
+	NSMutableArray<SMBGameLevelGenerator*>* const gameLevelGenerators = [NSMutableArray<SMBGameLevelGenerator*> array];
+
+	[gameLevelGenerators addObject:[[SMBGameLevelGenerator alloc] init_with_generateLevelBlock:^SMBGameLevel * _Nonnull{
+		return [SMBGameLevel smb_beamEntityOrder];
+	}
+																						  name:@"Beam entity order"
+																						  hint:@"Place entity at 0x3"]];
+	
+	return
+	[[self alloc] init_with_gameLevelGenerators:[NSArray<SMBGameLevelGenerator*> arrayWithArray:gameLevelGenerators]
+										   name:@"UNIT TESTS"];
 }
 
 @end

@@ -36,11 +36,11 @@
 	 Numbers = Sections
 
 	 Entities:
-	 BCP	Beam Creator Powered
+	 BcP	Beam Creator Powered
 	 Exi	Level Exit
 	 Wal	Wall
 	 PoS	Power Switch
-	 BCU	Beam Creator Unpowered
+	 BcU	Beam Creator Unpowered
 
 	 Usable:
 	 Forced Redirect (direction: up)
@@ -48,11 +48,11 @@
 	 Sections and entities:
 	 [   ] [   ] [   ] [   ] [   ] [PoS] [   ]
 	 [   ] [   ] [   ] [ 1 ] [   ] [   ] [   ]
-	 [   ] [BCP] [   ] [   ] [   ] [   ] [   ]
+	 [   ] [BcP] [   ] [   ] [   ] [   ] [   ]
 	 [Wal] [Wal] [Wal] [Wal] [Wal] [Wal] [Wal]
 	 [   ] [   ] [   ] [   ] [   ] [Exi] [   ]
 	 [   ] [   ] [   ] [ 2 ] [   ] [   ] [   ]
-	 [   ] [BCU] [   ] [   ] [   ] [   ] [   ]
+	 [   ] [BcU] [   ] [   ] [   ] [   ] [   ]
 
 	 S[x]	Switch [x]
 	 S[x]O	Switch [x] Output
@@ -169,12 +169,12 @@
 	 Numbers = Sections
 
 	 Entities:
-	 BCP	Beam Creator Powered
+	 BcP	Beam Creator Powered
 	 Exi	Level Exit
 	 Wal	Wall
 	 PoB	Power Button
 	 PoS	Power Switch
-	 BCU	Beam Creator Unpowered
+	 BcU	Beam Creator Unpowered
 	 Dor	Door
 
 	 Usable:
@@ -182,12 +182,12 @@
 
 	 Sections and entities:
 	 [   ] [   ] [   ] [   ] [   ] [PoS] [   ]
-	 [   ] [BCP] [   ] [ 1 ] [   ] [   ] [PoB]
+	 [   ] [BcP] [   ] [ 1 ] [   ] [   ] [PoB]
 	 [   ] [   ] [   ] [   ] [   ] [   ] [   ]
 	 [Wal] [Wal] [Wal] [Wal] [Wal] [Wal] [Wal]
 	 [   ] [   ] [   ] [   ] [   ] [Exi] [   ]
 	 [   ] [   ] [   ] [ 2 ] [   ] [Dor] [   ]
-	 [   ] [BCU] [   ] [   ] [   ] [   ] [   ]
+	 [   ] [BcU] [   ] [   ] [   ] [   ] [   ]
 
 	 S[x]	Switch [x]
 	 S[x]O	Switch [x] Output
@@ -324,7 +324,7 @@
 	 Numbers = Sections
 
 	 Entities:
-	 BCP	Beam Creator Powered
+	 BcP	Beam Creator Powered
 	 Exi	Level Exit
 	 PoS	Power Switch
 	 Dor	Door
@@ -337,7 +337,7 @@
 	 [   ] [   ] [Dor] [Exi] [   ]
 	 [   ] [Dor] [   ] [   ] [   ]
 	 [   ] [   ] [   ] [PoS] [   ]
-	 [   ] [BCP] [   ] [   ] [   ]
+	 [   ] [BcP] [   ] [   ] [   ]
 
 	 S[x]	Switch [x]
 	 S[x]O	Switch [x] Output
@@ -425,11 +425,11 @@
 	 Numbers = Sections
 
 	 Entities:
-	 BCP	Beam Creator Powered
+	 BcP	Beam Creator Powered
 	 Exi	Level Exit
 	 Wal	Wall
 	 PoS	Power Switch
-	 BCU	Beam Creator Unpowered
+	 BcU	Beam Creator Unpowered
 	 Dor	Door
 
 	 Usable:
@@ -438,11 +438,11 @@
 	 Sections and entities:
 	 [   ] [   ] [   ] [   ] [   ] [Exi] [   ]
 	 [   ] [   ] [   ] [ 2 ] [   ] [   ] [   ]
-	 [   ] [BCU] [Dor] [Dor] [Dor] [   ] [   ]
+	 [   ] [BcU] [Dor] [Dor] [Dor] [   ] [   ]
 	 [Wal] [Wal] [Wal] [Wal] [Wal] [Wal] [Wal]
 	 [   ] [   ] [   ] [   ] [PoS] [PoS] [   ]
 	 [   ] [   ] [   ] [ 1 ] [   ] [   ] [   ]
-	 [   ] [BCP] [   ] [   ] [   ] [   ] [   ]
+	 [   ] [BcP] [   ] [   ] [   ] [   ] [   ]
 
 	 S[x]	Switch [x]
 	 S[x]O	Switch [x] Output
@@ -604,11 +604,11 @@
 	 Numbers = Sections
 
 	 Entities:
-	 BCP	Beam Creator Powered
+	 BcP	Beam Creator Powered
 	 Exi	Level Exit
 	 Wal	Wall
 	 PoS	Power Switch
-	 BCU	Beam Creator Unpowered
+	 BcU	Beam Creator Unpowered
 	 Dor	Door
 
 	 Usable:
@@ -617,11 +617,11 @@
 	 Sections and entities:
 	 [   ] [   ] [   ] [   ] [   ] [Exi] [   ]
 	 [   ] [   ] [   ] [ 2 ] [   ] [   ] [   ]
-	 [   ] [BCU] [Dor] [Dor] [Dor] [   ] [   ]
+	 [   ] [BcU] [Dor] [Dor] [Dor] [   ] [   ]
 	 [Wal] [Wal] [Wal] [Wal] [Wal] [Wal] [Wal]
 	 [   ] [   ] [PoS] [   ] [   ] [PoS] [   ]
 	 [   ] [   ] [   ] [ 1 ] [   ] [   ] [   ]
-	 [   ] [BCP] [   ] [Dor] [Dor] [   ] [   ]
+	 [   ] [BcP] [   ] [Dor] [Dor] [   ] [   ]
 
 	 S[x]	Switch [x]
 	 S[x]O	Switch [x] Output
@@ -821,12 +821,12 @@
 	 Numbers = Sections
 
 	 Entities:
-	 BCP	Beam Creator Powered
+	 BcP	Beam Creator Powered
 	 Exi	Level Exit
 	 Wal	Wall
-	 PoS	Power Button
+	 PoB	Power Button
 	 PoS	Power Switch
-	 BCU	Beam Creator Unpowered
+	 BcU	Beam Creator Unpowered
 	 Dor	Door
 	 Dth	Death block
 
@@ -837,12 +837,12 @@
 
 	 Sections and entities:
 	 [   ] [   ] [   ] [Exi] [Dor] [   ] [   ]
-	 [   ] [   ] [BCU] [Dor] [   ] [   ] [   ]
-	 [   ] [BCU] [   ] [ 2 ] [   ] [   ] [   ]
+	 [   ] [   ] [BcU] [Dor] [   ] [   ] [   ]
+	 [   ] [BcU] [   ] [ 2 ] [   ] [   ] [   ]
 	 [Wal] [Wal] [Wal] [Wal] [Wal] [Wal] [Wal]
 	 [   ] [   ] [PoS] [   ] [   ] [PoS] [   ]
 	 [   ] [   ] [   ] [ 1 ] [   ] [PoB] [   ]
-	 [   ] [BCP] [   ] [Dor] [   ] [   ] [Dth]
+	 [   ] [BcP] [   ] [Dor] [   ] [   ] [Dth]
 
 	 B[x]	Button [x]
 	 B[x]O	Button [x] Output
@@ -971,6 +971,7 @@
 													row:NSMaxRange(gameBoardTilePosition_section_2_rows_range) - 1]];
 
 	/* Doors */
+
 	SMBDoorTileEntity* const doorTileEntity_section_1_3xminus0 = [SMBDoorTileEntity new];
 	[gameBoard gameBoardTileEntity_add:doorTileEntity_section_1_3xminus0
 							entityType:SMBGameBoardTile__entityType_beamInteractions
