@@ -296,13 +296,13 @@
 	 *- requiresExternalPowerForBeam = YES
 
 	 Usable:
-	 Forced Redirect (direction: up)
+	 Forced Redirect (direction: down)
 	 Forced Redirect (direction: left)
 
 	 Sections and entities:
 	 [   ] [   ] [Bc2]
-	 [   ] [   ] [   ]
-	 [Bc1] [   ] [PoB]
+	 [Bc1] [   ] [   ]
+	 [   ] [   ] [PoB]
 	 
 	 B[x]	Button [x]
 	 B[x]O	Button [x] Output
@@ -326,7 +326,7 @@
 	[gameBoard gameBoardTileEntity_for_beamInteractions_set:beamCreatorEntity
 								   to_gameBoardTilePosition:
 	 [[SMBGameBoardTilePosition alloc] init_with_column:0
-													row:[gameBoard gameBoardTiles_numberOfRows] - 1]];
+													row:[gameBoard gameBoardTiles_numberOfRows] - 2]];
 	
 	/* Un-powered beam creators. */
 	
@@ -349,7 +349,7 @@
 	/* Usable game board tile entities. */
 	
 	NSMutableArray<SMBGameBoardTileEntity*>* const gameBoardTileEntities = [NSMutableArray<SMBGameBoardTileEntity*> array];
-	[gameBoardTileEntities addObject:[[SMBForcedBeamRedirectTileEntity alloc] init_with_forcedBeamExitDirection:SMBGameBoardTile__direction_up]];
+	[gameBoardTileEntities addObject:[[SMBForcedBeamRedirectTileEntity alloc] init_with_forcedBeamExitDirection:SMBGameBoardTile__direction_down]];
 	[gameBoardTileEntities addObject:[[SMBForcedBeamRedirectTileEntity alloc] init_with_forcedBeamExitDirection:SMBGameBoardTile__direction_left]];
 
 	return
