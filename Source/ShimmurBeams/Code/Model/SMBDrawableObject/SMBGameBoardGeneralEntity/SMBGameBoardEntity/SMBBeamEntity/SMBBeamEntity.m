@@ -550,7 +550,10 @@ typedef NS_ENUM(NSInteger, SMBBeamEntity__drawingPiece) {
 
 	[beamEntityTileNode_toMarkReady setState_ready];
 
-	[self beamEntityTileNode_mappedDataCollection_toMarkReady_remove:beamEntityTileNode_toMarkReady];
+	if ([beamEntityTileNode_mappedDataCollection_toMarkReady mappableObject_exists:beamEntityTileNode_toMarkReady])
+	{
+		[self beamEntityTileNode_mappedDataCollection_toMarkReady_remove:beamEntityTileNode_toMarkReady];
+	}
 
 	[self setBeamEntityTileNode_mappedDataCollection_toMarkReady_markReadyAndClear_isHappening:NO];
 }

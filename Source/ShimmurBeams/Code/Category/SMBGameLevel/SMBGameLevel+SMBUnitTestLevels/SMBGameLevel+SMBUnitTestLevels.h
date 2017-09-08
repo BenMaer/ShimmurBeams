@@ -17,4 +17,7 @@
 #pragma mark - beamEntityOrder
 +(nonnull instancetype)smb_beamEntityOrder;
 
+#pragma mark - buttonPoweredImmediately
++(nonnull instancetype)smb_buttonPoweredImmediately;
+
 @end
