@@ -74,6 +74,7 @@ static void* kSMBGameBoard__KVOContext = &kSMBGameBoard__KVOContext;
 #endif
 
 	[self gameBoardTiles_setKVORegistered:NO];
+	[self setGameBoardEntities:nil];
 }
 
 -(instancetype)init
@@ -419,6 +420,33 @@ static void* kSMBGameBoard__KVOContext = &kSMBGameBoard__KVOContext;
 }
 
 #pragma mark - gameBoardEntities
+-(void)setGameBoardEntities:(nullable NSArray<SMBGameBoardEntity*>*)gameBoardEntities
+{
+	kRUConditionalReturn((self.gameBoardEntities == gameBoardEntities)
+						 ||
+						 [self.gameBoardEntities isEqual:gameBoardEntities], NO);
+
+	NSArray<SMBGameBoardEntity*>* const gameBoardEntities_old = self.gameBoardEntities;
+	_gameBoardEntities = (gameBoardEntities ? [NSArray<SMBGameBoardEntity*> arrayWithArray:gameBoardEntities] : nil);
+
+	NSArray<SMBGameBoardEntity*>* gameBoardEntities_removedObjects = nil;
+	NSArray<SMBGameBoardEntity*>* gameBoardEntities_addedObjects = nil;
+	[NSArray<SMBGameBoardEntity*> smb_changes_from_objects:gameBoardEntities_old
+												to_objects:self.gameBoardEntities
+											removedObjects:&gameBoardEntities_removedObjects
+												newObjects:&gameBoardEntities_addedObjects];
+
+	[gameBoardEntities_removedObjects enumerateObjectsUsingBlock:^(SMBGameBoardEntity * _Nonnull gameBoardEntity, NSUInteger idx, BOOL * _Nonnull stop) {
+		NSAssert(gameBoardEntity.gameBoard == self, @"should be");
+		[gameBoardEntity setGameBoard:nil];
+	}];
+
+	[gameBoardEntities_addedObjects enumerateObjectsUsingBlock:^(SMBGameBoardEntity * _Nonnull gameBoardEntity, NSUInteger idx, BOOL * _Nonnull stop) {
+		NSAssert(gameBoardEntity.gameBoard == nil, @"should be");
+		[gameBoardEntity setGameBoard:self];
+	}];
+}
+
 -(void)gameBoardEntity_add:(nonnull SMBGameBoardEntity*)gameBoardEntity
 {
 	kRUConditionalReturn(gameBoardEntity == nil, YES);

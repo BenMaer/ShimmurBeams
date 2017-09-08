@@ -12,6 +12,15 @@
 
 
 
+@class SMBGameBoard;
+
+
+
+
+
 @interface SMBGameBoardEntity : SMBGameBoardGeneralEntity
+
+#pragma mark - gameBoard
+@property (nonatomic, assign, nullable) SMBGameBoard* gameBoard;
 
 @end

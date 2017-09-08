@@ -199,7 +199,7 @@ static void* kSMBBeamCreatorTileEntity__KVOContext = &kSMBBeamCreatorTileEntity_
 										&&
 										(gameBoardTile.isPowered == false), NO);
 
-	return [[SMBBeamEntity alloc] init_with_gameBoardTile:gameBoardTile];
+	return [[SMBBeamEntity alloc] init_with_gameBoardTilePosition:gameBoardTile.gameBoardTilePosition];
 }
 
 #pragma mark - beamDirection

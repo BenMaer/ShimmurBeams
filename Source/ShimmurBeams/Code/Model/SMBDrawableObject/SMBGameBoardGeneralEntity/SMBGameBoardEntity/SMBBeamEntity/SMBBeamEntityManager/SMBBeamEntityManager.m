@@ -33,6 +33,13 @@
 @implementation SMBBeamEntityManager
 
 #pragma mark - beamEntity_forMarkingNodesReady
+-(void)setBeamEntity_forMarkingNodesReady:(SMBBeamEntity *)beamEntity_forMarkingNodesReady
+{
+	kRUConditionalReturn(self.beamEntity_forMarkingNodesReady == beamEntity_forMarkingNodesReady, NO);
+
+	_beamEntity_forMarkingNodesReady = beamEntity_forMarkingNodesReady;
+}
+
 @synthesize beamEntity_forMarkingNodesReady_mappedDataCollection = _beamEntity_forMarkingNodesReady_mappedDataCollection;
 -(nonnull SMBMutableMappedDataCollection<SMBBeamEntity*>*)beamEntity_forMarkingNodesReady_mappedDataCollection
 {
@@ -52,7 +59,7 @@
 -(void)beamEntity_forMarkingNodesReady_add:(nonnull SMBBeamEntity*)beamEntity
 {
 	kRUConditionalReturn(beamEntity == nil, YES);
-	kRUConditionalReturn([self.beamEntity_forMarkingNodesReady_mappedDataCollection mappableObject_exists:beamEntity], NO);
+	kRUConditionalReturn([self beamEntity_forMarkingNodesReady_exists:beamEntity], NO);
 
 	[self.beamEntity_forMarkingNodesReady_mappedDataCollection mappableObject_add:beamEntity];
 
@@ -62,11 +69,16 @@
 -(void)beamEntity_forMarkingNodesReady_remove:(nonnull SMBBeamEntity*)beamEntity
 {
 	kRUConditionalReturn(beamEntity == nil, YES);
-	kRUConditionalReturn([self.beamEntity_forMarkingNodesReady_mappedDataCollection mappableObject_exists:beamEntity] == false, NO);
+	kRUConditionalReturn([self beamEntity_forMarkingNodesReady_exists:beamEntity] == false, NO);
 
 	[self.beamEntity_forMarkingNodesReady_mappedDataCollection mappableObject_remove:beamEntity];
 
 	[self beamEntity_forMarkingNodesReady_update];
+}
+
+-(BOOL)beamEntity_forMarkingNodesReady_exists:(nonnull SMBBeamEntity*)beamEntity
+{
+	return [self.beamEntity_forMarkingNodesReady_mappedDataCollection mappableObject_exists:beamEntity];
 }
 
 #pragma mark - singleton

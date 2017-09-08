@@ -14,4 +14,13 @@
 
 @implementation SMBGameBoardEntity
 
+#if DEBUG
+#pragma mark - NSObject
+-(void)dealloc
+{
+	NSAssert(self.gameBoard == nil, @"Should already be cleared");
+	[self setGameBoard:nil];
+}
+#endif
+
 @end

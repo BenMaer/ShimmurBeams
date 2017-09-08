@@ -23,6 +23,9 @@
 
 @interface SMBBeamEntity : SMBGameBoardEntity
 
+#pragma mark - gameBoardTilePosition
+@property (nonatomic, readonly, strong, nullable) SMBGameBoardTilePosition* gameBoardTilePosition;
+
 #pragma mark - beamEntityTileNode_initial
 @property (nonatomic, readonly, strong, nullable) SMBBeamEntityTileNode* beamEntityTileNode_initial;
 
@@ -42,7 +45,7 @@
 															   with_beamExitDirection:(SMBGameBoardTile__direction)direction;
 
 #pragma mark - init
--(nullable instancetype)init_with_gameBoardTile:(nonnull SMBGameBoardTile*)gameBoardTile NS_DESIGNATED_INITIALIZER;
+-(nullable instancetype)init_with_gameBoardTilePosition:(nonnull SMBGameBoardTilePosition*)gameBoardTilePosition NS_DESIGNATED_INITIALIZER;
 
 @end
 

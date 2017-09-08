@@ -617,6 +617,7 @@ typedef NS_ENUM(NSInteger, SMBBeamEntityTileNode__state) {
 
 	_state = state;
 
+	[self providesPower_update];
 	[self node_next_gameTilePosition_update];
 
 	switch (self.state)
@@ -654,7 +655,6 @@ typedef NS_ENUM(NSInteger, SMBBeamEntityTileNode__state) {
 
 		case SMBBeamEntityTileNode__state_ready:
 		{
-			kRUConditionalReturn_ReturnValueFalse(self.gameBoardTile == nil, NO);
 			kRUConditionalReturn_ReturnValueFalse(self.state != SMBBeamEntityTileNode__state_created, NO);
 
 			return YES;
@@ -727,6 +727,7 @@ typedef NS_ENUM(NSInteger, SMBBeamEntityTileNode__state) {
 
 -(BOOL)providesPower_appropriate
 {
+	kRUConditionalReturn_ReturnValueFalse(self.state != SMBBeamEntityTileNode__state_ready, NO);
 	kRUConditionalReturn_ReturnValueFalse(self.gameBoardTile_allows_beamEnterDirection == false, NO);
 
 	return SMBGameBoardTile__direction__isInRange(self.beamEnterDirection);
