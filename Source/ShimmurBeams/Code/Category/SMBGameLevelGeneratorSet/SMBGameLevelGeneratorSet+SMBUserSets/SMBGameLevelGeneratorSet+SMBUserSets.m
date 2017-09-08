@@ -254,6 +254,12 @@
 																						  name:@"Initial power"
 																						  hint:@"The button should be powered off the bat."]];
 
+	[gameLevelGenerators addObject:[[SMBGameLevelGenerator alloc] init_with_generateLevelBlock:^SMBGameLevel * _Nonnull{
+		return [SMBGameLevel smb_beamCreatorPoweringItself];
+	}
+																						  name:@"Beam creator powering itself"
+																						  hint:@"Powered the beam creator, let it be the only one powering itself, the change its path."]];
+
 	return
 	[[self alloc] init_with_gameLevelGenerators:[NSArray<SMBGameLevelGenerator*> arrayWithArray:gameLevelGenerators]
 										   name:@"UNIT TESTS"];

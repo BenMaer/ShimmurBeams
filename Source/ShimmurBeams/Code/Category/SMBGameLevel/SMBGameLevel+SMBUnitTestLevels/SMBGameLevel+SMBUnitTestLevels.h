@@ -20,4 +20,7 @@
 #pragma mark - buttonPoweredImmediately
 +(nonnull instancetype)smb_buttonPoweredImmediately;
 
+#pragma mark - beamCreatorPoweringItself
++(nonnull instancetype)smb_beamCreatorPoweringItself;
+
 @end
