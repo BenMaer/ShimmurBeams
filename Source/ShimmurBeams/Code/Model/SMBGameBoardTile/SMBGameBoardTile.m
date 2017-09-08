@@ -486,7 +486,7 @@ static void* kSMBGameBoardTile__KVOContext = &kSMBGameBoardTile__KVOContext;
 -(nullable SMBGameBoardTile*)gameBoardTile_next_with_direction:(SMBGameBoardTile__direction)direction
 {
 	SMBGameBoard* const gameBoard = self.gameBoard;
-	kRUConditionalReturn_ReturnValueNil(gameBoard == nil, YES);
+	kRUConditionalReturn_ReturnValueNil(gameBoard == nil, NO);
 
 	return [gameBoard gameBoardTile_next_from_gameBoardTile:self
 												  direction:direction];
