@@ -1,0 +1,1 @@
+../../../ResplendentUtilities/Pod/Classes/Objects/UICollectionViewFlowLayout/RUCollectionViewFlowLayout_ContentSizeAdjustForMinimumLineSpacing.h
