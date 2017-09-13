@@ -182,6 +182,11 @@
 																						  name:@"Door Introduction"]];
 
 	[gameLevelGenerators addObject:[[SMBGameLevelGenerator alloc] init_with_generateLevelBlock:^SMBGameLevel * _Nonnull{
+		return [SMBGameLevel smb_powerButtons_and_door_selfPoweredBeamCreator];
+	}
+																						  name:@"Self Powered"]];
+
+	[gameLevelGenerators addObject:[[SMBGameLevelGenerator alloc] init_with_generateLevelBlock:^SMBGameLevel * _Nonnull{
 		return [SMBGameLevel smb_powerButtons_and_doors_choices];
 	}
 																						  name:@"Buttons and Doors"]];
