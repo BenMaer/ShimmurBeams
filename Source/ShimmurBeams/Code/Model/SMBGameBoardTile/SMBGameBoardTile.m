@@ -694,6 +694,7 @@ static void* kSMBGameBoardTile__KVOContext = &kSMBGameBoardTile__KVOContext;
 
 +(nonnull NSString*)gameBoardTileEntity_for_beamInteractions{return NSStringFromSelector(_cmd);}
 +(nonnull NSString*)gameBoardTileEntities_many{return NSStringFromSelector(_cmd);}
++(nonnull NSString*)gameBoardTileEntities_all{return NSStringFromSelector(_cmd);}
 +(nonnull NSString*)isPowered{return NSStringFromSelector(_cmd);}
 +(nonnull NSString*)isPowered_notByBeam{return NSStringFromSelector(_cmd);}
 +(nonnull NSString*)beamEnterDirections_blocked{return NSStringFromSelector(_cmd);}

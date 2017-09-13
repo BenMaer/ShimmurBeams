@@ -21,6 +21,8 @@
 
 #import <ResplendentUtilities/RUConditionalReturn.h>
 #import <ResplendentUtilities/UIView+RUUtility.h>
+#import <ResplendentUtilities/NSMutableArray+RUAddObjectIfNotNil.h>
+#import <ResplendentUtilities/RUConstants.h>
 
 
 
@@ -64,13 +66,13 @@ static void* kSMBBeamCreatorTileEntity__KVOContext = &kSMBBeamCreatorTileEntity_
 {
 	if (self = [super init])
 	{
-//		__weak typeof(self) const self_weak = self;
-//		[self subDrawableObjects_add:
-//		 [SMBBlockDrawableObject smb_defaultBlockDrawing_beamCreatorTileEntity_drawableObject_with_powerIndicatorColorRefBlock:
-//		  ^CGColorRef _Nullable{
-//			  return [self_weak powerIndicator_colorRef_appropriate];
-//		  }]];
-		[self subDrawableObjects_add:[SMBSVGDrawableObject smb_space_spaceship_SVG]];
+		__weak typeof(self) const self_weak = self;
+		[self subDrawableObjects_add:
+		 [SMBBlockDrawableObject smb_defaultBlockDrawing_beamCreatorTileEntity_drawableObject_with_powerIndicatorColorRefBlock:
+		  ^CGColorRef _Nullable{
+			  return [self_weak powerIndicator_colorRef_appropriate];
+		  }]];
+//		[self subDrawableObjects_add:[SMBSVGDrawableObject smb_space_spaceship_SVG]];
 
 		[self setBeamEnterDirections_blocked:SMBGameBoardTile__directions_all()];
 	}
@@ -78,6 +80,17 @@ static void* kSMBBeamCreatorTileEntity__KVOContext = &kSMBBeamCreatorTileEntity_
 	return self;
 }
 
+-(nonnull NSString*)description
+{
+	NSMutableArray<NSString*>* const description_lines = [NSMutableArray<NSString*> array];
+	[description_lines ru_addObjectIfNotNil:[super description]];
+	[description_lines ru_addObjectIfNotNil:RUStringWithFormat(@"self.beamEntity %@",self.beamEntity)];
+	[description_lines ru_addObjectIfNotNil:RUStringWithFormat(@"self.beamDirection %li",(signed long)self.beamDirection)];
+
+	return [description_lines componentsJoinedByString:@"\n"];
+}
+
+#pragma mark - SMBDrawableObject: subDrawableObjects
 -(void)subDrawableObject:(nonnull __kindof SMBDrawableObject*)subDrawableObject
 			draw_in_rect:(CGRect)rect
 {

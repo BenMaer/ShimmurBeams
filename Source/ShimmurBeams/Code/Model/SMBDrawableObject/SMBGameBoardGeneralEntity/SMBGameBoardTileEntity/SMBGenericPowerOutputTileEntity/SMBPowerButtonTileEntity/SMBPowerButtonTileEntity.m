@@ -99,7 +99,7 @@ static void* kSMBPowerButtonTileEntity__KVOContext = &kSMBPowerButtonTileEntity_
 		{
 			[gameBoardTile addObserver:self
 							forKeyPath:propertyToObserve
-							   options:(0)
+							   options:(NSKeyValueObservingOptionInitial)
 							   context:&kSMBPowerButtonTileEntity__KVOContext];
 		}
 		else

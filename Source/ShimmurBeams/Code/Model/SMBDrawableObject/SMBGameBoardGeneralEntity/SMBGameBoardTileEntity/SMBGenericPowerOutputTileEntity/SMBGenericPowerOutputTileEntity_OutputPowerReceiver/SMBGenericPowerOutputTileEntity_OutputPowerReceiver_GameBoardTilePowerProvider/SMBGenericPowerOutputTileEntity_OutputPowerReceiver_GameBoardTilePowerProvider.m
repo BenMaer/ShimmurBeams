@@ -101,6 +101,7 @@ static void* kSMBGenericPowerOutputTileEntity_OutputPowerReceiver_GameBoardTileP
 	SMBGameBoardTile* const powerOutputTileEntity_gameBoardTile_appropriate = self.powerOutputTileEntity_gameBoardTile_appropriate;
 	if (powerOutputTileEntity_gameBoardTile_appropriate)
 	{
+		NSAssert(powerOutputTileEntity.gameBoardTile == nil, @"should not be set yet.");
 		[powerOutputTileEntity_gameBoardTile_appropriate gameBoardTileEntities_add:powerOutputTileEntity
 																		entityType:entityType];
 	}

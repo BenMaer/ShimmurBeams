@@ -19,6 +19,7 @@
 @class SMBGameBoardTilePosition;
 @class SMBGameBoard;
 @class SMBGameBoardTileEntity;
+@class SMBMappedDataCollection<ObjectType>;
 
 
 
@@ -37,6 +38,9 @@
 
 #pragma mark - gameBoardTileEntities_many
 @property (nonatomic, readonly, copy, nullable) NSArray<SMBGameBoardTileEntity*>* gameBoardTileEntities_many;
+
+#pragma mark - gameBoardTileEntities_all
+@property (nonatomic, readonly, strong, nullable) SMBMappedDataCollection<SMBGameBoardTileEntity*>* gameBoardTileEntities_all;
 
 #pragma mark - gameBoardTileEntities
 -(void)gameBoardTileEntities_add:(nonnull SMBGameBoardTileEntity*)gameBoardTileEntity
@@ -75,6 +79,7 @@
 
 +(nonnull NSString*)gameBoardTileEntity_for_beamInteractions;
 +(nonnull NSString*)gameBoardTileEntities_many;
++(nonnull NSString*)gameBoardTileEntities_all;
 +(nonnull NSString*)isPowered;
 +(nonnull NSString*)isPowered_notByBeam;
 +(nonnull NSString*)beamEnterDirections_blocked;
