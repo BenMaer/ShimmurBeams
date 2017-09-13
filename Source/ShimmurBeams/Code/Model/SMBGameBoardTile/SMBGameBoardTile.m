@@ -316,6 +316,13 @@ static void* kSMBGameBoardTile__KVOContext = &kSMBGameBoardTile__KVOContext;
 						 [self.gameBoardTileEntities_all isEqual:gameBoardTileEntities_all],
 						 NO);
 
+	BOOL gameBoardTileEntities_all_isUpdating_shouldSet = (self.gameBoardTileEntities_all_isUpdating == false);
+
+	if (gameBoardTileEntities_all_isUpdating_shouldSet)
+	{
+		[self setGameBoardTileEntities_all_isUpdating:YES];
+	}
+
 	SMBMappedDataCollection<SMBGameBoardTileEntity*>* const gameBoardTileEntities_all_old = self.gameBoardTileEntities_all;
 	_gameBoardTileEntities_all = gameBoardTileEntities_all;
 
@@ -351,6 +358,11 @@ static void* kSMBGameBoardTile__KVOContext = &kSMBGameBoardTile__KVOContext;
 	[gameBoardTileEntities_added enumerateObjectsUsingBlock:^(SMBGameBoardTileEntity * _Nonnull gameBoardTileEntity_added, NSUInteger idx, BOOL * _Nonnull stop) {
 		gameBoardTileEntity_change_action(gameBoardTileEntity_added,YES);
 	}];
+
+	if (gameBoardTileEntities_all_isUpdating_shouldSet)
+	{
+		[self setGameBoardTileEntities_all_isUpdating:NO];
+	}
 }
 
 -(void)gameBoardTileEntities_all_update

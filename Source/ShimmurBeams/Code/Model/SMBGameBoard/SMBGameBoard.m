@@ -329,9 +329,6 @@ static void* kSMBGameBoard__KVOContext = &kSMBGameBoard__KVOContext;
 	kRUConditionalReturn(gameBoardTileEntities_mappedDataCollection == nil, YES);
 
 	[gameBoardTileEntities enumerateObjectsUsingBlock:^(SMBGameBoardTileEntity * _Nonnull gameBoardTileEntity, NSUInteger idx, BOOL * _Nonnull stop) {
-		kRUConditionalReturn([gameBoardTileEntities_mappedDataCollection mappableObject_exists:gameBoardTileEntity],
-							 NO);
-
 		[gameBoardTileEntities_mappedDataCollection mappableObject_add:gameBoardTileEntity];
 	}];
 
@@ -364,6 +361,7 @@ static void* kSMBGameBoard__KVOContext = &kSMBGameBoard__KVOContext;
 			{
 				SMBGameBoardTile* const gameBoardTile = kRUClassOrNil(object, SMBGameBoardTile);
 				kRUConditionalReturn(gameBoardTile == nil, YES);
+				kRUConditionalReturn(gameBoardTile.gameBoardTileEntities_all_isUpdating, NO);
 
 				SMBMappedDataCollection<SMBGameBoardTileEntity*>* const gameBoardTileEntities_old = kRUClassOrNil([change objectForKey:NSKeyValueChangeOldKey], SMBMappedDataCollection<SMBGameBoardTileEntity*>);
 				SMBMappedDataCollection<SMBGameBoardTileEntity*>* const gameBoardTileEntities = gameBoardTile.gameBoardTileEntities_all;
