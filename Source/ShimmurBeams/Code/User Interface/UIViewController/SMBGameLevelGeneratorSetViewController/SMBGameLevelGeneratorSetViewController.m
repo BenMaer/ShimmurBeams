@@ -200,7 +200,7 @@
 		{
 			UIAlertController* const alertController =
 			[UIAlertController alertControllerWithTitle:@"Congratulations!"
-												message:RUStringWithFormat(@"You beat level %lu! Continue to the next level?",gameLevelGeneratorSet_levelIndex + 1)
+												message:RUStringWithFormat(@"You beat level %lu! Continue to the next level?",(unsigned long)gameLevelGeneratorSet_levelIndex + 1)
 										 preferredStyle:UIAlertControllerStyleAlert];
 			
 			[alertController addAction:

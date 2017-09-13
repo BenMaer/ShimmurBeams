@@ -20,4 +20,7 @@
 #pragma mark - init
 -(nullable instancetype)init NS_DESIGNATED_INITIALIZER;
 
+#pragma mark - customFailureReasons
+@property (nonatomic, copy, nullable) NSArray<NSString*>* customFailureReasons;
+
 @end

@@ -1332,7 +1332,13 @@
 	/* Death blocks. */
 	
 	/* Section 1 -0x-0 */
-	[gameBoard gameBoardTileEntity_add:[SMBDeathBlockTileEntity new]
+	SMBDeathBlockTileEntity* const deathBlockTileEntity_deathLane = [SMBDeathBlockTileEntity new];
+	NSMutableArray<NSString*>* const deathBlockTileEntity_deathLane_customFailureReasons = [NSMutableArray<NSString*> array];
+	[deathBlockTileEntity_deathLane_customFailureReasons addObject:@"DEATH LANE"];
+	[deathBlockTileEntity_deathLane_customFailureReasons addObject:@"Embrace the Death Lane"];
+	[deathBlockTileEntity_deathLane_customFailureReasons addObject:@"You strolled down Death Lane"];
+	[deathBlockTileEntity_deathLane setCustomFailureReasons:deathBlockTileEntity_deathLane_customFailureReasons];
+	[gameBoard gameBoardTileEntity_add:deathBlockTileEntity_deathLane
 							entityType:SMBGameBoardTile__entityType_beamInteractions
 			  to_gameBoardTilePosition:
 	 [[SMBGameBoardTilePosition alloc] init_with_column:NSMaxRange(gameBoardTilePosition_section_1_columns_range) - 1

@@ -77,6 +77,7 @@
 		D7E511BB1F3CEC40008A6042 /* SMBGameLevelGeneratorSet+SMBUserSets.m in Sources */ = {isa = PBXBuildFile; fileRef = D7E511BA1F3CEC40008A6042 /* SMBGameLevelGeneratorSet+SMBUserSets.m */; };
 		D7E511BF1F3CEE67008A6042 /* SMBGameLevelGeneratorSetViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = D7E511BE1F3CEE67008A6042 /* SMBGameLevelGeneratorSetViewController.m */; };
 		D7E511CD1F3D4CFA008A6042 /* SMBGameBoardTileEntity+SMBBeamBlocker.m in Sources */ = {isa = PBXBuildFile; fileRef = D7E511CC1F3D4CFA008A6042 /* SMBGameBoardTileEntity+SMBBeamBlocker.m */; };
+		D7E56A741F6979E000E2DCB3 /* NSNumber+SMBRandomNumbers.m in Sources */ = {isa = PBXBuildFile; fileRef = D7E56A731F6979E000E2DCB3 /* NSNumber+SMBRandomNumbers.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -243,6 +244,8 @@
 		D7E511C21F3D2B31008A6042 /* SMBGameBoardTile__direction_offsets.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SMBGameBoardTile__direction_offsets.h; sourceTree = "<group>"; };
 		D7E511CB1F3D4CFA008A6042 /* SMBGameBoardTileEntity+SMBBeamBlocker.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "SMBGameBoardTileEntity+SMBBeamBlocker.h"; sourceTree = "<group>"; };
 		D7E511CC1F3D4CFA008A6042 /* SMBGameBoardTileEntity+SMBBeamBlocker.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "SMBGameBoardTileEntity+SMBBeamBlocker.m"; sourceTree = "<group>"; };
+		D7E56A721F6979E000E2DCB3 /* NSNumber+SMBRandomNumbers.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSNumber+SMBRandomNumbers.h"; sourceTree = "<group>"; };
+		D7E56A731F6979E000E2DCB3 /* NSNumber+SMBRandomNumbers.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSNumber+SMBRandomNumbers.m"; sourceTree = "<group>"; };
 		E8333239A81E9BC86B8B9223 /* Pods-ShimmurBeams.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-ShimmurBeams.release.xcconfig"; path = "Pods/Target Support Files/Pods-ShimmurBeams/Pods-ShimmurBeams.release.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -475,6 +478,7 @@
 			isa = PBXGroup;
 			children = (
 				D761FE3A1F3AC2FF0083842A /* NSArray */,
+				D7E56A701F6979AD00E2DCB3 /* NSNumber */,
 				D733A48C1F57753D007A8E6F /* SMBBlockDrawableObject */,
 				D761FE3E1F3AC2FF0083842A /* SMBGameBoard */,
 				D7C8C3D81F3CC7C7006D378E /* SMBGameBoardTileEntity */,
@@ -1252,6 +1256,23 @@
 			path = "SMBGameBoardTileEntity+SMBBeamBlocker";
 			sourceTree = "<group>";
 		};
+		D7E56A701F6979AD00E2DCB3 /* NSNumber */ = {
+			isa = PBXGroup;
+			children = (
+				D7E56A711F6979D300E2DCB3 /* NSNumber+SMBRandomNumbers */,
+			);
+			path = NSNumber;
+			sourceTree = "<group>";
+		};
+		D7E56A711F6979D300E2DCB3 /* NSNumber+SMBRandomNumbers */ = {
+			isa = PBXGroup;
+			children = (
+				D7E56A721F6979E000E2DCB3 /* NSNumber+SMBRandomNumbers.h */,
+				D7E56A731F6979E000E2DCB3 /* NSNumber+SMBRandomNumbers.m */,
+			);
+			path = "NSNumber+SMBRandomNumbers";
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -1409,6 +1430,7 @@
 				D733A4A31F5A20F2007A8E6F /* SMBPowerButtonTileEntity.m in Sources */,
 				D733A4B31F5F43BE007A8E6F /* SMBGenericPowerOutputTileEntity_OutputPowerReceiverCollection.m in Sources */,
 				D733A4B71F605D45007A8E6F /* SMBGenericPowerOutputTileEntity_OutputPowerReceiverCollection_BlacklistToggler.m in Sources */,
+				D7E56A741F6979E000E2DCB3 /* NSNumber+SMBRandomNumbers.m in Sources */,
 				D7951D041F41E79800A33AB2 /* SMBGameLevel+SMBForcedRedirectsAndWalls.m in Sources */,
 				D78CD09F1F3D6E5800118FB4 /* SMBGameBoardEntity.m in Sources */,
 				D77B86FD1F47A1D700144372 /* SMBPowerOutputTileEntity.m in Sources */,

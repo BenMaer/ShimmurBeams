@@ -11,6 +11,7 @@
 #import "SMBGameBoard.h"
 #import "SMBGameLevel.h"
 #import "SMBGameLevelCompletion.h"
+#import "NSNumber+SMBRandomNumbers.h"
 
 #import <ResplendentUtilities/RUConditionalReturn.h>
 
@@ -56,6 +57,11 @@ RUEnumIsInRangeSynthesization_autoFirstLast(SMBDeathBlockTileEntity__drawState);
 #if kSMBDeathBlockTileEntity__shortCircuitTimer
 <SMBTimer__timerDidFireDelegate>
 #endif
+
+#pragma mark - customFailureReasons
+//@property (nonatomic, assign) NSUInteger customFailureReasons_index;
+//-(void)customFailureReasons_index_increment;
+-(nullable NSString*)customFailureReason_random;
 
 #pragma mark - gameBoardTile
 -(void)SMBDeathBlockTileEntity_gameBoardTile_setKVORegistered:(BOOL)registered;
@@ -118,6 +124,52 @@ RUEnumIsInRangeSynthesization_autoFirstLast(SMBDeathBlockTileEntity__drawState);
 	kRUConditionalReturn_ReturnValueNil(YES, YES);
 
 	return [self init];
+}
+
+#pragma mark - customFailureReasons
+//-(void)setCustomFailureReasons:(nullable NSArray<NSString*>*)customFailureReasons
+//{
+//	kRUConditionalReturn((self.customFailureReasons == customFailureReasons)
+//						 ||
+//						 ([self.customFailureReasons isEqual:customFailureReasons]), NO);
+//
+//	[self setCustomFailureReasons_index:0];
+//
+//	_customFailureReasons = (customFailureReasons ? [NSArray<NSString*> arrayWithArray:customFailureReasons] : nil);
+//}
+//
+//-(void)customFailureReasons_index_increment
+//{
+//	NSArray<NSString*>* const customFailureReasons = self.customFailureReasons;
+//	kRUConditionalReturn(customFailureReasons == nil, YES);
+//	kRUConditionalReturn(customFailureReasons.count == 0, YES);
+//
+//	NSUInteger const customFailureReasons_index = self.customFailureReasons_index;
+//	NSUInteger const customFailureReasons_index_incremented = customFailureReasons_index + 1;
+//	NSUInteger const customFailureReasons_index_new =
+//	(customFailureReasons_index_incremented >= customFailureReasons.count
+//	 ?
+//	 0
+//	 :
+//	 customFailureReasons_index_incremented
+//	);
+//
+//	[self setCustomFailureReasons_index:customFailureReasons_index_new];
+//}
+
+-(nullable NSString*)customFailureReason_random
+{
+	NSArray<NSString*>* const customFailureReasons = self.customFailureReasons;
+	kRUConditionalReturn_ReturnValueNil(customFailureReasons == nil, NO);
+
+	NSUInteger const customFailureReasons_count = customFailureReasons.count;
+	kRUConditionalReturn_ReturnValueNil(customFailureReasons_count == 0, YES);
+	kRUConditionalReturn_ReturnValue(customFailureReasons_count == 1, NO, customFailureReasons.firstObject);
+
+	NSUInteger const customFailureReasons_index = [NSNumber smb_randomIntegerBetweenMin:0 max:(u_int32_t)customFailureReasons_count - 1];
+	kRUConditionalReturn_ReturnValueNil(customFailureReasons_index >= customFailureReasons_count, YES);
+
+	return [customFailureReasons objectAtIndex:customFailureReasons_index];
 }
 
 #pragma mark - SMBGameBoardGeneralEntity: draw
@@ -291,7 +343,15 @@ RUEnumIsInRangeSynthesization_autoFirstLast(SMBDeathBlockTileEntity__drawState);
 	SMBGameLevel* const gameLevel = gameBoard.gameLevel;
 	kRUConditionalReturn(gameLevel == nil, YES);
 
-	[gameLevel setCompletion:[[SMBGameLevelCompletion alloc] init_with_failureReason:@"You have died!"]];
+	NSMutableString* const failureReason = [NSMutableString stringWithString:@"You have died!"];
+
+	NSString* const customFailureReason_random = [self customFailureReason_random];
+	if (customFailureReason_random)
+	{
+		[failureReason appendFormat:@"\nReason: %@",customFailureReason_random];
+	}
+
+	[gameLevel setCompletion:[[SMBGameLevelCompletion alloc] init_with_failureReason:failureReason]];
 }
 
 #if kSMBDeathBlockTileEntity__shortCircuitTimer
