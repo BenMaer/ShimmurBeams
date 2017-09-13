@@ -8,6 +8,7 @@
 
 #import "SMBGameBoardTileEntity.h"
 #import "SMBGameBoardTile.h"
+#import "SMBMappedDataCollection.h"
 
 #import <ResplendentUtilities/RUConditionalReturn.h>
 #import <ResplendentUtilities/NSMutableArray+RUAddObjectIfNotNil.h>
@@ -75,10 +76,11 @@
 {
 	kRUConditionalReturn_ReturnValueFalse(gameBoardTile == nil, YES);
 
-	kRUConditionalReturn_ReturnValueTrue(gameBoardTile.gameBoardTileEntity_for_beamInteractions == self, NO);
-	kRUConditionalReturn_ReturnValueTrue([gameBoardTile.gameBoardTileEntities_many containsObject:self], NO);
+	SMBMappedDataCollection<SMBGameBoardTileEntity*>* const gameBoardTileEntities_all = gameBoardTile.gameBoardTileEntities_all;
+	kRUConditionalReturn_ReturnValueFalse(gameBoardTileEntities_all == nil, NO);
+	kRUConditionalReturn_ReturnValueFalse([gameBoardTileEntities_all mappableObject_exists:self] == false, NO);
 
-	return NO;
+	return YES;
 }
 #endif
 
