@@ -25,6 +25,6 @@
 
 #pragma mark - powerSwitches_and_doorGroups
 +(nonnull instancetype)smb_powerSwitches_and_doorGroups_beamCreatorGroup;
-+(nonnull instancetype)smb_powerSwitches_and_doorGroups_backwardsLane;
++(nonnull instancetype)smb_powerSwitches_and_doorGroups_deathLane;
 
 @end

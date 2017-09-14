@@ -1104,7 +1104,7 @@
 		  usableGameBoardTileEntities:[NSArray<SMBGameBoardTileEntity*> arrayWithArray:gameBoardTileEntities]];
 }
 
-+(nonnull instancetype)smb_powerSwitches_and_doorGroups_backwardsLane
++(nonnull instancetype)smb_powerSwitches_and_doorGroups_deathLane
 {
 	/*
 	 Numbers = Sections

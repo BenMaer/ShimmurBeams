@@ -187,6 +187,11 @@
 																						  name:@"Self Powered"]];
 
 	[gameLevelGenerators addObject:[[SMBGameLevelGenerator alloc] init_with_generateLevelBlock:^SMBGameLevel * _Nonnull{
+		return [SMBGameLevel smb_powerButtons_and_doors_powerPlant];
+	}
+																						  name:@"!Button Power Plant"]];
+
+	[gameLevelGenerators addObject:[[SMBGameLevelGenerator alloc] init_with_generateLevelBlock:^SMBGameLevel * _Nonnull{
 		return [SMBGameLevel smb_powerButtons_and_doors_choices];
 	}
 																						  name:@"Buttons and Doors"]];
@@ -233,7 +238,7 @@
 																						  name:@"Beam Creator Group Toggle"]];
 
 	[gameLevelGenerators addObject:[[SMBGameLevelGenerator alloc] init_with_generateLevelBlock:^SMBGameLevel * _Nonnull{
-		return [SMBGameLevel smb_powerSwitches_and_doorGroups_backwardsLane];
+		return [SMBGameLevel smb_powerSwitches_and_doorGroups_deathLane];
 	}
 																						  name:@"Death lane"]];
 
