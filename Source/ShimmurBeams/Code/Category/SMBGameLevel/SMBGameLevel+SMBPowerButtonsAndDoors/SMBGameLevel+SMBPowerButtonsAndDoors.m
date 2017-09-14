@@ -832,6 +832,7 @@
 	 Wal	Wall
 	 Fr[x]	Forced redirect
 	 Br[x]	Beam rotation
+	 Dm[x]	Diagonal Mirror
 	 PoB	Power Button
 	 Dor	Door
 	 
@@ -847,6 +848,8 @@
 	 *- direction: right
 	 - Fr2
 	 *- direction: left
+	 - Fr3
+	 *- direction: left
 	 - Br1
 	 *- direction_rotation: right
 	 - Br2
@@ -860,7 +863,11 @@
 	 - Br6
 	 *- direction_rotation: left
 	 *- Note: would like to find a better way to prevent the workaround in section 2.
-	 
+	 - Dm1
+	 *- startingPosition: bottomLeft
+	 - Dm2
+	 *- startingPosition: topLeft
+
 	 Usable:
 	 Forced Redirect (direction: left)
 	 Forced Redirect (direction: down)
@@ -872,13 +879,13 @@
 	 [   ] [PoB] [ 2 ] [   ] [Wal] [   ] [   ]
 	 [Fr1] [Br1] [   ] [Bc2] [Wal] [   ] [   ]
 	 [Br2] [   ] [Fr2] [   ] [Wal] [   ] [   ]
-	 [Wal] [   ] [Wal] [Wal] [   ] [   ] [   ]
-	 [Bc1] [   ] [ 1 ] [Dor] [   ] [   ] [ 4 ]
-	 [Wal] [Dor] [Wal] [Wal] [   ] [   ] [   ]
+	 [Wal] [   ] [Wal] [Wal] [Dm1] [   ] [   ]
+	 [Bc1] [   ] [ 1 ] [Dor] [   ] [Fr3] [ 4 ]
+	 [Wal] [Dor] [Wal] [Wal] [Dm2] [   ] [Wal]
 	 [   ] [   ] [   ] [   ] [Wal] [   ] [   ]
 	 [   ] [Br3] [ 3 ] [   ] [Wal] [   ] [   ]
 	 [Br6] [Br4] [Br5] [   ] [Wal] [   ] [   ]
-	 [PoB] [PoB] [   ] [Bc3] [Wal] [   ] [   ]
+	 [PoB] [PoB] [   ] [Bc3] [Wal] [   ] [Exi]
 	 
 	 B[x]	Button [x]
 	 B[x]O	Button [x] Output
@@ -890,7 +897,7 @@
 	 [   ] [   ] [   ] [   ] [Wal] [   ] [   ]
 	 [Wal] [   ] [Wal] [Wal] [   ] [   ] [   ]
 	 [   ] [   ] [ 1 ] [B4O] [   ] [   ] [ 4 ]
-	 [Wal] [B2O] [Wal] [Wal] [   ] [   ] [   ]
+	 [Wal] [B2O] [Wal] [Wal] [   ] [   ] [Wal]
 	 [   ] [   ] [   ] [   ] [Wal] [   ] [   ]
 	 [   ] [   ] [ 3 ] [   ] [Wal] [   ] [   ]
 	 [   ] [   ] [   ] [   ] [Wal] [   ] [   ]
@@ -1027,7 +1034,7 @@
 		.location	= NSMaxRange(gameBoardTilePosition_section_2_columns_range),
 		.length		= wall_between_sections_2and3_and_4_width,
 	};
-	NSRange const gameBoardTilePosition_wall_between_sections_2_and_4_rows_range_1 = (NSRange){
+	NSRange const gameBoardTilePosition_wall_between_sections_2_and_4_rows_range = (NSRange){
 		.location	= gameBoardTilePosition_section_2_rows_range.location,
 		.length		= gameBoardTilePosition_section_2_rows_range.length,
 	};
@@ -1037,14 +1044,24 @@
 		.location	= NSMaxRange(gameBoardTilePosition_section_3_columns_range),
 		.length		= wall_between_sections_2and3_and_4_width,
 	};
-	NSRange const gameBoardTilePosition_wall_between_sections_3_and_4_rows_range_1 = (NSRange){
+	NSRange const gameBoardTilePosition_wall_between_sections_3_and_4_rows_range = (NSRange){
 		.location	= gameBoardTilePosition_section_3_rows_range.location,
 		.length		= gameBoardTilePosition_section_3_rows_range.length,
 	};
 
+	/* Wall gap between section 1 and 4 */
+	NSRange const gameBoardTilePosition_wall_gap_between_sections_1_and_4_columns_range = (NSRange){
+		.location	= gameBoardTilePosition_wall_between_sections_2_and_4_columns_range.location,
+		.length		= gameBoardTilePosition_wall_between_sections_2_and_4_columns_range.length,
+	};
+	NSRange const gameBoardTilePosition_wall_gap_between_sections_1_and_4_rows_range = (NSRange){
+		.location	= NSMaxRange(gameBoardTilePosition_wall_between_sections_2_and_4_rows_range),
+		.length		= gameBoardTilePosition_wall_between_sections_3_and_4_rows_range.location - NSMaxRange(gameBoardTilePosition_wall_between_sections_2_and_4_rows_range),
+	};
+
 	/* Section 4 */
 	NSRange const gameBoardTilePosition_section_4_columns_range = (NSRange){
-		.location	= [gameBoard gameBoardTiles_numberOfColumns] - 1 - section_4_width,
+		.location	= [gameBoard gameBoardTiles_numberOfColumns] - section_4_width,
 		.length		= section_4_width,
 	};
 	NSRange const gameBoardTilePosition_section_4_rows_range = (NSRange){
@@ -1106,7 +1123,7 @@
 							  entityType:SMBGameBoardTile__entityType_beamInteractions
 								fillRect:YES
 								 columns:gameBoardTilePosition_wall_between_sections_2_and_4_columns_range
-									rows:gameBoardTilePosition_wall_between_sections_2_and_4_rows_range_1];
+									rows:gameBoardTilePosition_wall_between_sections_2_and_4_rows_range];
 
 	[gameBoard gameBoardTileEntities_add:
 	 ^SMBGameBoardTileEntity * _Nullable(SMBGameBoardTilePosition * _Nonnull position) {
@@ -1115,7 +1132,13 @@
 							  entityType:SMBGameBoardTile__entityType_beamInteractions
 								fillRect:YES
 								 columns:gameBoardTilePosition_wall_between_sections_3_and_4_columns_range
-									rows:gameBoardTilePosition_wall_between_sections_3_and_4_rows_range_1];
+									rows:gameBoardTilePosition_wall_between_sections_3_and_4_rows_range];
+
+	[gameBoard gameBoardTileEntity_add:[SMBWallTileEntity new]
+							entityType:SMBGameBoardTile__entityType_beamInteractions
+			  to_gameBoardTilePosition:
+	 [[SMBGameBoardTilePosition alloc] init_with_column:NSMaxRange(gameBoardTilePosition_section_4_columns_range) - 1
+													row:floor((NSMaxRange(gameBoardTilePosition_section_4_rows_range) - 1) / 2.0f) + 1]];
 
 	/* Un-powered beam creators. */
 	
@@ -1167,6 +1190,13 @@
 	 [[SMBGameBoardTilePosition alloc] init_with_column:gameBoardTilePosition_section_2_columns_range.location + 2
 													row:NSMaxRange(gameBoardTilePosition_section_2_rows_range) - 1]];
 
+	/* Section 4 0x50% */
+	[gameBoard gameBoardTileEntity_add:[[SMBForcedBeamRedirectTileEntity alloc] init_with_forcedBeamExitDirection:SMBGameBoardTile__direction_left]
+							entityType:SMBGameBoardTile__entityType_beamInteractions
+			  to_gameBoardTilePosition:
+	 [[SMBGameBoardTilePosition alloc] init_with_column:gameBoardTilePosition_section_4_columns_range.location
+													row:floor((NSMaxRange(gameBoardTilePosition_section_4_rows_range) - 1) / 2.0f)]];
+
 	/* Beam rotations. */
 	
 	/* Section 2 1x2 */
@@ -1211,6 +1241,22 @@
 	 [[SMBGameBoardTilePosition alloc] init_with_column:gameBoardTilePosition_section_3_columns_range.location
 													row:gameBoardTilePosition_section_3_rows_range.location + 2]];
 
+	/* Diagonal Mirrors */
+
+	/* Gap between 1 and 4 0x0 */
+	[gameBoard gameBoardTileEntity_add:[[SMBDiagonalMirrorTileEntity alloc] init_with_startingPosition:SMBDiagonalMirrorTileEntity_startingPosition_bottomLeft]
+							entityType:SMBGameBoardTile__entityType_beamInteractions
+			  to_gameBoardTilePosition:
+	 [[SMBGameBoardTilePosition alloc] init_with_column:gameBoardTilePosition_wall_gap_between_sections_1_and_4_columns_range.location
+													row:gameBoardTilePosition_wall_gap_between_sections_1_and_4_rows_range.location]];
+
+	/* Gap between 1 and 4 0x-0 */
+	[gameBoard gameBoardTileEntity_add:[[SMBDiagonalMirrorTileEntity alloc] init_with_startingPosition:SMBDiagonalMirrorTileEntity_startingPosition_topLeft]
+							entityType:SMBGameBoardTile__entityType_beamInteractions
+			  to_gameBoardTilePosition:
+	 [[SMBGameBoardTilePosition alloc] init_with_column:gameBoardTilePosition_wall_gap_between_sections_1_and_4_columns_range.location
+													row:NSMaxRange(gameBoardTilePosition_wall_gap_between_sections_1_and_4_rows_range) - 1]];
+
 	/* Power Buttons. */
 	
 	/* Section 2 1x1 to 3x2 */
@@ -1231,17 +1277,17 @@
 	 [[SMBGameBoardTilePosition alloc] init_with_column:gameBoardTilePosition_section_3_columns_range.location + 1
 													row:NSMaxRange(gameBoardTilePosition_section_3_rows_range) - 1]];
 
-//	/* Section 3 2x-0 to 3x-0 0x0 */
+	/* Section 3 2x-0 to 3x-0 0x0 */
 	[gameBoard gameBoardTileEntity_add_powerButtonTileEntity_with_gameBoardTilePosition_toPower:doorTileEntity_wall_gap_between_sections_1_and_4.gameBoardTile.gameBoardTilePosition
 																	   to_gameBoardTilePosition:
 	 [[SMBGameBoardTilePosition alloc] init_with_column:gameBoardTilePosition_section_3_columns_range.location + 2
 													row:NSMaxRange(gameBoardTilePosition_section_3_rows_range) - 1]];
 
-//	/* Level exit. */
-//	
-//	[gameBoard gameBoardTileEntity_add_levelExit_to_gameBoardTilePosition:
-//	 [[SMBGameBoardTilePosition alloc] init_with_column:[gameBoard gameBoardTiles_numberOfColumns] - 2
-//													row:[gameBoard gameBoardTiles_numberOfRows] - 1]];
+	/* Level exit. */
+	
+	[gameBoard gameBoardTileEntity_add_levelExit_to_gameBoardTilePosition:
+	 [[SMBGameBoardTilePosition alloc] init_with_column:NSMaxRange(gameBoardTilePosition_section_4_columns_range) - 1
+													row:NSMaxRange(gameBoardTilePosition_section_4_rows_range) - 1]];
 	
 	/* Usable game board tile entities. */
 	NSMutableArray<SMBGameBoardTileEntity*>* const gameBoardTileEntities = [NSMutableArray<SMBGameBoardTileEntity*> array];
