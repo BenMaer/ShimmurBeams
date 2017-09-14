@@ -268,7 +268,7 @@
 		return [SMBGameLevel smb_beamCreatorPoweringItself];
 	}
 																						  name:@"Beam creator powering itself"
-																						  hint:@"Powered the beam creator, let it be the only one powering itself, the change its path."]];
+																						  hint:@"Powered the beam creator, let it be the only one powering itself, then change its path."]];
 
 	return
 	[[self alloc] init_with_gameLevelGenerators:[NSArray<SMBGameLevelGenerator*> arrayWithArray:gameLevelGenerators]
