@@ -194,7 +194,7 @@
 	[gameLevelGenerators addObject:[[SMBGameLevelGenerator alloc] init_with_generateLevelBlock:^SMBGameLevel * _Nonnull{
 		return [SMBGameLevel smb_powerButtons_and_doors_powerPlant];
 	}
-																						  name:@"!Button Power Plant"]];
+																						  name:@"Button Power Plant"]];
 
 	return
 	[[self alloc] init_with_gameLevelGenerators:[NSArray<SMBGameLevelGenerator*> arrayWithArray:gameLevelGenerators]
