@@ -23,7 +23,7 @@
 #pragma mark - buttons and doors
 +(nonnull instancetype)smb_powerButtons_and_door_introduction;
 +(nonnull instancetype)smb_powerButtons_and_door_selfPoweredBeamCreator;
-+(nonnull instancetype)smb_powerButtons_and_doors_powerPlant;
 +(nonnull instancetype)smb_powerButtons_and_doors_choices;
++(nonnull instancetype)smb_powerButtons_and_doors_powerPlant;
 
 @end
