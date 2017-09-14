@@ -868,48 +868,58 @@
 	 Beam rotation (direction_rotation: left)
 	 
 	 Sections and entities:
-	 [   ] [PoB] [   ] [   ] [   ] [   ] [   ]
-	 [   ] [PoB] [ 2 ] [   ] [   ] [   ] [   ]
-	 [Fr1] [Br1] [   ] [Bc2] [   ] [   ] [   ]
-	 [Br2] [   ] [Fr2] [   ] [   ] [   ] [   ]
-	 [Wal] [   ] [Wal] [Wal] [Wal] [Wal] [Wal]
-	 [Bc1] [   ] [ 1 ] [Dor] [   ] [   ] [   ]
-	 [Wal] [Dor] [Wal] [Wal] [Wal] [Wal] [Wal]
-	 [   ] [   ] [   ] [   ] [   ] [   ] [   ]
-	 [   ] [Br3] [ 3 ] [   ] [   ] [   ] [   ]
-	 [Br6] [Br4] [Br5] [   ] [   ] [   ] [   ]
-	 [PoB] [PoB] [   ] [Bc3] [   ] [   ] [   ]
+	 [   ] [PoB] [   ] [   ] [Wal] [   ] [   ]
+	 [   ] [PoB] [ 2 ] [   ] [Wal] [   ] [   ]
+	 [Fr1] [Br1] [   ] [Bc2] [Wal] [   ] [   ]
+	 [Br2] [   ] [Fr2] [   ] [Wal] [   ] [   ]
+	 [Wal] [   ] [Wal] [Wal] [   ] [   ] [   ]
+	 [Bc1] [   ] [ 1 ] [Dor] [   ] [   ] [ 4 ]
+	 [Wal] [Dor] [Wal] [Wal] [   ] [   ] [   ]
+	 [   ] [   ] [   ] [   ] [Wal] [   ] [   ]
+	 [   ] [Br3] [ 3 ] [   ] [Wal] [   ] [   ]
+	 [Br6] [Br4] [Br5] [   ] [Wal] [   ] [   ]
+	 [PoB] [PoB] [   ] [Bc3] [Wal] [   ] [   ]
 	 
 	 B[x]	Button [x]
 	 B[x]O	Button [x] Output
 	 
 	 Wiring:
-	 [   ] [B2 ] [   ] [   ] [   ] [   ] [   ]
-	 [   ] [B1 ] [ 2 ] [   ] [   ] [   ] [   ]
-	 [   ] [   ] [   ] [B1O] [   ] [   ] [   ]
-	 [   ] [   ] [   ] [   ] [   ] [   ] [   ]
-	 [Wal] [   ] [Wal] [Wal] [Wal] [Wal] [Wal]
-	 [   ] [   ] [ 1 ] [B4O] [   ] [   ] [   ]
-	 [Wal] [B2O] [Wal] [Wal] [Wal] [Wal] [Wal]
-	 [   ] [   ] [   ] [   ] [   ] [   ] [   ]
-	 [   ] [   ] [ 3 ] [   ] [   ] [   ] [   ]
-	 [   ] [   ] [   ] [   ] [   ] [   ] [   ]
-	 [   ] [B3 ] [B4 ] [B3O] [   ] [   ] [   ]
+	 [   ] [B2 ] [   ] [   ] [Wal] [   ] [   ]
+	 [   ] [B1 ] [ 2 ] [   ] [Wal] [   ] [   ]
+	 [   ] [   ] [   ] [B1O] [Wal] [   ] [   ]
+	 [   ] [   ] [   ] [   ] [Wal] [   ] [   ]
+	 [Wal] [   ] [Wal] [Wal] [   ] [   ] [   ]
+	 [   ] [   ] [ 1 ] [B4O] [   ] [   ] [ 4 ]
+	 [Wal] [B2O] [Wal] [Wal] [   ] [   ] [   ]
+	 [   ] [   ] [   ] [   ] [Wal] [   ] [   ]
+	 [   ] [   ] [ 3 ] [   ] [Wal] [   ] [   ]
+	 [   ] [   ] [   ] [   ] [Wal] [   ] [   ]
+	 [   ] [B3 ] [B4 ] [B3O] [Wal] [   ] [   ]
 	 
 	 */
 
 	/* Initial constants. */
-	
+
+	NSUInteger const sections_1through3_width = 4;
 	NSUInteger const section_2_height = 4;
 	NSUInteger const wall_between_sections_1_and_2_height = 1;
 	NSUInteger const section_1_height = 1;
 	NSUInteger const wall_between_sections_1_and_3_height = 1;
 	NSUInteger const section_3_height = 4;
+	NSUInteger const wall_between_sections_2and3_and_4_width = 1;
+	NSUInteger const section_4_width = 2;
 
 	/* Game board. */
 	
 	SMBGameBoard* const gameBoard =
-	[[SMBGameBoard alloc] init_with_numberOfColumns:7
+	[[SMBGameBoard alloc] init_with_numberOfColumns:
+	 (
+	  sections_1through3_width
+	  +
+	  wall_between_sections_2and3_and_4_width
+	  +
+	  section_4_width
+	 )
 									   numberOfRows:
 	 (section_2_height
 	  +
@@ -929,7 +939,7 @@
 	/* Section 2 */
 	NSRange const gameBoardTilePosition_section_2_columns_range = (NSRange){
 		.location	= 0,
-		.length		= [gameBoard gameBoardTiles_numberOfColumns],
+		.length		= sections_1through3_width,
 	};
 	NSRange const gameBoardTilePosition_section_2_rows_range = (NSRange){
 		.location	= 0,
@@ -957,7 +967,7 @@
 
 	NSRange const gameBoardTilePosition_wall_between_sections_1_and_2_columns_range_2 = (NSRange){
 		.location	= NSMaxRange(gameBoardTilePosition_wall_gap_between_sections_1_and_2_columns_range),
-		.length		= [gameBoard gameBoardTiles_numberOfColumns] - NSMaxRange(gameBoardTilePosition_wall_gap_between_sections_1_and_2_columns_range),
+		.length		= sections_1through3_width - NSMaxRange(gameBoardTilePosition_wall_gap_between_sections_1_and_2_columns_range),
 	};
 	NSRange const gameBoardTilePosition_wall_between_sections_1_and_2_rows_range_2 = (NSRange){
 		.location	= NSMaxRange(gameBoardTilePosition_section_2_rows_range),
@@ -967,7 +977,7 @@
 	/* Section 1 */
 	NSRange const gameBoardTilePosition_section_1_columns_range = (NSRange){
 		.location	= 0,
-		.length		= [gameBoard gameBoardTiles_numberOfColumns],
+		.length		= sections_1through3_width,
 	};
 	NSRange const gameBoardTilePosition_section_1_rows_range = (NSRange){
 		.location	= NSMaxRange(gameBoardTilePosition_wall_between_sections_1_and_2_rows_range_1),
@@ -995,7 +1005,7 @@
 	
 	NSRange const gameBoardTilePosition_wall_between_sections_1_and_3_columns_range_2 = (NSRange){
 		.location	= NSMaxRange(gameBoardTilePosition_wall_gap_between_sections_1_and_3_columns_range),
-		.length		= [gameBoard gameBoardTiles_numberOfColumns] - NSMaxRange(gameBoardTilePosition_wall_gap_between_sections_1_and_3_columns_range),
+		.length		= sections_1through3_width - NSMaxRange(gameBoardTilePosition_wall_gap_between_sections_1_and_3_columns_range),
 	};
 	NSRange const gameBoardTilePosition_wall_between_sections_1_and_3_rows_range_2 = (NSRange){
 		.location	= NSMaxRange(gameBoardTilePosition_section_1_rows_range),
@@ -1005,11 +1015,41 @@
 	/* Section 3 */
 	NSRange const gameBoardTilePosition_section_3_columns_range = (NSRange){
 		.location	= 0,
-		.length		= [gameBoard gameBoardTiles_numberOfColumns],
+		.length		= sections_1through3_width,
 	};
 	NSRange const gameBoardTilePosition_section_3_rows_range = (NSRange){
 		.location	= NSMaxRange(gameBoardTilePosition_wall_between_sections_1_and_3_rows_range_1),
 		.length		= section_3_height,
+	};
+	
+	/* Walls section between sections 2 and 4 */
+	NSRange const gameBoardTilePosition_wall_between_sections_2_and_4_columns_range = (NSRange){
+		.location	= NSMaxRange(gameBoardTilePosition_section_2_columns_range),
+		.length		= wall_between_sections_2and3_and_4_width,
+	};
+	NSRange const gameBoardTilePosition_wall_between_sections_2_and_4_rows_range_1 = (NSRange){
+		.location	= gameBoardTilePosition_section_2_rows_range.location,
+		.length		= gameBoardTilePosition_section_2_rows_range.length,
+	};
+
+	/* Walls section between sections 3 and 4 */
+	NSRange const gameBoardTilePosition_wall_between_sections_3_and_4_columns_range = (NSRange){
+		.location	= NSMaxRange(gameBoardTilePosition_section_3_columns_range),
+		.length		= wall_between_sections_2and3_and_4_width,
+	};
+	NSRange const gameBoardTilePosition_wall_between_sections_3_and_4_rows_range_1 = (NSRange){
+		.location	= gameBoardTilePosition_section_3_rows_range.location,
+		.length		= gameBoardTilePosition_section_3_rows_range.length,
+	};
+
+	/* Section 4 */
+	NSRange const gameBoardTilePosition_section_4_columns_range = (NSRange){
+		.location	= [gameBoard gameBoardTiles_numberOfColumns] - 1 - section_4_width,
+		.length		= section_4_width,
+	};
+	NSRange const gameBoardTilePosition_section_4_rows_range = (NSRange){
+		.location	= 0,
+		.length		= [gameBoard gameBoardTiles_numberOfRows],
 	};
 
 	/* Initial beam creator. */
@@ -1058,6 +1098,24 @@
 								fillRect:YES
 								 columns:gameBoardTilePosition_wall_between_sections_1_and_3_columns_range_2
 									rows:gameBoardTilePosition_wall_between_sections_1_and_3_rows_range_2];
+
+	[gameBoard gameBoardTileEntities_add:
+	 ^SMBGameBoardTileEntity * _Nullable(SMBGameBoardTilePosition * _Nonnull position) {
+		 return [SMBWallTileEntity new];
+	 }
+							  entityType:SMBGameBoardTile__entityType_beamInteractions
+								fillRect:YES
+								 columns:gameBoardTilePosition_wall_between_sections_2_and_4_columns_range
+									rows:gameBoardTilePosition_wall_between_sections_2_and_4_rows_range_1];
+
+	[gameBoard gameBoardTileEntities_add:
+	 ^SMBGameBoardTileEntity * _Nullable(SMBGameBoardTilePosition * _Nonnull position) {
+		 return [SMBWallTileEntity new];
+	 }
+							  entityType:SMBGameBoardTile__entityType_beamInteractions
+								fillRect:YES
+								 columns:gameBoardTilePosition_wall_between_sections_3_and_4_columns_range
+									rows:gameBoardTilePosition_wall_between_sections_3_and_4_rows_range_1];
 
 	/* Un-powered beam creators. */
 	
