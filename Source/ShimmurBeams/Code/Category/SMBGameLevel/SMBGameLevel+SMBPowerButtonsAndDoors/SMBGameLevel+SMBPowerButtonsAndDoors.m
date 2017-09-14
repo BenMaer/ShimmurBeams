@@ -1231,10 +1231,14 @@
 		.location	= NSMaxRange(gameBoardTilePosition_wall_between_sections_1_and_2_columns_range_1),
 		.length		= 1,
 	};
-//	NSRange const gameBoardTilePosition_wall_gap_between_sections_1_and_2_rows_range = (NSRange){
-//		.location	= NSMaxRange(gameBoardTilePosition_section_2_rows_range),
-//		.length		= wall_between_sections_1_and_2_height,
-//	};
+	/*
+	 Commented out because unused.
+
+	NSRange const gameBoardTilePosition_wall_gap_between_sections_1_and_2_rows_range = (NSRange){
+		.location	= NSMaxRange(gameBoardTilePosition_section_2_rows_range),
+		.length		= wall_between_sections_1_and_2_height,
+	};
+	 */
 
 	NSRange const gameBoardTilePosition_wall_between_sections_1_and_2_columns_range_2 = (NSRange){
 		.location	= NSMaxRange(gameBoardTilePosition_wall_gap_between_sections_1_and_2_columns_range),
