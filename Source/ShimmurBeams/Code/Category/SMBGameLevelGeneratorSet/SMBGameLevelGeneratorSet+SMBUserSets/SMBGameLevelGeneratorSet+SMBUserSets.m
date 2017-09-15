@@ -182,9 +182,19 @@
 																						  name:@"Door Introduction"]];
 
 	[gameLevelGenerators addObject:[[SMBGameLevelGenerator alloc] init_with_generateLevelBlock:^SMBGameLevel * _Nonnull{
+		return [SMBGameLevel smb_powerButtons_and_door_selfPoweredBeamCreator];
+	}
+																						  name:@"Self Powered"]];
+
+	[gameLevelGenerators addObject:[[SMBGameLevelGenerator alloc] init_with_generateLevelBlock:^SMBGameLevel * _Nonnull{
 		return [SMBGameLevel smb_powerButtons_and_doors_choices];
 	}
 																						  name:@"Buttons and Doors"]];
+
+	[gameLevelGenerators addObject:[[SMBGameLevelGenerator alloc] init_with_generateLevelBlock:^SMBGameLevel * _Nonnull{
+		return [SMBGameLevel smb_powerButtons_and_doors_powerPlant];
+	}
+																						  name:@"Button Power Plant"]];
 
 	return
 	[[self alloc] init_with_gameLevelGenerators:[NSArray<SMBGameLevelGenerator*> arrayWithArray:gameLevelGenerators]
@@ -228,7 +238,7 @@
 																						  name:@"Beam Creator Group Toggle"]];
 
 	[gameLevelGenerators addObject:[[SMBGameLevelGenerator alloc] init_with_generateLevelBlock:^SMBGameLevel * _Nonnull{
-		return [SMBGameLevel smb_powerSwitches_and_doorGroups_backwardsLane];
+		return [SMBGameLevel smb_powerSwitches_and_doorGroups_deathLane];
 	}
 																						  name:@"Death lane"]];
 
@@ -258,7 +268,7 @@
 		return [SMBGameLevel smb_beamCreatorPoweringItself];
 	}
 																						  name:@"Beam creator powering itself"
-																						  hint:@"Powered the beam creator, let it be the only one powering itself, the change its path."]];
+																						  hint:@"Powered the beam creator, let it be the only one powering itself, then change its path."]];
 
 	return
 	[[self alloc] init_with_gameLevelGenerators:[NSArray<SMBGameLevelGenerator*> arrayWithArray:gameLevelGenerators]

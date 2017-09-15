@@ -170,25 +170,31 @@
 	 Numbers = Sections
 
 	 Entities:
-	 BcP	Beam Creator Powered
+	 Bc[x]	Beam Creator
 	 Exi	Level Exit
 	 Wal	Wall
 	 PoB	Power Button
 	 PoS	Power Switch
-	 BcU	Beam Creator Unpowered
 	 Dor	Door
+
+	 Entity Notes:
+	 - Bc1
+	 *- direction: right
+	 - Bc2
+	 *- direction: right
+	 *- requiresExternalPowerForBeam = YES
 
 	 Usable:
 	 Forced Redirect (direction: up)
 
 	 Sections and entities:
 	 [   ] [   ] [   ] [   ] [   ] [PoS] [   ]
-	 [   ] [BcP] [   ] [ 1 ] [   ] [   ] [PoB]
+	 [   ] [Bc1] [   ] [ 1 ] [   ] [   ] [PoB]
 	 [   ] [   ] [   ] [   ] [   ] [   ] [   ]
 	 [Wal] [Wal] [Wal] [Wal] [Wal] [Wal] [Wal]
 	 [   ] [   ] [   ] [   ] [   ] [Exi] [   ]
 	 [   ] [   ] [   ] [ 2 ] [   ] [Dor] [   ]
-	 [   ] [BcU] [   ] [   ] [   ] [   ] [   ]
+	 [   ] [Bc2] [   ] [   ] [   ] [   ] [   ]
 
 	 S[x]	Switch [x]
 	 S[x]O	Switch [x] Output
@@ -1098,7 +1104,7 @@
 		  usableGameBoardTileEntities:[NSArray<SMBGameBoardTileEntity*> arrayWithArray:gameBoardTileEntities]];
 }
 
-+(nonnull instancetype)smb_powerSwitches_and_doorGroups_backwardsLane
++(nonnull instancetype)smb_powerSwitches_and_doorGroups_deathLane
 {
 	/*
 	 Numbers = Sections

@@ -53,7 +53,9 @@
 	[gameLevelGeneratorSets addObject:[SMBGameLevelGeneratorSet smb_mirrorsAndMeltableBlocks]];
 	[gameLevelGeneratorSets addObject:[SMBGameLevelGeneratorSet smb_powerButtonsAndDoors]];
 	[gameLevelGeneratorSets addObject:[SMBGameLevelGeneratorSet smb_powerSwitchesAndDoorGroups]];
+#if DEBUG
 	[gameLevelGeneratorSets addObject:[SMBGameLevelGeneratorSet smb_unitTests]];
+#endif
 
 	return [NSArray<SMBGameLevelGeneratorSet*> arrayWithArray:gameLevelGeneratorSets];
 }
