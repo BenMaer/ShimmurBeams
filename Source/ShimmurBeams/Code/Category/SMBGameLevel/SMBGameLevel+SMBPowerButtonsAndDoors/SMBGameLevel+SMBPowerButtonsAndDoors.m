@@ -1105,6 +1105,7 @@
 	 *- direction: right
 	 - Bc2
 	 *- direction: left
+	 *- requiresExternalPowerForBeam = YES
 	 - Bc3
 	 *- direction: left
 	 *- requiresExternalPowerForBeam = YES
