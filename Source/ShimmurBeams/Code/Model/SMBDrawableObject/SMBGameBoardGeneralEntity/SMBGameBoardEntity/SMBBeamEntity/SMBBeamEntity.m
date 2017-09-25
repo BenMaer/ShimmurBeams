@@ -103,10 +103,14 @@ typedef NS_ENUM(NSInteger, SMBBeamEntity__drawingPiece) {
 {
 	kRUConditionalReturn_ReturnValueNil(YES, YES);
 
+#if __has_feature(nullability)
 #pragma clang diagnostic push
-#pragma clang diagnostic ignored "-Wno-nullability-completeness"
+#pragma GCC diagnostic ignored "-Wnullability-completeness"
+#endif
 	return [self init_with_gameBoardTilePosition:nil];
+#if __has_feature(nullability)
 #pragma clang diagnostic pop
+#endif
 }
 
 -(nonnull NSString*)description

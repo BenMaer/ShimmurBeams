@@ -39,13 +39,15 @@
 {
 	kRUConditionalReturn_ReturnValueNil(YES, YES);
 
+#if __has_feature(nullability)
 #pragma clang diagnostic push
-#pragma clang diagnostic ignored "-Wno-nullability-completeness"
-
+#pragma GCC diagnostic ignored "-Wnullability-completeness"
+#endif
 	return [self init_with_gameBoard:nil
 		 usableGameBoardTileEntities:nil];
-
+#if __has_feature(nullability)
 #pragma clang diagnostic pop
+#endif
 }
 
 #pragma mark - init
