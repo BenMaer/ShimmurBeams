@@ -35,6 +35,10 @@
 #pragma mark - singleton
 +(nonnull instancetype)sharedInstance;
 
+#if kSMBBeamEntityManager__beamEntity_forMarkingNodesReady_validation_general_enabled
+#pragma mark - beamEntity_forMarkingNodesReady_isNil_validate
+-(void)beamEntity_forMarkingNodesReady_isNil_validate;
+#endif
 @end
 
 

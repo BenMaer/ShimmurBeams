@@ -84,6 +84,14 @@
 #pragma mark - singleton
 RUSingletonUtil_Synthesize_Singleton_Implementation_SharedInstance;
 
+#if kSMBBeamEntityManager__beamEntity_forMarkingNodesReady_validation_general_enabled
+#pragma mark - beamEntity_forMarkingNodesReady_isNil_validate
+-(void)beamEntity_forMarkingNodesReady_isNil_validate
+{
+	NSAssert(self.beamEntity_forMarkingNodesReady == nil, @"when a level is finished, beam entity manager should be done with beam entities.");
+}
+#endif
+
 @end
 
 
