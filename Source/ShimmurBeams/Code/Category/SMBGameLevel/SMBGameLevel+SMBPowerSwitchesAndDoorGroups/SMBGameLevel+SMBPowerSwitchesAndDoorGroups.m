@@ -404,7 +404,7 @@
 	/* Power Switches. */
 
 	/* 3x3 to Door Group 1 */
-	[gameBoard gameBoardTileEntity_add:[[SMBPowerSwitchTileEntity alloc] init_with_outputPowerReceiverCollection:outputPowerReceiverCollections_1_genericPowerOutputTileEntity_OutputPowerReceiverCollection]
+	[gameBoard gameBoardTileEntity_add:[[SMBPowerSwitchTileEntity alloc] init_with_outputPowerReceiver:outputPowerReceiverCollections_1_genericPowerOutputTileEntity_OutputPowerReceiverCollection]
 							entityType:SMBGameBoardTile__entityType_beamInteractions
 			  to_gameBoardTilePosition:
 	 [[SMBGameBoardTilePosition alloc] init_with_column:3
@@ -583,7 +583,7 @@
 													row:gameBoardTilePosition_section_1_rows_range.location]];
 
 	/* Section 1 -1x0 to Door Group 1 */
-	[gameBoard gameBoardTileEntity_add:[[SMBPowerSwitchTileEntity alloc] init_with_outputPowerReceiverCollection:outputPowerReceiverCollections_1_genericPowerOutputTileEntity_OutputPowerReceiverCollection]
+	[gameBoard gameBoardTileEntity_add:[[SMBPowerSwitchTileEntity alloc] init_with_outputPowerReceiver:outputPowerReceiverCollections_1_genericPowerOutputTileEntity_OutputPowerReceiverCollection]
 							entityType:SMBGameBoardTile__entityType_beamInteractions
 			  to_gameBoardTilePosition:
 	 [[SMBGameBoardTilePosition alloc] init_with_column:NSMaxRange(gameBoardTilePosition_section_1_columns_range) - 2
@@ -793,7 +793,7 @@
 	/* Power Switches. */
 
 	/* Section 1 2x0 to Section 1 beamCreatorEntity_unpowered position */
-	[gameBoard gameBoardTileEntity_add:[[SMBPowerSwitchTileEntity alloc] init_with_outputPowerReceiverCollection:outputPowerReceiverCollections_3_genericPowerOutputTileEntity_OutputPowerReceiverCollection]
+	[gameBoard gameBoardTileEntity_add:[[SMBPowerSwitchTileEntity alloc] init_with_outputPowerReceiver:outputPowerReceiverCollections_3_genericPowerOutputTileEntity_OutputPowerReceiverCollection]
 							entityType:SMBGameBoardTile__entityType_beamInteractions
 																	   to_gameBoardTilePosition:
 	 [[SMBGameBoardTilePosition alloc] init_with_column:gameBoardTilePosition_section_1_columns_range.location + 2
@@ -1055,7 +1055,7 @@
 	/* Power Buttons. */
 
 	/* Section 1 -1x1 to Power Collection 4. */
-	[gameBoard gameBoardTileEntity_add:[[SMBPowerButtonTileEntity alloc] init_with_outputPowerReceiverCollection:outputPowerReceiverCollections_4_genericPowerOutputTileEntity_OutputPowerReceiverCollection]
+	[gameBoard gameBoardTileEntity_add:[[SMBPowerButtonTileEntity alloc] init_with_outputPowerReceiver:outputPowerReceiverCollections_4_genericPowerOutputTileEntity_OutputPowerReceiverCollection]
 							entityType:SMBGameBoardTile__entityType_beamInteractions
 			  to_gameBoardTilePosition:
 	 [[SMBGameBoardTilePosition alloc] init_with_column:NSMaxRange(gameBoardTilePosition_section_1_columns_range) - 2
@@ -1064,14 +1064,14 @@
 	/* Power Switches. */
 
 	/* Section 1 2x0 to Section 1 beamCreatorEntity_unpowered position */
-	[gameBoard gameBoardTileEntity_add:[[SMBPowerSwitchTileEntity alloc] init_with_outputPowerReceiverCollection:outputPowerReceiverCollections_3_genericPowerOutputTileEntity_OutputPowerReceiverCollection]
+	[gameBoard gameBoardTileEntity_add:[[SMBPowerSwitchTileEntity alloc] init_with_outputPowerReceiver:outputPowerReceiverCollections_3_genericPowerOutputTileEntity_OutputPowerReceiverCollection]
 							entityType:SMBGameBoardTile__entityType_beamInteractions
 			  to_gameBoardTilePosition:
 	 [[SMBGameBoardTilePosition alloc] init_with_column:gameBoardTilePosition_section_1_columns_range.location + 2
 													row:gameBoardTilePosition_section_1_rows_range.location]];
 
-	/* Section 1 -1x0 to Door Group 1 */
-	[gameBoard gameBoardTileEntity_add:[[SMBPowerSwitchTileEntity alloc] init_with_outputPowerReceiverCollection:outputPowerReceiverCollections_5_genericPowerOutputTileEntity_OutputPowerReceiverCollection]
+	/* Section 1 -1x0 to Power Collection 5. */
+	[gameBoard gameBoardTileEntity_add:[[SMBPowerSwitchTileEntity alloc] init_with_outputPowerReceiver:outputPowerReceiverCollections_5_genericPowerOutputTileEntity_OutputPowerReceiverCollection]
 							entityType:SMBGameBoardTile__entityType_beamInteractions
 			  to_gameBoardTilePosition:
 	 [[SMBGameBoardTilePosition alloc] init_with_column:NSMaxRange(gameBoardTilePosition_section_1_columns_range) - 2
@@ -1329,7 +1329,7 @@
 	/* Power Switches. */
 	
 	/* Section 1 -2x0 to Power Collection 1 */
-	[gameBoard gameBoardTileEntity_add:[[SMBPowerSwitchTileEntity alloc] init_with_outputPowerReceiverCollection:outputPowerReceiverCollections_1_genericPowerOutputTileEntity_OutputPowerReceiverCollection]
+	[gameBoard gameBoardTileEntity_add:[[SMBPowerSwitchTileEntity alloc] init_with_outputPowerReceiver:outputPowerReceiverCollections_1_genericPowerOutputTileEntity_OutputPowerReceiverCollection]
 							entityType:SMBGameBoardTile__entityType_beamInteractions
 			  to_gameBoardTilePosition:
 	 [[SMBGameBoardTilePosition alloc] init_with_column:NSMaxRange(gameBoardTilePosition_section_1_columns_range) - 3

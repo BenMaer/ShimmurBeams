@@ -102,7 +102,7 @@ static void* kSMBGenericPowerOutputTileEntity_OutputPowerReceiver_GameBoardTileP
 	kRUConditionalReturn(powerOutputTileEntity == nil, YES);
 	
 	SMBGameBoardTile__entityType const entityType = SMBGameBoardTile__entityType_many;
-	SMBGameBoardTile* const powerOutputTileEntity_gameBoardTile_appropriate = self.powerOutputTileEntity_gameBoardTile_appropriate;
+	SMBGameBoardTile* const powerOutputTileEntity_gameBoardTile_appropriate = [self powerOutputTileEntity_gameBoardTile_appropriate];
 	if (powerOutputTileEntity_gameBoardTile_appropriate)
 	{
 		NSAssert(powerOutputTileEntity.gameBoardTile == nil, @"should not be set yet.");
@@ -164,7 +164,7 @@ static void* kSMBGenericPowerOutputTileEntity_OutputPowerReceiver_GameBoardTileP
 	[self powerOutputTileEntity_providesPower_update];
 }
 
-#pragma mark - genericPowerOutputTileEntity
+#pragma mark - SMBGenericPowerOutputTileEntity_OutputPowerReceiver: genericPowerOutputTileEntity
 @synthesize outputPowerReceiver_genericPowerOutputTileEntity = _outputPowerReceiver_genericPowerOutputTileEntity;
 -(void)setOutputPowerReceiver_genericPowerOutputTileEntity:(nullable SMBGenericPowerOutputTileEntity*)outputPowerReceiver_genericPowerOutputTileEntity
 {

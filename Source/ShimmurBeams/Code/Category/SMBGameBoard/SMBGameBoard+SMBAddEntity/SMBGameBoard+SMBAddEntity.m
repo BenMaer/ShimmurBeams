@@ -148,7 +148,7 @@
 	NSMutableSet<id<SMBGenericPowerOutputTileEntity_OutputPowerReceiver>>* const outputPowerReceivers = [NSMutableSet<id<SMBGenericPowerOutputTileEntity_OutputPowerReceiver>> set];
 	[outputPowerReceivers addObject:genericPowerOutputTileEntity_OutputPowerReceiver_GameBoardTilePowerProvider];
 
-	[self gameBoardTileEntity_add:[[SMBPowerButtonTileEntity alloc] init_with_outputPowerReceiverCollection:[[SMBGenericPowerOutputTileEntity_OutputPowerReceiverCollection alloc] init_with_outputPowerReceivers:outputPowerReceivers]]
+	[self gameBoardTileEntity_add:[[SMBPowerButtonTileEntity alloc] init_with_outputPowerReceiver:[[SMBGenericPowerOutputTileEntity_OutputPowerReceiverCollection alloc] init_with_outputPowerReceivers:outputPowerReceivers]]
 					   entityType:SMBGameBoardTile__entityType_beamInteractions
 		 to_gameBoardTilePosition:gameBoardTilePosition];
 }
@@ -165,7 +165,7 @@
 	NSMutableSet<id<SMBGenericPowerOutputTileEntity_OutputPowerReceiver>>* const outputPowerReceivers = [NSMutableSet<id<SMBGenericPowerOutputTileEntity_OutputPowerReceiver>> set];
 	[outputPowerReceivers addObject:genericPowerOutputTileEntity_OutputPowerReceiver_GameBoardTilePowerProvider];
 
-	[self gameBoardTileEntity_add:[[SMBPowerSwitchTileEntity alloc] init_with_outputPowerReceiverCollection:[[SMBGenericPowerOutputTileEntity_OutputPowerReceiverCollection alloc] init_with_outputPowerReceivers:outputPowerReceivers]]
+	[self gameBoardTileEntity_add:[[SMBPowerSwitchTileEntity alloc] init_with_outputPowerReceiver:[[SMBGenericPowerOutputTileEntity_OutputPowerReceiverCollection alloc] init_with_outputPowerReceivers:outputPowerReceivers]]
 					   entityType:SMBGameBoardTile__entityType_beamInteractions
 		 to_gameBoardTilePosition:gameBoardTilePosition];
 }

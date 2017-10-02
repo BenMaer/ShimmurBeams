@@ -7,7 +7,7 @@
 //
 
 #import "SMBGenericPowerOutputTileEntity.h"
-#import "SMBGenericPowerOutputTileEntity_OutputPowerReceiverCollection.h"
+#import "SMBGenericPowerOutputTileEntity_OutputPowerReceiver.h"
 
 #import <ResplendentUtilities/RUConditionalReturn.h>
 
@@ -17,9 +17,9 @@
 
 @interface SMBGenericPowerOutputTileEntity ()
 
-#pragma mark - outputPowerReceiverCollection
--(void)outputPowerReceiverCollection_outputPowerReceiver_isPowered_update;
--(void)outputPowerReceiverCollection_outputPowerReceiver_genericPowerOutputTileEntity_update:(BOOL)registerToSelf;
+#pragma mark - outputPowerReceiver
+-(void)outputPowerReceiver_outputPowerReceiver_isPowered_update;
+-(void)outputPowerReceiver_outputPowerReceiver_genericPowerOutputTileEntity_update:(BOOL)registerToSelf;
 
 @end
 
@@ -32,7 +32,7 @@
 #pragma mark - NSObject
 -(void)dealloc
 {
-	[self outputPowerReceiverCollection_outputPowerReceiver_genericPowerOutputTileEntity_update:NO];
+	[self outputPowerReceiver_outputPowerReceiver_genericPowerOutputTileEntity_update:NO];
 }
 
 -(instancetype)init
@@ -43,24 +43,24 @@
 #pragma clang diagnostic push
 #pragma GCC diagnostic ignored "-Wnullability-completeness"
 #endif
-	return [self init_with_outputPowerReceiverCollection:nil];
+	return [self init_with_outputPowerReceiver:nil];
 #if __has_feature(nullability)
 #pragma clang diagnostic pop
 #endif
 }
 
 #pragma mark - init
--(nullable instancetype)init_with_outputPowerReceiverCollection:(nonnull SMBGenericPowerOutputTileEntity_OutputPowerReceiverCollection*)outputPowerReceiverCollection
+-(nullable instancetype)init_with_outputPowerReceiver:(nonnull id<SMBGenericPowerOutputTileEntity_OutputPowerReceiver>)outputPowerReceiver
 {
-	kRUConditionalReturn_ReturnValueNil(outputPowerReceiverCollection == nil, YES);
+	kRUConditionalReturn_ReturnValueNil(outputPowerReceiver == nil, YES);
 
 	if (self = [super init])
 	{
-		_outputPowerReceiverCollection = outputPowerReceiverCollection;
-		[self outputPowerReceiverCollection_outputPowerReceiver_genericPowerOutputTileEntity_update:YES];
+		_outputPowerReceiver = outputPowerReceiver;
+		[self outputPowerReceiver_outputPowerReceiver_genericPowerOutputTileEntity_update:YES];
 
 		[self setProvidesOutputPower:NO];
-		[self outputPowerReceiverCollection_outputPowerReceiver_isPowered_update];
+		[self outputPowerReceiver_outputPowerReceiver_isPowered_update];
 	}
 
 	return self;
@@ -73,27 +73,27 @@
 
 	_providesOutputPower = providesOutputPower;
 
-	[self outputPowerReceiverCollection_outputPowerReceiver_isPowered_update];
+	[self outputPowerReceiver_outputPowerReceiver_isPowered_update];
 }
 
-#pragma mark - outputPowerReceiverCollection
--(void)outputPowerReceiverCollection_outputPowerReceiver_isPowered_update
+#pragma mark - outputPowerReceiver
+-(void)outputPowerReceiver_outputPowerReceiver_isPowered_update
 {
-	SMBGenericPowerOutputTileEntity_OutputPowerReceiverCollection* const outputPowerReceiverCollection = self.outputPowerReceiverCollection;
-	kRUConditionalReturn(outputPowerReceiverCollection == nil, YES);
+	id<SMBGenericPowerOutputTileEntity_OutputPowerReceiver> const outputPowerReceiver = self.outputPowerReceiver;
+	kRUConditionalReturn(outputPowerReceiver == nil, YES);
 
-	[outputPowerReceiverCollection setOutputPowerReceiver_isPowered:self.providesOutputPower];
+	[outputPowerReceiver setOutputPowerReceiver_isPowered:self.providesOutputPower];
 }
 
--(void)outputPowerReceiverCollection_outputPowerReceiver_genericPowerOutputTileEntity_update:(BOOL)registerToSelf
+-(void)outputPowerReceiver_outputPowerReceiver_genericPowerOutputTileEntity_update:(BOOL)registerToSelf
 {
-	SMBGenericPowerOutputTileEntity_OutputPowerReceiverCollection* const outputPowerReceiverCollection = self.outputPowerReceiverCollection;
-	kRUConditionalReturn(outputPowerReceiverCollection == nil, YES);
+	id<SMBGenericPowerOutputTileEntity_OutputPowerReceiver> const outputPowerReceiver = self.outputPowerReceiver;
+	kRUConditionalReturn(outputPowerReceiver == nil, YES);
 
 	SMBGenericPowerOutputTileEntity* const outputPowerReceiver_genericPowerOutputTileEntity = (registerToSelf ? self : nil);
-	kRUConditionalReturn(outputPowerReceiverCollection.outputPowerReceiver_genericPowerOutputTileEntity == outputPowerReceiver_genericPowerOutputTileEntity, YES);
+	kRUConditionalReturn(outputPowerReceiver.outputPowerReceiver_genericPowerOutputTileEntity == outputPowerReceiver_genericPowerOutputTileEntity, YES);
 
-	[outputPowerReceiverCollection setOutputPowerReceiver_genericPowerOutputTileEntity:outputPowerReceiver_genericPowerOutputTileEntity];
+	[outputPowerReceiver setOutputPowerReceiver_genericPowerOutputTileEntity:outputPowerReceiver_genericPowerOutputTileEntity];
 }
 
 @end

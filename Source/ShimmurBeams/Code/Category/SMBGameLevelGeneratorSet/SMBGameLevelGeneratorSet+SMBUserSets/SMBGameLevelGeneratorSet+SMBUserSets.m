@@ -270,6 +270,12 @@
 																						  name:@"Beam creator powering itself"
 																						  hint:@"Powered the beam creator, let it be the only one powering itself, then change its path."]];
 
+	[gameLevelGenerators addObject:[[SMBGameLevelGenerator alloc] init_with_generateLevelBlock:^SMBGameLevel * _Nonnull{
+		return [SMBGameLevel smb_powerToggle_beamEntityManagerStuck];
+	}
+																						  name:@"Power Toggle - Beam Entity Manager Stuck"
+																						  hint:@"Power the switch, see if beam power continues. Leave level to hit unit test."]];
+
 	return
 	[[self alloc] init_with_gameLevelGenerators:[NSArray<SMBGameLevelGenerator*> arrayWithArray:gameLevelGenerators]
 										   name:@"UNIT TESTS"];

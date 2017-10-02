@@ -75,7 +75,7 @@
 	[self genericPowerOutputTileEntity_OutputPowerReceiverCollection_outputPowerReceivers_blacklisted_toggle];
 }
 
-#pragma mark - genericPowerOutputTileEntity
+#pragma mark - SMBGenericPowerOutputTileEntity_OutputPowerReceiver: genericPowerOutputTileEntity
 @synthesize outputPowerReceiver_genericPowerOutputTileEntity = _outputPowerReceiver_genericPowerOutputTileEntity;
 
 #pragma mark - genericPowerOutputTileEntity_OutputPowerReceiverCollection
