@@ -14,16 +14,16 @@
 
 
 
-@interface SMBGenericPowerOutputTileEntity_OutputPowerReceiverCollection : NSObject <SMBGenericPowerOutputTileEntity_OutputPowerReceiver>
+@interface SMBGenericPowerOutputTileEntity_OutputPowerReceiverCollection : SMBGenericPowerOutputTileEntity_OutputPowerReceiver
 
 #pragma mark - outputPowerReceivers_powerIsOppositeOfReceiver
 @property (nonatomic, assign) BOOL outputPowerReceivers_powerIsOppositeOfReceiver;
 
-#pragma mark - outputPowerReceiver
-@property (nonatomic, readonly, copy, nullable) NSSet<id<SMBGenericPowerOutputTileEntity_OutputPowerReceiver>>* outputPowerReceivers;
-@property (nonatomic, copy, nullable) NSSet<id<SMBGenericPowerOutputTileEntity_OutputPowerReceiver>>* outputPowerReceivers_blacklisted;
+#pragma mark - outputPowerReceivers
+@property (nonatomic, readonly, copy, nullable) NSSet<SMBGenericPowerOutputTileEntity_OutputPowerReceiver*>* outputPowerReceivers;
+@property (nonatomic, copy, nullable) NSSet<SMBGenericPowerOutputTileEntity_OutputPowerReceiver*>* outputPowerReceivers_blacklisted;
 
 #pragma mark - init
--(nullable instancetype)init_with_outputPowerReceivers:(nonnull NSSet<id<SMBGenericPowerOutputTileEntity_OutputPowerReceiver>>*)outputPowerReceivers NS_DESIGNATED_INITIALIZER;
+-(nullable instancetype)init_with_outputPowerReceivers:(nonnull NSSet<SMBGenericPowerOutputTileEntity_OutputPowerReceiver*>*)outputPowerReceivers NS_DESIGNATED_INITIALIZER;
 
 @end

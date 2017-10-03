@@ -8,6 +8,8 @@
 
 #import "SMBGenericPowerOutputTileEntity.h"
 #import "SMBGenericPowerOutputTileEntity_OutputPowerReceiver.h"
+#import "SMBGameBoardTile.h"
+#import "SMBGameBoard.h"
 
 #import <ResplendentUtilities/RUConditionalReturn.h>
 
@@ -19,7 +21,7 @@
 
 #pragma mark - outputPowerReceiver
 -(void)outputPowerReceiver_outputPowerReceiver_isPowered_update;
--(void)outputPowerReceiver_outputPowerReceiver_genericPowerOutputTileEntity_update:(BOOL)registerToSelf;
+-(void)outputPowerReceiver_outputPowerReceiver_gameBoard_update:(BOOL)forceClear;
 
 @end
 
@@ -32,7 +34,7 @@
 #pragma mark - NSObject
 -(void)dealloc
 {
-	[self outputPowerReceiver_outputPowerReceiver_genericPowerOutputTileEntity_update:NO];
+	[self outputPowerReceiver_outputPowerReceiver_gameBoard_update:YES];
 }
 
 -(instancetype)init
@@ -50,14 +52,14 @@
 }
 
 #pragma mark - init
--(nullable instancetype)init_with_outputPowerReceiver:(nonnull id<SMBGenericPowerOutputTileEntity_OutputPowerReceiver>)outputPowerReceiver
+-(nullable instancetype)init_with_outputPowerReceiver:(nonnull SMBGenericPowerOutputTileEntity_OutputPowerReceiver*)outputPowerReceiver
 {
 	kRUConditionalReturn_ReturnValueNil(outputPowerReceiver == nil, YES);
 
 	if (self = [super init])
 	{
 		_outputPowerReceiver = outputPowerReceiver;
-		[self outputPowerReceiver_outputPowerReceiver_genericPowerOutputTileEntity_update:YES];
+		[self outputPowerReceiver_outputPowerReceiver_gameBoard_update:NO];
 
 		[self setProvidesOutputPower:NO];
 		[self outputPowerReceiver_outputPowerReceiver_isPowered_update];
@@ -79,21 +81,33 @@
 #pragma mark - outputPowerReceiver
 -(void)outputPowerReceiver_outputPowerReceiver_isPowered_update
 {
-	id<SMBGenericPowerOutputTileEntity_OutputPowerReceiver> const outputPowerReceiver = self.outputPowerReceiver;
+	SMBGenericPowerOutputTileEntity_OutputPowerReceiver* const outputPowerReceiver = self.outputPowerReceiver;
 	kRUConditionalReturn(outputPowerReceiver == nil, YES);
 
-	[outputPowerReceiver setOutputPowerReceiver_isPowered:self.providesOutputPower];
+	[outputPowerReceiver setIsPowered:self.providesOutputPower];
 }
 
--(void)outputPowerReceiver_outputPowerReceiver_genericPowerOutputTileEntity_update:(BOOL)registerToSelf
+-(void)outputPowerReceiver_outputPowerReceiver_gameBoard_update:(BOOL)forceClear
 {
-	id<SMBGenericPowerOutputTileEntity_OutputPowerReceiver> const outputPowerReceiver = self.outputPowerReceiver;
+	SMBGenericPowerOutputTileEntity_OutputPowerReceiver* const outputPowerReceiver = self.outputPowerReceiver;
 	kRUConditionalReturn(outputPowerReceiver == nil, YES);
 
-	SMBGenericPowerOutputTileEntity* const outputPowerReceiver_genericPowerOutputTileEntity = (registerToSelf ? self : nil);
-	kRUConditionalReturn(outputPowerReceiver.outputPowerReceiver_genericPowerOutputTileEntity == outputPowerReceiver_genericPowerOutputTileEntity, YES);
+	SMBGameBoardTile* const gameBoardTile = self.gameBoardTile;
+	kRUConditionalReturn(gameBoardTile == nil, NO);
+	NSAssert(gameBoardTile.gameBoard != nil, @"Should be.");
 
-	[outputPowerReceiver setOutputPowerReceiver_genericPowerOutputTileEntity:outputPowerReceiver_genericPowerOutputTileEntity];
+	[outputPowerReceiver setGameBoard:(forceClear ? nil : self.gameBoardTile.gameBoard)];
+}
+
+#pragma mark - SMBGameBoardTileEntity: gameBoardTile
+-(void)setGameBoardTile:(nullable SMBGameBoardTile*)gameBoardTile
+{
+	SMBGameBoardTile* const gameBoardTile_old = self.gameBoardTile;
+	[super setGameBoardTile:gameBoardTile];
+
+	kRUConditionalReturn(self.gameBoardTile == gameBoardTile_old, NO);
+
+	[self outputPowerReceiver_outputPowerReceiver_gameBoard_update:NO];
 }
 
 @end

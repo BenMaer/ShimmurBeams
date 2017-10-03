@@ -20,7 +20,7 @@
 
 
 
-@interface SMBGenericPowerOutputTileEntity_OutputPowerReceiverCollection_BlacklistToggler : NSObject <SMBGenericPowerOutputTileEntity_OutputPowerReceiver>
+@interface SMBGenericPowerOutputTileEntity_OutputPowerReceiverCollection_BlacklistToggler : SMBGenericPowerOutputTileEntity_OutputPowerReceiver
 
 #pragma mark - genericPowerOutputTileEntity_OutputPowerReceiverCollection
 @property (nonatomic, readonly, strong, nullable) SMBGenericPowerOutputTileEntity_OutputPowerReceiverCollection* genericPowerOutputTileEntity_OutputPowerReceiverCollection;
