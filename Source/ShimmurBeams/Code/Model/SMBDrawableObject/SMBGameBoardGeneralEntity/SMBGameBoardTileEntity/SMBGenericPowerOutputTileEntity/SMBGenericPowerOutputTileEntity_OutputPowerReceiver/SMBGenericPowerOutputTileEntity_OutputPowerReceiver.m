@@ -20,8 +20,8 @@
 @interface SMBGenericPowerOutputTileEntity_OutputPowerReceiver ()
 
 #pragma mark - gameBoard
--(void)gameBoard_removeFrom:(nonnull SMBGameBoard*)gameBoard;
--(void)gameBoard_addTo;
+-(void)gameBoard_removeFrom_ifNecessary:(nonnull SMBGameBoard*)gameBoard;
+-(void)gameBoard_addTo_ifNecessary;
 
 @end
 
@@ -58,26 +58,28 @@
 
 	if (gameBoard_old)
 	{
-		[self gameBoard_removeFrom:gameBoard_old];
+		[self gameBoard_removeFrom_ifNecessary:gameBoard_old];
 	}
 
 	if (gameBoard)
 	{
-		[self gameBoard_addTo];
+		[self gameBoard_addTo_ifNecessary];
 	}
 }
 
--(void)gameBoard_removeFrom:(nonnull SMBGameBoard*)gameBoard
+-(void)gameBoard_removeFrom_ifNecessary:(nonnull SMBGameBoard*)gameBoard
 {
 	kRUConditionalReturn(gameBoard == nil, YES);
+	kRUConditionalReturn([gameBoard.outputPowerReceivers containsObject:self] == false, NO);
 
 	[gameBoard outputPowerReceiver_remove:self];
 }
 
--(void)gameBoard_addTo
+-(void)gameBoard_addTo_ifNecessary
 {
 	SMBGameBoard* const gameBoard = self.gameBoard;
 	kRUConditionalReturn(gameBoard == nil, YES);
+	kRUConditionalReturn([gameBoard.outputPowerReceivers containsObject:self], NO);
 
 	[gameBoard outputPowerReceiver_add:self];
 }
