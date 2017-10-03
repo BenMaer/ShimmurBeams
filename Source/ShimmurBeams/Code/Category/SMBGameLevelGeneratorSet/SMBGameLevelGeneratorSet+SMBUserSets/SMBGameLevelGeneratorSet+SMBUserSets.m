@@ -273,8 +273,8 @@
 	[gameLevelGenerators addObject:[[SMBGameLevelGenerator alloc] init_with_generateLevelBlock:^SMBGameLevel * _Nonnull{
 		return [SMBGameLevel smb_powerToggle_beamEntityManagerStuck];
 	}
-																						  name:@"Power Toggle - Beam Entity Manager Stuck"
-																						  hint:@"Power the switch, see if beam power continues. Leave level to hit unit test."]];
+																						  name:@"Beam Entity Manager Stuck"
+																						  hint:@"Power the button and switch. The unpowered beam creator at -0x-0 should now be powered. Leave level to hit unit test."]];
 
 	return
 	[[self alloc] init_with_gameLevelGenerators:[NSArray<SMBGameLevelGenerator*> arrayWithArray:gameLevelGenerators]
