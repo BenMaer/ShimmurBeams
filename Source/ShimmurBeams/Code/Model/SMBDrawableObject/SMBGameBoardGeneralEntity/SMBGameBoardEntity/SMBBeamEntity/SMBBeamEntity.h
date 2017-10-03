@@ -16,6 +16,7 @@
 @class SMBBeamEntityTileNode;
 @class SMBGameBoardTile;
 @class SMBGameBoardTilePosition;
+@class SMBBeamEntityManager;
 
 
 
@@ -28,6 +29,12 @@
 
 #pragma mark - beamEntityTileNode_initial
 @property (nonatomic, readonly, strong, nullable) SMBBeamEntityTileNode* beamEntityTileNode_initial;
+
+#pragma mark - beamEntityManager
+/**
+ Should only be set internally, or by `SMBBeamEntityManager`.
+ */
+@property (nonatomic, assign, nullable) SMBBeamEntityManager* beamEntityManager;
 
 #pragma mark - beamEntityTileNodes
 /**

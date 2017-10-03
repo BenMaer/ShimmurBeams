@@ -16,6 +16,7 @@
 #import "SMBMutableMappedDataCollection.h"
 #import "NSSet+SMBChanges.h"
 #import "SMBGenericPowerOutputTileEntity_OutputPowerReceiver.h"
+#import "SMBBeamEntityManager.h"
 
 #import <ResplendentUtilities/RUConditionalReturn.h>
 #import <ResplendentUtilities/RUClassOrNilUtil.h>
@@ -527,6 +528,18 @@ static void* kSMBGameBoard__KVOContext = &kSMBGameBoard__KVOContext;
 	[outputPowerReceivers_new removeObject:outputPowerReceiver];
 
 	[self setOutputPowerReceivers:[NSSet<SMBGenericPowerOutputTileEntity_OutputPowerReceiver*> setWithSet:outputPowerReceivers_new]];
+}
+
+#pragma mark - beamEntityManager
+@synthesize beamEntityManager = _beamEntityManager;
+-(nonnull SMBBeamEntityManager*)beamEntityManager
+{
+	if (_beamEntityManager == nil)
+	{
+		_beamEntityManager = [SMBBeamEntityManager new];
+	}
+	
+	return _beamEntityManager;
 }
 
 @end

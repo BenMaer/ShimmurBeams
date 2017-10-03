@@ -74,11 +74,10 @@ typedef NS_ENUM(NSInteger, SMBBeamEntity__drawingPiece) {
 @property (nonatomic, assign) BOOL beamEntityTileNode_mappedDataCollection_toMarkReady_markReadyAndClear_isHappening;
 
 #pragma mark - beamEntityManager
-@property (nonatomic, assign) BOOL beamEntityManager_KVORegistered;
 -(void)beamEntityManager_setKVORegistered:(BOOL)registered;
 -(BOOL)beamEntityManager_beamEntity_forMarkingNodesReady_isSelf;
--(void)beamEntityManager_add_or_remove_self;
--(void)beamEntityManager_update_relationship:(BOOL)shouldBeInQueuedForMarkReady;
+-(void)beamEntityManager_update;
+-(BOOL)beamEntityManager_beamEntity_forMarkingNodesReady_shouldBe;
 
 #pragma mark - node_last
 -(nullable SMBBeamEntityTileNode*)node_last;
@@ -96,7 +95,9 @@ typedef NS_ENUM(NSInteger, SMBBeamEntity__drawingPiece) {
 {
 	[self beamEntityTileNode_initial_removeFromTile];
 	[self beamEntityTileNode_mappedDataCollection_setKVORegistered:NO];
-	[self setBeamEntityManager_KVORegistered:NO];
+
+	NSAssert(self.beamEntityManager == nil, @"Should be");
+	[self setBeamEntityManager:nil];
 }
 
 -(instancetype)init
@@ -363,7 +364,7 @@ typedef NS_ENUM(NSInteger, SMBBeamEntity__drawingPiece) {
 		}
 		else
 		{
-			[self beamEntityManager_add_or_remove_self];
+			[self beamEntityManager_update];
 			[self beamEntityTileNode_mappedDataCollection_toMarkReady_markReadyAndClear];
 		}
 	}
@@ -400,7 +401,7 @@ typedef NS_ENUM(NSInteger, SMBBeamEntity__drawingPiece) {
 {
 	if (context == kSMBBeamEntity__KVOContext)
 	{
-		if (object == [SMBBeamEntityManager sharedInstance])
+		if (object == self.beamEntityManager)
 		{
 			if ([keyPath isEqualToString:[SMBBeamEntityManager_PropertiesForKVO beamEntity_forMarkingNodesReady]])
 			{
@@ -493,7 +494,7 @@ typedef NS_ENUM(NSInteger, SMBBeamEntity__drawingPiece) {
 
 	[self.beamEntityTileNode_mappedDataCollection_toMarkReady mappableObject_add:beamEntityTileNode];
 
-	[self beamEntityManager_add_or_remove_self];
+	[self beamEntityManager_update];
 }
 
 -(void)beamEntityTileNode_mappedDataCollection_toMarkReady_remove:(nonnull SMBBeamEntityTileNode*)beamEntityTileNode
@@ -505,7 +506,7 @@ typedef NS_ENUM(NSInteger, SMBBeamEntity__drawingPiece) {
 
 	[self.beamEntityTileNode_mappedDataCollection_toMarkReady mappableObject_remove:beamEntityTileNode];
 
-	[self beamEntityManager_add_or_remove_self];
+	[self beamEntityManager_update];
 }
 
 #if DEBUG
@@ -527,7 +528,7 @@ typedef NS_ENUM(NSInteger, SMBBeamEntity__drawingPiece) {
 
 	_beamEntityTileNode_mappedDataCollection_toMarkReady_markReadyAndClear_isHappening = beamEntityTileNode_mappedDataCollection_toMarkReady_markReadyAndClear_isHappening;
 
-	[self beamEntityManager_add_or_remove_self];
+	[self beamEntityManager_update];
 
 	if ((self.beamEntityTileNode_mappedDataCollection_toMarkReady_markReadyAndClear_isHappening == false)
 		&&
@@ -565,28 +566,39 @@ typedef NS_ENUM(NSInteger, SMBBeamEntity__drawingPiece) {
 }
 
 #pragma mark - beamEntityManager
--(void)setBeamEntityManager_KVORegistered:(BOOL)beamEntityManager_KVORegistered
+-(void)setBeamEntityManager:(nullable SMBBeamEntityManager*)beamEntityManager
 {
-	kRUConditionalReturn(self.beamEntityManager_KVORegistered == beamEntityManager_KVORegistered, NO);
+	kRUConditionalReturn(self.beamEntityManager == beamEntityManager, NO);
 
-	_beamEntityManager_KVORegistered = beamEntityManager_KVORegistered;
+	[self beamEntityManager_setKVORegistered:NO];
 
-	[self beamEntityManager_setKVORegistered:self.beamEntityManager_KVORegistered];
+	SMBBeamEntityManager* const beamEntityManager_old = self.beamEntityManager;
+	_beamEntityManager = beamEntityManager;
+
+	if (beamEntityManager_old)
+	{
+		[beamEntityManager_old beamEntity_forMarkingNodesReady_remove:self];
+	}
+
+	if (self.beamEntityManager)
+	{
+		[self.beamEntityManager beamEntity_forMarkingNodesReady_add:self];
+	}
+
+	[self beamEntityManager_setKVORegistered:YES];
 }
 
 -(void)beamEntityManager_setKVORegistered:(BOOL)registered
 {
-	kRUConditionalReturn(self.beamEntityManager_KVORegistered != registered, YES);
+	typeof(self.beamEntityManager) const beamEntityManager = self.beamEntityManager;
+	kRUConditionalReturn(beamEntityManager == nil, NO);
 
-	typeof([SMBBeamEntityManager sharedInstance]) const beamEntityManager = [SMBBeamEntityManager sharedInstance];
-	kRUConditionalReturn(beamEntityManager == nil, YES);
-	
 	NSMutableArray<NSString*>* const propertiesToObserve = [NSMutableArray<NSString*> array];
 	[propertiesToObserve addObject:[SMBBeamEntityManager_PropertiesForKVO beamEntity_forMarkingNodesReady]];
-	
+
 	NSMutableDictionary<NSNumber*,NSMutableArray<NSString*>*>* const KVOOptions_to_propertiesToObserve_mapping = [NSMutableDictionary<NSNumber*,NSMutableArray<NSString*>*> dictionary];
 	[KVOOptions_to_propertiesToObserve_mapping setObject:propertiesToObserve forKey:@(0)];
-	
+
 	[KVOOptions_to_propertiesToObserve_mapping enumerateKeysAndObjectsUsingBlock:^(NSNumber * _Nonnull KVOOptions_number, NSMutableArray<NSString *> * _Nonnull propertiesToObserve, BOOL * _Nonnull stop) {
 		[propertiesToObserve enumerateObjectsUsingBlock:^(NSString * _Nonnull propertyToObserve, NSUInteger idx, BOOL * _Nonnull stop) {
 			if (registered)
@@ -608,14 +620,16 @@ typedef NS_ENUM(NSInteger, SMBBeamEntity__drawingPiece) {
 
 -(BOOL)beamEntityManager_beamEntity_forMarkingNodesReady_isSelf
 {
-	return ([SMBBeamEntityManager sharedInstance].beamEntity_forMarkingNodesReady == self);
+	return (self.beamEntityManager.beamEntity_forMarkingNodesReady == self);
 }
 
--(void)beamEntityManager_add_or_remove_self
+-(void)beamEntityManager_update
 {
-	SMBBeamEntityManager* const beamEntityManager = [SMBBeamEntityManager sharedInstance];
-	kRUConditionalReturn(beamEntityManager == nil, YES);
-	
+	[self setBeamEntityManager:([self beamEntityManager_beamEntity_forMarkingNodesReady_shouldBe] ? self.gameBoard.beamEntityManager : nil)];
+}
+
+-(BOOL)beamEntityManager_beamEntity_forMarkingNodesReady_shouldBe
+{
 	/*
 	 We should be in the queue if:
 	 1.		We have at least one beam node to mark ready.
@@ -623,7 +637,7 @@ typedef NS_ENUM(NSInteger, SMBBeamEntity__drawingPiece) {
 	 3.		We are already in the queue, and:
 	 3.1	We are currently updating the nodes.
 	 */
-	BOOL const beamEntityManager_self_shouldExist =
+	return
 	((self.beamEntityTileNode_mappedDataCollection_toMarkReady.uniqueKey_to_mappableObject_mapping.count > 0) /* 1. */
 	 ||
 	 (self.beamEntityTileNode_mappedDataCollection_toMarkReady_markReadyAndClear_isHappening) /* 2. */
@@ -633,29 +647,6 @@ typedef NS_ENUM(NSInteger, SMBBeamEntity__drawingPiece) {
 	  self.beamEntityTileNode_mappedDataCollection_node_next_isUpdating /* 3.1 */
 	  )
 	 );
-
-	[self beamEntityManager_update_relationship:beamEntityManager_self_shouldExist];
-}
-
--(void)beamEntityManager_update_relationship:(BOOL)shouldBeInQueuedForMarkReady
-{
-	SMBBeamEntityManager* const beamEntityManager = [SMBBeamEntityManager sharedInstance];
-	kRUConditionalReturn(beamEntityManager == nil, YES);
-
-	BOOL const beamEntityManager_self_exists = [beamEntityManager beamEntity_forMarkingNodesReady_exists:self];
-
-	kRUConditionalReturn(beamEntityManager_self_exists == shouldBeInQueuedForMarkReady, NO);
-
-	[self setBeamEntityManager_KVORegistered:shouldBeInQueuedForMarkReady];
-
-	if (shouldBeInQueuedForMarkReady)
-	{
-		[[SMBBeamEntityManager sharedInstance] beamEntity_forMarkingNodesReady_add:self];
-	}
-	else
-	{
-		[[SMBBeamEntityManager sharedInstance] beamEntity_forMarkingNodesReady_remove:self];
-	}
 }
 
 #pragma mark - node_last
@@ -672,13 +663,9 @@ typedef NS_ENUM(NSInteger, SMBBeamEntity__drawingPiece) {
 
 	kRUConditionalReturn(gameBoard_old == gameBoard, NO);
 
-	if (gameBoard == nil)
-	{
-		[self beamEntityManager_update_relationship:NO];
-	}
-
 	[self beamEntityTileNode_initial_gameBoardTile_update];
 	[self beamEntityTileNode_mappedDataCollection_toMarkReady_markReadyAndClear];
+	[self beamEntityManager_update];
 }
 
 @end

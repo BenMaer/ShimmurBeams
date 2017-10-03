@@ -80,10 +80,6 @@ static void* kSMBGameLevelView__KVOContext = &kSMBGameLevelView__KVOContext;
 -(void)dealloc
 {
 	[self gameBoardTileEntityPickerView_setKVORegistered:NO];
-	
-#if kSMBGameLevelView__beamEntityManager_beamEntity_forMarkingNodesReady_validation_enabled
-	[[SMBBeamEntityManager sharedInstance] beamEntity_forMarkingNodesReady_isNil_validate];
-#endif
 }
 
 #pragma mark - UIView
@@ -147,7 +143,7 @@ static void* kSMBGameLevelView__KVOContext = &kSMBGameLevelView__KVOContext;
 	[self.gameBoardView setGameBoard:self.gameLevel.gameBoard];
 
 #if kSMBGameLevelView__beamEntityManager_beamEntity_forMarkingNodesReady_validation_enabled
-	[[SMBBeamEntityManager sharedInstance] beamEntity_forMarkingNodesReady_isNil_validate];
+	[self.gameLevel.gameBoard.beamEntityManager beamEntity_forMarkingNodesReady_isNil_validate];
 #endif
 }
 
@@ -344,7 +340,7 @@ static void* kSMBGameLevelView__KVOContext = &kSMBGameLevelView__KVOContext;
 	[self.gameBoardTileEntityPickerView setSelectedGameBoardTileEntity:gameBoardTileEntity];
 	
 #if kSMBGameLevelView__beamEntityManager_beamEntity_forMarkingNodesReady_validation_enabled
-	[[SMBBeamEntityManager sharedInstance] beamEntity_forMarkingNodesReady_isNil_validate];
+	[self.gameLevel.gameBoard.beamEntityManager beamEntity_forMarkingNodesReady_isNil_validate];
 #endif
 }
 
