@@ -24,8 +24,8 @@
 
 /* SMBGameLevelGeneratorViewController. */
 
-#define kSMBBeamEntityManager__beamEntity_forMarkingNodesReady_validation_general_enabled (kSMBEnvironment__validations_general_enable && 1)
-#define kSMBEnvironment__SMBGameLevelView_beamEntityManager_beamEntity_forMarkingNodesReady_validation_enabled (kSMBBeamEntityManager__beamEntity_forMarkingNodesReady_validation_general_enabled && 1)
+#define kSMBEnvironment__SMBBeamEntityManager__beamEntity_forMarkingNodesReady_validation_general_enabled (kSMBEnvironment__validations_general_enable && 1)
+#define kSMBEnvironment__SMBGameLevelView_beamEntityManager_beamEntity_forMarkingNodesReady_validation_enabled (kSMBEnvironment__validations_general_enable && 1)
 
 
 

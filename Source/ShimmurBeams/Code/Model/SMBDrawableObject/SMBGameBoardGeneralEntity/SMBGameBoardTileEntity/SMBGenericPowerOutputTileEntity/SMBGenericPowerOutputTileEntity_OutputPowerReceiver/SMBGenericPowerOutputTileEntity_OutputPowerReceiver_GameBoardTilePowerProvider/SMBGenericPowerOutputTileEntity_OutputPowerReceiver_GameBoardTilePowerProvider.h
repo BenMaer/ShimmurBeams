@@ -20,7 +20,7 @@
 
 
 
-@interface SMBGenericPowerOutputTileEntity_OutputPowerReceiver_GameBoardTilePowerProvider : NSObject <SMBGenericPowerOutputTileEntity_OutputPowerReceiver>
+@interface SMBGenericPowerOutputTileEntity_OutputPowerReceiver_GameBoardTilePowerProvider : SMBGenericPowerOutputTileEntity_OutputPowerReceiver
 
 #pragma mark - gameBoardTilePosition_toPower
 @property (nonatomic, readonly, strong, nullable) SMBGameBoardTilePosition* gameBoardTilePosition_toPower;
