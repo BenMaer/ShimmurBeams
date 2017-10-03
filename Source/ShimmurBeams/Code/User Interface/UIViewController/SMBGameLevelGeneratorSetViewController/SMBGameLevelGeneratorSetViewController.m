@@ -192,7 +192,7 @@
 	if (gameLevelGeneratorSet_levelIndex_new < gameLevelGenerators.count)
 	{
 		__weak typeof(self) const self_weak = self;
-		void (^actionBlock)() = ^(){
+		void (^actionBlock)(void) = ^(void){
 			[self_weak setGameLevelGeneratorSet_levelIndex:gameLevelGeneratorSet_levelIndex_new];
 		};
 
@@ -234,7 +234,7 @@
 	else
 	{
 		__weak typeof(self) const self_weak = self;
-		void (^actionBlock)() = ^(){
+		void (^actionBlock)(void) = ^(void){
 			[self_weak.navigationController popToViewController:self_weak animated:YES];
 		};
 

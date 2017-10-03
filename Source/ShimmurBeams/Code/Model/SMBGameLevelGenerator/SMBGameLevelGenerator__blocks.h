@@ -19,7 +19,7 @@
 
 
 
-typedef SMBGameLevel* _Nonnull (^SMBGameLevelGenerator__generateLevelBlock)();
+typedef SMBGameLevel* _Nonnull (^SMBGameLevelGenerator__generateLevelBlock)(void);
 
 
 

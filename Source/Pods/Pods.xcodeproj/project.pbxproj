@@ -335,7 +335,7 @@
 		1432A24479F6900528890D38997F9BFB /* RUHorizontalTitlePagingViewCollectionViewCell.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = RUHorizontalTitlePagingViewCollectionViewCell.h; path = Pod/Classes/View/HorizontalTitlePagingView/RUHorizontalTitlePagingViewCollectionViewCell.h; sourceTree = "<group>"; };
 		16BEB1F08C676C8460DDEBB4F05B3AE3 /* ResplendentUtilities-prefix.pch */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = "ResplendentUtilities-prefix.pch"; sourceTree = "<group>"; };
 		17BDDCB3AE2BBD04EBEBD04D3B28F202 /* RUNavigationControllerDelegate_navbarColorSetter.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; name = RUNavigationControllerDelegate_navbarColorSetter.m; path = Pod/Classes/Objects/NavigationControllerDelegate_navbarColorSetter/RUNavigationControllerDelegate_navbarColorSetter.m; sourceTree = "<group>"; };
-		17DA05EC9D62DEF78835D857B458F35A /* libPods-ShimmurBeams.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; name = "libPods-ShimmurBeams.a"; path = "libPods-ShimmurBeams.a"; sourceTree = BUILT_PRODUCTS_DIR; };
+		17DA05EC9D62DEF78835D857B458F35A /* libPods-ShimmurBeams.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-ShimmurBeams.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		198E65E2319C90A859549AE2CBACEFED /* UIColor+RUUtility.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = "UIColor+RUUtility.h"; path = "Pod/Classes/Category/UIColor/UIColor+RUUtility.h"; sourceTree = "<group>"; };
 		19DE04BB03F1B3424CF445635C9B45A7 /* UIView+RUViewHierarchyUtility.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; name = "UIView+RUViewHierarchyUtility.m"; path = "Pod/Classes/Category/UIView/UIView+RUViewHierarchyUtility.m"; sourceTree = "<group>"; };
 		1B6B942CD12A15F0072C0FE33A408149 /* RUCreateDestroyViewSynthesization.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = RUCreateDestroyViewSynthesization.h; path = Pod/Classes/Misc/RUCreateDestroyViewSynthesization.h; sourceTree = "<group>"; };
@@ -355,7 +355,7 @@
 		2DE62FE60677BC00A3D1AA8D714C976C /* CALayer+RUCornerRadius.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = "CALayer+RUCornerRadius.h"; path = "Pod/Classes/Category/CALayer/CALayer+RUCornerRadius/CALayer+RUCornerRadius.h"; sourceTree = "<group>"; };
 		2E4E7A534E65758E4CF95A57AB2001AE /* Pods-ShimmurBeams-acknowledgements.markdown */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text; path = "Pods-ShimmurBeams-acknowledgements.markdown"; sourceTree = "<group>"; };
 		304A71017F0B2298F5099AC7568EDAD7 /* RUDebug.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = RUDebug.h; path = Pod/Classes/Misc/RUDebug.h; sourceTree = "<group>"; };
-		31B5F7286841343645329251EBBAE4D2 /* libUIImage+SVG.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; name = "libUIImage+SVG.a"; path = "libUIImage+SVG.a"; sourceTree = BUILT_PRODUCTS_DIR; };
+		31B5F7286841343645329251EBBAE4D2 /* libUIImage+SVG.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libUIImage+SVG.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		323193012E450BFB8864E312B8B679F0 /* Pods-ShimmurBeams-acknowledgements.plist */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.plist.xml; path = "Pods-ShimmurBeams-acknowledgements.plist"; sourceTree = "<group>"; };
 		32D40945BD57ADC144F38BAFCB7AD7B4 /* UIView+RUCancelControlTracking.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; name = "UIView+RUCancelControlTracking.m"; path = "Pod/Classes/Category/UIView/UIView+RUCancelControlTracking.m"; sourceTree = "<group>"; };
 		33B25A1A1E1068D0AC04CB75E13639A0 /* RUColorPickerCell.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; name = RUColorPickerCell.m; path = Pod/Classes/View/ColorPicker/RUColorPickerCell.m; sourceTree = "<group>"; };
@@ -471,9 +471,9 @@
 		91809BE0437AEB5DB05B252B3DE229B3 /* UIView+RUSubviews.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = "UIView+RUSubviews.h"; path = "Pod/Classes/Category/UIView/UIView+RUSubviews.h"; sourceTree = "<group>"; };
 		91B7AB4D4BD4D4D90CA4D4E8B1A1798A /* UIButton+RUAsynchronousImageFetching.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; name = "UIButton+RUAsynchronousImageFetching.m"; path = "Pod/Classes/View/ImageFetching/UIButton+RUAsynchronousImageFetching.m"; sourceTree = "<group>"; };
 		92571207FB4B3FC9D68A375E326DDF2D /* RUKeyboardAdjustmentHelperProtocols.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = RUKeyboardAdjustmentHelperProtocols.h; path = Pod/Classes/Objects/KeyboardAdjustmentHelper/RUKeyboardAdjustmentHelperProtocols.h; sourceTree = "<group>"; };
-		92D8E04C20BD71BBCDF5D640292B9357 /* libRaptureXML.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; name = libRaptureXML.a; path = libRaptureXML.a; sourceTree = BUILT_PRODUCTS_DIR; };
+		92D8E04C20BD71BBCDF5D640292B9357 /* libRaptureXML.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libRaptureXML.a; sourceTree = BUILT_PRODUCTS_DIR; };
 		92F7EC18BABDE987A327BF7569A6F6AD /* UIView+RUSubviews.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; name = "UIView+RUSubviews.m"; path = "Pod/Classes/Category/UIView/UIView+RUSubviews.m"; sourceTree = "<group>"; };
-		93A4A3777CF96A4AAC1D13BA6DCCEA73 /* Podfile */ = {isa = PBXFileReference; explicitFileType = text.script.ruby; includeInIndex = 1; lastKnownFileType = text; name = Podfile; path = ../Podfile; sourceTree = SOURCE_ROOT; xcLanguageSpecificationIdentifier = xcode.lang.ruby; };
+		93A4A3777CF96A4AAC1D13BA6DCCEA73 /* Podfile */ = {isa = PBXFileReference; explicitFileType = text.script.ruby; includeInIndex = 1; name = Podfile; path = ../Podfile; sourceTree = SOURCE_ROOT; xcLanguageSpecificationIdentifier = xcode.lang.ruby; };
 		94D954F5F68BA53B69F9E56376203976 /* UIImage+RUDebug.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = "UIImage+RUDebug.h"; path = "Pod/Classes/Category/UIImage/UIImage+RUDebug.h"; sourceTree = "<group>"; };
 		95D99B59AA8D983FF6BF6F91B845CEB0 /* UIApplication+RUOpenUrl.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; name = "UIApplication+RUOpenUrl.m"; path = "Pod/Classes/Category/UIApplication/UIApplication+RUOpenUrl.m"; sourceTree = "<group>"; };
 		97258BE9076DE1B4E64AB4794A38CCC8 /* UIView+RUSpinner.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; name = "UIView+RUSpinner.m"; path = "Pod/Classes/Category/UIView/UIView+RUSpinner.m"; sourceTree = "<group>"; };
@@ -500,7 +500,7 @@
 		A65C61935237CD87D30E00FF6513B661 /* RUDeallocHook.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = RUDeallocHook.h; path = Pod/Classes/Objects/RUDeallocHook.h; sourceTree = "<group>"; };
 		A71DEC47FE6AEA483FAE65C1935EC9CB /* CAShapeLayer+RUMessageBox.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; name = "CAShapeLayer+RUMessageBox.m"; path = "Pod/Classes/Category/CALayer/CAShapeLayer/CAShapeLayer+RUMessageBox/CAShapeLayer+RUMessageBox.m"; sourceTree = "<group>"; };
 		ABB33AC0969520AF36E41B7B870D7086 /* UIView+RUSuperviews.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; name = "UIView+RUSuperviews.m"; path = "Pod/Classes/Category/UIView/UIView+RUSuperviews.m"; sourceTree = "<group>"; };
-		ABF051B0A67BF72C38CD22493DF18AE6 /* libResplendentUtilities.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; name = libResplendentUtilities.a; path = libResplendentUtilities.a; sourceTree = BUILT_PRODUCTS_DIR; };
+		ABF051B0A67BF72C38CD22493DF18AE6 /* libResplendentUtilities.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libResplendentUtilities.a; sourceTree = BUILT_PRODUCTS_DIR; };
 		AD3C04269559AFE89F4F1850B723980D /* NSURL+RUQueryParams.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = "NSURL+RUQueryParams.h"; path = "Pod/Classes/Category/NSURL/NSURL+RUQueryParams.h"; sourceTree = "<group>"; };
 		AE445B6FB43D393C8C6C0C0E424ACE36 /* NSPredicate+RUUtil.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; name = "NSPredicate+RUUtil.m"; path = "Pod/Classes/Category/NSPredicate+RUUtil.m"; sourceTree = "<group>"; };
 		AE47292B288853E91A728CA1BA5C3195 /* UIImage+SVG.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; name = "UIImage+SVG.m"; path = "Classes/UIImage+SVG.m"; sourceTree = "<group>"; };
@@ -636,7 +636,6 @@
 				E69CF839F62ADEC0CD9E7C5B76DE9998 /* RXMLElement.m */,
 				787C4321720E74333201FA7954E6D757 /* Support Files */,
 			);
-			name = RaptureXML;
 			path = RaptureXML;
 			sourceTree = "<group>";
 		};
@@ -963,7 +962,6 @@
 				68E7702096652FE95CE8E591E306291D /* UIViewController+RUStatusBarHeight.m */,
 				9CC15AE4488441F69939BA0B4A41D087 /* Support Files */,
 			);
-			name = ResplendentUtilities;
 			path = ResplendentUtilities;
 			sourceTree = "<group>";
 		};
@@ -989,7 +987,6 @@
 				AE47292B288853E91A728CA1BA5C3195 /* UIImage+SVG.m */,
 				765843E3796F4C5FCD72B99DDF288337 /* Support Files */,
 			);
-			name = "UIImage+SVG";
 			path = "UIImage+SVG";
 			sourceTree = "<group>";
 		};
@@ -1272,7 +1269,7 @@
 			isa = PBXProject;
 			attributes = {
 				LastSwiftUpdateCheck = 0830;
-				LastUpgradeCheck = 0700;
+				LastUpgradeCheck = 0900;
 			};
 			buildConfigurationList = 2D8E8EC45A3A1A1D94AE762CB5028504 /* Build configuration list for PBXProject "Pods" */;
 			compatibilityVersion = "Xcode 3.2";
@@ -1481,7 +1478,7 @@
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
 				GCC_NO_COMMON_BLOCKS = YES;
 				GCC_PREFIX_HEADER = "Target Support Files/ResplendentUtilities/ResplendentUtilities-prefix.pch";
-				IPHONEOS_DEPLOYMENT_TARGET = 6.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				MTL_ENABLE_DEBUG_INFO = YES;
 				OTHER_LDFLAGS = "";
 				OTHER_LIBTOOLFLAGS = "";
@@ -1504,7 +1501,7 @@
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
 				GCC_NO_COMMON_BLOCKS = YES;
 				GCC_PREFIX_HEADER = "Target Support Files/RaptureXML/RaptureXML-prefix.pch";
-				IPHONEOS_DEPLOYMENT_TARGET = 4.3;
+				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				MTL_ENABLE_DEBUG_INFO = YES;
 				OTHER_LDFLAGS = "";
 				OTHER_LIBTOOLFLAGS = "";
@@ -1526,7 +1523,9 @@
 				CLANG_CXX_LIBRARY = "libc++";
 				CLANG_ENABLE_MODULES = YES;
 				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
 				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
 				CLANG_WARN_CONSTANT_CONVERSION = YES;
 				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES;
 				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
@@ -1534,15 +1533,21 @@
 				CLANG_WARN_ENUM_CONVERSION = YES;
 				CLANG_WARN_INFINITE_RECURSION = YES;
 				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
 				CLANG_WARN_OBJC_ROOT_CLASS = YES;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
 				CLANG_WARN_SUSPICIOUS_MOVE = YES;
 				CLANG_WARN_UNREACHABLE_CODE = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
 				CODE_SIGNING_REQUIRED = NO;
 				COPY_PHASE_STRIP = NO;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
 				ENABLE_TESTABILITY = YES;
 				GCC_C_LANGUAGE_STANDARD = gnu99;
 				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_NO_COMMON_BLOCKS = YES;
 				GCC_OPTIMIZATION_LEVEL = 0;
 				GCC_PREPROCESSOR_DEFINITIONS = (
 					"POD_CONFIGURATION_DEBUG=1",
@@ -1598,7 +1603,7 @@
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
 				GCC_NO_COMMON_BLOCKS = YES;
 				GCC_PREFIX_HEADER = "Target Support Files/UIImage+SVG/UIImage+SVG-prefix.pch";
-				IPHONEOS_DEPLOYMENT_TARGET = 6.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				MTL_ENABLE_DEBUG_INFO = YES;
 				OTHER_LDFLAGS = "";
 				OTHER_LIBTOOLFLAGS = "";
@@ -1621,7 +1626,7 @@
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
 				GCC_NO_COMMON_BLOCKS = YES;
 				GCC_PREFIX_HEADER = "Target Support Files/ResplendentUtilities/ResplendentUtilities-prefix.pch";
-				IPHONEOS_DEPLOYMENT_TARGET = 6.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				MTL_ENABLE_DEBUG_INFO = NO;
 				OTHER_LDFLAGS = "";
 				OTHER_LIBTOOLFLAGS = "";
@@ -1667,7 +1672,7 @@
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
 				GCC_NO_COMMON_BLOCKS = YES;
 				GCC_PREFIX_HEADER = "Target Support Files/UIImage+SVG/UIImage+SVG-prefix.pch";
-				IPHONEOS_DEPLOYMENT_TARGET = 6.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				MTL_ENABLE_DEBUG_INFO = NO;
 				OTHER_LDFLAGS = "";
 				OTHER_LIBTOOLFLAGS = "";
@@ -1689,7 +1694,9 @@
 				CLANG_CXX_LIBRARY = "libc++";
 				CLANG_ENABLE_MODULES = YES;
 				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
 				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
 				CLANG_WARN_CONSTANT_CONVERSION = YES;
 				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES;
 				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
@@ -1697,14 +1704,20 @@
 				CLANG_WARN_ENUM_CONVERSION = YES;
 				CLANG_WARN_INFINITE_RECURSION = YES;
 				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
 				CLANG_WARN_OBJC_ROOT_CLASS = YES;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
 				CLANG_WARN_SUSPICIOUS_MOVE = YES;
 				CLANG_WARN_UNREACHABLE_CODE = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
 				CODE_SIGNING_REQUIRED = NO;
 				COPY_PHASE_STRIP = YES;
 				ENABLE_NS_ASSERTIONS = NO;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
 				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_NO_COMMON_BLOCKS = YES;
 				GCC_PREPROCESSOR_DEFINITIONS = (
 					"POD_CONFIGURATION_RELEASE=1",
 					"$(inherited)",
@@ -1734,7 +1747,7 @@
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
 				GCC_NO_COMMON_BLOCKS = YES;
 				GCC_PREFIX_HEADER = "Target Support Files/RaptureXML/RaptureXML-prefix.pch";
-				IPHONEOS_DEPLOYMENT_TARGET = 4.3;
+				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				MTL_ENABLE_DEBUG_INFO = NO;
 				OTHER_LDFLAGS = "";
 				OTHER_LIBTOOLFLAGS = "";
