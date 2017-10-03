@@ -8,6 +8,8 @@
 
 #import <Foundation/Foundation.h>
 
+#define kSMBBeamEntityManager__beamEntity_forMarkingNodesReady_validation_general_enabled (kSMBEnvironment__SMBBeamEntityManager__beamEntity_forMarkingNodesReady_validation_general_enabled && 1)
+
 
 
 
@@ -32,8 +34,10 @@
 -(void)beamEntity_forMarkingNodesReady_remove:(nonnull SMBBeamEntity*)beamEntity;
 -(BOOL)beamEntity_forMarkingNodesReady_exists:(nonnull SMBBeamEntity*)beamEntity;
 
-#pragma mark - singleton
-+(nonnull instancetype)sharedInstance;
+#if kSMBBeamEntityManager__beamEntity_forMarkingNodesReady_validation_general_enabled
+#pragma mark - beamEntity_forMarkingNodesReady_isNil_validate
+-(void)beamEntity_forMarkingNodesReady_isNil_validate;
+#endif
 
 @end
 

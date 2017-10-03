@@ -18,7 +18,14 @@
  */
 #define kSMBEnvironment__validations_general_enable (DEBUG && 1)
 
+/* SMBGameBoardTileEntity. */
+
 #define kSMBEnvironment__SMBGameBoardTileEntity_gameBoardTileOwnership_validation_enabled (kSMBEnvironment__validations_general_enable && 1)
+
+/* SMBGameLevelGeneratorViewController. */
+
+#define kSMBEnvironment__SMBBeamEntityManager__beamEntity_forMarkingNodesReady_validation_general_enabled (kSMBEnvironment__validations_general_enable && 1)
+#define kSMBEnvironment__SMBGameLevelView_beamEntityManager_beamEntity_forMarkingNodesReady_validation_enabled (kSMBEnvironment__validations_general_enable && 1)
 
 
 

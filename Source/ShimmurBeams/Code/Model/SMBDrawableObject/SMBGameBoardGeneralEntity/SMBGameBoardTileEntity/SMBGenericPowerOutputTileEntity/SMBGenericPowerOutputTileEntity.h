@@ -12,7 +12,7 @@
 
 
 
-@class SMBGenericPowerOutputTileEntity_OutputPowerReceiverCollection;
+@class SMBGenericPowerOutputTileEntity_OutputPowerReceiver;
 
 
 
@@ -23,10 +23,10 @@
 #pragma mark - providesOutputPower
 @property (nonatomic, assign) BOOL providesOutputPower;
 
-#pragma mark - outputPowerReceiverCollection
-@property (nonatomic, readonly, strong, nullable) SMBGenericPowerOutputTileEntity_OutputPowerReceiverCollection* outputPowerReceiverCollection;
+#pragma mark - outputPowerReceiver
+@property (nonatomic, readonly, strong, nullable) SMBGenericPowerOutputTileEntity_OutputPowerReceiver* outputPowerReceiver;
 
 #pragma mark - init
--(nullable instancetype)init_with_outputPowerReceiverCollection:(nonnull SMBGenericPowerOutputTileEntity_OutputPowerReceiverCollection*)outputPowerReceiverCollection NS_DESIGNATED_INITIALIZER;
+-(nullable instancetype)init_with_outputPowerReceiver:(nonnull SMBGenericPowerOutputTileEntity_OutputPowerReceiver*)outputPowerReceiver NS_DESIGNATED_INITIALIZER;
 
 @end

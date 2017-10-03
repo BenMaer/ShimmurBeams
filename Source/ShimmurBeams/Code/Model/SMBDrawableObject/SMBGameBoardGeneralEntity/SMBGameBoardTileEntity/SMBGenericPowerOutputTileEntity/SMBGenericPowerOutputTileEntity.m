@@ -7,7 +7,9 @@
 //
 
 #import "SMBGenericPowerOutputTileEntity.h"
-#import "SMBGenericPowerOutputTileEntity_OutputPowerReceiverCollection.h"
+#import "SMBGenericPowerOutputTileEntity_OutputPowerReceiver.h"
+#import "SMBGameBoardTile.h"
+#import "SMBGameBoard.h"
 
 #import <ResplendentUtilities/RUConditionalReturn.h>
 
@@ -17,9 +19,9 @@
 
 @interface SMBGenericPowerOutputTileEntity ()
 
-#pragma mark - outputPowerReceiverCollection
--(void)outputPowerReceiverCollection_outputPowerReceiver_isPowered_update;
--(void)outputPowerReceiverCollection_outputPowerReceiver_genericPowerOutputTileEntity_update:(BOOL)registerToSelf;
+#pragma mark - outputPowerReceiver
+-(void)outputPowerReceiver_outputPowerReceiver_isPowered_update;
+-(void)outputPowerReceiver_outputPowerReceiver_gameBoard_update:(BOOL)forceClear;
 
 @end
 
@@ -32,31 +34,35 @@
 #pragma mark - NSObject
 -(void)dealloc
 {
-	[self outputPowerReceiverCollection_outputPowerReceiver_genericPowerOutputTileEntity_update:NO];
+	[self outputPowerReceiver_outputPowerReceiver_gameBoard_update:YES];
 }
 
 -(instancetype)init
 {
 	kRUConditionalReturn_ReturnValueNil(YES, YES);
 
+#if __has_feature(nullability)
 #pragma clang diagnostic push
-#pragma clang diagnostic ignored "-Wno-nullability-completeness"
-	return [self init_with_outputPowerReceiverCollection:nil];
+#pragma GCC diagnostic ignored "-Wnullability-completeness"
+#endif
+	return [self init_with_outputPowerReceiver:nil];
+#if __has_feature(nullability)
 #pragma clang diagnostic pop
+#endif
 }
 
 #pragma mark - init
--(nullable instancetype)init_with_outputPowerReceiverCollection:(nonnull SMBGenericPowerOutputTileEntity_OutputPowerReceiverCollection*)outputPowerReceiverCollection
+-(nullable instancetype)init_with_outputPowerReceiver:(nonnull SMBGenericPowerOutputTileEntity_OutputPowerReceiver*)outputPowerReceiver
 {
-	kRUConditionalReturn_ReturnValueNil(outputPowerReceiverCollection == nil, YES);
+	kRUConditionalReturn_ReturnValueNil(outputPowerReceiver == nil, YES);
 
 	if (self = [super init])
 	{
-		_outputPowerReceiverCollection = outputPowerReceiverCollection;
-		[self outputPowerReceiverCollection_outputPowerReceiver_genericPowerOutputTileEntity_update:YES];
+		_outputPowerReceiver = outputPowerReceiver;
+		[self outputPowerReceiver_outputPowerReceiver_gameBoard_update:NO];
 
 		[self setProvidesOutputPower:NO];
-		[self outputPowerReceiverCollection_outputPowerReceiver_isPowered_update];
+		[self outputPowerReceiver_outputPowerReceiver_isPowered_update];
 	}
 
 	return self;
@@ -69,27 +75,39 @@
 
 	_providesOutputPower = providesOutputPower;
 
-	[self outputPowerReceiverCollection_outputPowerReceiver_isPowered_update];
+	[self outputPowerReceiver_outputPowerReceiver_isPowered_update];
 }
 
-#pragma mark - outputPowerReceiverCollection
--(void)outputPowerReceiverCollection_outputPowerReceiver_isPowered_update
+#pragma mark - outputPowerReceiver
+-(void)outputPowerReceiver_outputPowerReceiver_isPowered_update
 {
-	SMBGenericPowerOutputTileEntity_OutputPowerReceiverCollection* const outputPowerReceiverCollection = self.outputPowerReceiverCollection;
-	kRUConditionalReturn(outputPowerReceiverCollection == nil, YES);
+	SMBGenericPowerOutputTileEntity_OutputPowerReceiver* const outputPowerReceiver = self.outputPowerReceiver;
+	kRUConditionalReturn(outputPowerReceiver == nil, YES);
 
-	[outputPowerReceiverCollection setOutputPowerReceiver_isPowered:self.providesOutputPower];
+	[outputPowerReceiver setIsPowered:self.providesOutputPower];
 }
 
--(void)outputPowerReceiverCollection_outputPowerReceiver_genericPowerOutputTileEntity_update:(BOOL)registerToSelf
+-(void)outputPowerReceiver_outputPowerReceiver_gameBoard_update:(BOOL)forceClear
 {
-	SMBGenericPowerOutputTileEntity_OutputPowerReceiverCollection* const outputPowerReceiverCollection = self.outputPowerReceiverCollection;
-	kRUConditionalReturn(outputPowerReceiverCollection == nil, YES);
+	SMBGenericPowerOutputTileEntity_OutputPowerReceiver* const outputPowerReceiver = self.outputPowerReceiver;
+	kRUConditionalReturn(outputPowerReceiver == nil, YES);
 
-	SMBGenericPowerOutputTileEntity* const outputPowerReceiver_genericPowerOutputTileEntity = (registerToSelf ? self : nil);
-	kRUConditionalReturn(outputPowerReceiverCollection.outputPowerReceiver_genericPowerOutputTileEntity == outputPowerReceiver_genericPowerOutputTileEntity, YES);
+	SMBGameBoardTile* const gameBoardTile = self.gameBoardTile;
+	kRUConditionalReturn(gameBoardTile == nil, NO);
+	NSAssert(gameBoardTile.gameBoard != nil, @"Should be.");
 
-	[outputPowerReceiverCollection setOutputPowerReceiver_genericPowerOutputTileEntity:outputPowerReceiver_genericPowerOutputTileEntity];
+	[outputPowerReceiver setGameBoard:(forceClear ? nil : self.gameBoardTile.gameBoard)];
+}
+
+#pragma mark - SMBGameBoardTileEntity: gameBoardTile
+-(void)setGameBoardTile:(nullable SMBGameBoardTile*)gameBoardTile
+{
+	SMBGameBoardTile* const gameBoardTile_old = self.gameBoardTile;
+	[super setGameBoardTile:gameBoardTile];
+
+	kRUConditionalReturn(self.gameBoardTile == gameBoardTile_old, NO);
+
+	[self outputPowerReceiver_outputPowerReceiver_gameBoard_update:NO];
 }
 
 @end

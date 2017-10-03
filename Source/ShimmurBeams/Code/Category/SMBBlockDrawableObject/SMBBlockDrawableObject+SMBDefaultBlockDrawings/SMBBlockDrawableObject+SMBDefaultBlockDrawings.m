@@ -18,7 +18,7 @@
 @implementation SMBBlockDrawableObject (SMBDefaultBlockDrawings)
 
 #pragma mark - beamCreatorTileEntity
-+(nullable instancetype)smb_defaultBlockDrawing_beamCreatorTileEntity_drawableObject_with_powerIndicatorColorRefBlock:(CGColorRef _Nonnull (^)())powerIndicatorColorRefBlock
++(nullable instancetype)smb_defaultBlockDrawing_beamCreatorTileEntity_drawableObject_with_powerIndicatorColorRefBlock:(CGColorRef _Nonnull (^)(void))powerIndicatorColorRefBlock
 {
 	kRUConditionalReturn_ReturnValueNil(powerIndicatorColorRefBlock == nil, YES);
 
@@ -34,7 +34,6 @@
 void SMBBlockDrawableObject_SMBDefaultBlockDrawings__beamCreatorTileEntity_draw(CGContextRef _Nonnull context, CGRect rect, CGColorRef _Nullable powerIndicatorColorRef)
 {
 	kRUConditionalReturn(context == nil, YES);
-//	CGContextRef const context = UIGraphicsGetCurrentContext();
 
 	CGContextSetStrokeColorWithColor(context, [UIColor blackColor].CGColor);
 	CGContextSetLineWidth(context, 1.0f);
@@ -70,13 +69,6 @@ void SMBBlockDrawableObject_SMBDefaultBlockDrawings__beamCreatorTileEntity_draw(
 	{
 		CGFloat const powerIndicator_width = ((CGRectGetWidth(rect) / 2.0f) - box_inset_from_side) / 2.0f;
 		
-//		UIColor* const color =
-//		(self.beamEntity
-//		 ?
-//		 [UIColor greenColor]
-//		 :
-//		 [UIColor redColor]
-//		 );
 		CGContextSetFillColorWithColor(context, powerIndicatorColorRef);
 		
 		CGRect const powerIndicator_frame = (CGRect){

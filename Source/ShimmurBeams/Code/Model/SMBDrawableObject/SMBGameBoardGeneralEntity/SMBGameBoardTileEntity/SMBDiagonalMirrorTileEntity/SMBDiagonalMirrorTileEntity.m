@@ -120,7 +120,7 @@
 	return (self.startingPosition == SMBDiagonalMirrorTileEntity_startingPosition_topLeft ? CGRectGetMaxY(frame) - padding : CGRectGetMinY(frame) + padding);
 }
 
-#pragma SMBGeneralBeamExitDirectionRedirectTileEntity
+#pragma mark - SMBGeneralBeamExitDirectionRedirectTileEntity
 -(SMBGameBoardTile__direction)beamExitDirection_for_beamEnterDirection:(SMBGameBoardTile__direction)beamEnterDirection
 {
 	SMBGameBoardTile__direction const enterDirection = beamEnterDirection;

@@ -55,9 +55,9 @@ static void* kSMBPowerSwitchTileEntity__KVOContext = &kSMBPowerSwitchTileEntity_
 }
 
 #pragma mark - SMBGenericPowerOutputTileEntity: init
--(nullable instancetype)init_with_outputPowerReceiverCollection:(nonnull SMBGenericPowerOutputTileEntity_OutputPowerReceiverCollection*)outputPowerReceiverCollection
+-(nullable instancetype)init_with_outputPowerReceiver:(SMBGenericPowerOutputTileEntity_OutputPowerReceiver*)outputPowerReceiver
 {
-	if (self = [super init_with_outputPowerReceiverCollection:outputPowerReceiverCollection])
+	if (self = [super init_with_outputPowerReceiver:outputPowerReceiver])
 	{
 		[self setSwitchState:SMBPowerSwitchTileEntity__switchState__first];
 	}

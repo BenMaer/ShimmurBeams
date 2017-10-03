@@ -21,6 +21,8 @@
 @class SMBGameBoardTileEntity;
 @class SMBGameBoardEntity;
 @class SMBGameLevel;
+@class SMBGenericPowerOutputTileEntity_OutputPowerReceiver;
+@class SMBBeamEntityManager;
 
 
 
@@ -69,6 +71,14 @@
 -(void)gameBoardEntity_add:(nonnull SMBGameBoardEntity*)gameBoardEntity;
 -(void)gameBoardEntity_remove:(nonnull SMBGameBoardEntity*)gameBoardEntity;
 
+#pragma mark - outputPowerReceivers
+@property (nonatomic, readonly, copy, nullable) NSSet<SMBGenericPowerOutputTileEntity_OutputPowerReceiver*>* outputPowerReceivers;
+-(void)outputPowerReceiver_add:(nonnull SMBGenericPowerOutputTileEntity_OutputPowerReceiver*)gameBoardEntity;
+-(void)outputPowerReceiver_remove:(nonnull SMBGenericPowerOutputTileEntity_OutputPowerReceiver*)gameBoardEntity;
+
+#pragma mark - beamEntityManager
+@property (nonatomic, readonly, strong, nonnull) SMBBeamEntityManager* beamEntityManager;
+
 @end
 
 
@@ -80,5 +90,6 @@
 +(nonnull NSString*)gameBoardTiles;
 +(nonnull NSString*)gameBoardTileEntities;
 +(nonnull NSString*)gameBoardEntities;
++(nonnull NSString*)outputPowerReceivers;
 
 @end

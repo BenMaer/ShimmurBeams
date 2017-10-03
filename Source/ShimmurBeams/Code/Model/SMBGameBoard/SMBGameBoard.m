@@ -14,6 +14,9 @@
 #import "NSArray+SMBChanges.h"
 #import "SMBBeamEntityTileNode.h"
 #import "SMBMutableMappedDataCollection.h"
+#import "NSSet+SMBChanges.h"
+#import "SMBGenericPowerOutputTileEntity_OutputPowerReceiver.h"
+#import "SMBBeamEntityManager.h"
 
 #import <ResplendentUtilities/RUConditionalReturn.h>
 #import <ResplendentUtilities/RUClassOrNilUtil.h>
@@ -75,6 +78,7 @@ static void* kSMBGameBoard__KVOContext = &kSMBGameBoard__KVOContext;
 
 	[self gameBoardTiles_setKVORegistered:NO];
 	[self setGameBoardEntities:nil];
+	[self setOutputPowerReceivers:nil];
 }
 
 -(instancetype)init
@@ -464,6 +468,80 @@ static void* kSMBGameBoard__KVOContext = &kSMBGameBoard__KVOContext;
 	[self setGameBoardEntities:[NSArray<SMBGameBoardEntity*> arrayWithArray:gameBoardEntities_new]];
 }
 
+#pragma mark - outputPowerReceivers
+-(void)setOutputPowerReceivers:(nullable NSSet<SMBGenericPowerOutputTileEntity_OutputPowerReceiver*>*)outputPowerReceivers
+{
+	kRUConditionalReturn((self.outputPowerReceivers == outputPowerReceivers)
+						 ||
+						 [self.outputPowerReceivers isEqual:outputPowerReceivers], NO);
+
+	NSSet<SMBGenericPowerOutputTileEntity_OutputPowerReceiver*>* const outputPowerReceivers_old = self.outputPowerReceivers;
+	_outputPowerReceivers = (outputPowerReceivers ? [NSSet<SMBGenericPowerOutputTileEntity_OutputPowerReceiver*> setWithSet:outputPowerReceivers] : nil);
+
+	NSSet<SMBGenericPowerOutputTileEntity_OutputPowerReceiver*>* outputPowerReceivers_removedObjects = nil;
+	NSSet<SMBGenericPowerOutputTileEntity_OutputPowerReceiver*>* outputPowerReceivers_addedObjects = nil;
+	[NSSet<SMBGenericPowerOutputTileEntity_OutputPowerReceiver*> smb_changes_from_objects:outputPowerReceivers_old
+																				  to_objects:self.outputPowerReceivers
+																			  removedObjects:&outputPowerReceivers_removedObjects
+																				  newObjects:&outputPowerReceivers_addedObjects];
+
+	[outputPowerReceivers_removedObjects enumerateObjectsUsingBlock:^(SMBGenericPowerOutputTileEntity_OutputPowerReceiver*  _Nonnull outputPowerReceiver, BOOL * _Nonnull stop) {
+		[outputPowerReceiver setGameBoard:nil];
+	}];
+
+	[outputPowerReceivers_addedObjects enumerateObjectsUsingBlock:^(SMBGenericPowerOutputTileEntity_OutputPowerReceiver*  _Nonnull outputPowerReceiver, BOOL * _Nonnull stop) {
+		[outputPowerReceiver setGameBoard:self];
+	}];
+}
+
+-(void)outputPowerReceiver_add:(nonnull SMBGenericPowerOutputTileEntity_OutputPowerReceiver*)outputPowerReceiver
+{
+	kRUConditionalReturn(outputPowerReceiver == nil, YES);
+
+	NSSet<SMBGenericPowerOutputTileEntity_OutputPowerReceiver*>* const outputPowerReceivers_old = self.outputPowerReceivers;
+	kRUConditionalReturn([outputPowerReceivers_old containsObject:outputPowerReceiver], YES);
+
+	NSMutableSet<SMBGenericPowerOutputTileEntity_OutputPowerReceiver*>* const outputPowerReceivers_new = [NSMutableSet<SMBGenericPowerOutputTileEntity_OutputPowerReceiver*> set];
+
+	if (outputPowerReceivers_old)
+	{
+		[outputPowerReceivers_new unionSet:outputPowerReceivers_old];
+	}
+
+	[outputPowerReceivers_new addObject:outputPowerReceiver];
+
+	[self setOutputPowerReceivers:[NSSet<SMBGenericPowerOutputTileEntity_OutputPowerReceiver*> setWithSet:outputPowerReceivers_new]];
+}
+
+-(void)outputPowerReceiver_remove:(nonnull SMBGenericPowerOutputTileEntity_OutputPowerReceiver*)outputPowerReceiver
+{
+	kRUConditionalReturn(outputPowerReceiver == nil, YES);
+
+	NSSet<SMBGenericPowerOutputTileEntity_OutputPowerReceiver*>* const outputPowerReceivers_old = self.outputPowerReceivers;
+	kRUConditionalReturn(outputPowerReceivers_old == nil,
+						 (self.deallocWasCalled == false));
+
+	kRUConditionalReturn([outputPowerReceivers_old containsObject:outputPowerReceiver] == false, YES);
+
+	NSMutableSet<SMBGenericPowerOutputTileEntity_OutputPowerReceiver*>* const outputPowerReceivers_new = [NSMutableSet<SMBGenericPowerOutputTileEntity_OutputPowerReceiver*> set];
+	[outputPowerReceivers_new unionSet:outputPowerReceivers_old];
+	[outputPowerReceivers_new removeObject:outputPowerReceiver];
+
+	[self setOutputPowerReceivers:[NSSet<SMBGenericPowerOutputTileEntity_OutputPowerReceiver*> setWithSet:outputPowerReceivers_new]];
+}
+
+#pragma mark - beamEntityManager
+@synthesize beamEntityManager = _beamEntityManager;
+-(nonnull SMBBeamEntityManager*)beamEntityManager
+{
+	if (_beamEntityManager == nil)
+	{
+		_beamEntityManager = [SMBBeamEntityManager new];
+	}
+	
+	return _beamEntityManager;
+}
+
 @end
 
 
@@ -475,5 +553,6 @@ static void* kSMBGameBoard__KVOContext = &kSMBGameBoard__KVOContext;
 +(nonnull NSString*)gameBoardTiles{return NSStringFromSelector(_cmd);}
 +(nonnull NSString*)gameBoardTileEntities{return NSStringFromSelector(_cmd);}
 +(nonnull NSString*)gameBoardEntities{return NSStringFromSelector(_cmd);}
++(nonnull NSString*)outputPowerReceivers{return NSStringFromSelector(_cmd);}
 
 @end
