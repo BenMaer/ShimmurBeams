@@ -1127,7 +1127,7 @@
 	 *- requiresExternalPowerForBeam = YES
 	 - Fr1
 	 *- direction: down
-	 - Fr1
+	 - Fr2
 	 *- direction: left
 	 
 	 Usable:
@@ -1138,11 +1138,11 @@
 	 
 	 Sections and entities:
 	 [   ] [   ] [   ] [   ] [   ] [   ] [   ]
-	 [   ] [   ] [   ] [   ] [PoB] [Wal] [   ]
+	 [   ] [   ] [   ] [ 2 ] [PoB] [Wal] [   ]
 	 [   ] [Bc2] [   ] [   ] [   ] [   ] [Fr1]
 	 [Wal] [Wal] [Wal] [Wal] [Wal] [Wal] [   ]
 	 [Exi] [dor] [Fr2] [Dor] [PoS] [PoB] [   ]
-	 [   ] [Wal] [   ] [   ] [   ] [   ] [   ]
+	 [   ] [Wal] [   ] [ 1 ] [   ] [   ] [   ]
 	 [   ] [Bc1] [   ] [Dor] [   ] [   ] [Dth]
 	 
 	 B[x]	Button [x]
@@ -1156,11 +1156,11 @@
 	 
 	 Wiring:
 	 [   ] [   ] [   ] [   ] [   ] [   ] [   ]
-	 [   ] [   ] [   ] [   ] [B2 ] [Wal] [   ]
+	 [   ] [   ] [   ] [ 2 ] [B2 ] [Wal] [   ]
 	 [   ] [B1O] [   ] [   ] [   ] [   ] [Fr1]
 	 [Wal] [Wal] [Wal] [Wal] [Wal] [Wal] [   ]
 	 [   ] [B2O] [   ] [C1O] [S1 ] [B1 ] [   ]
-	 [   ] [   ] [   ] [   ] [   ] [   ] [   ]
+	 [   ] [   ] [   ] [ 1 ] [   ] [   ] [   ]
 	 [   ] [   ] [   ] [C1O] [   ] [   ] [Dth]
 	 
 	 S1O:
