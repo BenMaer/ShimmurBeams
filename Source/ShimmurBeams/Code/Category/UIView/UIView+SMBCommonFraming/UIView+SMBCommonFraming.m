@@ -20,4 +20,10 @@
 	return 10.0f;
 }
 
+#pragma mark - borderWidth
++(CGFloat)smb_commonFraming_borderWidth_general
+{
+	return 2.0f;
+}
+
 @end

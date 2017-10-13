@@ -10,6 +10,7 @@
 #import "SMBGameBoardTileEntityPickerViewCollectionViewCell.h"
 #import "SMBGameBoardTileEntity.h"
 #import "SMBGameBoardTile.h"
+#import "UIView+SMBCommonFraming.h"
 
 #import <ResplendentUtilities/RUConditionalReturn.h>
 #import <ResplendentUtilities/NSString+RUMacros.h>
@@ -92,6 +93,7 @@ typedef NS_ENUM(NSInteger, SMBGameBoardTileEntityPickerView__trashButton_type) {
 		[self.collectionView setDataSource:self];
 		[self.collectionView setScrollEnabled:YES];
 		[self.collectionView registerClass:[SMBGameBoardTileEntityPickerViewCollectionViewCell class] forCellWithReuseIdentifier:SMBGameBoardTileEntityPickerView__cellIdentifier_SMBGameBoardTileEntityPickerViewCollectionViewCell];
+		[self.collectionView setShowsHorizontalScrollIndicator:YES];
 		[self addSubview:self.collectionView];
 
 		_trashButton = [UIButton buttonWithType:UIButtonTypeCustom];
@@ -99,7 +101,8 @@ typedef NS_ENUM(NSInteger, SMBGameBoardTileEntityPickerView__trashButton_type) {
 		[self.trashButton addTarget:self action:@selector(trashButton_did_touchUpInside) forControlEvents:UIControlEventTouchUpInside];
 		[self.trashButton setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
 		[self.trashButton.titleLabel setFont:[UIFont systemFontOfSize:16.0f]];
-		[self.trashButton.layer setBorderWidth:2.0f];
+		[self.trashButton.layer setCornerRadius:[UIView smb_commonFraming_cornerRadius_general]];
+		[self.trashButton.layer setBorderWidth:[UIView smb_commonFraming_borderWidth_general]];
 		[self.trashButton.layer setBorderColor:[UIColor blackColor].CGColor];
 		[self addSubview:self.trashButton];
 
@@ -246,10 +249,11 @@ typedef NS_ENUM(NSInteger, SMBGameBoardTileEntityPickerView__trashButton_type) {
 -(CGRect)trashButton_frame
 {
 	CGFloat const height = CGRectGetHeight(self.bounds);
+	CGFloat const width = 70.0f;
 
 	return CGRectCeilOrigin((CGRect){
-		.origin.x		= CGRectGetWidth(self.bounds) - height,
-		.size.width		= height,
+		.origin.x		= CGRectGetWidth(self.bounds) - width,
+		.size.width		= width,
 		.size.height	= height,
 	});
 }
