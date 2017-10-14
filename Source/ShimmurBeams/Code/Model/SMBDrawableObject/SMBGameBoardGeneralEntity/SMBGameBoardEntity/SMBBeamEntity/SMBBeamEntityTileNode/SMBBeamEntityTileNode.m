@@ -6,6 +6,8 @@
 //  Copyright © 2017 Shimmur. All rights reserved.
 //
 
+#define kSMBBeamEntityTileNode__beamDrawing_shouldBeOnRightSide ((DEBUG || kSMBEnvironment__SMBBeamEntityTileNode_beamDrawing_shouldBeOnRightSide) && 1)
+
 #import "SMBBeamEntityTileNode.h"
 #import "SMBGameBoardTile.h"
 #import "SMBBeamCreatorTileEntity.h"
@@ -15,12 +17,63 @@
 #import "SMBBeamEntity.h"
 #import "SMBGameBoardTileEntity+SMBBeamBlocker.h"
 #import "SMBGameBoardTile__directions.h"
+#import "SMBGameBoardTile__direction_rotations.h"
 
 #import <ResplendentUtilities/RUConditionalReturn.h>
 #import <ResplendentUtilities/RUClassOrNilUtil.h>
 #import <ResplendentUtilities/RUProtocolOrNil.h>
 #import <ResplendentUtilities/NSMutableArray+RUAddObjectIfNotNil.h>
 #import <ResplendentUtilities/RUConstants.h>
+
+
+
+
+
+@interface SMBBeamEntityTileNode_DrawHalfLineProperties : NSObject
+
+#pragma mark - startPoint
+@property (nonatomic, readonly, assign) CGPoint startPoint;
+
+#pragma mark - endPoint
+@property (nonatomic, readonly, assign) CGPoint endPoint;
+
+#pragma mark - init
+-(nullable instancetype)init_with_startPoint:(CGPoint)startPoint
+									endPoint:(CGPoint)endPoint NS_DESIGNATED_INITIALIZER;
+
+@end
+
+
+
+
+
+@implementation SMBBeamEntityTileNode_DrawHalfLineProperties
+
+#pragma mark - NSObject
+-(instancetype)init
+{
+	kRUConditionalReturn_ReturnValueNil(YES, YES);
+
+	return [self init_with_startPoint:CGPointZero
+							  endPoint:CGPointZero];
+}
+
+#pragma mark - init
+-(nullable instancetype)init_with_startPoint:(CGPoint)startPoint
+									endPoint:(CGPoint)endPoint
+{
+	kRUConditionalReturn_ReturnValueNil(CGPointEqualToPoint(startPoint, endPoint), YES);
+
+	if (self = [super init])
+	{
+		_startPoint = startPoint;
+		_endPoint = endPoint;
+	}
+
+	return self;
+}
+
+@end
 
 
 
@@ -83,9 +136,20 @@ typedef NS_ENUM(NSInteger, SMBBeamEntityTileNode__state) {
 -(void)gameBoardTile_allows_beamEnterDirection_update;
 -(BOOL)gameBoardTile_allows_beamEnterDirection_appropriate;
 
-#pragma mark - draw
--(void)draw_half_line_in_rect:(CGRect)rect
-					direction:(SMBGameBoardTile__direction)direction;
+#pragma mark - half_line
+-(nullable SMBBeamEntityTileNode_DrawHalfLineProperties*)half_line_draw_in_rect:(CGRect)rect
+																	  direction:(SMBGameBoardTile__direction)direction
+																		 offset:(UIOffset)offset
+																		  inset:(UIEdgeInsets)inset;
+-(CGFloat)half_line_offset_amount_for_rect:(CGRect)rect;
+-(UIOffset)half_line_offset_in_rect:(CGRect)rect
+						  direction:(SMBGameBoardTile__direction)direction
+							   exit:(BOOL)exit;
+-(UIEdgeInsets)half_line_inset_in_rect:(CGRect)rect
+							 direction:(SMBGameBoardTile__direction)direction
+								isLong:(BOOL)isLong;
+-(nullable SMBBeamEntityTileNode_DrawHalfLineProperties*)half_line_draw_enter_in_rect:(CGRect)rect;
+-(nullable SMBBeamEntityTileNode_DrawHalfLineProperties*)half_line_draw_exit_in_rect:(CGRect)rect;
 
 -(CGPoint)draw_point_center_with_rect:(CGRect)rect;
 
@@ -143,7 +207,7 @@ typedef NS_ENUM(NSInteger, SMBBeamEntityTileNode__state) {
 	[description_lines ru_addObjectIfNotNil:RUStringWithFormat(@"self.node_next_gameTilePosition: %@",self.node_next_gameTilePosition)];
 	[description_lines ru_addObjectIfNotNil:RUStringWithFormat(@"self.beamEnterDirection: %lu",(unsigned long)self.beamEnterDirection)];
 	[description_lines ru_addObjectIfNotNil:RUStringWithFormat(@"self.beamExitDirection: %lu",(unsigned long)self.beamExitDirection)];
-	
+
 	return [description_lines componentsJoinedByString:@"\n"];
 }
 
@@ -505,41 +569,205 @@ typedef NS_ENUM(NSInteger, SMBBeamEntityTileNode__state) {
 	CGContextSetStrokeColorWithColor(context, [UIColor redColor].CGColor);
 	CGContextSetLineWidth(context, 1.0f);
 
-	if (self.gameBoardTile_allows_beamEnterDirection)
+	SMBBeamEntityTileNode_DrawHalfLineProperties* const drawHalfLineProperties_enter =
+	[self half_line_draw_enter_in_rect:rect];
+
+	SMBBeamEntityTileNode_DrawHalfLineProperties* const drawHalfLineProperties_exit =
+	[self half_line_draw_exit_in_rect:rect];
+
+	if ((drawHalfLineProperties_enter != nil)
+		&&
+		(drawHalfLineProperties_exit != nil)
+		&&
+		(CGPointEqualToPoint(drawHalfLineProperties_enter.startPoint, drawHalfLineProperties_exit.startPoint) == false))
 	{
-		SMBGameBoardTile__direction const beamEnterDirection = self.beamEnterDirection;
-		if (SMBGameBoardTile__direction__isInRange(beamEnterDirection))
-		{
-			[self draw_half_line_in_rect:rect
-							   direction:beamEnterDirection];
-		}
+		CGContextMoveToPoint(context, drawHalfLineProperties_enter.startPoint.x, drawHalfLineProperties_enter.startPoint.y);
+		CGContextAddLineToPoint(context, drawHalfLineProperties_exit.startPoint.x, drawHalfLineProperties_exit.startPoint.y);
 	}
-	
-	SMBGameBoardTile__direction const beamExitDirection = self.beamExitDirection;
-	if (SMBGameBoardTile__direction__isInRange(beamExitDirection))
-	{
-		[self draw_half_line_in_rect:rect
-						   direction:beamExitDirection];
-	}
-	
+
 	CGContextStrokePath(context);
 
 	CGContextRestoreGState(context);
 }
 
-#pragma mark - draw
--(void)draw_half_line_in_rect:(CGRect)rect
-					direction:(SMBGameBoardTile__direction)direction
+#pragma mark - half_line
+-(nullable SMBBeamEntityTileNode_DrawHalfLineProperties*)half_line_draw_in_rect:(CGRect)rect
+																	  direction:(SMBGameBoardTile__direction)direction
+																		 offset:(UIOffset)offset
+																		  inset:(UIEdgeInsets)inset
 {
-	kRUConditionalReturn(SMBGameBoardTile__direction__isInRange(direction) == false, YES);
+	kRUConditionalReturn_ReturnValueNil(SMBGameBoardTile__direction__isInRange(direction) == false, YES);
 
 	CGContextRef const context = UIGraphicsGetCurrentContext();
 
-	CGPoint const point_center = [self draw_point_center_with_rect:rect];
-	CGPoint const point_edge = [self draw_point_edgeMiddle_with_rect:rect direction:direction];
+	CGPoint(^point_offset)(CGPoint point) = ^CGPoint(CGPoint point){
+		return (CGPoint){
+			.x	= point.x	+ offset.horizontal,
+			.y	= point.y	+ offset.vertical,
+		};
+	};
 
-	CGContextMoveToPoint(context, point_center.x, point_center.y);
-	CGContextAddLineToPoint(context, point_edge.x, point_edge.y);
+	CGPoint const startPoint_raw = point_offset([self draw_point_center_with_rect:rect]);
+	CGPoint const startPoint_inset = (CGPoint){
+		.x	= startPoint_raw.x - inset.right + inset.left,
+		.y	= startPoint_raw.y + inset.top - inset.bottom,
+	};
+
+	SMBBeamEntityTileNode_DrawHalfLineProperties* const drawHalfLineProperties =
+	[[SMBBeamEntityTileNode_DrawHalfLineProperties alloc] init_with_startPoint:startPoint_inset
+																	  endPoint:point_offset([self draw_point_edgeMiddle_with_rect:rect direction:direction])];
+
+	CGContextMoveToPoint(context, drawHalfLineProperties.startPoint.x, drawHalfLineProperties.startPoint.y);
+	CGContextAddLineToPoint(context, drawHalfLineProperties.endPoint.x, drawHalfLineProperties.endPoint.y);
+
+	return drawHalfLineProperties;
+}
+
+-(CGFloat)half_line_offset_amount_for_rect:(CGRect)rect
+{
+	return CGRectGetWidth(rect) / 20.0f;
+}
+
+-(UIOffset)half_line_offset_in_rect:(CGRect)rect
+						  direction:(SMBGameBoardTile__direction)direction
+							   exit:(BOOL)exit
+{
+	CGFloat const offset_for_road =
+#if kSMBBeamEntityTileNode__beamDrawing_shouldBeOnRightSide
+	[self half_line_offset_amount_for_rect:rect];
+#else
+	0;
+#endif
+
+	switch (direction)
+	{
+		case SMBGameBoardTile__direction_unknown:
+		case SMBGameBoardTile__direction_none:
+			break;
+
+		case SMBGameBoardTile__direction_up:
+			return (UIOffset){
+				.horizontal		= (exit ? offset_for_road : -offset_for_road),
+			};
+			break;
+
+		case SMBGameBoardTile__direction_right:
+			return (UIOffset){
+				.vertical		= (exit ? offset_for_road : -offset_for_road),
+			};
+			break;
+
+		case SMBGameBoardTile__direction_down:
+			return (UIOffset){
+				.horizontal		= (exit ? -offset_for_road : offset_for_road),
+			};
+			break;
+
+		case SMBGameBoardTile__direction_left:
+			return (UIOffset){
+				.vertical		= (exit ? -offset_for_road : offset_for_road),
+			};
+			break;
+	}
+
+	NSAssert(false, @"unhandled direction %li",(long)direction);
+	return UIOffsetZero;
+}
+
+-(UIEdgeInsets)half_line_inset_in_rect:(CGRect)rect
+							 direction:(SMBGameBoardTile__direction)direction
+								isLong:(BOOL)isLong
+{
+	CGFloat const offset_for_road = [self half_line_offset_amount_for_rect:rect];
+
+	switch (direction)
+	{
+		case SMBGameBoardTile__direction_unknown:
+		case SMBGameBoardTile__direction_none:
+			break;
+			
+		case SMBGameBoardTile__direction_up:
+			return (UIEdgeInsets){
+				.bottom		= (isLong ? -offset_for_road : offset_for_road),
+			};
+			break;
+			
+		case SMBGameBoardTile__direction_right:
+			return (UIEdgeInsets){
+				.left		= (isLong ? -offset_for_road : offset_for_road),
+			};
+			break;
+			
+		case SMBGameBoardTile__direction_down:
+			return (UIEdgeInsets){
+				.top		= (isLong ? -offset_for_road : offset_for_road),
+			};
+			break;
+			
+		case SMBGameBoardTile__direction_left:
+			return (UIEdgeInsets){
+				.right		= (isLong ? -offset_for_road : offset_for_road),
+			};
+			break;
+	}
+	
+	NSAssert(false, @"unhandled direction %li",(long)direction);
+	return UIEdgeInsetsZero;
+}
+
+-(nullable SMBBeamEntityTileNode_DrawHalfLineProperties*)half_line_draw_enter_in_rect:(CGRect)rect
+{
+	kRUConditionalReturn_ReturnValueNil(self.gameBoardTile_allows_beamEnterDirection == false, NO);
+
+	SMBGameBoardTile__direction const beamEnterDirection = self.beamEnterDirection;
+	kRUConditionalReturn_ReturnValueNil(SMBGameBoardTile__direction__isInRange(beamEnterDirection) == false, NO);
+
+	UIOffset const offset =
+	[self half_line_offset_in_rect:rect
+						 direction:beamEnterDirection
+							  exit:NO];
+
+	return
+	[self half_line_draw_in_rect:rect
+					   direction:beamEnterDirection
+						  offset:offset
+						   inset:
+//	 (UIEdgeInsets){
+//		 .left	= (beamEnterDirection == SMBGameBoardTile__direction_rotation_right ? offset.vertical : 0.0f),
+//		 .right	= (beamEnterDirection == SMBGameBoardTile__direction_rotation_left ? -offset.vertical : 0.0f),
+//	 }
+	 [self half_line_inset_in_rect:rect
+						 direction:beamEnterDirection
+							isLong:NO]
+	 ];
+}
+
+-(nullable SMBBeamEntityTileNode_DrawHalfLineProperties*)half_line_draw_exit_in_rect:(CGRect)rect
+{
+	kRUConditionalReturn_ReturnValueNil(self.gameBoardTile_allows_beamEnterDirection == false, NO);
+
+	SMBGameBoardTile__direction const beamExitDirection = self.beamExitDirection;
+	kRUConditionalReturn_ReturnValueNil(SMBGameBoardTile__direction__isInRange(beamExitDirection) == false, NO);
+
+	SMBGameBoardTile__direction const beamEnterDirection = self.beamEnterDirection;
+
+	return
+	[self half_line_draw_in_rect:rect
+					   direction:beamExitDirection
+						  offset:
+	 [self half_line_offset_in_rect:rect
+						  direction:beamExitDirection
+							   exit:YES]
+						   inset:
+	 (SMBGameBoardTile__direction__isInRange(beamEnterDirection)
+	  ?
+	  [self half_line_inset_in_rect:rect
+						  direction:beamExitDirection
+							 isLong:(SMBGameBoardTile__direction_rotation_direction_rotated_left(beamEnterDirection) != beamExitDirection)]
+	  :
+	  UIEdgeInsetsZero
+	 )
+	 ];
 }
 
 -(CGPoint)draw_point_center_with_rect:(CGRect)rect

@@ -26,6 +26,20 @@
 
 #define kSMBEnvironment__SMBBeamEntityManager__beamEntity_forMarkingNodesReady_validation_general_enabled (kSMBEnvironment__validations_general_enable && 1)
 #define kSMBEnvironment__SMBGameLevelView_beamEntityManager_beamEntity_forMarkingNodesReady_validation_enabled (kSMBEnvironment__validations_general_enable && 1)
+/**
+ -- Validations
+ */
+
+/**
+ ++ UI
+ */
+
+#define kSMBEnvironment__SMBBeamEntityTileNode_beamDrawing_shouldBeOnRightSide (DEBUG && 1)
+
+/**
+ -- UI
+ */
+
 
 
 
