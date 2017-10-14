@@ -6,7 +6,7 @@
 //  Copyright © 2017 Shimmur. All rights reserved.
 //
 
-#define kSMBBeamEntityTileNode__beamDrawing_shouldBeOnRightSide ((DEBUG || kSMBEnvironment__SMBBeamEntityTileNode_beamDrawing_shouldBeOnRightSide) && 1)
+#define kSMBBeamEntityTileNode__beamDrawing_shouldBeOnRightSide (kSMBEnvironment__SMBBeamEntityTileNode_beamDrawing_shouldBeOnRightSide && 1)
 
 #import "SMBBeamEntityTileNode.h"
 #import "SMBGameBoardTile.h"
@@ -141,7 +141,6 @@ typedef NS_ENUM(NSInteger, SMBBeamEntityTileNode__state) {
 																	  direction:(SMBGameBoardTile__direction)direction
 																		 offset:(UIOffset)offset
 																		  inset:(UIEdgeInsets)inset;
--(CGFloat)half_line_offset_amount_for_rect:(CGRect)rect;
 -(UIOffset)half_line_offset_in_rect:(CGRect)rect
 						  direction:(SMBGameBoardTile__direction)direction
 							   exit:(BOOL)exit;
@@ -623,21 +622,21 @@ typedef NS_ENUM(NSInteger, SMBBeamEntityTileNode__state) {
 	return drawHalfLineProperties;
 }
 
--(CGFloat)half_line_offset_amount_for_rect:(CGRect)rect
++(CGFloat)half_line_offset_amount_for_rect:(CGRect)rect
 {
-	return CGRectGetWidth(rect) / 20.0f;
+	return
+#if kSMBBeamEntityTileNode__beamDrawing_shouldBeOnRightSide
+	CGRectGetWidth(rect) / 20.0f;
+#else
+	0;
+#endif
 }
 
 -(UIOffset)half_line_offset_in_rect:(CGRect)rect
 						  direction:(SMBGameBoardTile__direction)direction
 							   exit:(BOOL)exit
 {
-	CGFloat const offset_for_road =
-#if kSMBBeamEntityTileNode__beamDrawing_shouldBeOnRightSide
-	[self half_line_offset_amount_for_rect:rect];
-#else
-	0;
-#endif
+	CGFloat const offset_for_road = [[self class] half_line_offset_amount_for_rect:rect];
 
 	switch (direction)
 	{
@@ -678,39 +677,39 @@ typedef NS_ENUM(NSInteger, SMBBeamEntityTileNode__state) {
 							 direction:(SMBGameBoardTile__direction)direction
 								isLong:(BOOL)isLong
 {
-	CGFloat const offset_for_road = [self half_line_offset_amount_for_rect:rect];
+	CGFloat const offset_for_road = [[self class] half_line_offset_amount_for_rect:rect];
 
 	switch (direction)
 	{
 		case SMBGameBoardTile__direction_unknown:
 		case SMBGameBoardTile__direction_none:
 			break;
-			
+
 		case SMBGameBoardTile__direction_up:
 			return (UIEdgeInsets){
 				.bottom		= (isLong ? -offset_for_road : offset_for_road),
 			};
 			break;
-			
+
 		case SMBGameBoardTile__direction_right:
 			return (UIEdgeInsets){
 				.left		= (isLong ? -offset_for_road : offset_for_road),
 			};
 			break;
-			
+
 		case SMBGameBoardTile__direction_down:
 			return (UIEdgeInsets){
 				.top		= (isLong ? -offset_for_road : offset_for_road),
 			};
 			break;
-			
+
 		case SMBGameBoardTile__direction_left:
 			return (UIEdgeInsets){
 				.right		= (isLong ? -offset_for_road : offset_for_road),
 			};
 			break;
 	}
-	
+
 	NSAssert(false, @"unhandled direction %li",(long)direction);
 	return UIEdgeInsetsZero;
 }

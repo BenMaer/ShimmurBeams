@@ -30,11 +30,17 @@
  -- Validations
  */
 
+
+
+
+
 /**
  ++ UI
  */
 
 #define kSMBEnvironment__SMBBeamEntityTileNode_beamDrawing_shouldBeOnRightSide (DEBUG && 1)
+
+#define kSMBEnvironment__SMBBeamCreatorTileEntity_beamCreator_drawing_useSVG (DEBUG && 0)
 
 /**
  -- UI

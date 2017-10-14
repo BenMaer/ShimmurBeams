@@ -6,6 +6,8 @@
 //  Copyright © 2017 Shimmur. All rights reserved.
 //
 
+#define kSMBBeamCreatorTileEntity__beamCreator_drawing_useSVG (kSMBEnvironment__SMBBeamCreatorTileEntity_beamCreator_drawing_useSVG && 0)
+
 #import "SMBBeamCreatorTileEntity.h"
 #import "SMBBeamEntity.h"
 #import "SMBGameBoardTile.h"
@@ -48,6 +50,9 @@ static void* kSMBBeamCreatorTileEntity__KVOContext = &kSMBBeamCreatorTileEntity_
 #pragma mark - powerIndicator
 -(nullable CGColorRef)powerIndicator_colorRef_appropriate;
 
+#pragma mark - ship_drawableObject
+@property (nonatomic, readonly, strong, nullable) SMBDrawableObject* ship_drawableObject;
+
 @end
 
 
@@ -66,13 +71,20 @@ static void* kSMBBeamCreatorTileEntity__KVOContext = &kSMBBeamCreatorTileEntity_
 {
 	if (self = [super init])
 	{
+#if !(kSMBBeamCreatorTileEntity__beamCreator_drawing_useSVG)
 		__weak typeof(self) const self_weak = self;
-		[self subDrawableObjects_add:
-		 [SMBBlockDrawableObject smb_defaultBlockDrawing_beamCreatorTileEntity_drawableObject_with_powerIndicatorColorRefBlock:
-		  ^CGColorRef _Nullable{
-			  return [self_weak powerIndicator_colorRef_appropriate];
-		  }]];
-//		[self subDrawableObjects_add:[SMBSVGDrawableObject smb_space_spaceship_SVG]];
+#endif
+
+		_ship_drawableObject =
+#if kSMBBeamCreatorTileEntity__beamCreator_drawing_useSVG
+		[SMBSVGDrawableObject smb_space_spaceship_SVG];
+#else
+		[SMBBlockDrawableObject smb_defaultBlockDrawing_beamCreatorTileEntity_drawableObject_with_powerIndicatorColorRefBlock:
+		 ^CGColorRef _Nullable{
+			 return [self_weak powerIndicator_colorRef_appropriate];
+		 }];
+#endif
+		[self subDrawableObjects_add:self.ship_drawableObject];
 
 		[self setBeamEnterDirections_blocked:SMBGameBoardTile__directions_all()];
 	}
