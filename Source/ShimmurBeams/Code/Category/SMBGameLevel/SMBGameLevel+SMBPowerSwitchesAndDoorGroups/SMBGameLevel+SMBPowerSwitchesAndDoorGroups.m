@@ -1282,13 +1282,6 @@
 	 [[SMBGameBoardTilePosition alloc] init_with_column:gameBoardTilePosition_section_1_columns_range.location + 1
 													row:gameBoardTilePosition_section_1_rows_range.location]];
 
-//	SMBDoorTileEntity* const doorTileEntity_section_2_3xminus0 = [SMBDoorTileEntity new];
-//	[gameBoard gameBoardTileEntity_add:doorTileEntity_section_2_3xminus0
-//							entityType:SMBGameBoardTile__entityType_beamInteractions
-//			  to_gameBoardTilePosition:
-//	 [[SMBGameBoardTilePosition alloc] init_with_column:gameBoardTilePosition_section_2_columns_range.location + 3
-//													row:NSMaxRange(gameBoardTilePosition_section_2_rows_range) - 2]];
-
 	/* Output Power Receiver Collections. */
 	
 	NSMutableSet<SMBGenericPowerOutputTileEntity_OutputPowerReceiver*>* const outputPowerReceiverCollections_1_outputPowerReceivers = [NSMutableSet<SMBGenericPowerOutputTileEntity_OutputPowerReceiver*> set];
@@ -1297,20 +1290,6 @@
 	
 	SMBGenericPowerOutputTileEntity_OutputPowerReceiverCollection* const outputPowerReceiverCollections_1_genericPowerOutputTileEntity_OutputPowerReceiverCollection =
 	[[SMBGenericPowerOutputTileEntity_OutputPowerReceiverCollection alloc] init_with_outputPowerReceivers:outputPowerReceiverCollections_1_outputPowerReceivers];
-	
-//	NSMutableSet<SMBGenericPowerOutputTileEntity_OutputPowerReceiver*>* const outputPowerReceiverCollections_2_outputPowerReceivers = [NSMutableSet<SMBGenericPowerOutputTileEntity_OutputPowerReceiver*> set];
-//	[outputPowerReceiverCollections_2_outputPowerReceivers addObject:[[SMBGenericPowerOutputTileEntity_OutputPowerReceiver_GameBoardTilePowerProvider alloc] init_with_gameBoardTilePosition_toPower:doorTileEntity_section_2_3xminus0.gameBoardTile.gameBoardTilePosition]];
-//	
-//	SMBGenericPowerOutputTileEntity_OutputPowerReceiverCollection* const outputPowerReceiverCollections_2_genericPowerOutputTileEntity_OutputPowerReceiverCollection =
-//	[[SMBGenericPowerOutputTileEntity_OutputPowerReceiverCollection alloc] init_with_outputPowerReceivers:outputPowerReceiverCollections_2_outputPowerReceivers];
-//	[outputPowerReceiverCollections_2_genericPowerOutputTileEntity_OutputPowerReceiverCollection setOutputPowerReceivers_powerIsOppositeOfReceiver:YES];
-//	
-//	NSMutableSet<SMBGenericPowerOutputTileEntity_OutputPowerReceiver*>* const outputPowerReceiverCollections_3_outputPowerReceivers = [NSMutableSet<SMBGenericPowerOutputTileEntity_OutputPowerReceiver*> set];
-//	[outputPowerReceiverCollections_3_outputPowerReceivers addObject:outputPowerReceiverCollections_1_genericPowerOutputTileEntity_OutputPowerReceiverCollection];
-//	[outputPowerReceiverCollections_3_outputPowerReceivers addObject:outputPowerReceiverCollections_2_genericPowerOutputTileEntity_OutputPowerReceiverCollection];
-//	
-//	SMBGenericPowerOutputTileEntity_OutputPowerReceiverCollection* const outputPowerReceiverCollections_3_genericPowerOutputTileEntity_OutputPowerReceiverCollection =
-//	[[SMBGenericPowerOutputTileEntity_OutputPowerReceiverCollection alloc] init_with_outputPowerReceivers:outputPowerReceiverCollections_3_outputPowerReceivers];
 	
 	/* Power Buttons. */
 	
