@@ -19,5 +19,6 @@
 
 #pragma mark - meltableWall
 +(nonnull instancetype)smb_meltableWall_introduction;
++(nonnull instancetype)smb_meltableWall_oneDirection;
 
 @end

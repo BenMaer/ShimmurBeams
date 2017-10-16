@@ -144,6 +144,12 @@
 																						  name:@"Meltable Wall Introduction"
 																						  hint:@"Focus your beam on the meltable wall for a couple seconds to destroy it."]];
 
+	[gameLevelGenerators addObject:[[SMBGameLevelGenerator alloc] init_with_generateLevelBlock:^SMBGameLevel * _Nonnull{
+		return [SMBGameLevel smb_meltableWall_oneDirection];
+	}
+																						  name:@"One Direction"
+																						  hint:@"Meltable walls can block some beam directions from entering."]];
+
 	return
 	[[self alloc] init_with_gameLevelGenerators:[NSArray<SMBGameLevelGenerator*> arrayWithArray:gameLevelGenerators]
 										   name:@"Mirrors and Meltable Walls"];
