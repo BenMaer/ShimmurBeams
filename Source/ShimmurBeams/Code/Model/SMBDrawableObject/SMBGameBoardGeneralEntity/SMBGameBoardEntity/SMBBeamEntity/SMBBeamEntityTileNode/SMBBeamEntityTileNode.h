@@ -65,6 +65,7 @@
 						  beamEnterDirection:(SMBGameBoardTile__direction)beamEnterDirection NS_DESIGNATED_INITIALIZER;
 
 #pragma mark - half_line
++(CGFloat)half_line_width_in_rect:(CGRect)rect;
 +(CGFloat)half_line_offset_amount_for_rect:(CGRect)rect;
 
 @end

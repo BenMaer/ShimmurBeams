@@ -30,14 +30,17 @@ typedef NS_ENUM(NSInteger, SMBGameBoardTile__direction) {
 };
 
 static inline SMBGameBoardTile__direction SMBGameBoardTile__directions_all(){
-	SMBGameBoardTile__direction directions_all = 0;
-	
-	for (SMBGameBoardTile__direction direction = SMBGameBoardTile__direction__first;
-		 direction <= SMBGameBoardTile__direction__last;
-		 direction = direction << 1)
-	{
-		directions_all = (directions_all | direction);
-	}
+	static SMBGameBoardTile__direction directions_all = 0;
+
+	static dispatch_once_t onceToken;
+	dispatch_once(&onceToken, ^{
+		for (SMBGameBoardTile__direction direction = SMBGameBoardTile__direction__first;
+			 direction <= SMBGameBoardTile__direction__last;
+			 direction = direction << 1)
+		{
+			directions_all = (directions_all | direction);
+		}
+	});
 	
 	return directions_all;
 }
@@ -86,6 +89,24 @@ static inline SMBGameBoardTile__direction SMBGameBoardTile__direction__opposite(
 
 	NSCAssert(false, @"unhandled direction %li",(long)direction);
 	return SMBGameBoardTile__direction_unknown;
+}
+
+static inline SMBGameBoardTile__direction SMBGameBoardTile__directions__opposite(SMBGameBoardTile__direction directions){
+	SMBGameBoardTile__direction directions_opposite = 0;
+
+	/**
+	 Since all directions on `directions_opposite` have been set to false, we only need to check if we need to set any to true.
+	 */
+	for (SMBGameBoardTile__direction direction = SMBGameBoardTile__direction__first;
+		 direction <= SMBGameBoardTile__direction__last;
+		 direction = direction << 1)
+	{
+		if ((directions & direction) == false)
+		{
+			directions_opposite = (directions_opposite | direction);
+		}
+	}
+	return directions_opposite;
 }
 
 #endif /* SMBGameBoardTile__directions_h */

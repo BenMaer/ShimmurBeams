@@ -566,7 +566,7 @@ typedef NS_ENUM(NSInteger, SMBBeamEntityTileNode__state) {
 	CGContextSaveGState(context);
 
 	CGContextSetStrokeColorWithColor(context, [UIColor redColor].CGColor);
-	CGContextSetLineWidth(context, 1.0f);
+	CGContextSetLineWidth(context, [[self class] half_line_width_in_rect:rect]);
 
 	SMBBeamEntityTileNode_DrawHalfLineProperties* const drawHalfLineProperties_enter =
 	[self half_line_draw_enter_in_rect:rect];
@@ -620,6 +620,11 @@ typedef NS_ENUM(NSInteger, SMBBeamEntityTileNode__state) {
 	CGContextAddLineToPoint(context, drawHalfLineProperties.endPoint.x, drawHalfLineProperties.endPoint.y);
 
 	return drawHalfLineProperties;
+}
+
++(CGFloat)half_line_width_in_rect:(CGRect)rect
+{
+	return 1.0f;
 }
 
 +(CGFloat)half_line_offset_amount_for_rect:(CGRect)rect
