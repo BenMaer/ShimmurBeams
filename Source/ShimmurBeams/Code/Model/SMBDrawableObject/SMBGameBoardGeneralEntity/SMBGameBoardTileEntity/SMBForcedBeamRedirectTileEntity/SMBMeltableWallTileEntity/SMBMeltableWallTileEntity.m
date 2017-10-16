@@ -303,7 +303,7 @@ static void* kSMBMeltableWallTileEntity__KVOContext = &kSMBMeltableWallTileEntit
 
 	SMBTimer* const timer = [SMBTimer new];
 	[timer setTimerDidFireDelegate:self];
-	[timer setTimerDuration:2.0f];
+	[timer setTimerDuration:1.0f];
 
 	return timer;
 }

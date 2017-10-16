@@ -150,6 +150,11 @@
 																						  name:@"One Direction"
 																						  hint:@"Meltable walls can block some beam directions from entering."]];
 
+	[gameLevelGenerators addObject:[[SMBGameLevelGenerator alloc] init_with_generateLevelBlock:^SMBGameLevel * _Nonnull{
+		return [SMBGameLevel smb_meltableWall_inTheWay];
+	}
+																						  name:@"In The Way"]];
+
 	return
 	[[self alloc] init_with_gameLevelGenerators:[NSArray<SMBGameLevelGenerator*> arrayWithArray:gameLevelGenerators]
 										   name:@"Mirrors and Meltable Walls"];
