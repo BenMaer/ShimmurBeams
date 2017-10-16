@@ -731,10 +731,6 @@ typedef NS_ENUM(NSInteger, SMBBeamEntityTileNode__state) {
 					   direction:beamEnterDirection
 						  offset:offset
 						   inset:
-//	 (UIEdgeInsets){
-//		 .left	= (beamEnterDirection == SMBGameBoardTile__direction_rotation_right ? offset.vertical : 0.0f),
-//		 .right	= (beamEnterDirection == SMBGameBoardTile__direction_rotation_left ? -offset.vertical : 0.0f),
-//	 }
 	 [self half_line_inset_in_rect:rect
 						 direction:beamEnterDirection
 							isLong:NO]
@@ -743,8 +739,6 @@ typedef NS_ENUM(NSInteger, SMBBeamEntityTileNode__state) {
 
 -(nullable SMBBeamEntityTileNode_DrawHalfLineProperties*)half_line_draw_exit_in_rect:(CGRect)rect
 {
-	kRUConditionalReturn_ReturnValueNil(self.gameBoardTile_allows_beamEnterDirection == false, NO);
-
 	SMBGameBoardTile__direction const beamExitDirection = self.beamExitDirection;
 	kRUConditionalReturn_ReturnValueNil(SMBGameBoardTile__direction__isInRange(beamExitDirection) == false, NO);
 
