@@ -282,21 +282,21 @@
 	 *- direction: left
 	 - Fr3
 	 *- direction: right
+	 - Fr4
+	 *- direction: down
 	 - Fr5
 	 *- direction: right
 	 - Fr6
 	 *- direction: up
 	 - Fr7
 	 *- direction: left
-	 - Fr8
-	 *- direction: down
 	 - Dm1
 	 *- startingPosition: bottomLeft
-	 - Dm4
+	 - Dm2
 	 *- startingPosition: topLeft
-	 - Dm5
+	 - Dm3
 	 *- startingPosition: bottomLeft
-	 - Dm6
+	 - Dm4
 	 *- startingPosition: topLeft
 	 - Mw1
 	 *- meltableBeamEnterDirections: up
@@ -313,12 +313,12 @@
 	 Forced Redirect (direction: down)
 
 	 Sections and entities:
-	 [Dm5] [Dm4] [   ] [   ] [   ] [   ] [   ]
-	 [Dm6] [   ] [   ] [   ] [Fr5] [   ] [   ]
+	 [Dm3] [Dm4] [   ] [   ] [   ] [   ] [   ]
+	 [Dm2] [   ] [   ] [   ] [Fr5] [   ] [   ]
 	 [Fr1] [Br1] [Fr2] [   ] [   ] [Mw3] [Dm1]
 	 [Fr6] [   ] [   ] [Wal] [   ] [Br3] [Fr7]
 	 [   ] [Mw1] [   ] [Wal] [Mw4] [   ] [Exi]
-	 [   ] [   ] [   ] [Mw2] [Br2] [Fr8] [   ]
+	 [   ] [   ] [   ] [Mw2] [Br2] [Fr4] [   ]
 	 [   ] [Bc1] [   ] [   ] [Fr3] [   ] [   ]
 	 
 	 */
@@ -396,6 +396,13 @@
 	 [[SMBGameBoardTilePosition alloc] init_with_column:beamCreatorEntity.gameBoardTile.gameBoardTilePosition.column + 3
 													row:beamCreatorEntity.gameBoardTile.gameBoardTilePosition.row]];
 
+	/* Fr4 */
+	[gameBoard gameBoardTileEntity_add:[[SMBForcedBeamRedirectTileEntity alloc] init_with_forcedBeamExitDirection:SMBGameBoardTile__direction_down]
+							entityType:SMBGameBoardTile__entityType_beamInteractions
+			  to_gameBoardTilePosition:
+	 [[SMBGameBoardTilePosition alloc] init_with_column:beamCreatorEntity.gameBoardTile.gameBoardTilePosition.column + 4
+													row:beamCreatorEntity.gameBoardTile.gameBoardTilePosition.row - 1]];
+
 	/* Fr5 */
 	[gameBoard gameBoardTileEntity_add:[[SMBForcedBeamRedirectTileEntity alloc] init_with_forcedBeamExitDirection:SMBGameBoardTile__direction_right]
 							entityType:SMBGameBoardTile__entityType_beamInteractions
@@ -416,13 +423,6 @@
 			  to_gameBoardTilePosition:
 	 [[SMBGameBoardTilePosition alloc] init_with_column:beamCreatorEntity.gameBoardTile.gameBoardTilePosition.column + 5
 													row:beamCreatorEntity.gameBoardTile.gameBoardTilePosition.row - 3]];
-
-	/* Fr8 */
-	[gameBoard gameBoardTileEntity_add:[[SMBForcedBeamRedirectTileEntity alloc] init_with_forcedBeamExitDirection:SMBGameBoardTile__direction_down]
-							entityType:SMBGameBoardTile__entityType_beamInteractions
-			  to_gameBoardTilePosition:
-	 [[SMBGameBoardTilePosition alloc] init_with_column:beamCreatorEntity.gameBoardTile.gameBoardTilePosition.column + 4
-													row:beamCreatorEntity.gameBoardTile.gameBoardTilePosition.row - 1]];
 
 	/* Beam rotations. */
 
@@ -456,26 +456,26 @@
 	 [[SMBGameBoardTilePosition alloc] init_with_column:beamCreatorEntity.gameBoardTile.gameBoardTilePosition.column + 5
 													row:beamCreatorEntity.gameBoardTile.gameBoardTilePosition.row - 4]];
 
-	/* Dm4 */
+	/* Dm2 */
 	[gameBoard gameBoardTileEntity_add:[[SMBDiagonalMirrorTileEntity alloc] init_with_startingPosition:SMBDiagonalMirrorTileEntity_startingPosition_topLeft]
 							entityType:SMBGameBoardTile__entityType_beamInteractions
 			  to_gameBoardTilePosition:
-	 [[SMBGameBoardTilePosition alloc] init_with_column:beamCreatorEntity.gameBoardTile.gameBoardTilePosition.column
-													row:beamCreatorEntity.gameBoardTile.gameBoardTilePosition.row - 6]];
+	 [[SMBGameBoardTilePosition alloc] init_with_column:beamCreatorEntity.gameBoardTile.gameBoardTilePosition.column - 1
+													row:beamCreatorEntity.gameBoardTile.gameBoardTilePosition.row - 5]];
 
-	/* Dm5 */
+	/* Dm3 */
 	[gameBoard gameBoardTileEntity_add:[[SMBDiagonalMirrorTileEntity alloc] init_with_startingPosition:SMBDiagonalMirrorTileEntity_startingPosition_bottomLeft]
 							entityType:SMBGameBoardTile__entityType_beamInteractions
 			  to_gameBoardTilePosition:
 	 [[SMBGameBoardTilePosition alloc] init_with_column:beamCreatorEntity.gameBoardTile.gameBoardTilePosition.column - 1
 													row:beamCreatorEntity.gameBoardTile.gameBoardTilePosition.row - 6]];
 
-	/* Dm6 */
+	/* Dm4 */
 	[gameBoard gameBoardTileEntity_add:[[SMBDiagonalMirrorTileEntity alloc] init_with_startingPosition:SMBDiagonalMirrorTileEntity_startingPosition_topLeft]
 							entityType:SMBGameBoardTile__entityType_beamInteractions
 			  to_gameBoardTilePosition:
-	 [[SMBGameBoardTilePosition alloc] init_with_column:beamCreatorEntity.gameBoardTile.gameBoardTilePosition.column - 1
-													row:beamCreatorEntity.gameBoardTile.gameBoardTilePosition.row - 5]];
+	 [[SMBGameBoardTilePosition alloc] init_with_column:beamCreatorEntity.gameBoardTile.gameBoardTilePosition.column
+													row:beamCreatorEntity.gameBoardTile.gameBoardTilePosition.row - 6]];
 
 	/* Level exit. */
 	
