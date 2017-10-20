@@ -11,6 +11,8 @@
 
 #import <Foundation/Foundation.h>
 
+#import <ResplendentUtilities/RUConditionalReturn.h>
+
 
 
 
@@ -29,15 +31,26 @@ typedef NS_ENUM(NSInteger, SMBGameBoardTile__direction) {
 	SMBGameBoardTile__direction__last	= SMBGameBoardTile__direction_left,
 };
 
-static inline SMBGameBoardTile__direction SMBGameBoardTile__directions_all(){
-	SMBGameBoardTile__direction directions_all = 0;
-	
+static inline void SMBGameBoardTile__directions_enumerate(void (^ _Nonnull enumerationBlock)(SMBGameBoardTile__direction direction)){
+	kRUConditionalReturn(enumerationBlock == nil, YES);
+
 	for (SMBGameBoardTile__direction direction = SMBGameBoardTile__direction__first;
 		 direction <= SMBGameBoardTile__direction__last;
 		 direction = direction << 1)
 	{
-		directions_all = (directions_all | direction);
+		enumerationBlock(direction);
 	}
+}
+
+static inline SMBGameBoardTile__direction SMBGameBoardTile__directions_all(){
+	static SMBGameBoardTile__direction directions_all = 0;
+
+	static dispatch_once_t onceToken;
+	dispatch_once(&onceToken, ^{
+		SMBGameBoardTile__directions_enumerate(^(SMBGameBoardTile__direction direction) {
+			directions_all = (directions_all | direction);
+		});
+	});
 	
 	return directions_all;
 }
@@ -86,6 +99,22 @@ static inline SMBGameBoardTile__direction SMBGameBoardTile__direction__opposite(
 
 	NSCAssert(false, @"unhandled direction %li",(long)direction);
 	return SMBGameBoardTile__direction_unknown;
+}
+
+static inline SMBGameBoardTile__direction SMBGameBoardTile__directions__opposite(SMBGameBoardTile__direction directions){
+	__block SMBGameBoardTile__direction directions_opposite = 0;
+
+	/**
+	 Since all directions on `directions_opposite` have been set to false, we only need to check if we need to set any to true.
+	 */
+	SMBGameBoardTile__directions_enumerate(^(SMBGameBoardTile__direction direction) {
+		if ((directions & direction) == false)
+		{
+			directions_opposite = (directions_opposite | direction);
+		}
+	});
+
+	return directions_opposite;
 }
 
 #endif /* SMBGameBoardTile__directions_h */

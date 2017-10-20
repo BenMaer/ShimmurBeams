@@ -6,18 +6,20 @@
 //  Copyright © 2017 Shimmur. All rights reserved.
 //
 
-#import "SMBForcedBeamRedirectTileEntity.h"
+#import "SMBGameBoardTileEntity.h"
+#import "SMBBeamBlockerTileEntity.h"
+#import "SMBGeneralBeamEnterToExitDirectionRedirectTileEntity.h"
 
 
 
 
 
-@interface SMBMeltableWallTileEntity : SMBForcedBeamRedirectTileEntity
+@interface SMBMeltableWallTileEntity : SMBGameBoardTileEntity <SMBBeamBlockerTileEntity, SMBGeneralBeamEnterToExitDirectionRedirectTileEntity>
 
-#pragma mark - SMBForcedBeamRedirectTileEntity: init
--(nullable instancetype)init_with_forcedBeamExitDirection:(SMBGameBoardTile__direction)forcedBeamExitDirection OBJC_DEPRECATED("Must use init");
+#pragma mark - meltableBeamEnterDirections
+@property (nonatomic, readonly, assign) SMBGameBoardTile__direction meltableBeamEnterDirections;
 
 #pragma mark - init
--(nullable instancetype)init NS_DESIGNATED_INITIALIZER;
+-(nullable instancetype)init_with_meltableBeamEnterDirections:(SMBGameBoardTile__direction)meltableBeamEnterDirections NS_DESIGNATED_INITIALIZER;
 
 @end

@@ -7,7 +7,7 @@
 //
 
 #import "SMBGameBoardTileEntity.h"
-#import "SMBGeneralBeamExitDirectionRedirectTileEntity.h"
+#import "SMBGeneralBeamEnterToExitDirectionRedirectTileEntity.h"
 #import "SMBGameBoardTile__direction_rotations.h"
 
 
@@ -19,7 +19,7 @@ typedef NS_ENUM(NSInteger, SMBDiagonalMirrorTileEntity_startingPosition) {
 	SMBDiagonalMirrorTileEntity_startingPosition_bottomLeft,
 };
 
-@interface SMBDiagonalMirrorTileEntity : SMBGameBoardTileEntity <SMBGeneralBeamExitDirectionRedirectTileEntity>
+@interface SMBDiagonalMirrorTileEntity : SMBGameBoardTileEntity <SMBGeneralBeamEnterToExitDirectionRedirectTileEntity>
 
 #pragma mark - init
 -(nullable instancetype)init_with_startingPosition:(SMBDiagonalMirrorTileEntity_startingPosition)startingPosition NS_DESIGNATED_INITIALIZER;

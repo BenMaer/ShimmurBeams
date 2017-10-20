@@ -127,7 +127,7 @@ static void* kSMBGameLevelView__KVOContext = &kSMBGameLevelView__KVOContext;
 										gameBoardView_frame_maxY:CGRectGetMaxY([self gameBoardView_frame_with_boundingSize:size])];
 
 	return (CGSize){
-		.width		= CGRectGetWidth(gameBoardTileEntityPickerView_frame),
+		.width		= size.width,
 		.height		= CGRectGetMaxY(gameBoardTileEntityPickerView_frame),
 	};
 }
@@ -150,7 +150,7 @@ static void* kSMBGameLevelView__KVOContext = &kSMBGameLevelView__KVOContext;
 #pragma mark - content_inset
 -(CGFloat)content_inset
 {
-	return 10.0f;
+	return 6.0f;
 }
 
 #pragma mark - gameBoardTileEntityPickerView
@@ -190,11 +190,15 @@ static void* kSMBGameLevelView__KVOContext = &kSMBGameLevelView__KVOContext;
 -(CGRect)gameBoardTileEntityPickerView_frame_with_boundingWidth:(CGFloat)boundingWidth
 									   gameBoardView_frame_maxY:(CGFloat)gameBoardView_frame_maxY
 {
-	CGFloat const height = 80.0f;
+	CGFloat const content_inset = [self content_inset];
+	CGFloat const inset_top = content_inset;
+	CGFloat const inset_horizontal = content_inset;
+	CGFloat const height = 50.0f;
 
 	return CGRectCeilOrigin((CGRect){
-		.origin.y		= gameBoardView_frame_maxY + 20.0f,
-		.size.width		= boundingWidth,
+		.origin.x		= inset_horizontal,
+		.origin.y		= gameBoardView_frame_maxY + inset_top,
+		.size.width		= boundingWidth - (2.0f * inset_horizontal),
 		.size.height	= height,
 	});
 }

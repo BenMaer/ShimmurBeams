@@ -10,6 +10,7 @@
 #import "SMBBeamEntityTileNode.h"
 #import "CoreGraphics+SMBRotation.h"
 #import "SMBGameBoardTile__directions_to_CoreGraphics_SMBRotation__orientations_utilities.h"
+#import "SMBGameBoardTileBeamEnterToExitDirectionMapping.h"
 
 #import <ResplendentUtilities/RUConditionalReturn.h>
 
@@ -27,6 +28,11 @@
 -(CGFloat)beamRotateTileEntity_draw_point_final_xCoord_offsetFromCenter_scalar;
 -(nullable UIColor*)beamRotateTileEntity_draw_color_for_direction_rotation:(SMBGameBoardTile__direction_rotation)direction_rotation;
 
+#pragma mark - beamEnterToExitDirectionMapping
+-(void)beamEnterToExitDirectionMapping_update;
+-(nullable SMBGameBoardTileBeamEnterToExitDirectionMapping*)beamEnterToExitDirectionMapping_generate;
+-(nullable NSDictionary<NSNumber*,NSNumber*>*)beamEnterToExitDirectionMapping_beamEnterToExitDirectionMappingDictionary_generate;
+
 @end
 
 
@@ -35,11 +41,36 @@
 
 @implementation SMBBeamRotateTileEntity
 
+#pragma mark - NSObject
+-(instancetype)init
+{
+	kRUConditionalReturn_ReturnValueNil(YES, YES);
+
+	return [self init_with_direction_rotation:SMBGameBoardTile__direction_rotation_unknown];
+}
+
+#pragma mark - init
+-(nullable instancetype)init_with_direction_rotation:(SMBGameBoardTile__direction_rotation)direction_rotation
+{
+	kRUConditionalReturn_ReturnValueNil((SMBGameBoardTile__direction_rotation__isInRange(direction_rotation) == false)
+										||
+										(direction_rotation == SMBGameBoardTile__direction_rotation_none),
+										YES);
+
+	if (self = [super init])
+	{
+		_direction_rotation = direction_rotation;
+		[self beamEnterToExitDirectionMapping_update];
+	}
+
+	return self;
+}
+
 #pragma mark - SMBGameBoardGeneralEntity: draw
 -(void)draw_in_rect:(CGRect)rect
 {
 	[super draw_in_rect:rect];
-	
+
 	[self beamRotateTileEntity_draw_in_rect:rect];
 }
 
@@ -157,48 +188,53 @@
 		case SMBGameBoardTile__direction_rotation_unknown:
 		case SMBGameBoardTile__direction_rotation_none:
 			break;
-			
+
 		case SMBGameBoardTile__direction_rotation_left:
 			return [UIColor magentaColor];
 			break;
-			
+
 		case SMBGameBoardTile__direction_rotation_right:
 			return [UIColor redColor];
 			break;
 	}
-	
+
 	NSAssert(false, @"unhandled direction_rotation %li",(long)direction_rotation);
 	return nil;
-}
-
-#pragma mark - NSObject
--(instancetype)init
-{
-	kRUConditionalReturn_ReturnValueNil(YES, YES);
-	
-	return [self init_with_direction_rotation:SMBGameBoardTile__direction_rotation_unknown];
-}
-
-#pragma mark - init
--(nullable instancetype)init_with_direction_rotation:(SMBGameBoardTile__direction_rotation)direction_rotation
-{
-	kRUConditionalReturn_ReturnValueNil((SMBGameBoardTile__direction_rotation__isInRange(direction_rotation) == false)
-										||
-										(direction_rotation == SMBGameBoardTile__direction_rotation_none),
-										YES);
-	
-	if (self = [super init])
-	{
-		_direction_rotation = direction_rotation;
-	}
-	
-	return self;
 }
 
 #pragma mark - SMBGeneralBeamExitDirectionRedirectTileEntity
 -(SMBGameBoardTile__direction)beamExitDirection_for_beamEnterDirection:(SMBGameBoardTile__direction)beamEnterDirection
 {
 	return SMBGameBoardTile__direction_rotation_direction_rotated([SMBBeamEntityTileNode beamEnterDirection_for_node_previous_exitDirection:beamEnterDirection], self.direction_rotation);
+}
+
+#pragma mark - SMBGeneralBeamExitDirectionRedirectTileEntity
+@synthesize beamEnterToExitDirectionMapping = _beamEnterToExitDirectionMapping;
+
+#pragma mark - beamEnterToExitDirectionMapping
+-(void)beamEnterToExitDirectionMapping_update
+{
+	[self setBeamEnterToExitDirectionMapping:[self beamEnterToExitDirectionMapping_generate]];
+}
+
+-(nullable SMBGameBoardTileBeamEnterToExitDirectionMapping*)beamEnterToExitDirectionMapping_generate
+{
+	return
+	[[SMBGameBoardTileBeamEnterToExitDirectionMapping alloc] init_with_beamEnterToExitDirectionMappingDictionary:[self beamEnterToExitDirectionMapping_beamEnterToExitDirectionMappingDictionary_generate]];
+}
+
+-(nullable NSDictionary<NSNumber*,NSNumber*>*)beamEnterToExitDirectionMapping_beamEnterToExitDirectionMappingDictionary_generate
+{
+	NSMutableDictionary<NSNumber*,NSNumber*>* const beamEnterToExitDirectionMappingDictionary = [NSMutableDictionary<NSNumber*,NSNumber*> dictionary];
+	SMBGameBoardTile__direction_rotation const direction_rotation = self.direction_rotation;
+
+	SMBGameBoardTile__directions_enumerate(^(SMBGameBoardTile__direction direction) {
+		[beamEnterToExitDirectionMappingDictionary setObject:
+		 @(SMBGameBoardTile__direction_rotation_direction_rotated([SMBBeamEntityTileNode beamEnterDirection_for_node_previous_exitDirection:direction], direction_rotation))
+													  forKey:@(direction)];
+	});
+
+	return [NSDictionary<NSNumber*,NSNumber*> dictionaryWithDictionary:beamEnterToExitDirectionMappingDictionary];
 }
 
 @end

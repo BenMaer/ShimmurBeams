@@ -14,6 +14,9 @@
 
 @interface SMBGameLevel (SMBUnitTestLevels)
 
+#pragma mark - initialBeamDrawing
++(nonnull instancetype)smb_initialBeamDrawing;
+
 #pragma mark - beamEntityOrder
 +(nonnull instancetype)smb_beamEntityOrder;
 

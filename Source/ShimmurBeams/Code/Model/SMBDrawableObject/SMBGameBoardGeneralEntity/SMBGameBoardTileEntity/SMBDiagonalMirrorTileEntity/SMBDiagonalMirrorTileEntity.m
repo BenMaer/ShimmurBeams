@@ -7,6 +7,8 @@
 //
 
 #import "SMBDiagonalMirrorTileEntity.h"
+#import "SMBBeamEntityTileNode.h"
+#import "SMBGameBoardTileBeamEnterToExitDirectionMapping.h"
 
 
 
@@ -27,6 +29,12 @@
 
 #pragma mark - paddingFromEdge
 +(CGFloat)paddingFromEdge_forRect:(CGRect)rect;
+
+#pragma mark - beamEnterToExitDirectionMapping
+-(void)beamEnterToExitDirectionMapping_update;
+-(nullable SMBGameBoardTileBeamEnterToExitDirectionMapping*)beamEnterToExitDirectionMapping_generate;
+-(nullable NSDictionary<NSNumber*,NSNumber*>*)beamEnterToExitDirectionMapping_beamEnterToExitDirectionMappingDictionary_generate;
+-(SMBGameBoardTile__direction)beamEnterToExitDirectionMapping_beamExitDirection_for_beamEnterDirection:(SMBGameBoardTile__direction)beamEnterDirection;
 
 @end
 
@@ -58,6 +66,7 @@
 	if (self = [super init])
 	{
 		_startingPosition = startingPosition;
+		[self beamEnterToExitDirectionMapping_update];
 	}
 	
 	return self;
@@ -71,7 +80,7 @@
 	CGContextSaveGState(context);
 	
 	CGContextSetStrokeColorWithColor(context, [UIColor blackColor].CGColor);
-	CGContextSetLineWidth(context, 1.0f);
+	CGContextSetLineWidth(context, [SMBBeamEntityTileNode half_line_offset_amount_for_rect:rect] * 2.0f);
 	
 	CGPoint const point_start = (CGPoint){
 		.x  = [self draw_startingPoint_x_forFrame:rect],
@@ -120,8 +129,41 @@
 	return (self.startingPosition == SMBDiagonalMirrorTileEntity_startingPosition_topLeft ? CGRectGetMaxY(frame) - padding : CGRectGetMinY(frame) + padding);
 }
 
+#pragma mark - paddingFromEdge
++(CGFloat)paddingFromEdge_forRect:(CGRect)rect
+{
+	return CGRectGetWidth(rect) / 5.0f;
+}
+
 #pragma mark - SMBGeneralBeamExitDirectionRedirectTileEntity
--(SMBGameBoardTile__direction)beamExitDirection_for_beamEnterDirection:(SMBGameBoardTile__direction)beamEnterDirection
+@synthesize beamEnterToExitDirectionMapping = _beamEnterToExitDirectionMapping;
+
+#pragma mark - beamEnterToExitDirectionMapping
+-(void)beamEnterToExitDirectionMapping_update
+{
+	[self setBeamEnterToExitDirectionMapping:[self beamEnterToExitDirectionMapping_generate]];
+}
+
+-(nullable SMBGameBoardTileBeamEnterToExitDirectionMapping*)beamEnterToExitDirectionMapping_generate
+{
+	return
+	[[SMBGameBoardTileBeamEnterToExitDirectionMapping alloc] init_with_beamEnterToExitDirectionMappingDictionary:[self beamEnterToExitDirectionMapping_beamEnterToExitDirectionMappingDictionary_generate]];
+}
+
+-(nullable NSDictionary<NSNumber*,NSNumber*>*)beamEnterToExitDirectionMapping_beamEnterToExitDirectionMappingDictionary_generate
+{
+	NSMutableDictionary<NSNumber*,NSNumber*>* const beamEnterToExitDirectionMappingDictionary = [NSMutableDictionary<NSNumber*,NSNumber*> dictionary];
+
+	SMBGameBoardTile__directions_enumerate(^(SMBGameBoardTile__direction direction) {
+		[beamEnterToExitDirectionMappingDictionary setObject:
+		 @([self beamEnterToExitDirectionMapping_beamExitDirection_for_beamEnterDirection:direction])
+													  forKey:@(direction)];
+	});
+	
+	return [NSDictionary<NSNumber*,NSNumber*> dictionaryWithDictionary:beamEnterToExitDirectionMappingDictionary];
+}
+
+-(SMBGameBoardTile__direction)beamEnterToExitDirectionMapping_beamExitDirection_for_beamEnterDirection:(SMBGameBoardTile__direction)beamEnterDirection
 {
 	SMBGameBoardTile__direction const enterDirection = beamEnterDirection;
 	BOOL const topLeftToBottomRight = (self.startingPosition == SMBDiagonalMirrorTileEntity_startingPosition_topLeft);
@@ -151,12 +193,6 @@
 	
 	NSAssert(false, @"unhandled type %li", (long) enterDirection);
 	return SMBGameBoardTile__direction_left;
-}
-
-#pragma mark - paddingFromEdge
-+(CGFloat)paddingFromEdge_forRect:(CGRect)rect
-{
-	return CGRectGetWidth(rect) / 5.0f;
 }
 
 @end

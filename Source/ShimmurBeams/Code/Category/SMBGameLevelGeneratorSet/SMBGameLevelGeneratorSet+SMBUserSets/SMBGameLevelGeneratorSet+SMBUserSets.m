@@ -144,6 +144,17 @@
 																						  name:@"Meltable Wall Introduction"
 																						  hint:@"Focus your beam on the meltable wall for a couple seconds to destroy it."]];
 
+	[gameLevelGenerators addObject:[[SMBGameLevelGenerator alloc] init_with_generateLevelBlock:^SMBGameLevel * _Nonnull{
+		return [SMBGameLevel smb_meltableWall_oneDirection];
+	}
+																						  name:@"One Direction"
+																						  hint:@"Meltable walls can block some beam directions from entering."]];
+
+	[gameLevelGenerators addObject:[[SMBGameLevelGenerator alloc] init_with_generateLevelBlock:^SMBGameLevel * _Nonnull{
+		return [SMBGameLevel smb_meltableWall_inTheWay];
+	}
+																						  name:@"In The Way"]];
+
 	return
 	[[self alloc] init_with_gameLevelGenerators:[NSArray<SMBGameLevelGenerator*> arrayWithArray:gameLevelGenerators]
 										   name:@"Mirrors and Meltable Walls"];
@@ -251,6 +262,12 @@
 +(nonnull instancetype)smb_unitTests
 {
 	NSMutableArray<SMBGameLevelGenerator*>* const gameLevelGenerators = [NSMutableArray<SMBGameLevelGenerator*> array];
+
+	[gameLevelGenerators addObject:[[SMBGameLevelGenerator alloc] init_with_generateLevelBlock:^SMBGameLevel * _Nonnull{
+		return [SMBGameLevel smb_initialBeamDrawing];
+	}
+																						  name:@"Initial beam drawing."
+																						  hint:@"The beam should be drawn on half the tile that its beam creator is on."]];
 
 	[gameLevelGenerators addObject:[[SMBGameLevelGenerator alloc] init_with_generateLevelBlock:^SMBGameLevel * _Nonnull{
 		return [SMBGameLevel smb_beamEntityOrder];

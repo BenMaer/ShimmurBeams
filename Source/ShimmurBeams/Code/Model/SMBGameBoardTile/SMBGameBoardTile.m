@@ -20,18 +20,24 @@
 #import "SMBGameBoardTileEntity+SMBBeamBlocker.h"
 #import "SMBBeamBlockerTileEntity_PropertiesForKVO.h"
 #import "SMBBeamEntityTileNode.h"
+#import "SMBGeneralBeamEnterToExitDirectionRedirectTileEntity.h"
+#import "SMBGameBoardTileBeamEnterToExitDirectionMapping.h"
+#import "SMBGeneralBeamEnterToExitDirectionRedirectTileEntity_PropertiesForKVO.h"
 
 #import <ResplendentUtilities/RUConditionalReturn.h>
 #import <ResplendentUtilities/NSMutableArray+RUAddObjectIfNotNil.h>
 #import <ResplendentUtilities/RUConstants.h>
 #import <ResplendentUtilities/UIGeometry+RUUtility.h>
 #import <ResplendentUtilities/RUClassOrNilUtil.h>
+#import <ResplendentUtilities/RUProtocolOrNil.h>
 
 
 
 
 
-static void* kSMBGameBoardTile__KVOContext = &kSMBGameBoardTile__KVOContext;
+static void* kSMBGameBoardTile__KVOContext_gameBoardTileEntities_many_powerProviders_mappedDataCollection = &kSMBGameBoardTile__KVOContext_gameBoardTileEntities_many_powerProviders_mappedDataCollection;
+static void* kSMBGameBoardTile__KVOContext_gameBoardTileEntities_beamBlockers_mappedDataCollection = &kSMBGameBoardTile__KVOContext_gameBoardTileEntities_beamBlockers_mappedDataCollection;
+static void* kSMBGameBoardTile__KVOContext_generalBeamEnterToExitDirectionRedirectTileEntity = &kSMBGameBoardTile__KVOContext_generalBeamEnterToExitDirectionRedirectTileEntity;
 
 
 
@@ -90,6 +96,18 @@ static void* kSMBGameBoardTile__KVOContext = &kSMBGameBoardTile__KVOContext;
 @property (nonatomic, assign) SMBGameBoardTile__direction beamEnterDirections_blocked;
 -(void)beamEnterDirections_blocked_update;
 -(SMBGameBoardTile__direction)beamEnterDirections_blocked_generate;
+
+#pragma mark - generalBeamEnterToExitDirectionRedirectTileEntity
+@property (nonatomic, strong, nullable) SMBGameBoardTileEntity<SMBGeneralBeamEnterToExitDirectionRedirectTileEntity>* generalBeamEnterToExitDirectionRedirectTileEntity;
+-(void)generalBeamEnterToExitDirectionRedirectTileEntity_update;
+-(nullable SMBGameBoardTileEntity<SMBGeneralBeamEnterToExitDirectionRedirectTileEntity>*)generalBeamEnterToExitDirectionRedirectTileEntity_appropriate;
+-(void)generalBeamEnterToExitDirectionRedirectTileEntity_setKVORegistered:(BOOL)registered;
+
+#pragma mark - beamEnterToExitDirectionMapping
+@property (nonatomic, strong, nullable) SMBGameBoardTileBeamEnterToExitDirectionMapping* beamEnterToExitDirectionMapping;
+-(void)beamEnterToExitDirectionMapping_update;
+-(nonnull SMBGameBoardTileBeamEnterToExitDirectionMapping*)beamEnterToExitDirectionMapping_appropriate;
+-(nonnull SMBGameBoardTileBeamEnterToExitDirectionMapping*)beamEnterToExitDirectionMapping_generate;
 
 @end
 
@@ -152,6 +170,8 @@ static void* kSMBGameBoardTile__KVOContext = &kSMBGameBoardTile__KVOContext;
 		_gameBoardTileEntities_many_powerProviders_mappedDataCollection = [SMBMutableMappedDataCollection<SMBGameBoardTileEntity<SMBGameBoardTileEntity_PowerProvider>*> new];
 		_gameBoardTileEntities_many_powerProviders_providesPower_mappedDataCollection = [SMBMutableMappedDataCollection<SMBGameBoardTileEntity<SMBGameBoardTileEntity_PowerProvider>*> new];
 		_gameBoardTileEntities_beamBlockers_mappedDataCollection = [SMBMutableMappedDataCollection<SMBGameBoardTileEntity<SMBBeamBlockerTileEntity>*> new];
+
+		[self beamEnterToExitDirectionMapping_update];
 	}
 
 	return self;
@@ -209,6 +229,7 @@ static void* kSMBGameBoardTile__KVOContext = &kSMBGameBoardTile__KVOContext;
 	}
 
 	[self gameBoardTileEntities_all_update];
+	[self generalBeamEnterToExitDirectionRedirectTileEntity_update];
 }
 
 #pragma mark - gameBoardTileEntities_many
@@ -441,13 +462,13 @@ static void* kSMBGameBoardTile__KVOContext = &kSMBGameBoardTile__KVOContext;
 				[gameBoardTileEntity addObserver:self
 									  forKeyPath:propertyToObserve
 										 options:(KVOOptions_number.unsignedIntegerValue)
-										 context:&kSMBGameBoardTile__KVOContext];
+										 context:&kSMBGameBoardTile__KVOContext_gameBoardTileEntities_many_powerProviders_mappedDataCollection];
 			}
 			else
 			{
 				[gameBoardTileEntity removeObserver:self
 										 forKeyPath:propertyToObserve
-											context:&kSMBGameBoardTile__KVOContext];
+											context:&kSMBGameBoardTile__KVOContext_gameBoardTileEntities_many_powerProviders_mappedDataCollection];
 			}
 		}];
 	}];
@@ -576,7 +597,7 @@ static void* kSMBGameBoardTile__KVOContext = &kSMBGameBoardTile__KVOContext;
 #pragma mark - KVO
 -(void)observeValueForKeyPath:(nullable NSString*)keyPath ofObject:(nullable id)object change:(nullable NSDictionary*)change context:(nullable void*)context
 {
-	if (context == kSMBGameBoardTile__KVOContext)
+	if (context == kSMBGameBoardTile__KVOContext_gameBoardTileEntities_many_powerProviders_mappedDataCollection)
 	{
 		if ([[self.gameBoardTileEntities_many_powerProviders_mappedDataCollection mappableObjects] containsObject:object])
 		{
@@ -589,11 +610,36 @@ static void* kSMBGameBoardTile__KVOContext = &kSMBGameBoardTile__KVOContext;
 				NSAssert(false, @"unhandled keyPath %@",keyPath);
 			}
 		}
-		else if ([[self.gameBoardTileEntities_beamBlockers_mappedDataCollection mappableObjects] containsObject:object])
+		else
+		{
+			NSAssert(false, @"unhandled object %@",object);
+		}
+	}
+	else if (context == kSMBGameBoardTile__KVOContext_gameBoardTileEntities_beamBlockers_mappedDataCollection)
+	{
+		if ([[self.gameBoardTileEntities_beamBlockers_mappedDataCollection mappableObjects] containsObject:object])
 		{
 			if ([keyPath isEqualToString:[SMBBeamBlockerTileEntity_PropertiesForKVO beamEnterDirections_blocked]])
 			{
 				[self beamEnterDirections_blocked_update];
+			}
+			else
+			{
+				NSAssert(false, @"unhandled keyPath %@",keyPath);
+			}
+		}
+		else
+		{
+			NSAssert(false, @"unhandled object %@",object);
+		}
+	}
+	else if (context == kSMBGameBoardTile__KVOContext_generalBeamEnterToExitDirectionRedirectTileEntity)
+	{
+		if (self.generalBeamEnterToExitDirectionRedirectTileEntity == object)
+		{
+			if ([keyPath isEqualToString:[SMBGeneralBeamEnterToExitDirectionRedirectTileEntity_PropertiesForKVO beamEnterToExitDirectionMapping]])
+			{
+				[self beamEnterToExitDirectionMapping_update];
 			}
 			else
 			{
@@ -643,11 +689,11 @@ static void* kSMBGameBoardTile__KVOContext = &kSMBGameBoardTile__KVOContext;
 {
 	kRUConditionalReturn(gameBoardTileEntity_beamBlocker == nil, YES);
 
-	NSMutableArray<NSString*>* const propertiesToObserve_observe_old_and_initial = [NSMutableArray<NSString*> array];
-	[propertiesToObserve_observe_old_and_initial addObject:[SMBBeamBlockerTileEntity_PropertiesForKVO beamEnterDirections_blocked]];
+	NSMutableArray<NSString*>* const propertiesToObserve_observe_initial = [NSMutableArray<NSString*> array];
+	[propertiesToObserve_observe_initial addObject:[SMBBeamBlockerTileEntity_PropertiesForKVO beamEnterDirections_blocked]];
 
 	NSMutableDictionary<NSNumber*,NSMutableArray<NSString*>*>* const KVOOptions_to_propertiesToObserve_mapping = [NSMutableDictionary<NSNumber*,NSMutableArray<NSString*>*> dictionary];
-	[KVOOptions_to_propertiesToObserve_mapping setObject:propertiesToObserve_observe_old_and_initial forKey:@(NSKeyValueObservingOptionInitial)];
+	[KVOOptions_to_propertiesToObserve_mapping setObject:propertiesToObserve_observe_initial forKey:@(NSKeyValueObservingOptionInitial)];
 
 	[KVOOptions_to_propertiesToObserve_mapping enumerateKeysAndObjectsUsingBlock:^(NSNumber * _Nonnull KVOOptions_number, NSMutableArray<NSString *> * _Nonnull propertiesToObserve, BOOL * _Nonnull stop) {
 		[propertiesToObserve enumerateObjectsUsingBlock:^(NSString * _Nonnull propertyToObserve, NSUInteger idx, BOOL * _Nonnull stop) {
@@ -656,13 +702,13 @@ static void* kSMBGameBoardTile__KVOContext = &kSMBGameBoardTile__KVOContext;
 				[gameBoardTileEntity_beamBlocker addObserver:self
 												  forKeyPath:propertyToObserve
 													 options:(KVOOptions_number.unsignedIntegerValue)
-													 context:&kSMBGameBoardTile__KVOContext];
+													 context:&kSMBGameBoardTile__KVOContext_gameBoardTileEntities_beamBlockers_mappedDataCollection];
 			}
 			else
 			{
 				[gameBoardTileEntity_beamBlocker removeObserver:self
 													 forKeyPath:propertyToObserve
-														context:&kSMBGameBoardTile__KVOContext];
+														context:&kSMBGameBoardTile__KVOContext_gameBoardTileEntities_beamBlockers_mappedDataCollection];
 			}
 		}];
 	}];
@@ -700,6 +746,90 @@ static void* kSMBGameBoardTile__KVOContext = &kSMBGameBoardTile__KVOContext;
 	 );
 }
 
+#pragma mark - generalBeamEnterToExitDirectionRedirectTileEntity
+-(void)setGeneralBeamEnterToExitDirectionRedirectTileEntity:(nullable SMBGameBoardTileEntity<SMBGeneralBeamEnterToExitDirectionRedirectTileEntity>*)generalBeamEnterToExitDirectionRedirectTileEntity
+{
+	kRUConditionalReturn(self.generalBeamEnterToExitDirectionRedirectTileEntity == generalBeamEnterToExitDirectionRedirectTileEntity, NO);
+
+	[self generalBeamEnterToExitDirectionRedirectTileEntity_setKVORegistered:NO];
+
+	_generalBeamEnterToExitDirectionRedirectTileEntity = generalBeamEnterToExitDirectionRedirectTileEntity;
+
+	[self generalBeamEnterToExitDirectionRedirectTileEntity_setKVORegistered:YES];
+
+	if (self.generalBeamEnterToExitDirectionRedirectTileEntity == nil)
+	{
+		[self beamEnterToExitDirectionMapping_update];
+	}
+}
+
+-(void)generalBeamEnterToExitDirectionRedirectTileEntity_update
+{
+	[self setGeneralBeamEnterToExitDirectionRedirectTileEntity:[self generalBeamEnterToExitDirectionRedirectTileEntity_appropriate]];
+}
+
+-(nullable SMBGameBoardTileEntity<SMBGeneralBeamEnterToExitDirectionRedirectTileEntity>*)generalBeamEnterToExitDirectionRedirectTileEntity_appropriate
+{
+	SMBGameBoardTileEntity* const gameBoardTileEntity_for_beamInteractions = self.gameBoardTileEntity_for_beamInteractions;
+	kRUConditionalReturn_ReturnValueNil(gameBoardTileEntity_for_beamInteractions == nil, NO);
+	kRUConditionalReturn_ReturnValueNil(kRUProtocolOrNil(gameBoardTileEntity_for_beamInteractions, SMBGeneralBeamEnterToExitDirectionRedirectTileEntity) == nil, NO);
+
+	return (SMBGameBoardTileEntity<SMBGeneralBeamEnterToExitDirectionRedirectTileEntity>*)gameBoardTileEntity_for_beamInteractions;
+}
+
+-(void)generalBeamEnterToExitDirectionRedirectTileEntity_setKVORegistered:(BOOL)registered
+{
+	SMBGameBoardTileEntity<SMBGeneralBeamEnterToExitDirectionRedirectTileEntity>* const generalBeamEnterToExitDirectionRedirectTileEntity = self.generalBeamEnterToExitDirectionRedirectTileEntity;
+	kRUConditionalReturn(generalBeamEnterToExitDirectionRedirectTileEntity == nil, NO);
+
+	NSMutableArray<NSString*>* const propertiesToObserve_observe_initial = [NSMutableArray<NSString*> array];
+	[propertiesToObserve_observe_initial addObject:[SMBGeneralBeamEnterToExitDirectionRedirectTileEntity_PropertiesForKVO beamEnterToExitDirectionMapping]];
+
+	NSMutableDictionary<NSNumber*,NSMutableArray<NSString*>*>* const KVOOptions_to_propertiesToObserve_mapping = [NSMutableDictionary<NSNumber*,NSMutableArray<NSString*>*> dictionary];
+	[KVOOptions_to_propertiesToObserve_mapping setObject:propertiesToObserve_observe_initial forKey:@(NSKeyValueObservingOptionInitial)];
+
+	[KVOOptions_to_propertiesToObserve_mapping enumerateKeysAndObjectsUsingBlock:^(NSNumber * _Nonnull KVOOptions_number, NSMutableArray<NSString *> * _Nonnull propertiesToObserve, BOOL * _Nonnull stop) {
+		[propertiesToObserve enumerateObjectsUsingBlock:^(NSString * _Nonnull propertyToObserve, NSUInteger idx, BOOL * _Nonnull stop) {
+			if (registered)
+			{
+				[generalBeamEnterToExitDirectionRedirectTileEntity addObserver:self
+																	forKeyPath:propertyToObserve
+																	   options:(KVOOptions_number.unsignedIntegerValue)
+																	   context:&kSMBGameBoardTile__KVOContext_generalBeamEnterToExitDirectionRedirectTileEntity];
+			}
+			else
+			{
+				[generalBeamEnterToExitDirectionRedirectTileEntity removeObserver:self
+																	   forKeyPath:propertyToObserve
+																		  context:&kSMBGameBoardTile__KVOContext_generalBeamEnterToExitDirectionRedirectTileEntity];
+			}
+		}];
+	}];
+}
+
+#pragma mark - beamEnterToExitDirectionMapping
+-(void)beamEnterToExitDirectionMapping_update
+{
+	[self setBeamEnterToExitDirectionMapping:[self beamEnterToExitDirectionMapping_appropriate]];
+}
+
+-(nonnull SMBGameBoardTileBeamEnterToExitDirectionMapping*)beamEnterToExitDirectionMapping_appropriate
+{
+	SMBGameBoardTileEntity<SMBGeneralBeamEnterToExitDirectionRedirectTileEntity>* const generalBeamEnterToExitDirectionRedirectTileEntity = self.generalBeamEnterToExitDirectionRedirectTileEntity;
+	kRUConditionalReturn_ReturnValue(generalBeamEnterToExitDirectionRedirectTileEntity == nil, NO, [self beamEnterToExitDirectionMapping_generate]);
+
+	SMBGameBoardTileBeamEnterToExitDirectionMapping* const beamEnterToExitDirectionMapping = generalBeamEnterToExitDirectionRedirectTileEntity.beamEnterToExitDirectionMapping;
+	kRUConditionalReturn_ReturnValue(beamEnterToExitDirectionMapping == nil, YES, [self beamEnterToExitDirectionMapping_generate]);
+
+	return beamEnterToExitDirectionMapping;
+}
+
+-(nonnull SMBGameBoardTileBeamEnterToExitDirectionMapping*)beamEnterToExitDirectionMapping_generate
+{
+	return
+	[[SMBGameBoardTileBeamEnterToExitDirectionMapping alloc] init_with_beamEnterToExitDirectionMappingDictionary:nil];
+}
+
 @end
 
 
@@ -714,5 +844,6 @@ static void* kSMBGameBoardTile__KVOContext = &kSMBGameBoardTile__KVOContext;
 +(nonnull NSString*)isPowered{return NSStringFromSelector(_cmd);}
 +(nonnull NSString*)isPowered_notByBeam{return NSStringFromSelector(_cmd);}
 +(nonnull NSString*)beamEnterDirections_blocked{return NSStringFromSelector(_cmd);}
++(nonnull NSString*)beamEnterToExitDirectionMapping{return NSStringFromSelector(_cmd);}
 
 @end
