@@ -12,6 +12,7 @@
 #import "SMBGameBoardTile__directions_to_CoreGraphics_SMBRotation__orientations_utilities.h"
 #import "SMBTimer.h"
 #import "SMBBeamEntityTileNode.h"
+#import "SMBGameBoardTileBeamEnterToExitDirectionMapping.h"
 
 #import <ResplendentUtilities/RUConditionalReturn.h>
 #import <ResplendentUtilities/UIView+RUUtility.h>
@@ -30,6 +31,9 @@ static void* kSMBMeltableWallTileEntity__KVOContext = &kSMBMeltableWallTileEntit
 
 #pragma mark - gameBoardTile
 -(void)SMBMeltableWallTileEntity_gameBoardTile_setKVORegistered:(BOOL)registered;
+
+#pragma mark - isMelted
+@property (nonatomic, assign) BOOL isMelted;
 
 #pragma mark - meltableWall_draw
 -(void)meltableWall_draw_in_rect:(CGRect)rect;
@@ -55,6 +59,11 @@ static void* kSMBMeltableWallTileEntity__KVOContext = &kSMBMeltableWallTileEntit
 -(void)beamEnterDirections_blocked_update;
 -(SMBGameBoardTile__direction)beamEnterDirections_blocked_appropriate;
 
+#pragma mark - beamEnterToExitDirectionMapping
+-(void)beamEnterToExitDirectionMapping_update;
+-(nullable SMBGameBoardTileBeamEnterToExitDirectionMapping*)beamEnterToExitDirectionMapping_generate;
+-(nullable NSDictionary<NSNumber*,NSNumber*>*)beamEnterToExitDirectionMapping_beamEnterToExitDirectionMappingDictionary_generate;
+
 @end
 
 
@@ -69,26 +78,24 @@ static void* kSMBMeltableWallTileEntity__KVOContext = &kSMBMeltableWallTileEntit
 	[self SMBMeltableWallTileEntity_gameBoardTile_setKVORegistered:NO];
 }
 
-#pragma mark - NSObject
--(nullable instancetype)init_with_meltableBeamEnterDirections:(SMBGameBoardTile__direction)meltableBeamEnterDirections
-{
-	if (self = [super init_with_forcedBeamExitDirection:SMBGameBoardTile__direction_none])
-	{
-		_meltableBeamEnterDirections = meltableBeamEnterDirections;
-		[self beamEnterDirections_blocked_update];
-
-		[self setForcedBeamRedirectArrow_drawing_disable:YES];
-	}
-
-	return self;
-}
-
-#pragma mark - SMBForcedBeamRedirectTileEntity: init
--(nullable instancetype)init_with_forcedBeamExitDirection:(SMBGameBoardTile__direction)forcedBeamExitDirection
+-(instancetype)init
 {
 	kRUConditionalReturn_ReturnValueNil(YES, YES);
 
-	return [self init];
+	return [self init_with_meltableBeamEnterDirections:SMBGameBoardTile__direction_none];
+}
+
+#pragma mark - init
+-(nullable instancetype)init_with_meltableBeamEnterDirections:(SMBGameBoardTile__direction)meltableBeamEnterDirections
+{
+	if (self = [super init])
+	{
+		_meltableBeamEnterDirections = meltableBeamEnterDirections;
+		[self beamEnterDirections_blocked_update];
+		[self beamEnterToExitDirectionMapping_update];
+	}
+
+	return self;
 }
 
 #pragma mark - SMBGameBoardGeneralEntity: draw
@@ -112,6 +119,7 @@ static void* kSMBMeltableWallTileEntity__KVOContext = &kSMBMeltableWallTileEntit
 	CGFloat const inset_fromEdge = CGRectGetWidth(rect) / 20.0f;
 	CGFloat const inset_fromCenter = [SMBBeamEntityTileNode half_line_offset_amount_for_rect:rect] + [SMBBeamEntityTileNode half_line_width_in_rect:rect] + CGRectGetWidth(rect) / 20.0f;
 	SMBGameBoardTile__direction const meltableBeamEnterDirections = self.meltableBeamEnterDirections;
+	BOOL const isMelted = self.isMelted;
 
 	for (SMBGameBoardTile__direction direction = SMBGameBoardTile__direction__first;
 		 direction <= SMBGameBoardTile__direction__last;
@@ -122,7 +130,9 @@ static void* kSMBMeltableWallTileEntity__KVOContext = &kSMBMeltableWallTileEntit
 				   inset_fromEdge:inset_fromEdge
 				 inset_fromCenter:inset_fromCenter];
 
-		if ((meltableBeamEnterDirections & direction) == false)
+		if ((isMelted == false)
+			&&
+			(meltableBeamEnterDirections & direction) == false)
 		{
 			[self squareGap_draw_in_rect:rect
 							   direction:direction
@@ -131,16 +141,19 @@ static void* kSMBMeltableWallTileEntity__KVOContext = &kSMBMeltableWallTileEntit
 		}
 	}
 
-	CGFloat const square_inner_dimension_length = (inset_fromCenter * 2.0f);
-	CGRect const squareRect_inner = (CGRect){
-		.origin.x		= CGRectGetMidX(rect) - inset_fromCenter,
-		.origin.y		= CGRectGetMidY(rect) - inset_fromCenter,
-		.size.width		= square_inner_dimension_length,
-		.size.height	= square_inner_dimension_length,
-	};
-
-	CGContextSetFillColorWithColor(context, [UIColor brownColor].CGColor);
-	CGContextFillRect(context, squareRect_inner);
+	if (isMelted == false)
+	{
+		CGFloat const square_inner_dimension_length = (inset_fromCenter * 2.0f);
+		CGRect const squareRect_inner = (CGRect){
+			.origin.x		= CGRectGetMidX(rect) - inset_fromCenter,
+			.origin.y		= CGRectGetMidY(rect) - inset_fromCenter,
+			.size.width		= square_inner_dimension_length,
+			.size.height	= square_inner_dimension_length,
+		};
+		
+		CGContextSetFillColorWithColor(context, [UIColor brownColor].CGColor);
+		CGContextFillRect(context, squareRect_inner);
+	}
 
 	CGContextRestoreGState(context);
 }
@@ -282,6 +295,11 @@ static void* kSMBMeltableWallTileEntity__KVOContext = &kSMBMeltableWallTileEntit
 {
 	kRUConditionalReturn(self.melting_timer == melting_timer, NO);
 
+	if (self.melting_timer)
+	{
+		[self.melting_timer setRunning:NO];
+	}
+
 	_melting_timer = melting_timer;
 
 	if (self.melting_timer)
@@ -297,6 +315,8 @@ static void* kSMBMeltableWallTileEntity__KVOContext = &kSMBMeltableWallTileEntit
 
 -(nullable SMBTimer*)melting_timer_generate_attempt
 {
+	kRUConditionalReturn_ReturnValueNil(self.isMelted, NO);
+
 	SMBGameBoardTile* const gameBoardTile = self.gameBoardTile;
 	kRUConditionalReturn_ReturnValueNil(gameBoardTile == nil, NO);
 	kRUConditionalReturn_ReturnValueNil(gameBoardTile.isPowered == NO, NO);
@@ -311,11 +331,7 @@ static void* kSMBMeltableWallTileEntity__KVOContext = &kSMBMeltableWallTileEntit
 #pragma mark - SMBTimer__timerDidFireDelegate
 -(void)timer_didFire:(nonnull SMBTimer*)timer
 {
-	SMBGameBoardTile* const gameBoardTile = self.gameBoardTile;
-	kRUConditionalReturn(gameBoardTile == nil, YES);
-
-	[gameBoardTile gameBoardTileEntities_remove:self entityType:SMBGameBoardTile__entityType_beamInteractions];
-	NSAssert(self.gameBoardTile == nil, @"should be cleared");
+	[self setIsMelted:YES];
 }
 
 #pragma mark - SMBBeamBlockerTileEntity
@@ -329,7 +345,63 @@ static void* kSMBMeltableWallTileEntity__KVOContext = &kSMBMeltableWallTileEntit
 
 -(SMBGameBoardTile__direction)beamEnterDirections_blocked_appropriate
 {
+	kRUConditionalReturn_ReturnValue(self.isMelted, NO, SMBGameBoardTile__direction_none);
+
 	return SMBGameBoardTile__directions__opposite(self.meltableBeamEnterDirections);
+}
+
+#pragma mark - isMelted
+-(void)setIsMelted:(BOOL)isMelted
+{
+	kRUConditionalReturn(self.isMelted == isMelted, NO);
+
+	_isMelted = isMelted;
+
+	[self melting_timer_update];
+	[self beamEnterDirections_blocked_update];
+	[self beamEnterToExitDirectionMapping_update];
+	[self setNeedsRedraw];
+}
+
+#pragma mark - SMBGeneralBeamExitDirectionRedirectTileEntity
+-(SMBGameBoardTile__direction)beamExitDirection_for_beamEnterDirection:(SMBGameBoardTile__direction)beamEnterDirection
+{
+	return
+	(self.isMelted
+	 ?
+	 SMBGameBoardTile__direction__opposite(beamEnterDirection)
+	 :
+	 SMBGameBoardTile__direction_none
+	);
+}
+
+#pragma mark - SMBGeneralBeamExitDirectionRedirectTileEntity
+@synthesize beamEnterToExitDirectionMapping = _beamEnterToExitDirectionMapping;
+
+#pragma mark - beamEnterToExitDirectionMapping
+-(void)beamEnterToExitDirectionMapping_update
+{
+	[self setBeamEnterToExitDirectionMapping:[self beamEnterToExitDirectionMapping_generate]];
+}
+
+-(nullable SMBGameBoardTileBeamEnterToExitDirectionMapping*)beamEnterToExitDirectionMapping_generate
+{
+	return
+	[[SMBGameBoardTileBeamEnterToExitDirectionMapping alloc] init_with_beamEnterToExitDirectionMappingDictionary:[self beamEnterToExitDirectionMapping_beamEnterToExitDirectionMappingDictionary_generate]];
+}
+
+-(nullable NSDictionary<NSNumber*,NSNumber*>*)beamEnterToExitDirectionMapping_beamEnterToExitDirectionMappingDictionary_generate
+{
+	kRUConditionalReturn_ReturnValueNil(self.isMelted, NO);
+
+	NSMutableDictionary<NSNumber*,NSNumber*>* const beamEnterToExitDirectionMappingDictionary = [NSMutableDictionary<NSNumber*,NSNumber*> dictionary];
+
+	SMBGameBoardTile__directions_enumerate(^(SMBGameBoardTile__direction direction) {
+		[beamEnterToExitDirectionMappingDictionary setObject:@(SMBGameBoardTile__direction_none)
+											   forKey:@(direction)];
+	});
+
+	return [NSDictionary<NSNumber*,NSNumber*> dictionaryWithDictionary:beamEnterToExitDirectionMappingDictionary];
 }
 
 @end

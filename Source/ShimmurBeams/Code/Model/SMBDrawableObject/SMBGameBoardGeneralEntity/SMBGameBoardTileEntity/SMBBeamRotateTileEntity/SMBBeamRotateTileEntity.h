@@ -7,14 +7,14 @@
 //
 
 #import "SMBGameBoardTileEntity.h"
-#import "SMBGeneralBeamExitDirectionRedirectTileEntity.h"
+#import "SMBGeneralBeamEnterToExitDirectionRedirectTileEntity.h"
 #import "SMBGameBoardTile__direction_rotations.h"
 
 
 
 
 
-@interface SMBBeamRotateTileEntity : SMBGameBoardTileEntity <SMBGeneralBeamExitDirectionRedirectTileEntity>
+@interface SMBBeamRotateTileEntity : SMBGameBoardTileEntity <SMBGeneralBeamEnterToExitDirectionRedirectTileEntity>
 
 #pragma mark - direction_rotation
 @property (nonatomic, readonly, assign) SMBGameBoardTile__direction_rotation direction_rotation;

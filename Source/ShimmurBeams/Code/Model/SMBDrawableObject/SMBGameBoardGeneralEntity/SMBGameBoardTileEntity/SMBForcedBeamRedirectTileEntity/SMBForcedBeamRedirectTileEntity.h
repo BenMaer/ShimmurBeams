@@ -7,13 +7,14 @@
 //
 
 #import "SMBGameBoardTileEntity.h"
-#import "SMBGeneralBeamExitDirectionRedirectTileEntity.h"
+#import "SMBGeneralBeamEnterToExitDirectionRedirectTileEntity.h"
+#import "SMBGameBoardTile__directions.h"
 
 
 
 
 
-@interface SMBForcedBeamRedirectTileEntity : SMBGameBoardTileEntity <SMBGeneralBeamExitDirectionRedirectTileEntity>
+@interface SMBForcedBeamRedirectTileEntity : SMBGameBoardTileEntity <SMBGeneralBeamEnterToExitDirectionRedirectTileEntity>
 
 #pragma mark - forcedBeamExitDirection
 @property (nonatomic, readonly, assign) SMBGameBoardTile__direction forcedBeamExitDirection;

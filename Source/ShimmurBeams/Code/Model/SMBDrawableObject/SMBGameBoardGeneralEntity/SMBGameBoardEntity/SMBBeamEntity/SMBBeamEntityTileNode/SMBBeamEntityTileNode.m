@@ -13,11 +13,12 @@
 #import "SMBBeamCreatorTileEntity.h"
 #import "SMBGameBoard.h"
 #import "SMBGameBoardTilePosition.h"
-#import "SMBGeneralBeamExitDirectionRedirectTileEntity.h"
+#import "SMBGeneralBeamEnterToExitDirectionRedirectTileEntity.h"
 #import "SMBBeamEntity.h"
 #import "SMBGameBoardTileEntity+SMBBeamBlocker.h"
 #import "SMBGameBoardTile__directions.h"
 #import "SMBGameBoardTile__direction_rotations.h"
+#import "SMBGameBoardTileBeamEnterToExitDirectionMapping.h"
 
 #import <ResplendentUtilities/RUConditionalReturn.h>
 #import <ResplendentUtilities/RUClassOrNilUtil.h>
@@ -274,6 +275,7 @@ typedef NS_ENUM(NSInteger, SMBBeamEntityTileNode__state) {
 	NSMutableArray<NSString*>* const propertiesToObserve = [NSMutableArray<NSString*> array];
 	[propertiesToObserve addObject:[SMBGameBoardTile_PropertiesForKVO gameBoardTileEntity_for_beamInteractions]];
 	[propertiesToObserve addObject:[SMBGameBoardTile_PropertiesForKVO beamEnterDirections_blocked]];
+	[propertiesToObserve addObject:[SMBGameBoardTile_PropertiesForKVO beamEnterToExitDirectionMapping]];
 
 	[propertiesToObserve enumerateObjectsUsingBlock:^(NSString * _Nonnull propertyToObserve, NSUInteger idx, BOOL * _Nonnull stop) {
 		if (registered)
@@ -345,16 +347,10 @@ typedef NS_ENUM(NSInteger, SMBBeamEntityTileNode__state) {
 
 	kRUConditionalReturn_ReturnValue(self.gameBoardTile_allows_beamEnterDirection == false, NO, SMBGameBoardTile__direction_none);
 
-	if (gameBoardTileEntity_for_beamInteractions)
-	{
-		id<SMBGeneralBeamExitDirectionRedirectTileEntity> const generalBeamExitDirectionRedirectTileEntity = kRUProtocolOrNil(gameBoardTileEntity_for_beamInteractions, SMBGeneralBeamExitDirectionRedirectTileEntity);
-		if (generalBeamExitDirectionRedirectTileEntity)
-		{
-			return [generalBeamExitDirectionRedirectTileEntity beamExitDirection_for_beamEnterDirection:[self beamEnterDirection]];
-		}
-	}
+	SMBGameBoardTileBeamEnterToExitDirectionMapping* const beamEnterToExitDirectionMapping = gameBoardTile.beamEnterToExitDirectionMapping;
+	kRUConditionalReturn_ReturnValue(beamEnterToExitDirectionMapping == nil, YES, SMBGameBoardTile__direction__opposite(beamEnterDirection));
 
-	return SMBGameBoardTile__direction__opposite(beamEnterDirection);
+	return [beamEnterToExitDirectionMapping beamExitDirection_for_beamEnterDirection:beamEnterDirection];
 }
 
 #pragma mark - KVO
@@ -371,6 +367,10 @@ typedef NS_ENUM(NSInteger, SMBBeamEntityTileNode__state) {
 			else if ([keyPath isEqualToString:[SMBGameBoardTile_PropertiesForKVO beamEnterDirections_blocked]])
 			{
 				[self gameBoardTile_allows_beamEnterDirection_update];
+			}
+			else if ([keyPath isEqualToString:[SMBGameBoardTile_PropertiesForKVO beamEnterToExitDirectionMapping]])
+			{
+				[self beamExitDirection_update];
 			}
 			else
 			{
