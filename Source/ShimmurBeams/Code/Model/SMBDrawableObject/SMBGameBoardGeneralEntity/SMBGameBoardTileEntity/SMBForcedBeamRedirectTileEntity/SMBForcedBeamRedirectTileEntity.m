@@ -10,6 +10,7 @@
 #import "CoreGraphics+SMBRotation.h"
 #import "SMBGameBoardTile__directions_to_CoreGraphics_SMBRotation__orientations_utilities.h"
 #import "CoreGraphics+SMBDrawArrow.h"
+#import "SMBGameBoardTileBeamEnterToExitDirectionMapping.h"
 
 #import <ResplendentUtilities/RUConditionalReturn.h>
 
@@ -21,6 +22,11 @@
 
 #pragma mark - forcedBeamRedirectArrow_drawing
 -(void)forcedBeamRedirectArrow_draw_in_rect:(CGRect)rect;
+
+#pragma mark - beamEnterToExitDirectionMapping
+-(void)beamEnterToExitDirectionMapping_update;
+-(nullable SMBGameBoardTileBeamEnterToExitDirectionMapping*)beamEnterToExitDirectionMapping_generate;
+-(nullable NSDictionary<NSNumber*,NSNumber*>*)beamEnterToExitDirectionMapping_beamEnterToExitDirectionMappingDictionary_generate;
 
 @end
 
@@ -46,6 +52,7 @@
 	if (self = [super init])
 	{
 		_forcedBeamExitDirection = forcedBeamExitDirection;
+		[self beamEnterToExitDirectionMapping_update];
 	}
 
 	return self;
@@ -89,12 +96,31 @@
 }
 
 #pragma mark - SMBGeneralBeamExitDirectionRedirectTileEntity
--(SMBGameBoardTile__direction)beamExitDirection_for_beamEnterDirection:(SMBGameBoardTile__direction)beamEnterDirection
-{
-	SMBGameBoardTile__direction const forcedBeamExitDirection = self.forcedBeamExitDirection;
-	kRUConditionalReturn_ReturnValue(SMBGameBoardTile__direction__isInRange_or_none(forcedBeamExitDirection) == false, YES, SMBGameBoardTile__direction_unknown);
+@synthesize beamEnterToExitDirectionMapping = _beamEnterToExitDirectionMapping;
 
-	return forcedBeamExitDirection;
+#pragma mark - beamEnterToExitDirectionMapping
+-(void)beamEnterToExitDirectionMapping_update
+{
+	[self setBeamEnterToExitDirectionMapping:[self beamEnterToExitDirectionMapping_generate]];
+}
+
+-(nullable SMBGameBoardTileBeamEnterToExitDirectionMapping*)beamEnterToExitDirectionMapping_generate
+{
+	return
+	[[SMBGameBoardTileBeamEnterToExitDirectionMapping alloc] init_with_beamEnterToExitDirectionMappingDictionary:[self beamEnterToExitDirectionMapping_beamEnterToExitDirectionMappingDictionary_generate]];
+}
+
+-(nullable NSDictionary<NSNumber*,NSNumber*>*)beamEnterToExitDirectionMapping_beamEnterToExitDirectionMappingDictionary_generate
+{
+	NSMutableDictionary<NSNumber*,NSNumber*>* const beamEnterToExitDirectionMappingDictionary = [NSMutableDictionary<NSNumber*,NSNumber*> dictionary];
+	SMBGameBoardTile__direction const forcedBeamExitDirection = self.forcedBeamExitDirection;
+
+	SMBGameBoardTile__directions_enumerate(^(SMBGameBoardTile__direction direction) {
+		[beamEnterToExitDirectionMappingDictionary setObject:@(forcedBeamExitDirection)
+											   forKey:@(direction)];
+	});
+
+	return [NSDictionary<NSNumber*,NSNumber*> dictionaryWithDictionary:beamEnterToExitDirectionMappingDictionary];
 }
 
 @end

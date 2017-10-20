@@ -20,6 +20,7 @@
 @class SMBGameBoard;
 @class SMBGameBoardTileEntity;
 @class SMBMappedDataCollection<ObjectType>;
+@class SMBGameBoardTileBeamEnterToExitDirectionMapping;
 
 
 
@@ -67,6 +68,9 @@
 #pragma mark - beamEnterDirections_blocked
 @property (nonatomic, readonly, assign) SMBGameBoardTile__direction beamEnterDirections_blocked;
 
+#pragma mark - beamEnterToExitDirectionMapping
+@property (nonatomic, readonly, strong, nullable) SMBGameBoardTileBeamEnterToExitDirectionMapping* beamEnterToExitDirectionMapping;
+
 #pragma mark - isHighlighted
 @property (nonatomic, assign) BOOL isHighlighted;
 
@@ -84,5 +88,6 @@
 +(nonnull NSString*)isPowered;
 +(nonnull NSString*)isPowered_notByBeam;
 +(nonnull NSString*)beamEnterDirections_blocked;
++(nonnull NSString*)beamEnterToExitDirectionMapping;
 
 @end
