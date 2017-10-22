@@ -80,7 +80,12 @@
 	CGContextSaveGState(context);
 	
 	CGContextSetStrokeColorWithColor(context, [UIColor blackColor].CGColor);
-	CGContextSetLineWidth(context, [SMBBeamEntityTileNode half_line_offset_amount_for_rect:rect] * 2.0f);
+	CGContextSetLineWidth(context,
+						  ([SMBBeamEntityTileNode half_line_offset_amount_for_rect:rect]
+						   +
+						   [SMBBeamEntityTileNode half_line_width_in_rect:rect])
+						  *
+						  2.0f);
 	
 	CGPoint const point_start = (CGPoint){
 		.x  = [self draw_startingPoint_x_forFrame:rect],
