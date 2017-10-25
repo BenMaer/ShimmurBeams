@@ -32,11 +32,17 @@
 	 Numbers = Sections
 
 	 Entities:
-	 BcP	Beam Creator Powered
+	 Bc[x]	Beam Creator
 	 Exi	Level Exit
 	 Wal	Wall
 	 PoB	Power Button
-	 BcU	Beam Creator Unpowered
+
+	 Entity Notes:
+	 - Bc1
+	 *- direction: right
+	 - Bc2
+	 *- direction: right
+	 *- requiresExternalPowerForBeam = YES
 
 	 Usable:
 	 Forced Redirect (direction: up) x2
@@ -44,14 +50,15 @@
 	 Sections and entities:
 	 [   ] [   ] [   ] [   ] [   ] [PoB] [   ]
 	 [   ] [   ] [   ] [ 1 ] [   ] [   ] [   ]
-	 [   ] [BcP] [   ] [   ] [   ] [   ] [   ]
+	 [   ] [Bc1] [   ] [   ] [   ] [   ] [   ]
 	 [Wal] [Wal] [Wal] [Wal] [Wal] [Wal] [Wal]
 	 [   ] [   ] [   ] [   ] [   ] [Exi] [   ]
 	 [   ] [   ] [   ] [ 2 ] [   ] [   ] [   ]
-	 [   ] [BcU] [   ] [   ] [   ] [   ] [   ]
+	 [   ] [Bc2] [   ] [   ] [   ] [   ] [   ]
 
 	 B[x]	Button [x]
 	 B[x]O	Button [x] Output
+
 	 Wiring:
 	 [   ] [   ] [   ] [   ] [   ] [B1 ] [   ]
 	 [   ] [   ] [   ] [ 1 ] [   ] [   ] [   ]
@@ -1452,7 +1459,7 @@
 	 [[SMBGameBoardTilePosition alloc] init_with_column:gameBoardTilePosition_section_2_columns_range.location
 													row:gameBoardTilePosition_section_2_rows_range.location + 2]];
 
-	/* Section 2 2x-1 */
+	/* Section 2 2x-0 */
 	[gameBoard gameBoardTileEntity_add:[[SMBForcedBeamRedirectTileEntity alloc] init_with_forcedBeamExitDirection:SMBGameBoardTile__direction_left]
 							entityType:SMBGameBoardTile__entityType_beamInteractions
 			  to_gameBoardTilePosition:
