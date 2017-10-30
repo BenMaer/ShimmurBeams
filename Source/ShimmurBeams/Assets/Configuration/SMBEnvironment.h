@@ -42,6 +42,8 @@
 
 #define kSMBEnvironment__SMBBeamCreatorTileEntity_beamCreator_drawing_useSVG (0)
 
+#define kSMBEnvironment__SMBGameBoardView_showColumnAndRowValues_enabled (DEBUG && 1)
+
 /**
  -- UI
  */

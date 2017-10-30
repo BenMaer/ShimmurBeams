@@ -1,0 +1,65 @@
+//
+//  UIButton+RUTextSize.m
+//  Racer Tracer
+//
+//  Created by Benjamin Maer on 8/18/14.
+//  Copyright (c) 2014 Appy Dragon. All rights reserved.
+//
+
+#import "UIButton+RUTextSize.h"
+#import "RUAttributesDictionaryBuilder.h"
+#import "NSString+RUTextSize.h"
+#import "NSAttributedString+RUTextSize.h"
+#import "UIButton+RUAttributesDictionaryBuilder.h"
+
+
+
+
+
+@implementation UIButton (RUTextSize)
+
+#pragma mark - Current Title Size
+-(CGSize)ru_currentTitleTextSizeConstrainedToWidth:(CGFloat)width
+{
+	NSString* const currentTitle = self.currentTitle;
+	if (([currentTitle respondsToSelector:@selector(boundingRectWithSize:options:attributes:context:)]) &&
+		([currentTitle respondsToSelector:@selector(ruTextSizeWithBoundingWidth:attributes:)]))
+	{
+		RUAttributesDictionaryBuilder* const attributesDictionaryBuilder = [RUAttributesDictionaryBuilder new];
+		[self ru_apply_to_attributesDictionaryBuilder:attributesDictionaryBuilder];
+		return [currentTitle ruTextSizeWithBoundingWidth:width attributes:[attributesDictionaryBuilder attributesDictionary_generate]];
+	}
+	else
+	{
+#pragma clang diagnostic push
+#pragma clang diagnostic ignored "-Wdeprecated-declarations"
+		return [currentTitle sizeWithFont:self.titleLabel.font constrainedToSize:CGSizeMake(width, CGFLOAT_MAX) lineBreakMode:self.titleLabel.lineBreakMode];
+#pragma clang diagnostic pop
+	}
+}
+
+-(CGSize)ru_currentTitleTextSize
+{
+	return [self ru_currentTitleTextSizeConstrainedToWidth:CGFLOAT_MAX];
+}
+
+#pragma mark - Current Attribed Title Size
+-(CGSize)ru_currentAttributedTitleTextSizeConstrainedToWidth:(CGFloat)width
+{
+	if ([self respondsToSelector:@selector(currentAttributedTitle)])
+	{
+		return [self.currentAttributedTitle ru_textSizeWithBoundingWidth:width];
+	}
+	else
+	{
+		NSAssert(false, @"unhandled");
+		return CGSizeZero;
+	}
+}
+
+-(CGSize)ru_currentAttributedTitleTextSize
+{
+	return [self ru_currentAttributedTitleTextSizeConstrainedToWidth:CGFLOAT_MAX];
+}
+
+@end
