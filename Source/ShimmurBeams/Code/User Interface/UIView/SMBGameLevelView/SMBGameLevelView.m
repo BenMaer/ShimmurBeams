@@ -158,10 +158,10 @@ static void* kSMBGameLevelView__KVOContext = &kSMBGameLevelView__KVOContext;
 {
 	typeof(self.gameBoardTileEntityPickerView) const gameBoardTileEntityPickerView = self.gameBoardTileEntityPickerView;
 	kRUConditionalReturn(gameBoardTileEntityPickerView == nil, NO);
-	
+
 	NSMutableArray<NSString*>* const propertiesToObserve = [NSMutableArray<NSString*> array];
 	[propertiesToObserve addObject:[SMBGameBoardTileEntityPickerView_PropertiesForKVO selectedGameBoardTileEntity]];
-	
+
 	[propertiesToObserve enumerateObjectsUsingBlock:^(NSString * _Nonnull propertyToObserve, NSUInteger idx, BOOL * _Nonnull stop) {
 		if (registered)
 		{
@@ -206,7 +206,7 @@ static void* kSMBGameLevelView__KVOContext = &kSMBGameLevelView__KVOContext;
 -(void)gameBoardTileEntityPickerView_selectedGameBoardTileEntity_move_to_tile:(nonnull SMBGameBoardTile*)gameBoardTile
 {
 	kRUConditionalReturn(gameBoardTile == nil, YES);
-	
+
 	SMBGameBoardTileEntity* const gameBoardTileEntityPickerView_selectedGameBoardTileEntity = self.gameBoardTileEntityPickerView.selectedGameBoardTileEntity;
 	kRUConditionalReturn(gameBoardTileEntityPickerView_selectedGameBoardTileEntity == nil, NO);
 
@@ -329,20 +329,22 @@ static void* kSMBGameLevelView__KVOContext = &kSMBGameLevelView__KVOContext;
 	if (self.gameBoardTileEntityPickerView.selectedGameBoardTileEntity)
 	{
 		[self gameBoardTileEntityPickerView_selectedGameBoardTileEntity_move_to_tile:gameBoardTile];
-		return;
 	}
-
-	SMBGameBoardTileEntity* const gameBoardTileEntity = gameBoardTile.gameBoardTileEntity_for_beamInteractions;
-	if ((gameBoardTileEntity == nil)
-		||
-		([self.gameLevel.usableGameBoardTileEntities containsObject:gameBoardTileEntity] == false))
+	else
 	{
-		[self gameBoardTileEntityPickerView_borderColorView_animate];
-		return;
+		SMBGameBoardTileEntity* const gameBoardTileEntity = gameBoardTile.gameBoardTileEntity_for_beamInteractions;
+		if ((gameBoardTileEntity == nil)
+			||
+			([self.gameLevel.usableGameBoardTileEntities containsObject:gameBoardTileEntity] == false))
+		{
+			[self gameBoardTileEntityPickerView_borderColorView_animate];
+		}
+		else
+		{
+			[self.gameBoardTileEntityPickerView setSelectedGameBoardTileEntity:gameBoardTileEntity];
+		}
 	}
 
-	[self.gameBoardTileEntityPickerView setSelectedGameBoardTileEntity:gameBoardTileEntity];
-	
 #if kSMBGameLevelView__beamEntityManager_beamEntity_forMarkingNodesReady_validation_enabled
 	[self.gameLevel.gameBoard.beamEntityManager beamEntity_forMarkingNodesReady_isNil_validate];
 #endif
