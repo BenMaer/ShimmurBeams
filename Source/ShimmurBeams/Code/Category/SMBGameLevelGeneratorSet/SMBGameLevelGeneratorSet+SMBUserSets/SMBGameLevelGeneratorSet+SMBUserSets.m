@@ -273,7 +273,7 @@
 		return [SMBGameLevel smb_beamEntityOrder];
 	}
 																						  name:@"Beam entity order"
-																						  hint:@"Place entity at 0x3. Should not cause death."]];
+																						  hint:@"Place entity at A4. Should not cause death."]];
 
 	[gameLevelGenerators addObject:[[SMBGameLevelGenerator alloc] init_with_generateLevelBlock:^SMBGameLevel * _Nonnull{
 		return [SMBGameLevel smb_buttonPoweredImmediately];
