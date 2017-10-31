@@ -342,7 +342,7 @@ static void* kSMBGameBoardView__KVOContext = &kSMBGameBoardView__KVOContext;
 																				 newObjects:&newObjects];
 
 	[removedObjects enumerateObjectsUsingBlock:^(SMBGameBoardGeneralEntityView * _Nonnull gameBoardEntityView, NSUInteger idx, BOOL * _Nonnull stop) {
-		NSAssert(gameBoardEntityView.superview == self, @"Should be self");
+		NSAssert(gameBoardEntityView.superview == self.contentView, @"Should be contentView");
 		NSAssert([gameBoardTileEntityView_mappedDataCollection_old mappableObject_exists:gameBoardEntityView], @"Should be removed.");
 		NSAssert([self.gameBoardTileEntityView_mappedDataCollection mappableObject_exists:gameBoardEntityView] == false, @"Should be removed.");
 
@@ -449,7 +449,7 @@ static void* kSMBGameBoardView__KVOContext = &kSMBGameBoardView__KVOContext;
 																					newObjects:&newObjects];
 
 	[removedObjects enumerateObjectsUsingBlock:^(SMBGameBoardGeneralEntityView * _Nonnull gameBoardEntityView, NSUInteger idx, BOOL * _Nonnull stop) {
-		NSAssert(gameBoardEntityView.superview == self, @"Should be self");
+		NSAssert(gameBoardEntityView.superview == self.contentView, @"Should be contentView");
 		NSAssert([gameBoardEntityView_mappedDataCollection_old mappableObject_exists:gameBoardEntityView], @"Should be removed.");
 		NSAssert([self.gameBoardEntityView_mappedDataCollection mappableObject_exists:gameBoardEntityView] == false, @"Should be removed.");
 

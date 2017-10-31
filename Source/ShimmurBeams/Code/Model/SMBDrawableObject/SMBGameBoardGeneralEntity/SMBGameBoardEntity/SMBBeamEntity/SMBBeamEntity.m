@@ -118,8 +118,8 @@ typedef NS_ENUM(NSInteger, SMBBeamEntity__drawingPiece) {
 {
 	NSMutableArray<NSString*>* const description_lines = [NSMutableArray<NSString*> array];
 	[description_lines ru_addObjectIfNotNil:[super description]];
-	[description_lines ru_addObjectIfNotNil:RUStringWithFormat(@"self.beamEntityTileNode_initial: %@",self.beamEntityTileNode_initial)];
-	[description_lines ru_addObjectIfNotNil:RUStringWithFormat(@"[self node_last]: %@",[self node_last])];
+	[description_lines ru_addObjectIfNotNil:RUStringWithFormat(@"beamEntityTileNode_initial: %@",self.beamEntityTileNode_initial)];
+	[description_lines ru_addObjectIfNotNil:RUStringWithFormat(@"node_last: %@",[self node_last])];
 
 	return [description_lines componentsJoinedByString:@"\n"];
 }

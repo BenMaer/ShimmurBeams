@@ -204,9 +204,9 @@ typedef NS_ENUM(NSInteger, SMBBeamEntityTileNode__state) {
 {
 	NSMutableArray<NSString*>* const description_lines = [NSMutableArray<NSString*> array];
 	[description_lines ru_addObjectIfNotNil:[super description]];
-	[description_lines ru_addObjectIfNotNil:RUStringWithFormat(@"self.node_next_gameTilePosition: %@",self.node_next_gameTilePosition)];
-	[description_lines ru_addObjectIfNotNil:RUStringWithFormat(@"self.beamEnterDirection: %lu",(unsigned long)self.beamEnterDirection)];
-	[description_lines ru_addObjectIfNotNil:RUStringWithFormat(@"self.beamExitDirection: %lu",(unsigned long)self.beamExitDirection)];
+	[description_lines ru_addObjectIfNotNil:RUStringWithFormat(@"node_next_gameTilePosition: %@",self.node_next_gameTilePosition)];
+	[description_lines ru_addObjectIfNotNil:RUStringWithFormat(@"beamEnterDirection: %lu",(unsigned long)self.beamEnterDirection)];
+	[description_lines ru_addObjectIfNotNil:RUStringWithFormat(@"beamExitDirection: %lu",(unsigned long)self.beamExitDirection)];
 
 	return [description_lines componentsJoinedByString:@"\n"];
 }
