@@ -549,7 +549,7 @@ static void* kSMBGameBoardView__KVOContext = &kSMBGameBoardView__KVOContext;
 						 [self.gameBoardTileViews isEqual:gameBoardTileViews], NO);
 
 	[self.gameBoardTileViews enumerateObjectsUsingBlock:^(SMBGameBoardTileView * _Nonnull gameBoardTileView, NSUInteger idx, BOOL * _Nonnull stop) {
-		NSAssert(gameBoardTileView.superview == self, @"superview should be self");
+		NSAssert(gameBoardTileView.superview == self.contentView, @"superview should be content view");
 
 		[gameBoardTileView removeFromSuperview];
 	}];
