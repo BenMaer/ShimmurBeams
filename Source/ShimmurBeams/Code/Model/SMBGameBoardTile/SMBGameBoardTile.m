@@ -23,6 +23,7 @@
 #import "SMBGeneralBeamEnterToExitDirectionRedirectTileEntity.h"
 #import "SMBGameBoardTileBeamEnterToExitDirectionMapping.h"
 #import "SMBGeneralBeamEnterToExitDirectionRedirectTileEntity_PropertiesForKVO.h"
+#import "SMBBeamEntityManager.h"
 
 #import <ResplendentUtilities/RUConditionalReturn.h>
 #import <ResplendentUtilities/NSMutableArray+RUAddObjectIfNotNil.h>
@@ -271,6 +272,12 @@ static void* kSMBGameBoardTile__KVOContext_generalBeamEnterToExitDirectionRedire
 -(void)gameBoardTileEntities_add:(nonnull SMBGameBoardTileEntity*)gameBoardTileEntity
 					  entityType:(SMBGameBoardTile__entityType)entityType
 {
+	BOOL const beamEntityManager_shouldPause = (self.gameBoard.beamEntityManager.isPaused == false);
+	if (beamEntityManager_shouldPause)
+	{
+		[self.gameBoard.beamEntityManager setIsPaused:YES];
+	}
+
 	switch (entityType)
 	{
 		case SMBGameBoardTile__entityType_none:
@@ -285,6 +292,12 @@ static void* kSMBGameBoardTile__KVOContext_generalBeamEnterToExitDirectionRedire
 		case SMBGameBoardTile__entityType_beamInteractions:
 			[self setGameBoardTileEntity_for_beamInteractions:gameBoardTileEntity];
 			break;
+	}
+
+	if (beamEntityManager_shouldPause)
+	{
+		NSAssert(self.gameBoard.beamEntityManager.isPaused == YES, @"Should be paused from pausing it above.");
+		[self.gameBoard.beamEntityManager setIsPaused:NO];
 	}
 }
 

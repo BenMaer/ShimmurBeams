@@ -22,6 +22,7 @@
 #pragma mark - beamEntity_forMarkingNodesReady
 @property (nonatomic, strong, nullable) SMBBeamEntity* beamEntity_forMarkingNodesReady;
 -(void)beamEntity_forMarkingNodesReady_update;
+-(nullable SMBBeamEntity*)beamEntity_forMarkingNodesReady_appropriate;
 
 #pragma mark - beamEntity_forMarkingNodesReady_mappedDataCollection
 @property (nonatomic, readonly, strong, nonnull) SMBMutableMappedDataCollection<SMBBeamEntity*>* beamEntity_forMarkingNodesReady_mappedDataCollection;
@@ -62,7 +63,14 @@
 
 -(void)beamEntity_forMarkingNodesReady_update
 {
-	[self setBeamEntity_forMarkingNodesReady:self.beamEntities_forMarkingNodesReady.firstObject];
+	[self setBeamEntity_forMarkingNodesReady:[self beamEntity_forMarkingNodesReady_appropriate]];
+}
+
+-(nullable SMBBeamEntity*)beamEntity_forMarkingNodesReady_appropriate
+{
+	kRUConditionalReturn_ReturnValueNil(self.isPaused, NO);
+
+	return self.beamEntities_forMarkingNodesReady.firstObject;
 }
 
 -(void)beamEntity_forMarkingNodesReady_add:(nonnull SMBBeamEntity*)beamEntity
@@ -130,6 +138,16 @@
 	NSAssert(self.beamEntity_forMarkingNodesReady == nil, @"when a level is finished, beam entity manager should be done with beam entities.");
 }
 #endif
+
+#pragma mark - isPaused
+-(void)setIsPaused:(BOOL)isPaused
+{
+	kRUConditionalReturn(self.isPaused == isPaused, NO);
+
+	_isPaused = isPaused;
+
+	[self beamEntity_forMarkingNodesReady_update];
+}
 
 @end
 
