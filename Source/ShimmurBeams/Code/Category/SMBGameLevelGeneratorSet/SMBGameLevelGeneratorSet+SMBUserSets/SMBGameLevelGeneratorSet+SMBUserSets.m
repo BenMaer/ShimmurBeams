@@ -288,6 +288,12 @@
 																						  hint:@"Powered the beam creator, let it be the only one powering itself, then change its path."]];
 
 	[gameLevelGenerators addObject:[[SMBGameLevelGenerator alloc] init_with_generateLevelBlock:^SMBGameLevel * _Nonnull{
+		return [SMBGameLevel smb_laserPassesThroughMovedEntity];
+	}
+																						  name:@"Beam passes through moved entity."
+																						  hint:@"Place entity at B2. Then move entity to D2. Shouldn't trigger death."]];
+
+	[gameLevelGenerators addObject:[[SMBGameLevelGenerator alloc] init_with_generateLevelBlock:^SMBGameLevel * _Nonnull{
 		return [SMBGameLevel smb_powerToggle_beamEntityManagerStuck];
 	}
 																						  name:@"Beam Entity Manager Stuck"

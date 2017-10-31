@@ -26,6 +26,9 @@
 #pragma mark - beamCreatorPoweringItself
 +(nonnull instancetype)smb_beamCreatorPoweringItself;
 
+#pragma mark - laserPassesThroughMovedEntity
++(nonnull instancetype)smb_laserPassesThroughMovedEntity;
+
 #pragma mark - powerToggle_beamEntityManagerStuck
 +(nonnull instancetype)smb_powerToggle_beamEntityManagerStuck;
 

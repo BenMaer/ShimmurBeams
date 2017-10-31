@@ -399,6 +399,88 @@
 		  usableGameBoardTileEntities:gameBoardTileEntities];
 }
 
+#pragma mark - laserPassesThroughMovedEntity
++(nonnull instancetype)smb_laserPassesThroughMovedEntity
+{
+	/*
+	 Numbers = Sections
+	 
+	 Entities:
+	 Bc[x]	Beam Creator
+	 Exi	Level Exit
+	 Dth	Death block
+	 PoS	Power Switch
+
+	 Entity Notes:
+	 - Bc1
+	 *- direction: right
+
+	 Usable:
+	 Forced Redirect (direction: up)
+
+	 Sections and entities:
+	 [   ] [PoS] [   ] [   ] [   ]
+	 [Bc1] [   ] [Dor] [   ] [Dth]
+
+	 Power entities:
+	 S[x]	Switch [x]
+	 S[x]O	Switch [x] Output
+
+	 Power map:
+	 [   ] [S1 ] [   ] [   ] [   ]
+	 [   ] [   ] [S1O] [   ] [   ]
+
+	 */
+
+	/* Game board. */
+	
+	SMBGameBoard* const gameBoard =
+	[[SMBGameBoard alloc] init_with_numberOfColumns:5
+									   numberOfRows:2];
+
+	/* Initial beam creator. */
+	
+	SMBBeamCreatorTileEntity* const beamCreatorEntity = [SMBBeamCreatorTileEntity new];
+	[beamCreatorEntity setBeamDirection:SMBGameBoardTile__direction_right];
+	[gameBoard gameBoardTileEntity_for_beamInteractions_set:beamCreatorEntity
+								   to_gameBoardTilePosition:
+	 [[SMBGameBoardTilePosition alloc] init_with_column:0
+													row:[gameBoard gameBoardTiles_numberOfRows] - 1]];
+
+	/* Doors */
+	
+	SMBDoorTileEntity* const doorTileEntity = [SMBDoorTileEntity new];
+	[gameBoard gameBoardTileEntity_add:doorTileEntity
+							entityType:SMBGameBoardTile__entityType_beamInteractions
+			  to_gameBoardTilePosition:
+	 [[SMBGameBoardTilePosition alloc] init_with_column:2
+													row:[gameBoard gameBoardTiles_numberOfRows] - 1]];
+
+	/* Power Switches. */
+
+	[gameBoard gameBoardTileEntity_add_powerSwitchTileEntity_with_gameBoardTilePosition_toPower:doorTileEntity.gameBoardTile.gameBoardTilePosition
+																	   to_gameBoardTilePosition:
+	 [[SMBGameBoardTilePosition alloc] init_with_column:1
+													row:0]];
+
+	/* Death blocks. */
+	
+	[gameBoard gameBoardTileEntity_add:[SMBDeathBlockTileEntity new]
+							entityType:SMBGameBoardTile__entityType_beamInteractions
+			  to_gameBoardTilePosition:
+	 [[SMBGameBoardTilePosition alloc] init_with_column:[gameBoard gameBoardTiles_numberOfColumns] - 1
+													row:[gameBoard gameBoardTiles_numberOfRows] - 1]];
+
+	/* Usable game board tile entities. */
+	
+	NSMutableArray<SMBGameBoardTileEntity*>* const gameBoardTileEntities = [NSMutableArray<SMBGameBoardTileEntity*> array];
+	[gameBoardTileEntities addObject:[[SMBForcedBeamRedirectTileEntity alloc] init_with_forcedBeamExitDirection:SMBGameBoardTile__direction_up]];
+	
+	return
+	[[self alloc] init_with_gameBoard:gameBoard
+		  usableGameBoardTileEntities:[NSArray<SMBGameBoardTileEntity*> arrayWithArray:gameBoardTileEntities]];
+}
+
 #pragma mark - powerToggle_beamEntityManagerStuck
 +(nonnull instancetype)smb_powerToggle_beamEntityManagerStuck
 {
