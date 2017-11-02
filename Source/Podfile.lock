@@ -1,22 +1,22 @@
 PODS:
   - RaptureXML (1.0.1)
-  - ResplendentUtilities (0.5.2)
+  - ResplendentUtilities (0.5.3)
   - RUTextSize (0.1.17):
     - ResplendentUtilities (~> 0.5.2)
   - UIImage+SVG (0.1):
     - RaptureXML (~> 1.0.1)
 
 DEPENDENCIES:
-  - ResplendentUtilities (= 0.5.2)
+  - ResplendentUtilities (= 0.5.3)
   - RUTextSize (= 0.1.17)
   - UIImage+SVG (= 0.1)
 
 SPEC CHECKSUMS:
   RaptureXML: b5c33c04c1a4adfd8ad0d5463329a31820596e82
-  ResplendentUtilities: 76f87cca03bda3e246c31bba7bd74fe34ceb16ea
+  ResplendentUtilities: d0b25000014152fb14f5a9b9d36c391dc788aeb3
   RUTextSize: 1a9e27d32b2cb4e5c9f10397076f4c65859ac285
   UIImage+SVG: 23a2edbb60b0f4c083068963086e309ebd8be592
 
-PODFILE CHECKSUM: faac50510282fb7037b1a1502ec8582e66e43e90
+PODFILE CHECKSUM: 4ccbf2936e7f121edac2867e596dca30167c47d7
 
 COCOAPODS: 1.2.1

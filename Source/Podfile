@@ -1,7 +1,7 @@
 platform :ios, '9.0'
 
 target 'ShimmurBeams' do
-	pod 'ResplendentUtilities', '0.5.2'
+	pod 'ResplendentUtilities', '0.5.3'
 	pod 'RUTextSize', '0.1.17'
 
 	pod 'UIImage+SVG', '0.1'
