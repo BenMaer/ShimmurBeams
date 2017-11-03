@@ -34,7 +34,7 @@
 -(void)viewDidLoad
 {
 	[super viewDidLoad];
-	
+
 	[self.view setBackgroundColor:[UIColor redColor]];
 
 	SMBGameLevelGeneratorSetsViewController* const gameLevelGeneratorSetsViewController = [SMBGameLevelGeneratorSetsViewController new];
@@ -53,7 +53,7 @@
 	[gameLevelGeneratorSets addObject:[SMBGameLevelGeneratorSet smb_mirrorsAndMeltableBlocks]];
 	[gameLevelGeneratorSets addObject:[SMBGameLevelGeneratorSet smb_powerButtonsAndDoors]];
 	[gameLevelGeneratorSets addObject:[SMBGameLevelGeneratorSet smb_powerSwitchesAndDoorGroups]];
-#if DEBUG
+#if kSMBEnvironment__SMBGameLevel_SMBUnitTestLevels_unitTestLevels_enabled
 	[gameLevelGeneratorSets addObject:[SMBGameLevelGeneratorSet smb_unitTests]];
 #endif
 

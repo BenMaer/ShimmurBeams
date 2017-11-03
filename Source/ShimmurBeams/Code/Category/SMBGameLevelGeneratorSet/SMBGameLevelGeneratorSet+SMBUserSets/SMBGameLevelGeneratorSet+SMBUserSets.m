@@ -258,6 +258,8 @@
 										   name:@"Power switches and door groups"];
 }
 
+#if kSMBEnvironment__SMBGameLevel_SMBUnitTestLevels_unitTestLevels_enabled
+
 #pragma mark - unitTests
 +(nonnull instancetype)smb_unitTests
 {
@@ -303,5 +305,7 @@
 	[[self alloc] init_with_gameLevelGenerators:[NSArray<SMBGameLevelGenerator*> arrayWithArray:gameLevelGenerators]
 										   name:@"UNIT TESTS"];
 }
+
+#endif
 
 @end

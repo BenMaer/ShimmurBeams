@@ -6,6 +6,8 @@
 //  Copyright © 2017 Shimmur. All rights reserved.
 //
 
+#if kSMBEnvironment__SMBGameLevel_SMBUnitTestLevels_unitTestLevels_enabled
+
 #import "SMBGameLevel.h"
 
 
@@ -33,3 +35,5 @@
 +(nonnull instancetype)smb_powerToggle_beamEntityManagerStuck;
 
 @end
+
+#endif

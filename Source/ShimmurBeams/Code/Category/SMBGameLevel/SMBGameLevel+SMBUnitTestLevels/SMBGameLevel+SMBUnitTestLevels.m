@@ -6,6 +6,7 @@
 //  Copyright © 2017 Shimmur. All rights reserved.
 //
 
+#if kSMBEnvironment__SMBGameLevel_SMBUnitTestLevels_unitTestLevels_enabled
 #import "SMBGameLevel+SMBUnitTestLevels.h"
 #import "SMBGameBoard.h"
 #import "SMBBeamCreatorTileEntity.h"
@@ -682,3 +683,5 @@
 }
 
 @end
+
+#endif

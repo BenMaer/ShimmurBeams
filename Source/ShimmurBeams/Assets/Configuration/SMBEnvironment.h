@@ -44,6 +44,8 @@
 
 #define kSMBEnvironment__SMBGameBoardView_showColumnAndRowValues_enabled (DEBUG && 1)
 
+#define kSMBEnvironment__SMBGameLevel_SMBUnitTestLevels_unitTestLevels_enabled (DEBUG && 1)
+
 /**
  -- UI
  */
