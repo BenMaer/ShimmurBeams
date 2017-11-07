@@ -12,7 +12,6 @@
 #import "SMBGameBoardTile.h"
 #import "UIView+SMBCommonFraming.h"
 #import "SMBGameBoardTileEntitySpawner.h"
-#import "SMBWeakPointerMappableObject.h"
 
 #import <ResplendentUtilities/RUConditionalReturn.h>
 #import <ResplendentUtilities/NSString+RUMacros.h>
@@ -142,9 +141,9 @@ typedef NS_ENUM(NSInteger, SMBGameBoardTileEntityPickerView__trashButton_type) {
 	kRUConditionalReturn((self.gameBoardTileEntitySpawners == gameBoardTileEntitySpawners)
 						 ||
 						 [self.gameBoardTileEntitySpawners isEqual:gameBoardTileEntitySpawners], NO);
-	
+
 	_gameBoardTileEntitySpawners = (gameBoardTileEntitySpawners ? [NSArray<SMBGameBoardTileEntitySpawner*> arrayWithArray:gameBoardTileEntitySpawners] : nil);
-	
+
 	[self.collectionView reloadData];
 }
 
@@ -152,7 +151,7 @@ typedef NS_ENUM(NSInteger, SMBGameBoardTileEntityPickerView__trashButton_type) {
 {
 	NSArray<SMBGameBoardTileEntitySpawner*>* const gameBoardTileEntitySpawners = self.gameBoardTileEntitySpawners;
 	kRUConditionalReturn_ReturnValueNil(gameBoardTileEntitySpawner_index >= gameBoardTileEntitySpawners.count, YES);
-	
+
 	return [gameBoardTileEntitySpawners objectAtIndex:gameBoardTileEntitySpawner_index];
 }
 
@@ -164,10 +163,7 @@ typedef NS_ENUM(NSInteger, SMBGameBoardTileEntityPickerView__trashButton_type) {
 -(void)gameBoardTileEntitySpawners_removeAllEntitiesFromTiles
 {
 	[self.gameBoardTileEntitySpawners enumerateObjectsUsingBlock:^(SMBGameBoardTileEntitySpawner * _Nonnull gameBoardTileEntitySpawner, NSUInteger idx, BOOL * _Nonnull stop) {
-		[[gameBoardTileEntitySpawner spawnedGameBoardTileEntities_tracked] enumerateObjectsUsingBlock:^(SMBWeakPointerMappableObject<SMBGameBoardTileEntity *> * _Nonnull weakPointerMappableObject, NSUInteger idx, BOOL * _Nonnull stop) {
-			SMBGameBoardTileEntity* _Nonnull const gameBoardTileEntity = weakPointerMappableObject.object;
-			kRUConditionalReturn(gameBoardTileEntity == nil, YES);
-
+		[[gameBoardTileEntitySpawner spawnedGameBoardTileEntities_tracked] enumerateObjectsUsingBlock:^(SMBGameBoardTileEntity * _Nonnull gameBoardTileEntity, NSUInteger idx, BOOL * _Nonnull stop) {
 			[self gameBoardTileEntity_removeFromTile:gameBoardTileEntity];
 		}];
 	}];
@@ -253,11 +249,11 @@ typedef NS_ENUM(NSInteger, SMBGameBoardTileEntityPickerView__trashButton_type) {
 {
 	SMBGameBoardTileEntitySpawnerPickerCollectionViewCell* const gameBoardTileEntitySpawnerPickerCollectionViewCell =
 	[collectionView dequeueReusableCellWithReuseIdentifier:SMBGameBoardTileEntityPickerView__cellIdentifier_SMBGameBoardTileEntitySpawnerPickerCollectionViewCell forIndexPath:indexPath];
-	
+
 	SMBGameBoardTileEntitySpawner* const gameBoardTileEntitySpawner = [self gameBoardTileEntitySpawner_at_index:[self gameBoardTileEntitySpawner_index_for_indexPathRow:indexPath.row]];
 	[gameBoardTileEntitySpawnerPickerCollectionViewCell setGameBoardTileEntitySpawner:gameBoardTileEntitySpawner];
 	[self gameBoardTileEntitySpawnerPickerCollectionViewCell_isSelected_update:gameBoardTileEntitySpawnerPickerCollectionViewCell];
-	
+
 	return gameBoardTileEntitySpawnerPickerCollectionViewCell;
 }
 
@@ -307,13 +303,10 @@ typedef NS_ENUM(NSInteger, SMBGameBoardTileEntityPickerView__trashButton_type) {
 	SMBGameBoardTileEntitySpawner* const selectedGameBoardTileEntitySpawner = self.selectedGameBoardTileEntitySpawner;
 	kRUConditionalReturn(selectedGameBoardTileEntitySpawner == nil, YES);
 
-	[[selectedGameBoardTileEntitySpawner spawnedGameBoardTileEntities_tracked] enumerateObjectsUsingBlock:^(SMBWeakPointerMappableObject<SMBGameBoardTileEntity *> * _Nonnull weakPointerMappableObject, NSUInteger idx, BOOL * _Nonnull stop) {
-		SMBGameBoardTileEntity* _Nonnull const gameBoardTileEntity = weakPointerMappableObject.object;
-		kRUConditionalReturn(gameBoardTileEntity == nil, YES);
-
+	[[selectedGameBoardTileEntitySpawner spawnedGameBoardTileEntities_tracked] enumerateObjectsUsingBlock:^(SMBGameBoardTileEntity * _Nonnull gameBoardTileEntity, NSUInteger idx, BOOL * _Nonnull stop) {
 		[self gameBoardTileEntity_removeFromTile:gameBoardTileEntity];
 	}];
-	
+
 	[self setSelectedGameBoardTileEntitySpawner:nil];
 }
 

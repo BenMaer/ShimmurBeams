@@ -168,10 +168,7 @@ static void* SMBGameBoardTileEntitySpawnerManager__KVOContext_gameBoardTileEntit
 
 	NSMutableDictionary<NSString*,SMBGameBoardTileEntitySpawner*>* const gameBoardTileEntity_uniqueId_to_gameBoardTileEntitySpawner_mapping = [NSMutableDictionary<NSString*,SMBGameBoardTileEntitySpawner*> dictionary];
 	[gameBoardTileEntitySpawners enumerateObjectsUsingBlock:^(SMBGameBoardTileEntitySpawner * _Nonnull gameBoardTileEntitySpawner, NSUInteger idx, BOOL * _Nonnull stop) {
-		[gameBoardTileEntitySpawner.spawnedGameBoardTileEntities_tracked enumerateObjectsUsingBlock:^(SMBWeakPointerMappableObject<SMBGameBoardTileEntity *> * _Nonnull weakPointerMappableObject, NSUInteger idx, BOOL * _Nonnull stop) {
-			SMBGameBoardTileEntity* _Nonnull const gameBoardTileEntity = weakPointerMappableObject.object;
-			kRUConditionalReturn(gameBoardTileEntity == nil, YES);
-
+		[gameBoardTileEntitySpawner.spawnedGameBoardTileEntities_tracked enumerateObjectsUsingBlock:^(SMBGameBoardTileEntity * _Nonnull gameBoardTileEntity, NSUInteger idx, BOOL * _Nonnull stop) {
 			NSString* const gameBoardTileEntity_uniqueId = gameBoardTileEntity.uniqueId;
 			kRUConditionalReturn(gameBoardTileEntity_uniqueId == nil, YES);
 			kRUConditionalReturn([gameBoardTileEntity_uniqueId_to_gameBoardTileEntitySpawner_mapping objectForKey:gameBoardTileEntity_uniqueId] != nil, YES);
