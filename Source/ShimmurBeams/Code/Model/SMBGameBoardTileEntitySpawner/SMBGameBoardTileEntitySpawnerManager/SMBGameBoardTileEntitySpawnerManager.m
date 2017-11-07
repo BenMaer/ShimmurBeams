@@ -9,6 +9,7 @@
 #import "SMBGameBoardTileEntitySpawnerManager.h"
 #import "SMBGameBoardTileEntity.h"
 #import "SMBGameBoardTileEntitySpawner.h"
+#import "SMBWeakPointerMappableObject.h"
 
 #import <ResplendentUtilities/RUConditionalReturn.h>
 
@@ -104,7 +105,7 @@ static void* SMBGameBoardTileEntitySpawnerManager__KVOContext_gameBoardTileEntit
 	NSMutableDictionary<NSNumber*,NSMutableArray<NSString*>*>* const KVOOptions_to_propertiesToObserve_mapping = [NSMutableDictionary<NSNumber*,NSMutableArray<NSString*>*> dictionary];
 	
 	NSMutableArray<NSString*>* const propertiesToObserve_observe_initial = [NSMutableArray<NSString*> array];
-	[propertiesToObserve_observe_initial addObject:[SMBGameBoardTileEntitySpawner_PropertiesForKVO gameBoardTileEntities_spawned]];
+	[propertiesToObserve_observe_initial addObject:[SMBGameBoardTileEntitySpawner_PropertiesForKVO spawnedGameBoardTileEntities_tracked]];
 	[KVOOptions_to_propertiesToObserve_mapping setObject:propertiesToObserve_observe_initial forKey:@(NSKeyValueObservingOptionInitial)];
 	
 	[KVOOptions_to_propertiesToObserve_mapping enumerateKeysAndObjectsUsingBlock:^(NSNumber * _Nonnull KVOOptions_number, NSMutableArray<NSString *> * _Nonnull propertiesToObserve, BOOL * _Nonnull stop) {
@@ -167,7 +168,10 @@ static void* SMBGameBoardTileEntitySpawnerManager__KVOContext_gameBoardTileEntit
 
 	NSMutableDictionary<NSString*,SMBGameBoardTileEntitySpawner*>* const gameBoardTileEntity_uniqueId_to_gameBoardTileEntitySpawner_mapping = [NSMutableDictionary<NSString*,SMBGameBoardTileEntitySpawner*> dictionary];
 	[gameBoardTileEntitySpawners enumerateObjectsUsingBlock:^(SMBGameBoardTileEntitySpawner * _Nonnull gameBoardTileEntitySpawner, NSUInteger idx, BOOL * _Nonnull stop) {
-		[gameBoardTileEntitySpawner.gameBoardTileEntities_spawned enumerateObjectsUsingBlock:^(SMBGameBoardTileEntity * _Nonnull gameBoardTileEntity, NSUInteger idx, BOOL * _Nonnull stop) {
+		[gameBoardTileEntitySpawner.spawnedGameBoardTileEntities_tracked enumerateObjectsUsingBlock:^(SMBWeakPointerMappableObject<SMBGameBoardTileEntity *> * _Nonnull weakPointerMappableObject, NSUInteger idx, BOOL * _Nonnull stop) {
+			SMBGameBoardTileEntity* _Nonnull const gameBoardTileEntity = weakPointerMappableObject.object;
+			kRUConditionalReturn(gameBoardTileEntity == nil, YES);
+
 			NSString* const gameBoardTileEntity_uniqueId = gameBoardTileEntity.uniqueId;
 			kRUConditionalReturn(gameBoardTileEntity_uniqueId == nil, YES);
 			kRUConditionalReturn([gameBoardTileEntity_uniqueId_to_gameBoardTileEntitySpawner_mapping objectForKey:gameBoardTileEntity_uniqueId] != nil, YES);
@@ -187,7 +191,7 @@ static void* SMBGameBoardTileEntitySpawnerManager__KVOContext_gameBoardTileEntit
 	{
 		if ([self.gameBoardTileEntitySpawners containsObject:object])
 		{
-			if ([keyPath isEqualToString:[SMBGameBoardTileEntitySpawner_PropertiesForKVO gameBoardTileEntities_spawned]])
+			if ([keyPath isEqualToString:[SMBGameBoardTileEntitySpawner_PropertiesForKVO spawnedGameBoardTileEntities_tracked]])
 			{
 				[self gameBoardTileEntity_uniqueId_to_gameBoardTileEntitySpawner_mapping_update];
 			}

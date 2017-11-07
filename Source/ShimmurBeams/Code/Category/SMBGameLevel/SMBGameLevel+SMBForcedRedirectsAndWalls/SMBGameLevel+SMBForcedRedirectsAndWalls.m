@@ -42,7 +42,7 @@
 	NSMutableArray<SMBGameBoardTileEntitySpawner*>* const gameBoardTileEntitySpawners = [NSMutableArray<SMBGameBoardTileEntitySpawner*> array];
 
 	[gameBoardTileEntitySpawners addObject:
-	 [[SMBGameBoardTileEntitySpawner alloc] init_with_gameBoardTileEntities_maximum:1
+	 [[SMBGameBoardTileEntitySpawner alloc] init_with_spawnedGameBoardTileEntities_tracked_maximum:1
 																   spawnEntityBlock:
 	  ^SMBGameBoardTileEntity * _Nullable{
 		  return [[SMBForcedBeamRedirectTileEntity alloc] init_with_forcedBeamExitDirection:SMBGameBoardTile__direction_right];

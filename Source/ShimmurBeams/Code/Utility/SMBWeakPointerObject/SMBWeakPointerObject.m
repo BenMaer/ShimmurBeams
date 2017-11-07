@@ -19,7 +19,7 @@
 @interface SMBWeakPointerObject ()
 
 #pragma mark - object
-@property (nonatomic, assign, nullable) id object;
+@property (nonatomic, weak, nullable) id object;
 
 @end
 
@@ -71,6 +71,12 @@ kRUDefineNSStringConstant(kSMBWeakPointerObject_SMBWeakPointerObject_DeallocHook
 	if (self = [super init])
 	{
 		[self setObject:object];
+
+		if (deallocBlock)
+		{
+			[self.object setSMBGameBoardTileEntitySpawner_DeallocHook__deallocHook:
+			 [[RUDeallocHook alloc] initWithBlock:deallocBlock]];
+		}
 	}
 	
 	return self;
@@ -85,6 +91,6 @@ kRUDefineNSStringConstant(kSMBWeakPointerObject_SMBWeakPointerObject_DeallocHook
 @implementation NSObject (SMBWeakPointerObject_DeallocHook)
 
 #pragma mark - deallocHook
-RU_Synthesize_AssociatedObject_GetterSetter_Implementation(, , SMBGameBoardTileEntitySpawner_DeallocHook__deallocHook, RUDeallocHook*, &kSMBGameBoardTileEntity_SMBGameBoardTileEntitySpawner_DeallocHook__AssociatedObjectKey__deallocHook, OBJC_ASSOCIATION_RETAIN_NONATOMIC);
+RU_Synthesize_AssociatedObject_GetterSetter_Implementation(, , SMBGameBoardTileEntitySpawner_DeallocHook__deallocHook, RUDeallocHook*, &kSMBWeakPointerObject_SMBWeakPointerObject_DeallocHook__AssociatedObjectKey__deallocHook, OBJC_ASSOCIATION_RETAIN_NONATOMIC);
 
 @end

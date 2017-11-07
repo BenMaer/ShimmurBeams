@@ -47,6 +47,7 @@
 		D77B86FD1F47A1D700144372 /* SMBPowerOutputTileEntity.m in Sources */ = {isa = PBXBuildFile; fileRef = D77B86FC1F47A1D700144372 /* SMBPowerOutputTileEntity.m */; };
 		D78B47A61FB1096E004C967B /* SMBGameBoardTileEntitySpawnerManager.m in Sources */ = {isa = PBXBuildFile; fileRef = D78B47A51FB1096E004C967B /* SMBGameBoardTileEntitySpawnerManager.m */; };
 		D78B47AA1FB254C9004C967B /* SMBWeakPointerObject.m in Sources */ = {isa = PBXBuildFile; fileRef = D78B47A91FB254C9004C967B /* SMBWeakPointerObject.m */; };
+		D78B47AE1FB268E1004C967B /* SMBWeakPointerMappableObject.m in Sources */ = {isa = PBXBuildFile; fileRef = D78B47AD1FB268E1004C967B /* SMBWeakPointerMappableObject.m */; };
 		D78CD07D1F3D6DB800118FB4 /* SMBDrawableObject.m in Sources */ = {isa = PBXBuildFile; fileRef = D78CD07C1F3D6DB800118FB4 /* SMBDrawableObject.m */; };
 		D78CD09D1F3D6E5800118FB4 /* SMBBeamEntity.m in Sources */ = {isa = PBXBuildFile; fileRef = D78CD0821F3D6E5800118FB4 /* SMBBeamEntity.m */; };
 		D78CD09E1F3D6E5800118FB4 /* SMBBeamEntityTileNode.m in Sources */ = {isa = PBXBuildFile; fileRef = D78CD0851F3D6E5800118FB4 /* SMBBeamEntityTileNode.m */; };
@@ -178,6 +179,8 @@
 		D78B47A51FB1096E004C967B /* SMBGameBoardTileEntitySpawnerManager.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = SMBGameBoardTileEntitySpawnerManager.m; sourceTree = "<group>"; };
 		D78B47A81FB254C9004C967B /* SMBWeakPointerObject.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SMBWeakPointerObject.h; sourceTree = "<group>"; };
 		D78B47A91FB254C9004C967B /* SMBWeakPointerObject.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = SMBWeakPointerObject.m; sourceTree = "<group>"; };
+		D78B47AC1FB268E1004C967B /* SMBWeakPointerMappableObject.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SMBWeakPointerMappableObject.h; sourceTree = "<group>"; };
+		D78B47AD1FB268E1004C967B /* SMBWeakPointerMappableObject.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = SMBWeakPointerMappableObject.m; sourceTree = "<group>"; };
 		D78CD07B1F3D6DB800118FB4 /* SMBDrawableObject.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SMBDrawableObject.h; sourceTree = "<group>"; };
 		D78CD07C1F3D6DB800118FB4 /* SMBDrawableObject.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SMBDrawableObject.m; sourceTree = "<group>"; };
 		D78CD0811F3D6E5800118FB4 /* SMBBeamEntity.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SMBBeamEntity.h; sourceTree = "<group>"; };
@@ -849,10 +852,20 @@
 		D78B47A71FB254C5004C967B /* SMBWeakPointerObject */ = {
 			isa = PBXGroup;
 			children = (
+				D78B47AB1FB268D9004C967B /* SMBWeakPointerMappableObject */,
 				D78B47A81FB254C9004C967B /* SMBWeakPointerObject.h */,
 				D78B47A91FB254C9004C967B /* SMBWeakPointerObject.m */,
 			);
 			path = SMBWeakPointerObject;
+			sourceTree = "<group>";
+		};
+		D78B47AB1FB268D9004C967B /* SMBWeakPointerMappableObject */ = {
+			isa = PBXGroup;
+			children = (
+				D78B47AC1FB268E1004C967B /* SMBWeakPointerMappableObject.h */,
+				D78B47AD1FB268E1004C967B /* SMBWeakPointerMappableObject.m */,
+			);
+			path = SMBWeakPointerMappableObject;
 			sourceTree = "<group>";
 		};
 		D78CD07A1F3D6DB200118FB4 /* SMBDrawableObject */ = {
@@ -1550,6 +1563,7 @@
 				D7035AFE1F9957300023399B /* SMBGameBoardTileBeamEnterToExitDirectionMapping.m in Sources */,
 				D78B47A61FB1096E004C967B /* SMBGameBoardTileEntitySpawnerManager.m in Sources */,
 				D733A4761F576767007A8E6F /* SMBImageDrawableObject.m in Sources */,
+				D78B47AE1FB268E1004C967B /* SMBWeakPointerMappableObject.m in Sources */,
 				D7C8C3E81F3CE3C1006D378E /* SMBGameLevelGenerator.m in Sources */,
 				D7C8C3E41F3CE2A8006D378E /* SMBGameLevelGeneratorSetsNavigationController.m in Sources */,
 				D761FE961F3AC2FF0083842A /* SMBMutableMappedDataCollection.m in Sources */,

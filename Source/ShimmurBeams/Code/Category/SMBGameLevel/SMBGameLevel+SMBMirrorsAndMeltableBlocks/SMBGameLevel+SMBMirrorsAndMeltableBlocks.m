@@ -43,7 +43,7 @@
 //
 //	NSMutableArray<SMBGameBoardTileEntitySpawner*>* const gameBoardTileEntities = [NSMutableArray<SMBGameBoardTileEntitySpawner*> array];
 //	[gameBoardTileEntities addObject:
-//	 [[SMBGameBoardTileEntitySpawner alloc] init_with_gameBoardTileEntities_maximum:1
+//	 [[SMBGameBoardTileEntitySpawner alloc] init_with_spawnedGameBoardTileEntities_tracked_maximum:1
 //																   spawnEntityBlock:
 //	  ^SMBGameBoardTileEntity * _Nullable{
 //		  return [[SMBDiagonalMirrorTileEntity alloc] init_with_startingPosition:SMBDiagonalMirrorTileEntity_startingPosition_bottomLeft];

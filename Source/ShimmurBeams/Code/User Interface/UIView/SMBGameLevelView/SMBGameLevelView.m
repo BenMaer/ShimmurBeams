@@ -17,6 +17,7 @@
 #import "SMBGameBoardTileEntitySpawnerManager.h"
 #import "SMBGameBoardTileEntitySpawner.h"
 #import "UIColor+SMBColors.h"
+#import "SMBWeakPointerMappableObject.h"
 
 #import <ResplendentUtilities/RUConditionalReturn.h>
 #import <ResplendentUtilities/UIView+RUUtility.h>
@@ -78,9 +79,9 @@ static void* kSMBGameLevelView__KVOContext_selectedGameBoardTileEntitySpawner = 
 -(void)SMBGameLevelView_selectedGameBoardTileEntitySpawner_setKVORegistered:(BOOL)registered;
 
 #pragma mark - selectedGameBoardTileEntities
-@property (nonatomic, copy, nullable) NSSet<SMBGameBoardTileEntity*>* selectedGameBoardTileEntities;
+@property (nonatomic, copy, nullable) NSSet<SMBWeakPointerMappableObject<SMBGameBoardTileEntity*>*>* selectedGameBoardTileEntities;
 -(void)selectedGameBoardTileEntities_update;
--(nullable NSSet<SMBGameBoardTileEntity*>*)selectedGameBoardTileEntities_generate;
+-(nullable NSSet<SMBWeakPointerMappableObject<SMBGameBoardTileEntity*>*>*)selectedGameBoardTileEntities_generate;
 
 #pragma mark - gameBoardTileEntity
 -(void)gameBoardTileEntity_update:(nonnull SMBGameBoardTileEntity*)gameBoardTileEntity
@@ -381,7 +382,7 @@ static void* kSMBGameLevelView__KVOContext_selectedGameBoardTileEntitySpawner = 
 		[self gameBoardTileEntityPickerView_selectedGameBoardTileEntitySpawner_spawn_attempt_on_tile:gameBoardTile];
 
 		/* User actions: 5.a */
-		if ([self.gameBoardTileEntityPickerView.selectedGameBoardTileEntitySpawner gameBoardTileEntities_spawned_atCapacity])
+		if ([self.gameBoardTileEntityPickerView.selectedGameBoardTileEntitySpawner spawnedGameBoardTileEntities_tracked_atCapacity])
 		{
 			/* User actions: 5.a.i */
 			[self.gameBoardTileEntityPickerView setSelectedGameBoardTileEntitySpawner:nil];
@@ -452,7 +453,7 @@ static void* kSMBGameLevelView__KVOContext_selectedGameBoardTileEntitySpawner = 
 	{
 		if (object == self.selectedGameBoardTileEntitySpawner)
 		{
-			if ([keyPath isEqualToString:[SMBGameBoardTileEntitySpawner_PropertiesForKVO gameBoardTileEntities_spawned]])
+			if ([keyPath isEqualToString:[SMBGameBoardTileEntitySpawner_PropertiesForKVO spawnedGameBoardTileEntities_tracked]])
 			{
 				[self selectedGameBoardTileEntities_update];
 			}
@@ -533,7 +534,7 @@ static void* kSMBGameLevelView__KVOContext_selectedGameBoardTileEntitySpawner = 
 	NSMutableDictionary<NSNumber*,NSMutableArray<NSString*>*>* const KVOOptions_to_propertiesToObserve_mapping = [NSMutableDictionary<NSNumber*,NSMutableArray<NSString*>*> dictionary];
 
 	NSMutableArray<NSString*>* const propertiesToObserve_observe_initial = [NSMutableArray<NSString*> array];
-	[propertiesToObserve_observe_initial addObject:[SMBGameBoardTileEntitySpawner_PropertiesForKVO gameBoardTileEntities_spawned]];
+	[propertiesToObserve_observe_initial addObject:[SMBGameBoardTileEntitySpawner_PropertiesForKVO spawnedGameBoardTileEntities_tracked]];
 	[KVOOptions_to_propertiesToObserve_mapping setObject:propertiesToObserve_observe_initial forKey:@(NSKeyValueObservingOptionInitial)];
 
 	[KVOOptions_to_propertiesToObserve_mapping enumerateKeysAndObjectsUsingBlock:^(NSNumber * _Nonnull KVOOptions_number, NSMutableArray<NSString *> * _Nonnull propertiesToObserve, BOOL * _Nonnull stop) {
@@ -556,19 +557,25 @@ static void* kSMBGameLevelView__KVOContext_selectedGameBoardTileEntitySpawner = 
 }
 
 #pragma mark - selectedGameBoardTileEntities
--(void)setSelectedGameBoardTileEntities:(nullable NSSet<SMBGameBoardTileEntity*>*)selectedGameBoardTileEntities
+-(void)setSelectedGameBoardTileEntities:(nullable NSSet<SMBWeakPointerMappableObject<SMBGameBoardTileEntity*>*>*)selectedGameBoardTileEntities
 {
 	kRUConditionalReturn((self.selectedGameBoardTileEntities == selectedGameBoardTileEntities)
 						 ||
 						 [self.selectedGameBoardTileEntities isEqual:selectedGameBoardTileEntities], NO);
 
-	[self.selectedGameBoardTileEntities enumerateObjectsUsingBlock:^(SMBGameBoardTileEntity * _Nonnull gameBoardTileEntity, BOOL * _Nonnull stop) {
+	[self.selectedGameBoardTileEntities enumerateObjectsUsingBlock:^(SMBWeakPointerMappableObject<SMBGameBoardTileEntity *> * _Nonnull weakPointerMappableObject, BOOL * _Nonnull stop) {
+		SMBGameBoardTileEntity* _Nonnull const gameBoardTileEntity = weakPointerMappableObject.object;
+		kRUConditionalReturn(gameBoardTileEntity == nil, YES);
+
 		[self gameBoardTileEntity_update:gameBoardTileEntity isHighlighted:NO];
 	}];
 
-	_selectedGameBoardTileEntities = (selectedGameBoardTileEntities ? [NSSet<SMBGameBoardTileEntity*> setWithSet:selectedGameBoardTileEntities] : nil);
+	_selectedGameBoardTileEntities = (selectedGameBoardTileEntities ? [NSSet<SMBWeakPointerMappableObject<SMBGameBoardTileEntity*>*> setWithSet:selectedGameBoardTileEntities] : nil);
 
-	[self.selectedGameBoardTileEntities enumerateObjectsUsingBlock:^(SMBGameBoardTileEntity * _Nonnull gameBoardTileEntity, BOOL * _Nonnull stop) {
+	[self.selectedGameBoardTileEntities enumerateObjectsUsingBlock:^(SMBWeakPointerMappableObject<SMBGameBoardTileEntity *> * _Nonnull weakPointerMappableObject, BOOL * _Nonnull stop) {
+		SMBGameBoardTileEntity* _Nonnull const gameBoardTileEntity = weakPointerMappableObject.object;
+		kRUConditionalReturn(gameBoardTileEntity == nil, YES);
+
 		[self gameBoardTileEntity_update:gameBoardTileEntity isHighlighted:YES];
 	}];
 }
@@ -578,15 +585,15 @@ static void* kSMBGameLevelView__KVOContext_selectedGameBoardTileEntitySpawner = 
 	[self setSelectedGameBoardTileEntities:[self selectedGameBoardTileEntities_generate]];
 }
 
--(nullable NSSet<SMBGameBoardTileEntity*>*)selectedGameBoardTileEntities_generate
+-(nullable NSSet<SMBWeakPointerMappableObject<SMBGameBoardTileEntity*>*>*)selectedGameBoardTileEntities_generate
 {
 	SMBGameBoardTileEntitySpawner* const selectedGameBoardTileEntitySpawner = self.selectedGameBoardTileEntitySpawner;
 	kRUConditionalReturn_ReturnValueNil(selectedGameBoardTileEntitySpawner == nil, NO);
 
-	NSArray<SMBGameBoardTileEntity*>* const gameBoardTileEntities_spawned = selectedGameBoardTileEntitySpawner.gameBoardTileEntities_spawned;
-	kRUConditionalReturn_ReturnValueNil(gameBoardTileEntities_spawned == nil, NO);
+	NSArray<SMBWeakPointerMappableObject<SMBGameBoardTileEntity*>*>* const spawnedGameBoardTileEntities_tracked = selectedGameBoardTileEntitySpawner.spawnedGameBoardTileEntities_tracked;
+	kRUConditionalReturn_ReturnValueNil(spawnedGameBoardTileEntities_tracked == nil, NO);
 
-	return [NSSet<SMBGameBoardTileEntity*> setWithArray:gameBoardTileEntities_spawned];
+	return [NSSet<SMBWeakPointerMappableObject<SMBGameBoardTileEntity*>*> setWithArray:spawnedGameBoardTileEntities_tracked];
 }
 
 #pragma mark - gameBoardTileEntity

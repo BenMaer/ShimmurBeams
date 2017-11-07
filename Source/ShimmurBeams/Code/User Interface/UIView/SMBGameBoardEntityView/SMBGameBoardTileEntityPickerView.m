@@ -12,6 +12,7 @@
 #import "SMBGameBoardTile.h"
 #import "UIView+SMBCommonFraming.h"
 #import "SMBGameBoardTileEntitySpawner.h"
+#import "SMBWeakPointerMappableObject.h"
 
 #import <ResplendentUtilities/RUConditionalReturn.h>
 #import <ResplendentUtilities/NSString+RUMacros.h>
@@ -163,7 +164,10 @@ typedef NS_ENUM(NSInteger, SMBGameBoardTileEntityPickerView__trashButton_type) {
 -(void)gameBoardTileEntitySpawners_removeAllEntitiesFromTiles
 {
 	[self.gameBoardTileEntitySpawners enumerateObjectsUsingBlock:^(SMBGameBoardTileEntitySpawner * _Nonnull gameBoardTileEntitySpawner, NSUInteger idx, BOOL * _Nonnull stop) {
-		[[gameBoardTileEntitySpawner gameBoardTileEntities_spawned] enumerateObjectsUsingBlock:^(SMBGameBoardTileEntity * _Nonnull gameBoardTileEntity, NSUInteger idx, BOOL * _Nonnull stop) {
+		[[gameBoardTileEntitySpawner spawnedGameBoardTileEntities_tracked] enumerateObjectsUsingBlock:^(SMBWeakPointerMappableObject<SMBGameBoardTileEntity *> * _Nonnull weakPointerMappableObject, NSUInteger idx, BOOL * _Nonnull stop) {
+			SMBGameBoardTileEntity* _Nonnull const gameBoardTileEntity = weakPointerMappableObject.object;
+			kRUConditionalReturn(gameBoardTileEntity == nil, YES);
+
 			[self gameBoardTileEntity_removeFromTile:gameBoardTileEntity];
 		}];
 	}];
@@ -303,7 +307,10 @@ typedef NS_ENUM(NSInteger, SMBGameBoardTileEntityPickerView__trashButton_type) {
 	SMBGameBoardTileEntitySpawner* const selectedGameBoardTileEntitySpawner = self.selectedGameBoardTileEntitySpawner;
 	kRUConditionalReturn(selectedGameBoardTileEntitySpawner == nil, YES);
 
-	[[selectedGameBoardTileEntitySpawner gameBoardTileEntities_spawned] enumerateObjectsUsingBlock:^(SMBGameBoardTileEntity * _Nonnull gameBoardTileEntity, NSUInteger idx, BOOL * _Nonnull stop) {
+	[[selectedGameBoardTileEntitySpawner spawnedGameBoardTileEntities_tracked] enumerateObjectsUsingBlock:^(SMBWeakPointerMappableObject<SMBGameBoardTileEntity *> * _Nonnull weakPointerMappableObject, NSUInteger idx, BOOL * _Nonnull stop) {
+		SMBGameBoardTileEntity* _Nonnull const gameBoardTileEntity = weakPointerMappableObject.object;
+		kRUConditionalReturn(gameBoardTileEntity == nil, YES);
+
 		[self gameBoardTileEntity_removeFromTile:gameBoardTileEntity];
 	}];
 	

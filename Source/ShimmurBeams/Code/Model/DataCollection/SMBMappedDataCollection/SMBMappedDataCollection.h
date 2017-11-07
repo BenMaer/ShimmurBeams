@@ -30,7 +30,7 @@
 
 #pragma mark - mappableObjects
 -(nullable NSArray<ObjectType /**<SMBMappedDataCollection_MappableObject>*/ >*)mappableObjects;
--(nullable ObjectType)mappableObject_for_uniqueKey:(nonnull NSString*)uniqueKey;
+-(nullable ObjectType /**<SMBMappedDataCollection_MappableObject>*/)mappableObject_for_uniqueKey:(nonnull NSString*)uniqueKey;
 -(BOOL)mappableObject_exists:(nonnull ObjectType<SMBMappedDataCollection_MappableObject>)mappableObject;
 -(nullable NSString*)mappableObject_uniqueKey:(nonnull ObjectType<SMBMappedDataCollection_MappableObject>)mappableObject;
 

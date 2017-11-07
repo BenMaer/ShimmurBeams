@@ -15,6 +15,7 @@
 
 
 @class SMBGameBoardTile;
+@class SMBWeakPointerMappableObject<ObjectType>;
 @class SMBGameBoardTileEntity;
 
 
@@ -31,14 +32,14 @@
 -(nullable SMBGameBoardTileEntity*)gameBoardTileEntity_spawnNew_tracked_on_gameBoardTile:(nonnull SMBGameBoardTile*)gameBoardTile;
 -(nullable SMBGameBoardTileEntity*)gameBoardTileEntity_spawnNew_untracked;
 
-#pragma mark - gameBoardTileEntities_spawned
-@property (nonatomic, readonly, assign) NSUInteger gameBoardTileEntities_maximum;
-@property (nonatomic, readonly, copy, nullable) NSArray<SMBGameBoardTileEntity*>* gameBoardTileEntities_spawned;
--(BOOL)gameBoardTileEntities_spawned_atCapacity;
+#pragma mark - spawnedGameBoardTileEntities_tracked
+@property (nonatomic, readonly, assign) NSUInteger spawnedGameBoardTileEntities_tracked_maximum;
+@property (nonatomic, readonly, copy, nullable) NSArray<SMBGameBoardTileEntity*>* spawnedGameBoardTileEntities_tracked;
+-(BOOL)spawnedGameBoardTileEntities_tracked_atCapacity;
 
 #pragma mark - init
--(nullable instancetype)init_with_gameBoardTileEntities_maximum:(NSUInteger)gameBoardTileEntities_maximum
-											   spawnEntityBlock:(nonnull SMBGameBoardTileEntitySpawner_spawnEntityBlock)spawnEntityBlock NS_DESIGNATED_INITIALIZER;
+-(nullable instancetype)init_with_spawnedGameBoardTileEntities_tracked_maximum:(NSUInteger)spawnedGameBoardTileEntities_tracked_maximum
+															  spawnEntityBlock:(nonnull SMBGameBoardTileEntitySpawner_spawnEntityBlock)spawnEntityBlock NS_DESIGNATED_INITIALIZER;
 
 @end
 
@@ -48,6 +49,6 @@
 
 @interface SMBGameBoardTileEntitySpawner_PropertiesForKVO : NSObject
 
-+(nonnull NSString*)gameBoardTileEntities_spawned;
++(nonnull NSString*)spawnedGameBoardTileEntities_tracked;
 
 @end

@@ -20,7 +20,7 @@
 : NSObject
 
 #pragma mark - object
-@property (nonatomic, readonly, assign, nullable) ObjectType object;
+@property (nonatomic, readonly, weak, nullable) ObjectType object;
 
 #pragma mark - init
 -(nullable instancetype)init_with_object:(nonnull ObjectType)object
