@@ -205,25 +205,30 @@ static void* kSMBGameBoardView__KVOContext = &kSMBGameBoardView__KVOContext;
 	typeof(self.gameBoard) const gameBoard = self.gameBoard;
 	kRUConditionalReturn(gameBoard == nil, NO);
 
-	NSMutableArray<NSString*>* const propertiesToObserve = [NSMutableArray<NSString*> array];
-	[propertiesToObserve addObject:[SMBGameBoard_PropertiesForKVO gameBoardTiles]];
-	[propertiesToObserve addObject:[SMBGameBoard_PropertiesForKVO gameBoardTileEntities]];
-	[propertiesToObserve addObject:[SMBGameBoard_PropertiesForKVO gameBoardEntities]];
+	NSMutableDictionary<NSNumber*,NSMutableArray<NSString*>*>* const KVOOptions_to_propertiesToObserve_mapping = [NSMutableDictionary<NSNumber*,NSMutableArray<NSString*>*> dictionary];
 
-	[propertiesToObserve enumerateObjectsUsingBlock:^(NSString * _Nonnull propertyToObserve, NSUInteger idx, BOOL * _Nonnull stop) {
-		if (registered)
-		{
-			[gameBoard addObserver:self
-						forKeyPath:propertyToObserve
-						   options:(NSKeyValueObservingOptionInitial)
-						   context:&kSMBGameBoardView__KVOContext];
-		}
-		else
-		{
-			[gameBoard removeObserver:self
-						   forKeyPath:propertyToObserve
-							  context:&kSMBGameBoardView__KVOContext];
-		}
+	NSMutableArray<NSString*>* const propertiesToObserve_observe_initial = [NSMutableArray<NSString*> array];
+	[propertiesToObserve_observe_initial addObject:[SMBGameBoard_PropertiesForKVO gameBoardTiles]];
+	[propertiesToObserve_observe_initial addObject:[SMBGameBoard_PropertiesForKVO gameBoardTileEntities]];
+	[propertiesToObserve_observe_initial addObject:[SMBGameBoard_PropertiesForKVO gameBoardEntities]];
+	[KVOOptions_to_propertiesToObserve_mapping setObject:propertiesToObserve_observe_initial forKey:@(NSKeyValueObservingOptionInitial)];
+
+	[KVOOptions_to_propertiesToObserve_mapping enumerateKeysAndObjectsUsingBlock:^(NSNumber * _Nonnull KVOOptions_number, NSMutableArray<NSString *> * _Nonnull propertiesToObserve, BOOL * _Nonnull stop) {
+		[propertiesToObserve enumerateObjectsUsingBlock:^(NSString * _Nonnull propertyToObserve, NSUInteger idx, BOOL * _Nonnull stop) {
+			if (registered)
+			{
+				[gameBoard addObserver:self
+							forKeyPath:propertyToObserve
+							   options:(KVOOptions_number.unsignedIntegerValue)
+							   context:&kSMBGameBoardView__KVOContext];
+			}
+			else
+			{
+				[gameBoard removeObserver:self
+							   forKeyPath:propertyToObserve
+								  context:&kSMBGameBoardView__KVOContext];
+			}
+		}];
 	}];
 }
 

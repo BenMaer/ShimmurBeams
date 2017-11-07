@@ -18,8 +18,8 @@
 
 @interface SMBGameLevel ()
 
-#pragma mark - usableGameBoardTileEntities
-@property (nonatomic, copy, nullable) NSArray<SMBGameBoardTileEntity*>* usableGameBoardTileEntities;
+#pragma mark - gameBoardTileEntitySpawnerManager
+@property (nonatomic, strong, nullable) SMBGameBoardTileEntitySpawnerManager* gameBoardTileEntitySpawnerManager;
 
 @end
 
@@ -44,7 +44,7 @@
 #pragma GCC diagnostic ignored "-Wnullability-completeness"
 #endif
 	return [self init_with_gameBoard:nil
-		 usableGameBoardTileEntities:nil];
+   gameBoardTileEntitySpawnerManager:nil];
 #if __has_feature(nullability)
 #pragma clang diagnostic pop
 #endif
@@ -52,7 +52,7 @@
 
 #pragma mark - init
 -(nullable instancetype)init_with_gameBoard:(nonnull SMBGameBoard*)gameBoard
-				usableGameBoardTileEntities:(nullable NSArray<SMBGameBoardTileEntity*>*)usableGameBoardTileEntities
+		  gameBoardTileEntitySpawnerManager:(nullable SMBGameBoardTileEntitySpawnerManager*)gameBoardTileEntitySpawnerManager
 {
 	kRUConditionalReturn_ReturnValueNil(gameBoard == nil, YES);
 
@@ -62,7 +62,7 @@
 		[self.gameBoard setGameLevel:self];
 		kRUConditionalReturn_ReturnValueNil(self.completion != nil, YES);
 
-		[self setUsableGameBoardTileEntities:usableGameBoardTileEntities];
+		_gameBoardTileEntitySpawnerManager = gameBoardTileEntitySpawnerManager;
 	}
 
 	return self;

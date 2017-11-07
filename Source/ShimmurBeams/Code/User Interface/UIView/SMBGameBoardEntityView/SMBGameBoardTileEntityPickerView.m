@@ -7,10 +7,11 @@
 //
 
 #import "SMBGameBoardTileEntityPickerView.h"
-#import "SMBGameBoardTileEntityPickerViewCollectionViewCell.h"
+#import "SMBGameBoardTileEntitySpawnerPickerCollectionViewCell.h"
 #import "SMBGameBoardTileEntity.h"
 #import "SMBGameBoardTile.h"
 #import "UIView+SMBCommonFraming.h"
+#import "SMBGameBoardTileEntitySpawner.h"
 
 #import <ResplendentUtilities/RUConditionalReturn.h>
 #import <ResplendentUtilities/NSString+RUMacros.h>
@@ -21,14 +22,14 @@
 
 
 
-kRUDefineNSStringConstant(SMBGameBoardTileEntityPickerView__cellIdentifier_SMBGameBoardTileEntityPickerViewCollectionViewCell);
+kRUDefineNSStringConstant(SMBGameBoardTileEntityPickerView__cellIdentifier_SMBGameBoardTileEntitySpawnerPickerCollectionViewCell);
 
 typedef NS_ENUM(NSInteger, SMBGameBoardTileEntityPickerView__trashButton_type) {
 	SMBGameBoardTileEntityPickerView__trashButton_type_none,
-	SMBGameBoardTileEntityPickerView__trashButton_type_clear,
+	SMBGameBoardTileEntityPickerView__trashButton_type_clearBoard,
 	SMBGameBoardTileEntityPickerView__trashButton_type_remove,
 
-	SMBGameBoardTileEntityPickerView__trashButton_type__first	= SMBGameBoardTileEntityPickerView__trashButton_type_clear,
+	SMBGameBoardTileEntityPickerView__trashButton_type__first	= SMBGameBoardTileEntityPickerView__trashButton_type_clearBoard,
 	SMBGameBoardTileEntityPickerView__trashButton_type__last	= SMBGameBoardTileEntityPickerView__trashButton_type_remove,
 };
 
@@ -38,14 +39,22 @@ typedef NS_ENUM(NSInteger, SMBGameBoardTileEntityPickerView__trashButton_type) {
 
 @interface SMBGameBoardTileEntityPickerView () <UICollectionViewDelegate, UICollectionViewDataSource>
 
+#pragma mark - gameBoardTileEntitySpawners
+-(nullable SMBGameBoardTileEntitySpawner*)gameBoardTileEntitySpawner_at_index:(NSUInteger)gameBoardTileEntitySpawner_index;
+-(NSUInteger)gameBoardTileEntitySpawner_index_for_indexPathRow:(NSInteger)indexPathRow;
+-(void)gameBoardTileEntitySpawners_removeAllEntitiesFromTiles;
+
 #pragma mark - gameBoardTileEntities
--(nullable SMBGameBoardTileEntity*)gameBoardTileEntity_at_index:(NSUInteger)gameBoardTileEntity_index;
--(NSUInteger)gameBoardTileEntity_index_for_indexPathRow:(NSInteger)indexPathRow;
--(void)gameBoardTileEntities_removeFromTiles_and_deselect;
+//-(nullable SMBGameBoardTileEntity*)gameBoardTileEntity_at_index:(NSUInteger)gameBoardTileEntity_index;
+//-(NSUInteger)gameBoardTileEntity_index_for_indexPathRow:(NSInteger)indexPathRow;
+//-(void)gameBoardTileEntities_removeFromTiles_and_deselect;
 -(void)gameBoardTileEntity_removeFromTile:(nonnull SMBGameBoardTileEntity*)gameBoardTileEntity;
 
-#pragma mark - selectedGameBoardTileEntity
--(void)selectedGameBoardTileEntity_removeFromTile_and_deselect;
+#pragma mark - selectedGameBoardTileEntitySpawner
+-(void)selectedGameBoardTileEntitySpawner_removeSpawnedEntitiesFromTile;
+
+//#pragma mark - selectedGameBoardTileEntity
+//-(void)selectedGameBoardTileEntity_removeFromTile_and_deselect;
 
 #pragma mark - collectionView
 @property (nonatomic, readonly, strong, nullable) UICollectionViewFlowLayout* collectionViewFlowLayout;
@@ -66,6 +75,10 @@ typedef NS_ENUM(NSInteger, SMBGameBoardTileEntityPickerView__trashButton_type) {
 #pragma mark - trashButton_type
 @property (nonatomic, assign) SMBGameBoardTileEntityPickerView__trashButton_type trashButton_type;
 -(void)trashButton_type_update;
+
+#pragma mark - gameBoardTileEntitySpawnerPickerCollectionViewCell
+-(nonnull SMBGameBoardTileEntitySpawnerPickerCollectionViewCell*)gameBoardTileEntitySpawnerPickerCollectionViewCell_for_collectionView:(nonnull UICollectionView*)collectionView
+																													   itemAtIndexPath:(nonnull NSIndexPath*)indexPath;
 
 @end
 
@@ -92,7 +105,7 @@ typedef NS_ENUM(NSInteger, SMBGameBoardTileEntityPickerView__trashButton_type) {
 		[self.collectionView setDelegate:self];
 		[self.collectionView setDataSource:self];
 		[self.collectionView setScrollEnabled:YES];
-		[self.collectionView registerClass:[SMBGameBoardTileEntityPickerViewCollectionViewCell class] forCellWithReuseIdentifier:SMBGameBoardTileEntityPickerView__cellIdentifier_SMBGameBoardTileEntityPickerViewCollectionViewCell];
+		[self.collectionView registerClass:[SMBGameBoardTileEntitySpawnerPickerCollectionViewCell class] forCellWithReuseIdentifier:SMBGameBoardTileEntityPickerView__cellIdentifier_SMBGameBoardTileEntitySpawnerPickerCollectionViewCell];
 		[self.collectionView setShowsHorizontalScrollIndicator:YES];
 		[self addSubview:self.collectionView];
 
@@ -122,40 +135,74 @@ typedef NS_ENUM(NSInteger, SMBGameBoardTileEntityPickerView__trashButton_type) {
 	[self.trashButton setFrame:[self trashButton_frame]];
 }
 
-#pragma mark - gameBoardTileEntities
--(void)setGameBoardTileEntities:(nullable NSArray<SMBGameBoardTileEntity*>*)gameBoardTileEntities
+#pragma mark - gameBoardTileEntitySpawners
+-(void)setGameBoardTileEntitySpawners:(nullable NSArray<SMBGameBoardTileEntitySpawner*>*)gameBoardTileEntitySpawners
 {
-	kRUConditionalReturn((self.gameBoardTileEntities == gameBoardTileEntities)
+	kRUConditionalReturn((self.gameBoardTileEntitySpawners == gameBoardTileEntitySpawners)
 						 ||
-						 [self.gameBoardTileEntities isEqual:gameBoardTileEntities], NO);
-
-	_gameBoardTileEntities = (gameBoardTileEntities ? [NSArray<SMBGameBoardTileEntity*> arrayWithArray:gameBoardTileEntities] : nil);
-
+						 [self.gameBoardTileEntitySpawners isEqual:gameBoardTileEntitySpawners], NO);
+	
+	_gameBoardTileEntitySpawners = (gameBoardTileEntitySpawners ? [NSArray<SMBGameBoardTileEntitySpawner*> arrayWithArray:gameBoardTileEntitySpawners] : nil);
+	
 	[self.collectionView reloadData];
 }
 
--(nullable SMBGameBoardTileEntity*)gameBoardTileEntity_at_index:(NSUInteger)gameBoardTileEntity_index
+-(nullable SMBGameBoardTileEntitySpawner*)gameBoardTileEntitySpawner_at_index:(NSUInteger)gameBoardTileEntitySpawner_index
 {
-	NSArray<SMBGameBoardTileEntity*>* const gameBoardTileEntities = self.gameBoardTileEntities;
-	kRUConditionalReturn_ReturnValueNil(gameBoardTileEntity_index >= gameBoardTileEntities.count, YES);
-
-	return [gameBoardTileEntities objectAtIndex:gameBoardTileEntity_index];
+	NSArray<SMBGameBoardTileEntitySpawner*>* const gameBoardTileEntitySpawners = self.gameBoardTileEntitySpawners;
+	kRUConditionalReturn_ReturnValueNil(gameBoardTileEntitySpawner_index >= gameBoardTileEntitySpawners.count, YES);
+	
+	return [gameBoardTileEntitySpawners objectAtIndex:gameBoardTileEntitySpawner_index];
 }
 
--(NSUInteger)gameBoardTileEntity_index_for_indexPathRow:(NSInteger)indexPathRow
+-(NSUInteger)gameBoardTileEntitySpawner_index_for_indexPathRow:(NSInteger)indexPathRow
 {
 	return indexPathRow;
 }
 
--(void)gameBoardTileEntities_removeFromTiles_and_deselect
+-(void)gameBoardTileEntitySpawners_removeAllEntitiesFromTiles
 {
-	[self.gameBoardTileEntities enumerateObjectsUsingBlock:^(SMBGameBoardTileEntity * _Nonnull gameBoardTileEntity, NSUInteger idx, BOOL * _Nonnull stop) {
-		[self gameBoardTileEntity_removeFromTile:gameBoardTileEntity];
+	[self.gameBoardTileEntitySpawners enumerateObjectsUsingBlock:^(SMBGameBoardTileEntitySpawner * _Nonnull gameBoardTileEntitySpawner, NSUInteger idx, BOOL * _Nonnull stop) {
+		[[gameBoardTileEntitySpawner gameBoardTileEntities_spawned] enumerateObjectsUsingBlock:^(SMBGameBoardTileEntity * _Nonnull gameBoardTileEntity, NSUInteger idx, BOOL * _Nonnull stop) {
+			[self gameBoardTileEntity_removeFromTile:gameBoardTileEntity];
+		}];
 	}];
-
-	[self setSelectedGameBoardTileEntity:nil];
 }
 
+#pragma mark - gameBoardTileEntities
+//-(void)setGameBoardTileEntities:(nullable NSArray<SMBGameBoardTileEntity*>*)gameBoardTileEntities
+//{
+//	kRUConditionalReturn((self.gameBoardTileEntities == gameBoardTileEntities)
+//						 ||
+//						 [self.gameBoardTileEntities isEqual:gameBoardTileEntities], NO);
+//
+//	_gameBoardTileEntities = (gameBoardTileEntities ? [NSArray<SMBGameBoardTileEntity*> arrayWithArray:gameBoardTileEntities] : nil);
+//
+//	[self.collectionView reloadData];
+//}
+//
+//-(nullable SMBGameBoardTileEntity*)gameBoardTileEntity_at_index:(NSUInteger)gameBoardTileEntity_index
+//{
+//	NSArray<SMBGameBoardTileEntity*>* const gameBoardTileEntities = self.gameBoardTileEntities;
+//	kRUConditionalReturn_ReturnValueNil(gameBoardTileEntity_index >= gameBoardTileEntities.count, YES);
+//
+//	return [gameBoardTileEntities objectAtIndex:gameBoardTileEntity_index];
+//}
+//
+//-(NSUInteger)gameBoardTileEntity_index_for_indexPathRow:(NSInteger)indexPathRow
+//{
+//	return indexPathRow;
+//}
+//
+//-(void)gameBoardTileEntities_removeFromTiles_and_deselect
+//{
+//	[self.gameBoardTileEntities enumerateObjectsUsingBlock:^(SMBGameBoardTileEntity * _Nonnull gameBoardTileEntity, NSUInteger idx, BOOL * _Nonnull stop) {
+//		[self gameBoardTileEntity_removeFromTile:gameBoardTileEntity];
+//	}];
+//
+//	[self setSelectedGameBoardTileEntity:nil];
+//}
+//
 -(void)gameBoardTileEntity_removeFromTile:(nonnull SMBGameBoardTileEntity*)gameBoardTileEntity
 {
 	SMBGameBoardTile* const gameBoardTile = gameBoardTileEntity.gameBoardTile;
@@ -189,60 +236,78 @@ typedef NS_ENUM(NSInteger, SMBGameBoardTileEntityPickerView__trashButton_type) {
 -(void)collectionView_visibleCells_gameBoardTileEntityPickerViewCollectionViewCell_gameBoardTileEntity_isSelected_update
 {
 	[self.collectionView.visibleCells enumerateObjectsUsingBlock:^(__kindof UICollectionViewCell * _Nonnull collectionViewCell, NSUInteger idx, BOOL * _Nonnull stop) {
-		SMBGameBoardTileEntityPickerViewCollectionViewCell* const gameBoardTileEntityPickerViewCollectionViewCell = kRUClassOrNil(collectionViewCell, SMBGameBoardTileEntityPickerViewCollectionViewCell);
-		kRUConditionalReturn(gameBoardTileEntityPickerViewCollectionViewCell == nil, YES);
+		SMBGameBoardTileEntitySpawnerPickerCollectionViewCell* const gameBoardTileEntitySpawnerPickerCollectionViewCell = kRUClassOrNil(collectionViewCell, SMBGameBoardTileEntitySpawnerPickerCollectionViewCell);
+		kRUConditionalReturn(gameBoardTileEntitySpawnerPickerCollectionViewCell == nil, YES);
 
-		[gameBoardTileEntityPickerViewCollectionViewCell setGameBoardTileEntity_isSelected:(gameBoardTileEntityPickerViewCollectionViewCell.gameBoardTileEntity == self.selectedGameBoardTileEntity)];
+		[self gameBoardTileEntitySpawnerPickerCollectionViewCell_isSelected_update:gameBoardTileEntitySpawnerPickerCollectionViewCell];
 	}];
+}
+
+#pragma mark - gameBoardTileEntitySpawnerPickerCollectionViewCell
+-(nonnull SMBGameBoardTileEntitySpawnerPickerCollectionViewCell*)gameBoardTileEntitySpawnerPickerCollectionViewCell_for_collectionView:(nonnull UICollectionView*)collectionView
+																													   itemAtIndexPath:(nonnull NSIndexPath*)indexPath
+{
+	SMBGameBoardTileEntitySpawnerPickerCollectionViewCell* const gameBoardTileEntitySpawnerPickerCollectionViewCell =
+	[collectionView dequeueReusableCellWithReuseIdentifier:SMBGameBoardTileEntityPickerView__cellIdentifier_SMBGameBoardTileEntitySpawnerPickerCollectionViewCell forIndexPath:indexPath];
+	
+	SMBGameBoardTileEntitySpawner* const gameBoardTileEntitySpawner = [self gameBoardTileEntitySpawner_at_index:[self gameBoardTileEntitySpawner_index_for_indexPathRow:indexPath.row]];
+	[gameBoardTileEntitySpawnerPickerCollectionViewCell setGameBoardTileEntitySpawner:gameBoardTileEntitySpawner];
+	[self gameBoardTileEntitySpawnerPickerCollectionViewCell_isSelected_update:gameBoardTileEntitySpawnerPickerCollectionViewCell];
+	
+	return gameBoardTileEntitySpawnerPickerCollectionViewCell;
+}
+
+-(void)gameBoardTileEntitySpawnerPickerCollectionViewCell_isSelected_update:(nonnull SMBGameBoardTileEntitySpawnerPickerCollectionViewCell*)gameBoardTileEntitySpawnerPickerCollectionViewCell
+{
+	kRUConditionalReturn(gameBoardTileEntitySpawnerPickerCollectionViewCell == nil, YES);
+
+	[gameBoardTileEntitySpawnerPickerCollectionViewCell setGameBoardTileEntitySpawner_isSelected:(gameBoardTileEntitySpawnerPickerCollectionViewCell.gameBoardTileEntitySpawner == self.selectedGameBoardTileEntitySpawner)];
 }
 
 #pragma marl - UICollectionViewDelegate, UICollectionViewDataSource
 -(NSInteger)collectionView:(nonnull UICollectionView*)collectionView numberOfItemsInSection:(NSInteger)section
 {
-	return self.gameBoardTileEntities.count;
+	return self.gameBoardTileEntitySpawners.count;
 }
 
 -(nonnull UICollectionViewCell*)collectionView:(nonnull UICollectionView*)collectionView cellForItemAtIndexPath:(nonnull NSIndexPath*)indexPath
 {
-	SMBGameBoardTileEntityPickerViewCollectionViewCell* const gameBoardTileEntityPickerViewCollectionViewCell =
-	[collectionView dequeueReusableCellWithReuseIdentifier:SMBGameBoardTileEntityPickerView__cellIdentifier_SMBGameBoardTileEntityPickerViewCollectionViewCell forIndexPath:indexPath];
-
-	SMBGameBoardTileEntity* const gameBoardTileEntity = [self gameBoardTileEntity_at_index:[self gameBoardTileEntity_index_for_indexPathRow:indexPath.row]];
-	[gameBoardTileEntityPickerViewCollectionViewCell setGameBoardTileEntity:gameBoardTileEntity];
-	[gameBoardTileEntityPickerViewCollectionViewCell setGameBoardTileEntity_isSelected:(gameBoardTileEntity == self.selectedGameBoardTileEntity)];
-
-	return gameBoardTileEntityPickerViewCollectionViewCell;
+	return
+	[self gameBoardTileEntitySpawnerPickerCollectionViewCell_for_collectionView:collectionView
+																itemAtIndexPath:indexPath];
 }
 
 -(void)collectionView:(nonnull UICollectionView*)collectionView didSelectItemAtIndexPath:(nonnull NSIndexPath*)indexPath
 {
-	SMBGameBoardTileEntity* const gameBoardTileEntity = [self gameBoardTileEntity_at_index:[self gameBoardTileEntity_index_for_indexPathRow:indexPath.row]];
-	kRUConditionalReturn(gameBoardTileEntity == nil, YES);
+	SMBGameBoardTileEntitySpawner* const gameBoardTileEntitySpawner = [self gameBoardTileEntitySpawner_at_index:[self gameBoardTileEntitySpawner_index_for_indexPathRow:indexPath.row]];
+	kRUConditionalReturn(gameBoardTileEntitySpawner == nil, YES);
 
-	[self setSelectedGameBoardTileEntity:((self.selectedGameBoardTileEntity == gameBoardTileEntity) ? nil : gameBoardTileEntity)];
+	[self setSelectedGameBoardTileEntitySpawner:((self.selectedGameBoardTileEntitySpawner == gameBoardTileEntitySpawner) ? nil : gameBoardTileEntitySpawner)];
 
 	[collectionView deselectItemAtIndexPath:indexPath animated:NO];
 }
 
-#pragma mark - selectedGameBoardTileEntity
--(void)setSelectedGameBoardTileEntity:(nullable SMBGameBoardTileEntity*)selectedGameBoardTileEntity
+#pragma mark - selectedGameBoardTileEntitySpawner
+-(void)setSelectedGameBoardTileEntitySpawner:(nullable SMBGameBoardTileEntitySpawner*)selectedGameBoardTileEntitySpawner
 {
-	kRUConditionalReturn(self.selectedGameBoardTileEntity == selectedGameBoardTileEntity, NO);
+	kRUConditionalReturn(self.selectedGameBoardTileEntitySpawner == selectedGameBoardTileEntitySpawner, NO);
 
-	_selectedGameBoardTileEntity = selectedGameBoardTileEntity;
+	_selectedGameBoardTileEntitySpawner = selectedGameBoardTileEntitySpawner;
 
 	[self collectionView_visibleCells_gameBoardTileEntityPickerViewCollectionViewCell_gameBoardTileEntity_isSelected_update];
 	[self trashButton_type_update];
 }
 
--(void)selectedGameBoardTileEntity_removeFromTile_and_deselect
+-(void)selectedGameBoardTileEntitySpawner_removeSpawnedEntitiesFromTile
 {
-	SMBGameBoardTileEntity* const selectedGameBoardTileEntity = self.selectedGameBoardTileEntity;
-	kRUConditionalReturn(selectedGameBoardTileEntity == nil, YES);
+	SMBGameBoardTileEntitySpawner* const selectedGameBoardTileEntitySpawner = self.selectedGameBoardTileEntitySpawner;
+	kRUConditionalReturn(selectedGameBoardTileEntitySpawner == nil, YES);
 
-	[self gameBoardTileEntity_removeFromTile:selectedGameBoardTileEntity];
-
-	[self setSelectedGameBoardTileEntity:nil];
+	[[selectedGameBoardTileEntitySpawner gameBoardTileEntities_spawned] enumerateObjectsUsingBlock:^(SMBGameBoardTileEntity * _Nonnull gameBoardTileEntity, NSUInteger idx, BOOL * _Nonnull stop) {
+		[self gameBoardTileEntity_removeFromTile:gameBoardTileEntity];
+	}];
+	
+	[self setSelectedGameBoardTileEntitySpawner:nil];
 }
 
 #pragma mark - trashButton
@@ -266,12 +331,13 @@ typedef NS_ENUM(NSInteger, SMBGameBoardTileEntityPickerView__trashButton_type) {
 			NSAssert(false, @"unhandled trashButton_type %li",(long)self.trashButton_type);
 			break;
 
-		case SMBGameBoardTileEntityPickerView__trashButton_type_clear:
-			[self gameBoardTileEntities_removeFromTiles_and_deselect];
+		case SMBGameBoardTileEntityPickerView__trashButton_type_clearBoard:
+			[self gameBoardTileEntitySpawners_removeAllEntitiesFromTiles];
 			break;
 
 		case SMBGameBoardTileEntityPickerView__trashButton_type_remove:
-			[self selectedGameBoardTileEntity_removeFromTile_and_deselect];
+			[self selectedGameBoardTileEntitySpawner_removeSpawnedEntitiesFromTile];
+			[self setSelectedGameBoardTileEntitySpawner:nil];
 			break;
 	}
 }
@@ -290,7 +356,7 @@ typedef NS_ENUM(NSInteger, SMBGameBoardTileEntityPickerView__trashButton_type) {
 		case SMBGameBoardTileEntityPickerView__trashButton_type_none:
 			break;
 
-		case SMBGameBoardTileEntityPickerView__trashButton_type_clear:
+		case SMBGameBoardTileEntityPickerView__trashButton_type_clearBoard:
 			return @"Clear";
 			break;
 
@@ -316,9 +382,9 @@ typedef NS_ENUM(NSInteger, SMBGameBoardTileEntityPickerView__trashButton_type) {
 -(void)trashButton_type_update
 {
 	[self setTrashButton_type:
-	 ((self.selectedGameBoardTileEntity == nil)
+	 ((self.selectedGameBoardTileEntitySpawner == nil)
 	  ?
-	  SMBGameBoardTileEntityPickerView__trashButton_type_clear
+	  SMBGameBoardTileEntityPickerView__trashButton_type_clearBoard
 	  :
 	  SMBGameBoardTileEntityPickerView__trashButton_type_remove
 	 )];
@@ -332,6 +398,6 @@ typedef NS_ENUM(NSInteger, SMBGameBoardTileEntityPickerView__trashButton_type) {
 
 @implementation SMBGameBoardTileEntityPickerView_PropertiesForKVO
 
-+(nonnull NSString*)selectedGameBoardTileEntity{return NSStringFromSelector(_cmd);}
++(nonnull NSString*)selectedGameBoardTileEntitySpawner{return NSStringFromSelector(_cmd);}
 
 @end

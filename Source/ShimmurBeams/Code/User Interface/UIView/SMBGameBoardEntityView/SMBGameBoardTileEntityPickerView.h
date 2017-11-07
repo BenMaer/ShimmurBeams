@@ -12,7 +12,7 @@
 
 
 
-@class SMBGameBoardTileEntity;
+@class SMBGameBoardTileEntitySpawner;
 
 
 
@@ -20,11 +20,14 @@
 
 @interface SMBGameBoardTileEntityPickerView : UIView
 
-#pragma mark - gameBoardTileEntities
-@property (nonatomic, copy, nullable) NSArray<SMBGameBoardTileEntity*>* gameBoardTileEntities;
+#pragma mark - gameBoardTileEntitySpawners
+@property (nonatomic, copy, nullable) NSArray<SMBGameBoardTileEntitySpawner*>* gameBoardTileEntitySpawners;
 
-#pragma mark - selectedGameBoardTileEntity
-@property (nonatomic, strong, nullable) SMBGameBoardTileEntity* selectedGameBoardTileEntity;
+#pragma mark - selectedGameBoardTileEntitySpawner
+@property (nonatomic, strong, nullable) SMBGameBoardTileEntitySpawner* selectedGameBoardTileEntitySpawner;
+
+//#pragma mark - selectedGameBoardTileEntity
+//@property (nonatomic, strong, nullable) SMBGameBoardTileEntitySpawner* selectedGameBoardTileEntity;
 
 @end
 
@@ -34,6 +37,6 @@
 
 @interface SMBGameBoardTileEntityPickerView_PropertiesForKVO : NSObject
 
-+(nonnull NSString*)selectedGameBoardTileEntity;
++(nonnull NSString*)selectedGameBoardTileEntitySpawner;
 
 @end

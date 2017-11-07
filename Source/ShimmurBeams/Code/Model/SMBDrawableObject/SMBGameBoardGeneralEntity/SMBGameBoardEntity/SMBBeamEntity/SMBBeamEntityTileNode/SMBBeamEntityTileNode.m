@@ -272,25 +272,30 @@ typedef NS_ENUM(NSInteger, SMBBeamEntityTileNode__state) {
 	typeof(self.gameBoardTile) const gameBoardTile = self.gameBoardTile;
 	kRUConditionalReturn(gameBoardTile == nil, NO);
 
-	NSMutableArray<NSString*>* const propertiesToObserve = [NSMutableArray<NSString*> array];
-	[propertiesToObserve addObject:[SMBGameBoardTile_PropertiesForKVO gameBoardTileEntity_for_beamInteractions]];
-	[propertiesToObserve addObject:[SMBGameBoardTile_PropertiesForKVO beamEnterDirections_blocked]];
-	[propertiesToObserve addObject:[SMBGameBoardTile_PropertiesForKVO beamEnterToExitDirectionMapping]];
+	NSMutableDictionary<NSNumber*,NSMutableArray<NSString*>*>* const KVOOptions_to_propertiesToObserve_mapping = [NSMutableDictionary<NSNumber*,NSMutableArray<NSString*>*> dictionary];
 
-	[propertiesToObserve enumerateObjectsUsingBlock:^(NSString * _Nonnull propertyToObserve, NSUInteger idx, BOOL * _Nonnull stop) {
-		if (registered)
-		{
-			[gameBoardTile addObserver:self
-							forKeyPath:propertyToObserve
-							   options:(NSKeyValueObservingOptionInitial)
-							   context:&kSMBBeamEntityTileNode__KVOContext];
-		}
-		else
-		{
-			[gameBoardTile removeObserver:self
-							   forKeyPath:propertyToObserve
-								  context:&kSMBBeamEntityTileNode__KVOContext];
-		}
+	NSMutableArray<NSString*>* const propertiesToObserve_observe_initial = [NSMutableArray<NSString*> array];
+	[propertiesToObserve_observe_initial addObject:[SMBGameBoardTile_PropertiesForKVO gameBoardTileEntity_for_beamInteractions]];
+	[propertiesToObserve_observe_initial addObject:[SMBGameBoardTile_PropertiesForKVO beamEnterDirections_blocked]];
+	[propertiesToObserve_observe_initial addObject:[SMBGameBoardTile_PropertiesForKVO beamEnterToExitDirectionMapping]];
+	[KVOOptions_to_propertiesToObserve_mapping setObject:propertiesToObserve_observe_initial forKey:@(NSKeyValueObservingOptionInitial)];
+
+	[KVOOptions_to_propertiesToObserve_mapping enumerateKeysAndObjectsUsingBlock:^(NSNumber * _Nonnull KVOOptions_number, NSMutableArray<NSString *> * _Nonnull propertiesToObserve, BOOL * _Nonnull stop) {
+		[propertiesToObserve enumerateObjectsUsingBlock:^(NSString * _Nonnull propertyToObserve, NSUInteger idx, BOOL * _Nonnull stop) {
+			if (registered)
+			{
+				[gameBoardTile addObserver:self
+								forKeyPath:propertyToObserve
+								   options:(KVOOptions_number.unsignedIntegerValue)
+								   context:&kSMBBeamEntityTileNode__KVOContext];
+			}
+			else
+			{
+				[gameBoardTile removeObserver:self
+								   forKeyPath:propertyToObserve
+									  context:&kSMBBeamEntityTileNode__KVOContext];
+			}
+		}];
 	}];
 }
 

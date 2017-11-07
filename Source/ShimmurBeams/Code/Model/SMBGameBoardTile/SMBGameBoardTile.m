@@ -14,7 +14,6 @@
 #import "SMBGameBoardTileEntity+SMBProvidesPower.h"
 #import "SMBBeamBlockerTileEntity.h"
 #import "SMBGameBoardTileEntity_PowerProvider.h"
-#import "UIColor+SMBColors.h"
 #import "SMBGameBoardTileEntity_PowerProvider_PropertiesForKVO.h"
 #import "NSArray+SMBChanges.h"
 #import "SMBGameBoardTileEntity+SMBBeamBlocker.h"
@@ -569,12 +568,12 @@ static void* kSMBGameBoardTile__KVOContext_generalBeamEnterToExitDirectionRedire
 	return isPowered_notByBeam_appropriate;
 }
 
-#pragma mark - isHighlighted
--(void)setIsHighlighted:(BOOL)isHighlighted
+#pragma mark - highlightColor
+-(void)setHighlightColor:(nullable UIColor*)highlightColor
 {
-	kRUConditionalReturn(self.isHighlighted == isHighlighted, NO);
+	kRUConditionalReturn(self.highlightColor == highlightColor, NO);
 
-	_isHighlighted = isHighlighted;
+	_highlightColor = highlightColor;
 
 	[self setNeedsRedraw];
 }
@@ -584,7 +583,8 @@ static void* kSMBGameBoardTile__KVOContext_generalBeamEnterToExitDirectionRedire
 {
 	[super draw_in_rect:rect];
 
-	if (self.isHighlighted)
+	UIColor* const highlightColor = self.highlightColor;
+	if (highlightColor != nil)
 	{
 		CGContextRef const context = UIGraphicsGetCurrentContext();
 
@@ -592,7 +592,7 @@ static void* kSMBGameBoardTile__KVOContext_generalBeamEnterToExitDirectionRedire
 
 		CGFloat const lineWidth = 1.0f;
 
-		CGContextSetStrokeColorWithColor(context, [UIColor smb_selectedTileEntity_color].CGColor);
+		CGContextSetStrokeColorWithColor(context, highlightColor.CGColor);
 
 		CGRect const rect_inset = UIEdgeInsetsInsetRect(rect, RU_UIEdgeInsetsMakeAll(lineWidth / 2.0f));
 		UIBezierPath* const path =
@@ -795,10 +795,10 @@ static void* kSMBGameBoardTile__KVOContext_generalBeamEnterToExitDirectionRedire
 	SMBGameBoardTileEntity<SMBGeneralBeamEnterToExitDirectionRedirectTileEntity>* const generalBeamEnterToExitDirectionRedirectTileEntity = self.generalBeamEnterToExitDirectionRedirectTileEntity;
 	kRUConditionalReturn(generalBeamEnterToExitDirectionRedirectTileEntity == nil, NO);
 
+	NSMutableDictionary<NSNumber*,NSMutableArray<NSString*>*>* const KVOOptions_to_propertiesToObserve_mapping = [NSMutableDictionary<NSNumber*,NSMutableArray<NSString*>*> dictionary];
+
 	NSMutableArray<NSString*>* const propertiesToObserve_observe_initial = [NSMutableArray<NSString*> array];
 	[propertiesToObserve_observe_initial addObject:[SMBGeneralBeamEnterToExitDirectionRedirectTileEntity_PropertiesForKVO beamEnterToExitDirectionMapping]];
-
-	NSMutableDictionary<NSNumber*,NSMutableArray<NSString*>*>* const KVOOptions_to_propertiesToObserve_mapping = [NSMutableDictionary<NSNumber*,NSMutableArray<NSString*>*> dictionary];
 	[KVOOptions_to_propertiesToObserve_mapping setObject:propertiesToObserve_observe_initial forKey:@(NSKeyValueObservingOptionInitial)];
 
 	[KVOOptions_to_propertiesToObserve_mapping enumerateKeysAndObjectsUsingBlock:^(NSNumber * _Nonnull KVOOptions_number, NSMutableArray<NSString *> * _Nonnull propertiesToObserve, BOOL * _Nonnull stop) {

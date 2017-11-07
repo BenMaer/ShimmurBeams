@@ -71,8 +71,8 @@
 #pragma mark - beamEnterToExitDirectionMapping
 @property (nonatomic, readonly, strong, nullable) SMBGameBoardTileBeamEnterToExitDirectionMapping* beamEnterToExitDirectionMapping;
 
-#pragma mark - isHighlighted
-@property (nonatomic, assign) BOOL isHighlighted;
+#pragma mark - highlightColor
+@property (nonatomic, strong, nullable) UIColor* highlightColor;
 
 @end
 

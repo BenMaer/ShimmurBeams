@@ -16,23 +16,23 @@
 
 @interface SMBGameLevel (SMBUnitTestLevels)
 
-#pragma mark - initialBeamDrawing
-+(nonnull instancetype)smb_initialBeamDrawing;
-
-#pragma mark - beamEntityOrder
-+(nonnull instancetype)smb_beamEntityOrder;
-
-#pragma mark - buttonPoweredImmediately
-+(nonnull instancetype)smb_buttonPoweredImmediately;
-
-#pragma mark - beamCreatorPoweringItself
-+(nonnull instancetype)smb_beamCreatorPoweringItself;
-
-#pragma mark - laserPassesThroughMovedEntity
-+(nonnull instancetype)smb_laserPassesThroughMovedEntity;
-
-#pragma mark - powerToggle_beamEntityManagerStuck
-+(nonnull instancetype)smb_powerToggle_beamEntityManagerStuck;
+//#pragma mark - initialBeamDrawing
+//+(nonnull instancetype)smb_initialBeamDrawing;
+//
+//#pragma mark - beamEntityOrder
+//+(nonnull instancetype)smb_beamEntityOrder;
+//
+//#pragma mark - buttonPoweredImmediately
+//+(nonnull instancetype)smb_buttonPoweredImmediately;
+//
+//#pragma mark - beamCreatorPoweringItself
+//+(nonnull instancetype)smb_beamCreatorPoweringItself;
+//
+//#pragma mark - laserPassesThroughMovedEntity
+//+(nonnull instancetype)smb_laserPassesThroughMovedEntity;
+//
+//#pragma mark - powerToggle_beamEntityManagerStuck
+//+(nonnull instancetype)smb_powerToggle_beamEntityManagerStuck;
 
 @end
 

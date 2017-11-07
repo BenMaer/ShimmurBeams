@@ -14,14 +14,15 @@
 
 @interface SMBGameLevel (SMBForcedRedirectsAndWalls)
 
-+(nonnull instancetype)smb_forcedRedirectsAndWalls_oneWall_threeForces;
-+(nonnull instancetype)smb_forcedRedirectsAndWalls_twoWalls_threeForces;
-+(nonnull instancetype)smb_forcedRedirectsAndWalls_wallsAndForces_twoForcesNotMovable_tricky;
-
-#pragma mark - forces not movable
+#pragma mark - forced redirects
 +(nonnull instancetype)smb_forcedRedirects_oneForce_right;
-+(nonnull instancetype)smb_forcedRedirects_twoForces_leftThenDown;
-+(nonnull instancetype)smb_forcedRedirects_oneForceNotMovable;
-+(nonnull instancetype)smb_forcedRedirects_wallsAndForces_threeForcesNotMovable;
+//+(nonnull instancetype)smb_forcedRedirects_twoForces_leftThenDown;
+//+(nonnull instancetype)smb_forcedRedirects_oneForceNotMovable;
+//+(nonnull instancetype)smb_forcedRedirects_wallsAndForces_threeForcesNotMovable;
+
+#pragma mark - forced redirects and walls
+//+(nonnull instancetype)smb_forcedRedirectsAndWalls_oneWall_threeForces;
+//+(nonnull instancetype)smb_forcedRedirectsAndWalls_twoWalls_threeForces;
+//+(nonnull instancetype)smb_forcedRedirectsAndWalls_wallsAndForces_twoForcesNotMovable_tricky;
 
 @end
