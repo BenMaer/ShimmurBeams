@@ -11,6 +11,7 @@
 		D7035AFE1F9957300023399B /* SMBGameBoardTileBeamEnterToExitDirectionMapping.m in Sources */ = {isa = PBXBuildFile; fileRef = D7035AFD1F9957300023399B /* SMBGameBoardTileBeamEnterToExitDirectionMapping.m */; };
 		D7035B031F996C8E0023399B /* SMBGeneralBeamEnterToExitDirectionRedirectTileEntity_PropertiesForKVO.m in Sources */ = {isa = PBXBuildFile; fileRef = D7035B021F996C8E0023399B /* SMBGeneralBeamEnterToExitDirectionRedirectTileEntity_PropertiesForKVO.m */; };
 		D71765A41FB3ACF60084E09A /* SMBGameLevel+SMBLevelEditor.m in Sources */ = {isa = PBXBuildFile; fileRef = D71765A31FB3ACF60084E09A /* SMBGameLevel+SMBLevelEditor.m */; };
+		D71765A81FB3AF660084E09A /* SMBGameLevelView_UserSelection.m in Sources */ = {isa = PBXBuildFile; fileRef = D71765A71FB3AF660084E09A /* SMBGameLevelView_UserSelection.m */; };
 		D722CE371FB0C68C00DF6136 /* SMBGameBoardTileEntitySpawner.m in Sources */ = {isa = PBXBuildFile; fileRef = D722CE361FB0C68C00DF6136 /* SMBGameBoardTileEntitySpawner.m */; };
 		D722CE401FB0D64300DF6136 /* SMBGameBoardTileEntitySpawnerPickerCollectionViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = D722CE3F1FB0D64300DF6136 /* SMBGameBoardTileEntitySpawnerPickerCollectionViewCell.m */; };
 		D733A4761F576767007A8E6F /* SMBImageDrawableObject.m in Sources */ = {isa = PBXBuildFile; fileRef = D733A4751F576767007A8E6F /* SMBImageDrawableObject.m */; };
@@ -101,6 +102,8 @@
 		D7035B021F996C8E0023399B /* SMBGeneralBeamEnterToExitDirectionRedirectTileEntity_PropertiesForKVO.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = SMBGeneralBeamEnterToExitDirectionRedirectTileEntity_PropertiesForKVO.m; sourceTree = "<group>"; };
 		D71765A21FB3ACF60084E09A /* SMBGameLevel+SMBLevelEditor.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "SMBGameLevel+SMBLevelEditor.h"; sourceTree = "<group>"; };
 		D71765A31FB3ACF60084E09A /* SMBGameLevel+SMBLevelEditor.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = "SMBGameLevel+SMBLevelEditor.m"; sourceTree = "<group>"; };
+		D71765A61FB3AF660084E09A /* SMBGameLevelView_UserSelection.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SMBGameLevelView_UserSelection.h; sourceTree = "<group>"; };
+		D71765A71FB3AF660084E09A /* SMBGameLevelView_UserSelection.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = SMBGameLevelView_UserSelection.m; sourceTree = "<group>"; };
 		D722CE351FB0C68C00DF6136 /* SMBGameBoardTileEntitySpawner.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SMBGameBoardTileEntitySpawner.h; sourceTree = "<group>"; };
 		D722CE361FB0C68C00DF6136 /* SMBGameBoardTileEntitySpawner.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = SMBGameBoardTileEntitySpawner.m; sourceTree = "<group>"; };
 		D722CE381FB0C99C00DF6136 /* SMBGameBoardTileEntitySpawner__Blocks.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SMBGameBoardTileEntitySpawner__Blocks.h; sourceTree = "<group>"; };
@@ -338,6 +341,15 @@
 				D71765A31FB3ACF60084E09A /* SMBGameLevel+SMBLevelEditor.m */,
 			);
 			path = "SMBGameLevel+SMBLevelEditor";
+			sourceTree = "<group>";
+		};
+		D71765A51FB3AF5D0084E09A /* SMBGameLevelView_UserSelection */ = {
+			isa = PBXGroup;
+			children = (
+				D71765A61FB3AF660084E09A /* SMBGameLevelView_UserSelection.h */,
+				D71765A71FB3AF660084E09A /* SMBGameLevelView_UserSelection.m */,
+			);
+			path = SMBGameLevelView_UserSelection;
 			sourceTree = "<group>";
 		};
 		D722CE341FB0C68000DF6136 /* SMBGameBoardTileEntitySpawner */ = {
@@ -816,6 +828,7 @@
 			isa = PBXGroup;
 			children = (
 				D7C8C3D61F3CC422006D378E /* Prefix Header */,
+				D71765A51FB3AF5D0084E09A /* SMBGameLevelView_UserSelection */,
 				D78B47B81FB2BA38004C967B /* SMBNotificationCenterSynthesizations */,
 				D7951D1C1F43950100A33AB2 /* SMBTimer */,
 				D761FE8F1F3AC2FF0083842A /* SMBUniqueStringGenerator */,
@@ -1561,6 +1574,7 @@
 				D761FEA81F3AC2FF0083842A /* SMBUniqueStringGenerator.m in Sources */,
 				D7951D451F43ADAC00A33AB2 /* SMBDeathBlockTileEntity.m in Sources */,
 				D7951D4E1F43AF8200A33AB2 /* SMBMeltableWallTileEntity.m in Sources */,
+				D71765A81FB3AF660084E09A /* SMBGameLevelView_UserSelection.m in Sources */,
 				D7C8C3B41F3B7A14006D378E /* SMBGameBoardTileEntityPickerView.m in Sources */,
 				D7951D561F43C06700A33AB2 /* SMBGameLevel+SMBMirrorsAndMeltableBlocks.m in Sources */,
 				D770EEFE1F82FC5E00117FEE /* NSSet+SMBChanges.m in Sources */,
