@@ -11,6 +11,7 @@
 #import "SMBGameBoardTileEntity.h"
 #import "SMBGameBoardTile.h"
 #import "SMBWeakPointerMappableObject.h"
+#import "NSObject+SMBGameBoardTileEntityDeallocNotifications.h"
 
 #import <ResplendentUtilities/RUConditionalReturn.h>
 #import <ResplendentUtilities/NSMutableArray+RUAddObjectIfNotNil.h>
@@ -89,6 +90,11 @@ typedef NS_ENUM(NSInteger, SMBGameBoardTileEntitySpawner__spawnNewEntityState) {
 -(void)SMBGameBoardTileEntitySpawner_spawnedGameBoardTileEntities_offBoard_tracked:(nonnull SMBGameBoardTileEntity*)gameBoardTileEntity
 																  setKVORegistered:(BOOL)registered;
 
+-(void)SMBGameBoardTileEntitySpawner_spawnedGameBoardTileEntities_offBoard_tracked_setRegisteredToNotificationCenter:(BOOL)registered;
+-(void)SMBGameBoardTileEntitySpawner_spawnedGameBoardTileEntities_offBoard_tracked:(nonnull SMBGameBoardTileEntity*)gameBoardTileEntity
+												 setRegisteredToNotificationCenter:(BOOL)registered;
+-(void)spawnedGameBoardTileEntities_offBoard_tracked_notificationDidFire_didCallDealloc_with_notification:(nonnull NSNotification*)notification;
+
 #pragma mark - spawnEntityBlock
 @property (nonatomic, copy, nullable) SMBGameBoardTileEntitySpawner_spawnEntityBlock spawnEntityBlock;
 
@@ -105,6 +111,7 @@ typedef NS_ENUM(NSInteger, SMBGameBoardTileEntitySpawner__spawnNewEntityState) {
 {
 	[self SMBGameBoardTileEntitySpawner_spawnedGameBoardTileEntities_tracked_setKVORegistered:NO];
 	[self SMBGameBoardTileEntitySpawner_spawnedGameBoardTileEntities_offBoard_tracked_setKVORegistered:NO];
+	[self SMBGameBoardTileEntitySpawner_spawnedGameBoardTileEntities_offBoard_tracked_setRegisteredToNotificationCenter:NO];
 }
 
 -(instancetype)init
@@ -265,6 +272,8 @@ typedef NS_ENUM(NSInteger, SMBGameBoardTileEntitySpawner__spawnNewEntityState) {
 	[self.spawnedGameBoardTileEntities_tracked_mappedDataCollection mappableObject_remove:gameBoardTileEntity];
 
 	[self spawnedGameBoardTileEntities_tracked_update];
+
+	[self spawnedGameBoardTileEntities_offBoard_tracked_mappedDataCollection_add:gameBoardTileEntity];
 }
 
 #pragma mark - spawnedGameBoardTileEntities_tracked
@@ -380,18 +389,15 @@ typedef NS_ENUM(NSInteger, SMBGameBoardTileEntitySpawner__spawnNewEntityState) {
 	/* Should not have a game board tile. */
 	kRUConditionalReturn(gameBoardTileEntity.gameBoardTile != nil, YES);
 
-	__weak typeof(self) const self_weak = self;
-	__weak typeof(gameBoardTileEntity) const gameBoardTileEntity_weak = gameBoardTileEntity;
 	SMBWeakPointerMappableObject<SMBGameBoardTileEntity*>* const weakPointerMappableObject =
 	[[SMBWeakPointerMappableObject<SMBGameBoardTileEntity*> alloc] init_with_object:gameBoardTileEntity
-											  deallocBlock:
-	 ^{
-		 [self_weak spawnedGameBoardTileEntities_tracked_mappedDataCollection_remove:gameBoardTileEntity_weak];
-	 }];
+											  deallocBlock:nil];
 
-	kRUConditionalReturn(gameBoardTileEntity_weak == nil, YES);
+	kRUConditionalReturn(weakPointerMappableObject == nil, YES);
 
 	[self.spawnedGameBoardTileEntities_offBoard_tracked_mappedDataCollection mappableObject_add:weakPointerMappableObject];
+
+	[self spawnedGameBoardTileEntities_offBoard_tracked_update];
 }
 
 -(void)spawnedGameBoardTileEntities_offBoard_tracked_mappedDataCollection_remove:(nonnull SMBGameBoardTileEntity*)gameBoardTileEntity
@@ -410,6 +416,8 @@ typedef NS_ENUM(NSInteger, SMBGameBoardTileEntitySpawner__spawnNewEntityState) {
 
 	[spawnedGameBoardTileEntities_offBoard_tracked_mappedDataCollection mappableObject_remove:weakPointerMappableObject];
 
+	[self spawnedGameBoardTileEntities_offBoard_tracked_update];
+
 	if (gameBoardTileEntity.gameBoardTile != nil)
 	{
 		[self spawnedGameBoardTileEntities_tracked_mappedDataCollection_add:gameBoardTileEntity];
@@ -425,10 +433,12 @@ typedef NS_ENUM(NSInteger, SMBGameBoardTileEntitySpawner__spawnNewEntityState) {
 						 NO);
 
 	[self SMBGameBoardTileEntitySpawner_spawnedGameBoardTileEntities_offBoard_tracked_setKVORegistered:NO];
+	[self SMBGameBoardTileEntitySpawner_spawnedGameBoardTileEntities_offBoard_tracked_setRegisteredToNotificationCenter:NO];
 
 	_spawnedGameBoardTileEntities_offBoard_tracked = (spawnedGameBoardTileEntities_offBoard_tracked ? [NSArray<SMBWeakPointerMappableObject<SMBGameBoardTileEntity*>*> arrayWithArray:spawnedGameBoardTileEntities_offBoard_tracked] : nil);
 
 	[self SMBGameBoardTileEntitySpawner_spawnedGameBoardTileEntities_offBoard_tracked_setKVORegistered:YES];
+	[self SMBGameBoardTileEntitySpawner_spawnedGameBoardTileEntities_offBoard_tracked_setRegisteredToNotificationCenter:YES];
 }
 
 -(void)spawnedGameBoardTileEntities_offBoard_tracked_update
@@ -475,6 +485,45 @@ typedef NS_ENUM(NSInteger, SMBGameBoardTileEntitySpawner__spawnNewEntityState) {
 			}
 		}];
 	}];
+}
+
+-(void)SMBGameBoardTileEntitySpawner_spawnedGameBoardTileEntities_offBoard_tracked_setRegisteredToNotificationCenter:(BOOL)registered
+{
+	[self.spawnedGameBoardTileEntities_offBoard_tracked enumerateObjectsUsingBlock:^(SMBWeakPointerMappableObject<SMBGameBoardTileEntity *> * _Nonnull weakPointerMappableObject, NSUInteger idx, BOOL * _Nonnull stop) {
+		SMBGameBoardTileEntity* const gameBoardTileEntity = weakPointerMappableObject.object;
+		kRUConditionalReturn(gameBoardTileEntity == nil, YES);
+		
+		[self SMBGameBoardTileEntitySpawner_spawnedGameBoardTileEntities_offBoard_tracked:gameBoardTileEntity
+														setRegisteredToNotificationCenter:registered];
+	}];
+}
+
+-(void)SMBGameBoardTileEntitySpawner_spawnedGameBoardTileEntities_offBoard_tracked:(nonnull SMBGameBoardTileEntity*)gameBoardTileEntity
+												 setRegisteredToNotificationCenter:(BOOL)registered
+{
+	if (registered)
+	{
+		[self setRegisteredFor_SMBGameBoardTileEntityDeallocNotification_didCallDeallocOnWithNotificationSelector:@selector(spawnedGameBoardTileEntities_offBoard_tracked_notificationDidFire_didCallDealloc_with_notification:) notificationObject:gameBoardTileEntity];
+	}
+	else
+	{
+		[self clearRegisteredFor_SMBGameBoardTileEntityDeallocNotification_didCallDealloc_with_notificationObject:gameBoardTileEntity];
+	}
+}
+
+-(void)spawnedGameBoardTileEntities_offBoard_tracked_notificationDidFire_didCallDealloc_with_notification:(nonnull NSNotification*)notification
+{
+	id const notification_object = notification.object;
+	kRUConditionalReturn(notification_object == nil, YES);
+
+	SMBGameBoardTileEntity* const gameBoardTileEntity = kRUClassOrNil(notification_object, SMBGameBoardTileEntity);
+	kRUConditionalReturn(gameBoardTileEntity == nil, YES);
+
+#if kSMBEnvironment__SMBGameBoardTileEntitySpawner_deallocIsOccuring_enabled
+	kRUConditionalReturn(gameBoardTileEntity.deallocIsOccuring == false, YES);
+#endif
+
+	[self spawnedGameBoardTileEntities_offBoard_tracked_mappedDataCollection_remove:gameBoardTileEntity];
 }
 
 #pragma mark - KVO

@@ -19,7 +19,7 @@
 @interface SMBWeakPointerObject ()
 
 #pragma mark - object
-@property (nonatomic, weak, nullable) id object;
+@property (nonatomic, assign, nullable) id object;
 
 @end
 

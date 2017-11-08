@@ -15,7 +15,6 @@
 
 
 @class SMBGameBoardTile;
-@class SMBWeakPointerMappableObject<ObjectType>;
 @class SMBGameBoardTileEntity;
 
 
@@ -52,3 +51,4 @@
 +(nonnull NSString*)spawnedGameBoardTileEntities_tracked;
 
 @end
+

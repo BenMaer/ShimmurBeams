@@ -19,7 +19,10 @@
 @implementation SMBWeakPointerMappableObject
 
 #pragma mark - object
-@dynamic object;
+-(nonnull id /**<SMBMappedDataCollection_MappableObject> */)object
+{
+	return [super object];
+}
 
 #pragma mark - init
 -(nullable instancetype)init_with_object:(nonnull id<SMBMappedDataCollection_MappableObject>)object

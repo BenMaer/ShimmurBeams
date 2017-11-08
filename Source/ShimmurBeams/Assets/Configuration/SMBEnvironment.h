@@ -21,11 +21,18 @@
 /* SMBGameBoardTileEntity. */
 
 #define kSMBEnvironment__SMBGameBoardTileEntity_gameBoardTileOwnership_validation_enabled (kSMBEnvironment__validations_general_enable && 1)
+#define kSMBEnvironment__SMBGameBoardTileEntity_deallocIsOccuring_enabled (kSMBEnvironment__validations_general_enable && 1)
 
 /* SMBGameLevelGeneratorViewController. */
 
 #define kSMBEnvironment__SMBBeamEntityManager__beamEntity_forMarkingNodesReady_validation_general_enabled (kSMBEnvironment__validations_general_enable && 1)
 #define kSMBEnvironment__SMBGameLevelView_beamEntityManager_beamEntity_forMarkingNodesReady_validation_enabled (kSMBEnvironment__validations_general_enable && 1)
+
+/* SMBGameBoardTileEntitySpawner */
+
+/* Depends on `kSMBEnvironment__SMBGameBoardTileEntity_deallocIsOccuring_enabled` being true. */
+#define kSMBEnvironment__SMBGameBoardTileEntitySpawner_deallocIsOccuring_enabled (kSMBEnvironment__validations_general_enable && kSMBEnvironment__SMBGameBoardTileEntity_deallocIsOccuring_enabled && 1)
+
 /**
  -- Validations
  */

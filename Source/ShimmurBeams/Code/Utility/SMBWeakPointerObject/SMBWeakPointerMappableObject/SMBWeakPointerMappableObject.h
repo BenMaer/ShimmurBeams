@@ -17,7 +17,7 @@
 @interface SMBWeakPointerMappableObject<ObjectType> : SMBWeakPointerObject <SMBMappedDataCollection_MappableObject>
 
 #pragma mark - object
-@property (nonatomic, readonly, assign, nullable) ObjectType /**<SMBMappedDataCollection_MappableObject> */ object;
+-(nonnull ObjectType /**<SMBMappedDataCollection_MappableObject> */)object;
 
 #pragma mark - init
 -(nullable instancetype)init_with_object:(nonnull ObjectType<SMBMappedDataCollection_MappableObject>)object

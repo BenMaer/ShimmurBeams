@@ -82,9 +82,14 @@ static void* kSMBGameLevelView__KVOContext_selectedGameBoardTileEntitySpawner = 
 -(void)selectedGameBoardTileEntities_update;
 -(nullable NSSet<SMBGameBoardTileEntity*>*)selectedGameBoardTileEntities_generate;
 
-#pragma mark - gameBoardTileEntity
--(void)gameBoardTileEntity_update:(nonnull SMBGameBoardTileEntity*)gameBoardTileEntity
-					isHighlighted:(BOOL)isHighlighted;
+#pragma mark - selectedGameBoardTiles
+@property (nonatomic, copy, nullable) NSSet<SMBGameBoardTile*>* selectedGameBoardTiles;
+-(void)selectedGameBoardTiles_update;
+-(nullable NSSet<SMBGameBoardTile*>*)selectedGameBoardTiles_generate;
+
+#pragma mark - gameBoardTile
+-(void)gameBoardTile_update:(nonnull SMBGameBoardTile*)gameBoardTile
+			  isHighlighted:(BOOL)isHighlighted;
 
 @end
 
@@ -562,15 +567,9 @@ static void* kSMBGameLevelView__KVOContext_selectedGameBoardTileEntitySpawner = 
 						 ||
 						 [self.selectedGameBoardTileEntities isEqual:selectedGameBoardTileEntities], NO);
 
-	[self.selectedGameBoardTileEntities enumerateObjectsUsingBlock:^(SMBGameBoardTileEntity * _Nonnull gameBoardTileEntity, BOOL * _Nonnull stop) {
-		[self gameBoardTileEntity_update:gameBoardTileEntity isHighlighted:NO];
-	}];
-
 	_selectedGameBoardTileEntities = (selectedGameBoardTileEntities ? [NSSet<SMBGameBoardTileEntity*> setWithSet:selectedGameBoardTileEntities] : nil);
 
-	[self.selectedGameBoardTileEntities enumerateObjectsUsingBlock:^(SMBGameBoardTileEntity * _Nonnull gameBoardTileEntity, BOOL * _Nonnull stop) {
-		[self gameBoardTileEntity_update:gameBoardTileEntity isHighlighted:YES];
-	}];
+	[self selectedGameBoardTiles_update];
 }
 
 -(void)selectedGameBoardTileEntities_update
@@ -589,19 +588,53 @@ static void* kSMBGameLevelView__KVOContext_selectedGameBoardTileEntitySpawner = 
 	return [NSSet<SMBGameBoardTileEntity*> setWithArray:spawnedGameBoardTileEntities_tracked];
 }
 
-#pragma mark - gameBoardTileEntity
--(void)gameBoardTileEntity_update:(nonnull SMBGameBoardTileEntity*)gameBoardTileEntity
-					isHighlighted:(BOOL)isHighlighted
+#pragma mark - selectedGameBoardTiles
+-(void)setSelectedGameBoardTiles:(nullable NSSet<SMBGameBoardTile*>*)selectedGameBoardTiles
 {
-	kRUConditionalReturn(gameBoardTileEntity == nil, YES);
-
-	SMBGameBoardTile* const gameBoardTile = gameBoardTileEntity.gameBoardTile;
-	kRUConditionalReturn(gameBoardTile == nil, YES);
+	kRUConditionalReturn((self.selectedGameBoardTiles == selectedGameBoardTiles)
+						 ||
+						 [self.selectedGameBoardTiles isEqual:selectedGameBoardTiles], NO);
 	
+	[self.selectedGameBoardTiles enumerateObjectsUsingBlock:^(SMBGameBoardTile * _Nonnull gameBoardTile, BOOL * _Nonnull stop) {
+		[self gameBoardTile_update:gameBoardTile isHighlighted:NO];
+	}];
+	
+	_selectedGameBoardTiles = (selectedGameBoardTiles ? [NSSet<SMBGameBoardTile*> setWithSet:selectedGameBoardTiles] : nil);
+	
+	[self.selectedGameBoardTiles enumerateObjectsUsingBlock:^(SMBGameBoardTile * _Nonnull gameBoardTile, BOOL * _Nonnull stop) {
+		[self gameBoardTile_update:gameBoardTile isHighlighted:YES];
+	}];
+}
+
+-(void)selectedGameBoardTiles_update
+{
+	[self setSelectedGameBoardTiles:[self selectedGameBoardTiles_generate]];
+}
+
+-(nullable NSSet<SMBGameBoardTile*>*)selectedGameBoardTiles_generate
+{
+	NSSet<SMBGameBoardTileEntity*>* const selectedGameBoardTileEntities = self.selectedGameBoardTileEntities;
+	kRUConditionalReturn_ReturnValueNil(selectedGameBoardTileEntities == nil, NO);
+
+	NSMutableSet<SMBGameBoardTile*>* const selectedGameBoardTiles = [NSMutableSet<SMBGameBoardTile*> set];
+	[selectedGameBoardTileEntities enumerateObjectsUsingBlock:^(SMBGameBoardTileEntity * _Nonnull gameBoardTileEntity, BOOL * _Nonnull stop) {
+		SMBGameBoardTile* const gameBoardTile = gameBoardTileEntity.gameBoardTile;
+		kRUConditionalReturn(gameBoardTile == nil, YES);
+
+		[selectedGameBoardTiles addObject:gameBoardTile];
+	}];
+
+	return [NSSet<SMBGameBoardTile*> setWithSet:selectedGameBoardTiles];
+}
+
+#pragma mark - gameBoardTile
+-(void)gameBoardTile_update:(nonnull SMBGameBoardTile*)gameBoardTile
+			  isHighlighted:(BOOL)isHighlighted
+{
 	[gameBoardTile setHighlightColor:
 	 (isHighlighted
 	  ?
-	  (gameBoardTileEntity == self.selectedGameBoardTileEntity
+	  (gameBoardTile.gameBoardTileEntity_for_beamInteractions == self.selectedGameBoardTileEntity
 	   ?
 	   [UIColor greenColor]
 	   :

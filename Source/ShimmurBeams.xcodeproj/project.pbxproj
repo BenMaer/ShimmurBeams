@@ -48,6 +48,7 @@
 		D78B47A61FB1096E004C967B /* SMBGameBoardTileEntitySpawnerManager.m in Sources */ = {isa = PBXBuildFile; fileRef = D78B47A51FB1096E004C967B /* SMBGameBoardTileEntitySpawnerManager.m */; };
 		D78B47AA1FB254C9004C967B /* SMBWeakPointerObject.m in Sources */ = {isa = PBXBuildFile; fileRef = D78B47A91FB254C9004C967B /* SMBWeakPointerObject.m */; };
 		D78B47AE1FB268E1004C967B /* SMBWeakPointerMappableObject.m in Sources */ = {isa = PBXBuildFile; fileRef = D78B47AD1FB268E1004C967B /* SMBWeakPointerMappableObject.m */; };
+		D78B47B71FB2898A004C967B /* NSObject+SMBGameBoardTileEntityDeallocNotifications.m in Sources */ = {isa = PBXBuildFile; fileRef = D78B47B61FB2898A004C967B /* NSObject+SMBGameBoardTileEntityDeallocNotifications.m */; };
 		D78CD07D1F3D6DB800118FB4 /* SMBDrawableObject.m in Sources */ = {isa = PBXBuildFile; fileRef = D78CD07C1F3D6DB800118FB4 /* SMBDrawableObject.m */; };
 		D78CD09D1F3D6E5800118FB4 /* SMBBeamEntity.m in Sources */ = {isa = PBXBuildFile; fileRef = D78CD0821F3D6E5800118FB4 /* SMBBeamEntity.m */; };
 		D78CD09E1F3D6E5800118FB4 /* SMBBeamEntityTileNode.m in Sources */ = {isa = PBXBuildFile; fileRef = D78CD0851F3D6E5800118FB4 /* SMBBeamEntityTileNode.m */; };
@@ -181,6 +182,9 @@
 		D78B47A91FB254C9004C967B /* SMBWeakPointerObject.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = SMBWeakPointerObject.m; sourceTree = "<group>"; };
 		D78B47AC1FB268E1004C967B /* SMBWeakPointerMappableObject.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SMBWeakPointerMappableObject.h; sourceTree = "<group>"; };
 		D78B47AD1FB268E1004C967B /* SMBWeakPointerMappableObject.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = SMBWeakPointerMappableObject.m; sourceTree = "<group>"; };
+		D78B47B51FB2898A004C967B /* NSObject+SMBGameBoardTileEntityDeallocNotifications.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSObject+SMBGameBoardTileEntityDeallocNotifications.h"; sourceTree = "<group>"; };
+		D78B47B61FB2898A004C967B /* NSObject+SMBGameBoardTileEntityDeallocNotifications.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSObject+SMBGameBoardTileEntityDeallocNotifications.m"; sourceTree = "<group>"; };
+		D78B47B91FB2BA3F004C967B /* SMBNotificationCenterSynthesizations.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SMBNotificationCenterSynthesizations.h; sourceTree = "<group>"; };
 		D78CD07B1F3D6DB800118FB4 /* SMBDrawableObject.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SMBDrawableObject.h; sourceTree = "<group>"; };
 		D78CD07C1F3D6DB800118FB4 /* SMBDrawableObject.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SMBDrawableObject.m; sourceTree = "<group>"; };
 		D78CD0811F3D6E5800118FB4 /* SMBBeamEntity.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SMBBeamEntity.h; sourceTree = "<group>"; };
@@ -546,6 +550,7 @@
 			children = (
 				D761FE3A1F3AC2FF0083842A /* NSArray */,
 				D7E56A701F6979AD00E2DCB3 /* NSNumber */,
+				D78B47AF1FB2888C004C967B /* NSObject */,
 				D770EEFA1F82FC4000117FEE /* NSSet */,
 				D733A48C1F57753D007A8E6F /* SMBBlockDrawableObject */,
 				D761FE3E1F3AC2FF0083842A /* SMBGameBoard */,
@@ -798,6 +803,7 @@
 			isa = PBXGroup;
 			children = (
 				D7C8C3D61F3CC422006D378E /* Prefix Header */,
+				D78B47B81FB2BA38004C967B /* SMBNotificationCenterSynthesizations */,
 				D7951D1C1F43950100A33AB2 /* SMBTimer */,
 				D761FE8F1F3AC2FF0083842A /* SMBUniqueStringGenerator */,
 				D78B47A71FB254C5004C967B /* SMBWeakPointerObject */,
@@ -866,6 +872,31 @@
 				D78B47AD1FB268E1004C967B /* SMBWeakPointerMappableObject.m */,
 			);
 			path = SMBWeakPointerMappableObject;
+			sourceTree = "<group>";
+		};
+		D78B47AF1FB2888C004C967B /* NSObject */ = {
+			isa = PBXGroup;
+			children = (
+				D78B47B41FB2898A004C967B /* NSObject+SMBGameBoardTileEntityDeallocNotifications */,
+			);
+			path = NSObject;
+			sourceTree = "<group>";
+		};
+		D78B47B41FB2898A004C967B /* NSObject+SMBGameBoardTileEntityDeallocNotifications */ = {
+			isa = PBXGroup;
+			children = (
+				D78B47B51FB2898A004C967B /* NSObject+SMBGameBoardTileEntityDeallocNotifications.h */,
+				D78B47B61FB2898A004C967B /* NSObject+SMBGameBoardTileEntityDeallocNotifications.m */,
+			);
+			path = "NSObject+SMBGameBoardTileEntityDeallocNotifications";
+			sourceTree = "<group>";
+		};
+		D78B47B81FB2BA38004C967B /* SMBNotificationCenterSynthesizations */ = {
+			isa = PBXGroup;
+			children = (
+				D78B47B91FB2BA3F004C967B /* SMBNotificationCenterSynthesizations.h */,
+			);
+			path = SMBNotificationCenterSynthesizations;
 			sourceTree = "<group>";
 		};
 		D78CD07A1F3D6DB200118FB4 /* SMBDrawableObject */ = {
@@ -1525,6 +1556,7 @@
 				D733A49F1F5A1D33007A8E6F /* SMBGenericPowerOutputTileEntity.m in Sources */,
 				D7C8C3E01F3CE26A006D378E /* SMBGameLevelGeneratorSetsViewController.m in Sources */,
 				D7035B031F996C8E0023399B /* SMBGeneralBeamEnterToExitDirectionRedirectTileEntity_PropertiesForKVO.m in Sources */,
+				D78B47B71FB2898A004C967B /* NSObject+SMBGameBoardTileEntityDeallocNotifications.m in Sources */,
 				D761FEA61F3AC2FF0083842A /* SMBGameLevelView.m in Sources */,
 				D7C8C3DC1F3CC7ED006D378E /* SMBGameBoardTileEntity+SMBProvidesPower.m in Sources */,
 				D733A4901F5775BF007A8E6F /* SMBBlockDrawableObject+SMBDefaultBlockDrawings.m in Sources */,
