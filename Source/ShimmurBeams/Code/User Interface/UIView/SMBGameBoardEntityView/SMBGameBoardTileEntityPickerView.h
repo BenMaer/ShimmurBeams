@@ -26,9 +26,6 @@
 #pragma mark - selectedGameBoardTileEntitySpawner
 @property (nonatomic, strong, nullable) SMBGameBoardTileEntitySpawner* selectedGameBoardTileEntitySpawner;
 
-//#pragma mark - selectedGameBoardTileEntity
-//@property (nonatomic, strong, nullable) SMBGameBoardTileEntitySpawner* selectedGameBoardTileEntity;
-
 @end
 
 

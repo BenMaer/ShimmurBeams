@@ -52,8 +52,9 @@ static void* kSMBGameLevelView__KVOContext_gameLevelView_UserSelection = &kSMBGa
 -(CGRect)gameBoardView_frame_with_boundingSize:(CGSize)boundingSize;
 
 #pragma mark - gameBoardTileEntityPickerView
--(void)gameBoardTileEntityPickerView_setKVORegistered:(BOOL)registered;
 @property (nonatomic, readonly, strong, nullable) SMBGameBoardTileEntityPickerView* gameBoardTileEntityPickerView;
+-(void)gameBoardTileEntityPickerView_setKVORegistered:(BOOL)registered
+   selectedGameBoardTileEntitySpawner_observe_initial:(BOOL)selectedGameBoardTileEntitySpawner_observe_initial;
 -(CGRect)gameBoardTileEntityPickerView_frame;
 -(CGRect)gameBoardTileEntityPickerView_frame_with_boundingWidth:(CGFloat)boundingWidth
 									   gameBoardView_frame_maxY:(CGFloat)gameBoardView_frame_maxY;
@@ -95,7 +96,7 @@ static void* kSMBGameLevelView__KVOContext_gameLevelView_UserSelection = &kSMBGa
 #pragma mark - NSObject
 -(void)dealloc
 {
-	[self gameBoardTileEntityPickerView_setKVORegistered:NO];
+	[self gameBoardTileEntityPickerView_setKVORegistered:NO selectedGameBoardTileEntitySpawner_observe_initial:NO];
 	[self gameLevelView_UserSelection_setKVORegistered:NO];
 }
 
@@ -108,7 +109,7 @@ static void* kSMBGameLevelView__KVOContext_gameLevelView_UserSelection = &kSMBGa
 
 		_gameBoardTileEntityPickerView = [SMBGameBoardTileEntityPickerView new];
 		[self.gameBoardTileEntityPickerView setBackgroundColor:[UIColor clearColor]];
-		[self gameBoardTileEntityPickerView_setKVORegistered:YES];
+		[self gameBoardTileEntityPickerView_setKVORegistered:YES selectedGameBoardTileEntitySpawner_observe_initial:YES];
 		[self addSubview:self.gameBoardTileEntityPickerView];
 
 		_gameBoardTileEntityPickerView_borderColorView = [UIView new];
@@ -172,6 +173,7 @@ static void* kSMBGameLevelView__KVOContext_gameLevelView_UserSelection = &kSMBGa
 
 #pragma mark - gameBoardTileEntityPickerView
 -(void)gameBoardTileEntityPickerView_setKVORegistered:(BOOL)registered
+   selectedGameBoardTileEntitySpawner_observe_initial:(BOOL)selectedGameBoardTileEntitySpawner_observe_initial
 {
 	typeof(self.gameBoardTileEntityPickerView) const gameBoardTileEntityPickerView = self.gameBoardTileEntityPickerView;
 	kRUConditionalReturn(gameBoardTileEntityPickerView == nil, NO);
@@ -179,8 +181,18 @@ static void* kSMBGameLevelView__KVOContext_gameLevelView_UserSelection = &kSMBGa
 	NSMutableDictionary<NSNumber*,NSMutableArray<NSString*>*>* const KVOOptions_to_propertiesToObserve_mapping = [NSMutableDictionary<NSNumber*,NSMutableArray<NSString*>*> dictionary];
 
 	NSMutableArray<NSString*>* const propertiesToObserve_observe_initial = [NSMutableArray<NSString*> array];
-	[propertiesToObserve_observe_initial addObject:[SMBGameBoardTileEntityPickerView_PropertiesForKVO selectedGameBoardTileEntitySpawner]];
 	[KVOOptions_to_propertiesToObserve_mapping setObject:propertiesToObserve_observe_initial forKey:@(NSKeyValueObservingOptionInitial)];
+
+	NSMutableArray<NSString*>* const propertiesToObserve = [NSMutableArray<NSString*> array];
+	[KVOOptions_to_propertiesToObserve_mapping setObject:propertiesToObserve forKey:@(0)];
+
+	[(selectedGameBoardTileEntitySpawner_observe_initial
+	  ?
+	  propertiesToObserve_observe_initial
+	  :
+	  propertiesToObserve
+	  )
+	 addObject:[SMBGameBoardTileEntityPickerView_PropertiesForKVO selectedGameBoardTileEntitySpawner]];
 
 	[KVOOptions_to_propertiesToObserve_mapping enumerateKeysAndObjectsUsingBlock:^(NSNumber * _Nonnull KVOOptions_number, NSMutableArray<NSString *> * _Nonnull propertiesToObserve, BOOL * _Nonnull stop) {
 		[propertiesToObserve enumerateObjectsUsingBlock:^(NSString * _Nonnull propertyToObserve, NSUInteger idx, BOOL * _Nonnull stop) {
@@ -199,6 +211,17 @@ static void* kSMBGameLevelView__KVOContext_gameLevelView_UserSelection = &kSMBGa
 			}
 		}];
 	}];
+}
+
+-(void)gameBoardTileEntityPickerView_selectedGameBoardTileEntitySpawner_update_from_gameLevelView_UserSelection
+{
+	[self gameBoardTileEntityPickerView_setKVORegistered:NO
+	  selectedGameBoardTileEntitySpawner_observe_initial:NO];
+
+	[self.gameBoardTileEntityPickerView setSelectedGameBoardTileEntitySpawner:self.gameLevelView_UserSelection.selectedGameBoardTileEntitySpawner];
+
+	[self gameBoardTileEntityPickerView_setKVORegistered:YES
+	  selectedGameBoardTileEntitySpawner_observe_initial:NO];
 }
 
 -(CGRect)gameBoardTileEntityPickerView_frame
@@ -485,6 +508,7 @@ static void* kSMBGameLevelView__KVOContext_gameLevelView_UserSelection = &kSMBGa
 	[self gameLevelView_UserSelection_setKVORegistered:YES];
 
 	[self selectedGameBoardTiles_update];
+	[self gameBoardTileEntityPickerView_selectedGameBoardTileEntitySpawner_update_from_gameLevelView_UserSelection];
 }
 
 -(void)gameLevelView_UserSelection_setKVORegistered:(BOOL)registered
