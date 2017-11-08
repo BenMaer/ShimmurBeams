@@ -356,11 +356,11 @@ typedef NS_ENUM(NSInteger, SMBGameBoardTileEntitySpawner__spawnNewEntityState) {
 -(BOOL)spawnedGameBoardTileEntities_tracked_atCapacity
 {
 	NSUInteger const spawnedGameBoardTileEntities_tracked_maximum = self.spawnedGameBoardTileEntities_tracked_maximum;
-	kRUConditionalReturn_ReturnValueTrue(spawnedGameBoardTileEntities_tracked_maximum <= 0, NO);
+	kRUConditionalReturn_ReturnValueFalse(spawnedGameBoardTileEntities_tracked_maximum <= 0, NO);
 
 	NSArray<SMBGameBoardTileEntity*>* const spawnedGameBoardTileEntities_tracked = [self spawnedGameBoardTileEntities_tracked];
 	NSUInteger const spawnedGameBoardTileEntities_tracked_count = (spawnedGameBoardTileEntities_tracked ? spawnedGameBoardTileEntities_tracked.count : 0);
-	kRUConditionalReturn_ReturnValueFalse(spawnedGameBoardTileEntities_tracked_count > spawnedGameBoardTileEntities_tracked_maximum, YES);
+	kRUConditionalReturn_ReturnValueTrue(spawnedGameBoardTileEntities_tracked_count > spawnedGameBoardTileEntities_tracked_maximum, YES);
 
 	return
 	(
