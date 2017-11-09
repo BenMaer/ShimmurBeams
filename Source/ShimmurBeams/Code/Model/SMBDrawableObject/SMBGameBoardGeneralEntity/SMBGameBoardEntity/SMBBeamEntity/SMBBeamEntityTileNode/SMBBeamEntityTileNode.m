@@ -103,9 +103,6 @@ typedef NS_ENUM(NSInteger, SMBBeamEntityTileNode__state) {
 
 @interface SMBBeamEntityTileNode ()
 
-#pragma mark - beamEntity
--(BOOL)beamEntity_contains_self;
-
 #pragma mark - gameBoardTile
 -(BOOL)gameBoardTile_validateNew:(nullable SMBGameBoardTile*)gameBoardTile;
 -(void)SMBBeamEntityTileNode_gameBoardTile_setKVORegistered:(BOOL)registered;
@@ -232,15 +229,6 @@ typedef NS_ENUM(NSInteger, SMBBeamEntityTileNode__state) {
 	return self;
 }
 
-#pragma mark - beamEntity
--(BOOL)beamEntity_contains_self
-{
-	SMBBeamEntity* const beamEntity = self.beamEntity;
-	kRUConditionalReturn_ReturnValueFalse(beamEntity == nil, YES);
-
-	return [beamEntity beamEntityTileNodes_contains:self];
-}
-
 #pragma mark - gameBoardTile
 -(void)setGameBoardTile:(nullable SMBGameBoardTile*)gameBoardTile
 {
@@ -337,9 +325,13 @@ typedef NS_ENUM(NSInteger, SMBBeamEntityTileNode__state) {
 	{
 		if (gameBoardTileEntity_for_beamInteractions == nil)
 		{
-			BOOL const isError = [self beamEntity_contains_self];
-			NSAssert(isError != false, @"We should not be contained in the beam entity if there's no previous node, nor no beam creator on this entity.");
-			return (isError ? direction_error : SMBGameBoardTile__direction_none);
+			SMBBeamEntity* const beamEntity = self.beamEntity;
+			kRUConditionalReturn_ReturnValue(beamEntity == nil, YES, direction_error);
+			kRUConditionalReturn_ReturnValue((beamEntity.beamEntityManager != nil)
+											 &&
+											 [beamEntity beamEntityTileNodes_contains:self], YES, direction_error);
+
+			return SMBGameBoardTile__direction_none;
 		}
 
 		SMBBeamCreatorTileEntity* const beamCreatorTileEntity = kRUClassOrNil(gameBoardTileEntity_for_beamInteractions, SMBBeamCreatorTileEntity);

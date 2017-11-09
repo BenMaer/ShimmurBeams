@@ -16,6 +16,8 @@
 #import "SMBGameBoardEntity.h"
 #import "UIView+SMBCommonFraming.h"
 #import "SMBGameBoardTileView.h"
+#import "NSString+SMBColumnNames.h"
+#import "NSString+SMBRowNames.h"
 
 #import <ResplendentUtilities/RUConditionalReturn.h>
 #import <ResplendentUtilities/RUClassOrNilUtil.h>
@@ -706,13 +708,12 @@ static void* kSMBGameBoardView__KVOContext = &kSMBGameBoardView__KVOContext;
 	NSUInteger const numberOfColumns = [self.gameBoard gameBoardTiles_numberOfColumns];
 	NSMutableArray<UILabel*>* const columnLabels = [NSMutableArray<UILabel*> arrayWithCapacity:numberOfColumns];
 
-	char const baseLetter = 'A';
 	for (NSUInteger column = 0;
 		 column < numberOfColumns;
 		 column++)
 	{
 		UILabel* const label = [self columnAndRowLabel_generate];
-		[label setText:RUStringWithFormat(@"%c",baseLetter + (char)column)];
+		[label setText:[NSString smb_columnName_for_columnIndex:column]];
 		[columnLabels addObject:label];
 	}
 
@@ -795,7 +796,7 @@ static void* kSMBGameBoardView__KVOContext = &kSMBGameBoardView__KVOContext;
 		 row++)
 	{
 		UILabel* const label = [self columnAndRowLabel_generate];
-		[label setText:RUStringWithFormat(@"%lu",(unsigned long)row + 1)];
+		[label setText:[NSString smb_rowName_for_rowIndex:row]];
 		[rowLabels addObject:label];
 	}
 	
