@@ -19,7 +19,6 @@
 #pragma mark - rowName
 +(nonnull NSString*)smb_rowName_for_rowIndex:(NSUInteger)rowIndex
 {
-	char const baseLetter = 'A';
 	return RUStringWithFormat(@"%lu",(unsigned long)rowIndex + 1);
 }
 
