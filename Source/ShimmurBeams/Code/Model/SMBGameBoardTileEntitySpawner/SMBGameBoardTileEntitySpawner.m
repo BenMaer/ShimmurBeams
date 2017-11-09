@@ -571,7 +571,10 @@ typedef NS_ENUM(NSInteger, SMBGameBoardTileEntitySpawner__spawnNewEntityState) {
 	}
 	else if (context == SMBGameBoardTileEntitySpawner__KVOContext_spawnedGameBoardTileEntities_offBoard_tracked)
 	{
-		if ([self.spawnedGameBoardTileEntities_offBoard_tracked containsObject:object])
+		SMBGameBoardTileEntity* const gameBoardTileEntity = kRUClassOrNil(object, SMBGameBoardTileEntity);
+		if ((gameBoardTileEntity != nil)
+			&&
+			[self.spawnedGameBoardTileEntities_offBoard_tracked containsObject:[self.spawnedGameBoardTileEntities_offBoard_tracked_mappedDataCollection mappableObject_for_uniqueKey:[gameBoardTileEntity smb_uniqueKey]]])
 		{
 			if ([keyPath isEqualToString:[SMBGameBoardTileEntity_PropertiesForKVO gameBoardTile]])
 			{
