@@ -282,9 +282,15 @@ typedef NS_ENUM(NSInteger, SMBGameBoardTileEntityPickerView__trashButton_type) {
 	SMBGameBoardTileEntitySpawner* const gameBoardTileEntitySpawner = [self gameBoardTileEntitySpawner_at_index:[self gameBoardTileEntitySpawner_index_for_indexPathRow:indexPath.row]];
 	kRUConditionalReturn(gameBoardTileEntitySpawner == nil, YES);
 
-	[self setSelectedGameBoardTileEntitySpawner:((self.selectedGameBoardTileEntitySpawner == gameBoardTileEntitySpawner) ? nil : gameBoardTileEntitySpawner)];
+//	[self setSelectedGameBoardTileEntitySpawner:((self.selectedGameBoardTileEntitySpawner == gameBoardTileEntitySpawner) ? nil : gameBoardTileEntitySpawner)];
 
 	[collectionView deselectItemAtIndexPath:indexPath animated:NO];
+
+	id<SMBGameBoardTileEntityPickerView__GameBoardTileEntitySpawner_TapDelegate> const gameBoardTileEntitySpawner_tapDelegate = self.gameBoardTileEntitySpawner_tapDelegate;
+	kRUConditionalReturn(gameBoardTileEntitySpawner_tapDelegate == nil, YES);
+
+	[gameBoardTileEntitySpawner_tapDelegate gameBoardTileEntityPickerView:self
+										didTap_gameBoardTileEntitySpawner:gameBoardTileEntitySpawner];
 }
 
 #pragma mark - selectedGameBoardTileEntitySpawner
@@ -392,12 +398,3 @@ typedef NS_ENUM(NSInteger, SMBGameBoardTileEntityPickerView__trashButton_type) {
 
 @end
 
-
-
-
-
-@implementation SMBGameBoardTileEntityPickerView_PropertiesForKVO
-
-+(nonnull NSString*)selectedGameBoardTileEntitySpawner{return NSStringFromSelector(_cmd);}
-
-@end

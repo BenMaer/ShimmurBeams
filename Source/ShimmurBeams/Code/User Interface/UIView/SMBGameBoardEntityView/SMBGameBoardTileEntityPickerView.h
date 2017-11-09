@@ -6,6 +6,8 @@
 //  Copyright © 2017 Shimmur. All rights reserved.
 //
 
+#import "SMBGameBoardTileEntityPickerView__Protocols.h"
+
 #import <UIKit/UIKit.h>
 
 
@@ -26,14 +28,8 @@
 #pragma mark - selectedGameBoardTileEntitySpawner
 @property (nonatomic, strong, nullable) SMBGameBoardTileEntitySpawner* selectedGameBoardTileEntitySpawner;
 
-@end
-
-
-
-
-
-@interface SMBGameBoardTileEntityPickerView_PropertiesForKVO : NSObject
-
-+(nonnull NSString*)selectedGameBoardTileEntitySpawner;
+#pragma mark - gameBoardTileEntitySpawner_tapDelegate
+@property (nonatomic, assign, nullable) id<SMBGameBoardTileEntityPickerView__GameBoardTileEntitySpawner_TapDelegate> gameBoardTileEntitySpawner_tapDelegate;
 
 @end
+

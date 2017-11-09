@@ -41,7 +41,7 @@ static void* kSMBGameLevelView__KVOContext_gameLevelView_UserSelection = &kSMBGa
 
 
 
-@interface SMBGameLevelView () <SMBGameBoardView_tileTapDelegate>
+@interface SMBGameLevelView () <SMBGameBoardView_tileTapDelegate, SMBGameBoardTileEntityPickerView__GameBoardTileEntitySpawner_TapDelegate>
 
 #pragma mark - content_inset
 -(CGFloat)content_inset;
@@ -53,8 +53,6 @@ static void* kSMBGameLevelView__KVOContext_gameLevelView_UserSelection = &kSMBGa
 
 #pragma mark - gameBoardTileEntityPickerView
 @property (nonatomic, readonly, strong, nullable) SMBGameBoardTileEntityPickerView* gameBoardTileEntityPickerView;
--(void)gameBoardTileEntityPickerView_setKVORegistered:(BOOL)registered
-   selectedGameBoardTileEntitySpawner_observe_initial:(BOOL)selectedGameBoardTileEntitySpawner_observe_initial;
 -(CGRect)gameBoardTileEntityPickerView_frame;
 -(CGRect)gameBoardTileEntityPickerView_frame_with_boundingWidth:(CGFloat)boundingWidth
 									   gameBoardView_frame_maxY:(CGFloat)gameBoardView_frame_maxY;
@@ -97,7 +95,6 @@ static void* kSMBGameLevelView__KVOContext_gameLevelView_UserSelection = &kSMBGa
 #pragma mark - NSObject
 -(void)dealloc
 {
-	[self gameBoardTileEntityPickerView_setKVORegistered:NO selectedGameBoardTileEntitySpawner_observe_initial:NO];
 	[self gameLevelView_UserSelection_setKVORegistered:NO];
 }
 
@@ -110,7 +107,7 @@ static void* kSMBGameLevelView__KVOContext_gameLevelView_UserSelection = &kSMBGa
 
 		_gameBoardTileEntityPickerView = [SMBGameBoardTileEntityPickerView new];
 		[self.gameBoardTileEntityPickerView setBackgroundColor:[UIColor clearColor]];
-		[self gameBoardTileEntityPickerView_setKVORegistered:YES selectedGameBoardTileEntitySpawner_observe_initial:YES];
+		[self.gameBoardTileEntityPickerView setGameBoardTileEntitySpawner_tapDelegate:self];
 		[self addSubview:self.gameBoardTileEntityPickerView];
 
 		_gameBoardTileEntityPickerView_borderColorView = [UIView new];
@@ -173,56 +170,9 @@ static void* kSMBGameLevelView__KVOContext_gameLevelView_UserSelection = &kSMBGa
 }
 
 #pragma mark - gameBoardTileEntityPickerView
--(void)gameBoardTileEntityPickerView_setKVORegistered:(BOOL)registered
-   selectedGameBoardTileEntitySpawner_observe_initial:(BOOL)selectedGameBoardTileEntitySpawner_observe_initial
-{
-	typeof(self.gameBoardTileEntityPickerView) const gameBoardTileEntityPickerView = self.gameBoardTileEntityPickerView;
-	kRUConditionalReturn(gameBoardTileEntityPickerView == nil, NO);
-
-	NSMutableDictionary<NSNumber*,NSMutableArray<NSString*>*>* const KVOOptions_to_propertiesToObserve_mapping = [NSMutableDictionary<NSNumber*,NSMutableArray<NSString*>*> dictionary];
-
-	NSMutableArray<NSString*>* const propertiesToObserve_observe_initial = [NSMutableArray<NSString*> array];
-	[KVOOptions_to_propertiesToObserve_mapping setObject:propertiesToObserve_observe_initial forKey:@(NSKeyValueObservingOptionInitial)];
-
-	NSMutableArray<NSString*>* const propertiesToObserve = [NSMutableArray<NSString*> array];
-	[KVOOptions_to_propertiesToObserve_mapping setObject:propertiesToObserve forKey:@(0)];
-
-	[(selectedGameBoardTileEntitySpawner_observe_initial
-	  ?
-	  propertiesToObserve_observe_initial
-	  :
-	  propertiesToObserve
-	  )
-	 addObject:[SMBGameBoardTileEntityPickerView_PropertiesForKVO selectedGameBoardTileEntitySpawner]];
-
-	[KVOOptions_to_propertiesToObserve_mapping enumerateKeysAndObjectsUsingBlock:^(NSNumber * _Nonnull KVOOptions_number, NSMutableArray<NSString *> * _Nonnull propertiesToObserve, BOOL * _Nonnull stop) {
-		[propertiesToObserve enumerateObjectsUsingBlock:^(NSString * _Nonnull propertyToObserve, NSUInteger idx, BOOL * _Nonnull stop) {
-			if (registered)
-			{
-				[gameBoardTileEntityPickerView addObserver:self
-												forKeyPath:propertyToObserve
-												   options:(KVOOptions_number.unsignedIntegerValue)
-												   context:&kSMBGameLevelView__KVOContext_gameBoardTileEntityPickerView];
-			}
-			else
-			{
-				[gameBoardTileEntityPickerView removeObserver:self
-												   forKeyPath:propertyToObserve
-													  context:&kSMBGameLevelView__KVOContext_gameBoardTileEntityPickerView];
-			}
-		}];
-	}];
-}
-
 -(void)gameBoardTileEntityPickerView_selectedGameBoardTileEntitySpawner_update_from_gameLevelView_UserSelection
 {
-	[self gameBoardTileEntityPickerView_setKVORegistered:NO
-	  selectedGameBoardTileEntitySpawner_observe_initial:NO];
-
 	[self.gameBoardTileEntityPickerView setSelectedGameBoardTileEntitySpawner:self.gameLevelView_UserSelection.selectedGameBoardTileEntitySpawner];
-
-	[self gameBoardTileEntityPickerView_setKVORegistered:YES
-	  selectedGameBoardTileEntitySpawner_observe_initial:NO];
 }
 
 -(CGRect)gameBoardTileEntityPickerView_frame
@@ -391,7 +341,7 @@ static void* kSMBGameLevelView__KVOContext_gameLevelView_UserSelection = &kSMBGa
 	 Refer to document `User facing actions` for details on expected logic.
 	 https://docs.google.com/a/shimmur.com/document/d/1XXJqmIBKHtOcW3BhYKM5rFmT7ciu0J8-2ZjjPGTynUg/edit?usp=sharing
 
-	 This is covering: User taps: 2
+	 This is covering: User taps: 2)
 	 */
 
 	SMBGameBoardTileEntity* const gameBoardTileEntity = gameBoardTile.gameBoardTileEntity_for_beamInteractions;
@@ -463,25 +413,7 @@ static void* kSMBGameLevelView__KVOContext_gameLevelView_UserSelection = &kSMBGa
 #pragma mark - KVO
 -(void)observeValueForKeyPath:(nullable NSString*)keyPath ofObject:(nullable id)object change:(nullable NSDictionary*)change context:(nullable void*)context
 {
-	if (context == kSMBGameLevelView__KVOContext_gameBoardTileEntityPickerView)
-	{
-		if (object == self.gameBoardTileEntityPickerView)
-		{
-			if ([keyPath isEqualToString:[SMBGameBoardTileEntityPickerView_PropertiesForKVO selectedGameBoardTileEntitySpawner]])
-			{
-				[self gameLevelView_UserSelection_update_from_selectedGameBoardTileEntitySpawner:self.gameBoardTileEntityPickerView.selectedGameBoardTileEntitySpawner];
-			}
-			else
-			{
-				NSAssert(false, @"unhandled keyPath %@",keyPath);
-			}
-		}
-		else
-		{
-			NSAssert(false, @"unhandled object %@",object);
-		}
-	}
-	else if (context == kSMBGameLevelView__KVOContext_gameLevelView_UserSelection)
+	if (context == kSMBGameLevelView__KVOContext_gameLevelView_UserSelection)
 	{
 		if (object == self.gameLevelView_UserSelection)
 		{
@@ -613,6 +545,48 @@ static void* kSMBGameLevelView__KVOContext_gameLevelView_UserSelection = &kSMBGa
 	  :
 	  nil
 	  )];
+}
+
+#pragma mark - SMBGameBoardTileEntityPickerView__GameBoardTileEntitySpawner_TapDelegate
+-(void)gameBoardTileEntityPickerView:(nonnull SMBGameBoardTileEntityPickerView*)gameBoardTileEntityPickerView
+   didTap_gameBoardTileEntitySpawner:(nonnull SMBGameBoardTileEntitySpawner*)gameBoardTileEntitySpawner
+{
+	kRUConditionalReturn(gameBoardTileEntitySpawner == nil, YES);
+
+	/*
+	 Refer to document `User facing actions` for details on expected logic.
+	 https://docs.google.com/a/shimmur.com/document/d/1XXJqmIBKHtOcW3BhYKM5rFmT7ciu0J8-2ZjjPGTynUg/edit?usp=sharing
+
+	 This is covering: User taps: 1)
+	 */
+
+	SMBGameLevelView_UserSelection* const gameLevelView_UserSelection = self.gameLevelView_UserSelection;
+	/* User actions: 1.a) */
+	/* User actions: 1.a.i) */
+	if ((gameLevelView_UserSelection != nil)
+		&&
+		(gameLevelView_UserSelection.selectedGameBoardTileEntitySpawner == gameBoardTileEntitySpawner)
+		)
+	{
+		/* User actions: 1.a.i.1) */
+		/* User actions: 1.a.i.1.a) */
+		if (gameLevelView_UserSelection.selectedGameBoardTileEntity)
+		{
+			/* User actions: 1.a.i.1.a.i) */
+			[self gameLevelView_UserSelection_update_from_selectedGameBoardTileEntitySpawner:gameBoardTileEntitySpawner];
+		}
+		/* User actions: 1.a.i.1.b) */
+		else
+		{
+			/* User actions: 1.a.i.1.b.i) */
+			[self gameLevelView_UserSelection_update_from_selectedGameBoardTileEntitySpawner:nil];
+		}
+	}
+	/* User actions: 1.a.ii) */
+	else
+	{
+		[self gameLevelView_UserSelection_update_from_selectedGameBoardTileEntitySpawner:gameBoardTileEntitySpawner];
+	}
 }
 
 @end
