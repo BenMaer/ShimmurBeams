@@ -15,7 +15,7 @@
 @class SMBGameBoardTileEntitySpawnerManager;
 @class SMBGameBoardTileEntity;
 @class SMBGameBoardTileEntitySpawner;
-@class SMBGameBoardTile;
+@class SMBGameLevelView_UserSelection_GameBoardTile_HighlightData;
 
 
 
@@ -31,13 +31,13 @@
 								 selectedGameBoardTileEntitySpawner:(nonnull SMBGameBoardTileEntitySpawner*)selectedGameBoardTileEntitySpawner NS_DESIGNATED_INITIALIZER;
 
 #pragma mark - selectedGameBoardTileEntity
-@property (nonatomic, readonly, strong, nullable) SMBGameBoardTileEntity* selectedGameBoardTileEntity;
+-(nullable SMBGameBoardTileEntity*)selectedGameBoardTileEntity;
 
 #pragma mark - selectedGameBoardTileEntitySpawner
-@property (nonatomic, readonly, strong, nullable) SMBGameBoardTileEntitySpawner* selectedGameBoardTileEntitySpawner;
+-(nullable SMBGameBoardTileEntitySpawner*)selectedGameBoardTileEntitySpawner;
 
-#pragma mark - selectedGameBoardTiles
-@property (nonatomic, readonly, copy, nullable) NSSet<SMBGameBoardTile*>* selectedGameBoardTiles;
+#pragma mark - selectedGameBoardTiles_HighlightData
+-(nullable NSSet<SMBGameLevelView_UserSelection_GameBoardTile_HighlightData*>*)selectedGameBoardTiles_HighlightData;
 
 @end
 
@@ -47,6 +47,6 @@
 
 @interface SMBGameLevelView_UserSelection_PropertiesForKVO : NSObject
 
-+(nonnull NSString*)selectedGameBoardTiles;
++(nonnull NSString*)selectedGameBoardTiles_HighlightData;
 
 @end

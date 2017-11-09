@@ -18,12 +18,6 @@
 
 @implementation SMBWeakPointerMappableObject
 
-#pragma mark - object
--(nonnull id /**<SMBMappedDataCollection_MappableObject> */)object
-{
-	return [super object];
-}
-
 #pragma mark - init
 -(nullable instancetype)init_with_object:(nonnull id<SMBMappedDataCollection_MappableObject>)object
 							deallocBlock:(nullable RUDeallocHookBlock)deallocBlock
@@ -46,6 +40,12 @@
 	}
 
 	return [object smb_uniqueKey];
+}
+
+#pragma mark - object
+-(nonnull id /**<SMBMappedDataCollection_MappableObject> */)object
+{
+	return [super object];
 }
 
 @end

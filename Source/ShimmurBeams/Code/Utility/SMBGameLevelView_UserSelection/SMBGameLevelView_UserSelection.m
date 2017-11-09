@@ -10,6 +10,8 @@
 #import "SMBGameBoardTileEntitySpawner.h"
 #import "SMBGameBoardTileEntity.h"
 #import "SMBGameBoardTileEntitySpawnerManager.h"
+#import "SMBGameLevelView_UserSelection_GameBoardTile_HighlightData.h"
+#import "UIColor+SMBColors.h"
 
 #import <ResplendentUtilities/RUConditionalReturn.h>
 
@@ -40,8 +42,6 @@ static void* kSMBGameLevelView_UserSelection__KVOContext_selectedGameBoardTileEn
 -(void)selectedGameBoardTileEntitySpawner_update_from_selectedGameBoardTileEntity;
 -(nullable SMBGameBoardTileEntitySpawner*)selectedGameBoardTileEntitySpawner_from_selectedGameBoardTileEntity;
 
-//-(void)selectedGameBoardTileEntitySpawner_update;
-//-(nullable SMBGameBoardTileEntitySpawner*)selectedGameBoardTileEntitySpawner_appropriate;
 -(void)SMBGameLevelView_UserSelection_selectedGameBoardTileEntitySpawner_setKVORegistered:(BOOL)registered;
 
 #pragma mark - selectedGameBoardTileEntities
@@ -49,10 +49,10 @@ static void* kSMBGameLevelView_UserSelection__KVOContext_selectedGameBoardTileEn
 -(void)selectedGameBoardTileEntities_update;
 -(nullable NSSet<SMBGameBoardTileEntity*>*)selectedGameBoardTileEntities_generate;
 
-#pragma mark - selectedGameBoardTiles
-@property (nonatomic, copy, nullable) NSSet<SMBGameBoardTile*>* selectedGameBoardTiles;
+#pragma mark - selectedGameBoardTiles_HighlightData
+@property (nonatomic, copy, nullable) NSSet<SMBGameLevelView_UserSelection_GameBoardTile_HighlightData*>* selectedGameBoardTiles_HighlightData;
 -(void)selectedGameBoardTiles_update;
--(nullable NSSet<SMBGameBoardTile*>*)selectedGameBoardTiles_generate;
+-(nullable NSSet<SMBGameLevelView_UserSelection_GameBoardTile_HighlightData*>*)selectedGameBoardTiles_generate;
 
 @end
 
@@ -140,7 +140,12 @@ static void* kSMBGameLevelView_UserSelection__KVOContext_selectedGameBoardTileEn
 
 -(nullable SMBGameBoardTileEntity*)selectedGameBoardTileEntity_appropriate_from_selectedGameBoardTileEntitySpawner
 {
-	return nil;
+	SMBGameBoardTileEntitySpawner* const selectedGameBoardTileEntitySpawner = self.selectedGameBoardTileEntitySpawner;
+	kRUConditionalReturn_ReturnValueNil(selectedGameBoardTileEntitySpawner == nil, YES);
+
+	kRUConditionalReturn_ReturnValueNil([selectedGameBoardTileEntitySpawner spawnedGameBoardTileEntities_tracked_atCapacity] == false, NO);
+
+	return selectedGameBoardTileEntitySpawner.spawnedGameBoardTileEntities_tracked.firstObject;
 }
 
 #pragma mark - selectedGameBoardTileEntitySpawner
@@ -250,26 +255,39 @@ static void* kSMBGameLevelView_UserSelection__KVOContext_selectedGameBoardTileEn
 	return [NSSet<SMBGameBoardTileEntity*> setWithArray:spawnedGameBoardTileEntities_tracked];
 }
 
-#pragma mark - selectedGameBoardTiles
+#pragma mark - selectedGameBoardTiles_HighlightData
 -(void)selectedGameBoardTiles_update
 {
-	[self setSelectedGameBoardTiles:[self selectedGameBoardTiles_generate]];
+	[self setSelectedGameBoardTiles_HighlightData:[self selectedGameBoardTiles_generate]];
 }
 
--(nullable NSSet<SMBGameBoardTile*>*)selectedGameBoardTiles_generate
+-(nullable NSSet<SMBGameLevelView_UserSelection_GameBoardTile_HighlightData*>*)selectedGameBoardTiles_generate
 {
 	NSSet<SMBGameBoardTileEntity*>* const selectedGameBoardTileEntities = self.selectedGameBoardTileEntities;
 	kRUConditionalReturn_ReturnValueNil(selectedGameBoardTileEntities == nil, NO);
 
-	NSMutableSet<SMBGameBoardTile*>* const selectedGameBoardTiles = [NSMutableSet<SMBGameBoardTile*> set];
+	NSMutableSet<SMBGameLevelView_UserSelection_GameBoardTile_HighlightData*>* const selectedGameBoardTiles = [NSMutableSet<SMBGameLevelView_UserSelection_GameBoardTile_HighlightData*> set];
 	[selectedGameBoardTileEntities enumerateObjectsUsingBlock:^(SMBGameBoardTileEntity * _Nonnull gameBoardTileEntity, BOOL * _Nonnull stop) {
 		SMBGameBoardTile* const gameBoardTile = gameBoardTileEntity.gameBoardTile;
 		kRUConditionalReturn(gameBoardTile == nil, YES);
 
-		[selectedGameBoardTiles addObject:gameBoardTile];
+		SMBGameBoardTileEntity* const selectedGameBoardTileEntity = self.selectedGameBoardTileEntity;
+		SMBGameLevelView_UserSelection_GameBoardTile_HighlightData* const gameLevelView_UserSelection_GameBoardTile_HighlightData =
+		[[SMBGameLevelView_UserSelection_GameBoardTile_HighlightData alloc] init_with_gameBoardTile:gameBoardTile
+																					 highlightColor:
+		 (
+		  selectedGameBoardTileEntity == gameBoardTileEntity
+		  ?
+		  [UIColor smb_selectedTileEntity_color_primary]
+		  :
+		  [UIColor smb_selectedTileEntity_color]
+		 )];
+		kRUConditionalReturn(gameLevelView_UserSelection_GameBoardTile_HighlightData == nil, YES);
+
+		[selectedGameBoardTiles addObject:gameLevelView_UserSelection_GameBoardTile_HighlightData];
 	}];
 
-	return [NSSet<SMBGameBoardTile*> setWithSet:selectedGameBoardTiles];
+	return [NSSet<SMBGameLevelView_UserSelection_GameBoardTile_HighlightData*> setWithSet:selectedGameBoardTiles];
 }
 
 #pragma mark - KVO
@@ -307,6 +325,6 @@ static void* kSMBGameLevelView_UserSelection__KVOContext_selectedGameBoardTileEn
 
 @implementation SMBGameLevelView_UserSelection_PropertiesForKVO : NSObject
 
-+(nonnull NSString*)selectedGameBoardTiles{return NSStringFromSelector(_cmd);}
++(nonnull NSString*)selectedGameBoardTiles_HighlightData{return NSStringFromSelector(_cmd);}
 
 @end
