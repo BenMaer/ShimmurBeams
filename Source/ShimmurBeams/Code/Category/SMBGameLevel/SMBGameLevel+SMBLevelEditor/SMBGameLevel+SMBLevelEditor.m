@@ -12,6 +12,7 @@
 #import "SMBGameBoardTileEntitySpawnerManager.h"
 #import "SMBBeamCreatorTileEntity.h"
 #import "SMBForcedBeamRedirectTileEntity.h"
+#import "SMBWallTileEntity.h"
 
 
 
@@ -28,21 +29,22 @@
 
 	NSMutableArray<SMBGameBoardTileEntitySpawner*>* const gameBoardTileEntitySpawners = [NSMutableArray<SMBGameBoardTileEntitySpawner*> array];
 
+	/* SMBBeamCreatorTileEntity */
 	SMBGameBoardTile__directions_enumerate(^(SMBGameBoardTile__direction direction) {
-
-		/* SMBBeamCreatorTileEntity */
 		[gameBoardTileEntitySpawners addObject:
 		 [[SMBGameBoardTileEntitySpawner alloc] init_with_spawnedGameBoardTileEntities_tracked_maximum:0
 																					  spawnEntityBlock:
 		  ^SMBGameBoardTileEntity * _Nullable{
 			  SMBBeamCreatorTileEntity* const beamCreatorTileEntity = [SMBBeamCreatorTileEntity new];
 			  [beamCreatorTileEntity setBeamDirection:direction];
-
+			  
 			  return beamCreatorTileEntity;
 		  }]
 		 ];
+	});
 
-		/* SMBForcedBeamRedirectTileEntity */
+	/* SMBForcedBeamRedirectTileEntity */
+	SMBGameBoardTile__directions_enumerate(^(SMBGameBoardTile__direction direction) {
 		[gameBoardTileEntitySpawners addObject:
 		 [[SMBGameBoardTileEntitySpawner alloc] init_with_spawnedGameBoardTileEntities_tracked_maximum:0
 																					  spawnEntityBlock:
@@ -51,6 +53,15 @@
 		  }]
 		 ];
 	});
+
+	/* SMBWallTileEntity */
+	[gameBoardTileEntitySpawners addObject:
+	 [[SMBGameBoardTileEntitySpawner alloc] init_with_spawnedGameBoardTileEntities_tracked_maximum:0
+																				  spawnEntityBlock:
+	  ^SMBGameBoardTileEntity * _Nullable{
+		  return [SMBWallTileEntity new];
+	  }]
+	 ];
 
 	return
 	[[self alloc] init_with_gameBoard:gameBoard
