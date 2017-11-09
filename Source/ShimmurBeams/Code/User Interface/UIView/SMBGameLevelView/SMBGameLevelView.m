@@ -254,7 +254,11 @@ static void* kSMBGameLevelView__KVOContext_gameLevelView_UserSelection = &kSMBGa
 	 Refer to document `User facing actions` for details on expected logic.
 	 https://docs.google.com/a/shimmur.com/document/d/1XXJqmIBKHtOcW3BhYKM5rFmT7ciu0J8-2ZjjPGTynUg/edit?usp=sharing
 
-	 This is covering: User taps: 2.a...
+	 This is covering User actions:
+	 - 5
+
+	 Coming from User taps:
+	 - 2.b.i.1
 	 */
 
 	kRUConditionalReturn(gameBoardTile == nil, YES);
@@ -284,6 +288,17 @@ static void* kSMBGameLevelView__KVOContext_gameLevelView_UserSelection = &kSMBGa
 	 User taps: 2.a.ii.1.b.i
 	 */
 	[gameBoardTileEntityPickerView_selectedGameBoardTileEntitySpawner gameBoardTileEntity_spawnNew_tracked_on_gameBoardTile:gameBoardTile];
+
+	/* User actions: 5.a */
+	if ([gameBoardTileEntityPickerView_selectedGameBoardTileEntitySpawner spawnedGameBoardTileEntities_tracked_atCapacity])
+	{
+		/* User actions: 5.a.i */
+		[self.gameBoardTileEntityPickerView setSelectedGameBoardTileEntitySpawner:nil];
+	}
+	/* User actions: 5.b */
+	/* User actions: 5.b.i
+	 else{}
+	 */
 }
 
 #pragma mark - gameBoardTileEntityPickerView_borderColorView
@@ -395,48 +410,44 @@ static void* kSMBGameLevelView__KVOContext_gameLevelView_UserSelection = &kSMBGa
 	 This is covering: User taps: 2
 	 */
 
+	SMBGameBoardTileEntity* const gameBoardTileEntity = gameBoardTile.gameBoardTileEntity_for_beamInteractions;
 	/* User taps: 2.a */
-	if (self.gameBoardTileEntityPickerView.selectedGameBoardTileEntitySpawner)
+	if (gameBoardTileEntity)
 	{
-		/* User taps: 2.a... */
-		[self gameBoardTileEntityPickerView_selectedGameBoardTileEntitySpawner_spawn_attempt_on_tile:gameBoardTile];
-
-		/* User actions: 5.a */
-		if ([self.gameBoardTileEntityPickerView.selectedGameBoardTileEntitySpawner spawnedGameBoardTileEntities_tracked_atCapacity])
+		SMBGameBoardTileEntitySpawner* const gameBoardTileEntitySpawner = [self.gameLevel.gameBoardTileEntitySpawnerManager gameBoardTileEntitySpawner_for_entity:gameBoardTileEntity];
+		/* User taps: 2.a.i */
+		if (gameBoardTileEntitySpawner)
 		{
-			/* User actions: 5.a.i */
-			[self.gameBoardTileEntityPickerView setSelectedGameBoardTileEntitySpawner:nil];
+			SMBGameLevelView_UserSelection* const gameLevelView_UserSelection = self.gameLevelView_UserSelection;
+			/* User taps: 2.a.i.1 */
+			if ((gameLevelView_UserSelection != nil)
+				&&
+				(gameLevelView_UserSelection.selectedGameBoardTileEntity == gameBoardTileEntity))
+			{
+				/* User taps: 2.a.i.1.a */
+				[self gameLevelView_UserSelection_update_from_selectedGameBoardTileEntity:nil];
+			}
+			/* User taps: 2.a.i.2 */
+			else
+			{
+				/* User taps: 2.a.i.2.a */
+				[self gameLevelView_UserSelection_update_from_selectedGameBoardTileEntity:gameBoardTileEntity];
+			}
 		}
+		/* User taps: 2.a.ii
+		 else{}
+		 */
 	}
 	/* User taps: 2.b */
 	else
 	{
-		SMBGameBoardTileEntity* const gameBoardTileEntity = gameBoardTile.gameBoardTileEntity_for_beamInteractions;
+		SMBGameLevelView_UserSelection* const gameLevelView_UserSelection = self.gameLevelView_UserSelection;
+		SMBGameBoardTileEntitySpawner* const selectedGameBoardTileEntitySpawner = gameLevelView_UserSelection.selectedGameBoardTileEntitySpawner;
 		/* User taps: 2.b.i */
-		if (gameBoardTileEntity)
+		if (selectedGameBoardTileEntitySpawner)
 		{
-			SMBGameBoardTileEntitySpawner* const gameBoardTileEntitySpawner = [self.gameLevel.gameBoardTileEntitySpawnerManager gameBoardTileEntitySpawner_for_entity:gameBoardTileEntity];
-
 			/* User taps: 2.b.i.1 */
-			if (gameBoardTileEntitySpawner)
-			{
-				SMBGameLevelView_UserSelection* const gameLevelView_UserSelection = self.gameLevelView_UserSelection;
-				/* User taps: 2.b.i.1.a */
-				if ((gameLevelView_UserSelection != nil)
-					&&
-					(gameLevelView_UserSelection.selectedGameBoardTileEntity == gameBoardTileEntity))
-				{
-					/* User taps: 2.b.i.1.a.i */
-					[self gameLevelView_UserSelection_update_from_selectedGameBoardTileEntity:nil];
-				}
-				/* User taps: 2.b.i.1.b */
-				else
-				{
-					/* User taps: 2.b.i.1.b.i */
-					[self gameLevelView_UserSelection_update_from_selectedGameBoardTileEntity:gameBoardTileEntity];
-				}
-			}
-			/* User taps: 2.b.i.2.a */
+			[self gameBoardTileEntityPickerView_selectedGameBoardTileEntitySpawner_spawn_attempt_on_tile:gameBoardTile];
 		}
 		/* User taps: 2.b.ii */
 		else
@@ -445,6 +456,62 @@ static void* kSMBGameLevelView__KVOContext_gameLevelView_UserSelection = &kSMBGa
 			[self gameBoardTileEntityPickerView_borderColorView_animate];
 		}
 	}
+
+
+
+
+
+
+//	/* User taps: 2.a */
+//	if (self.gameBoardTileEntityPickerView.selectedGameBoardTileEntitySpawner)
+//	{
+//		/* User taps: 2.a... */
+//		[self gameBoardTileEntityPickerView_selectedGameBoardTileEntitySpawner_spawn_attempt_on_tile:gameBoardTile];
+//
+//		/* User actions: 5.a */
+//		if ([self.gameBoardTileEntityPickerView.selectedGameBoardTileEntitySpawner spawnedGameBoardTileEntities_tracked_atCapacity])
+//		{
+//			/* User actions: 5.a.i */
+//			[self.gameBoardTileEntityPickerView setSelectedGameBoardTileEntitySpawner:nil];
+//		}
+//	}
+//	/* User taps: 2.b */
+//	else
+//	{
+//		SMBGameBoardTileEntity* const gameBoardTileEntity = gameBoardTile.gameBoardTileEntity_for_beamInteractions;
+//		/* User taps: 2.b.i */
+//		if (gameBoardTileEntity)
+//		{
+//			SMBGameBoardTileEntitySpawner* const gameBoardTileEntitySpawner = [self.gameLevel.gameBoardTileEntitySpawnerManager gameBoardTileEntitySpawner_for_entity:gameBoardTileEntity];
+//
+//			/* User taps: 2.b.i.1 */
+//			if (gameBoardTileEntitySpawner)
+//			{
+//				SMBGameLevelView_UserSelection* const gameLevelView_UserSelection = self.gameLevelView_UserSelection;
+//				/* User taps: 2.b.i.1.a */
+//				if ((gameLevelView_UserSelection != nil)
+//					&&
+//					(gameLevelView_UserSelection.selectedGameBoardTileEntity == gameBoardTileEntity))
+//				{
+//					/* User taps: 2.b.i.1.a.i */
+//					[self gameLevelView_UserSelection_update_from_selectedGameBoardTileEntity:nil];
+//				}
+//				/* User taps: 2.b.i.1.b */
+//				else
+//				{
+//					/* User taps: 2.b.i.1.b.i */
+//					[self gameLevelView_UserSelection_update_from_selectedGameBoardTileEntity:gameBoardTileEntity];
+//				}
+//			}
+//			/* User taps: 2.b.i.2.a */
+//		}
+//		/* User taps: 2.b.ii */
+//		else
+//		{
+//			/* User taps: 2.b.ii.1 */
+//			[self gameBoardTileEntityPickerView_borderColorView_animate];
+//		}
+//	}
 
 #if kSMBGameLevelView__beamEntityManager_beamEntity_forMarkingNodesReady_validation_enabled
 	[self.gameLevel.gameBoard.beamEntityManager beamEntity_forMarkingNodesReady_isNil_validate];
