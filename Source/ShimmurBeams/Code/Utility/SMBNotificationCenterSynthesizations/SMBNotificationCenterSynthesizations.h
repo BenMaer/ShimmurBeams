@@ -18,6 +18,12 @@
 
 
 
+#warning Made this updated version of this code, but no longer using it. We can delete this file once we move the new code to the library via asana todo: https://app.asana.com/0/37488452886436/473593202309309
+
+
+
+
+
 #define kSMBNotificationCenterSynthesizations_synthesize_setterMethod_declaration(V,arName) \
 -(void)set##V##arName##OnWithNotificationSelector:(nonnull SEL)notificationSelector notificationObject:(nullable id)notificationObject
 

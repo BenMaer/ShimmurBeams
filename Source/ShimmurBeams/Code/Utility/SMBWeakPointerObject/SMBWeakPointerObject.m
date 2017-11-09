@@ -11,6 +11,8 @@
 #import <ResplendentUtilities/RUConditionalReturn.h>
 #import <ResplendentUtilities/RUSynthesizeAssociatedObjects.h>
 #import <ResplendentUtilities/NSString+RUMacros.h>
+#import <ResplendentUtilities/NSMutableArray+RUAddObjectIfNotNil.h>
+#import <ResplendentUtilities/RUConstants.h>
 
 
 
@@ -50,7 +52,7 @@ kRUDefineNSStringConstant(kSMBWeakPointerObject_SMBWeakPointerObject_DeallocHook
 -(instancetype)init
 {
 	kRUConditionalReturn_ReturnValueNil(YES, YES);
-	
+
 #if __has_feature(nullability)
 #pragma clang diagnostic push
 #pragma GCC diagnostic ignored "-Wnullability-completeness"
@@ -60,6 +62,15 @@ kRUDefineNSStringConstant(kSMBWeakPointerObject_SMBWeakPointerObject_DeallocHook
 #if __has_feature(nullability)
 #pragma clang diagnostic pop
 #endif
+}
+
+-(nonnull NSString*)description
+{
+	NSMutableArray<NSString*>* const description_lines = [NSMutableArray<NSString*> array];
+	[description_lines ru_addObjectIfNotNil:[super description]];
+	[description_lines ru_addObjectIfNotNil:RUStringWithFormat(@"object: %@",self.object)];
+
+	return [description_lines componentsJoinedByString:@"\n"];
 }
 
 #pragma mark - init
@@ -78,7 +89,7 @@ kRUDefineNSStringConstant(kSMBWeakPointerObject_SMBWeakPointerObject_DeallocHook
 			 [[RUDeallocHook alloc] initWithBlock:deallocBlock]];
 		}
 	}
-	
+
 	return self;
 }
 

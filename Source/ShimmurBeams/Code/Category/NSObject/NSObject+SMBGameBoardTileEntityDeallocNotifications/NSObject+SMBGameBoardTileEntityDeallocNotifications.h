@@ -10,8 +10,6 @@
 
 #import <Foundation/Foundation.h>
 
-//#import <ResplendentUtilities/RUNotifications.h>
-
 
 
 
@@ -24,8 +22,10 @@ extern NSString* _Nonnull const NSObject_SMBGameBoardTileEntityDeallocNotificati
 
 @interface NSObject (SMBGameBoardTileEntityDeallocNotifications)
 
-#warning Let's use `RUNotifications.h` again once it's been updated with this asana todo: https://app.asana.com/0/37488452886436/473593202309309
-kSMBNotificationCenterSynthesizations_Synthesize_NotificationReadonlySetWithSelectorClearProperty(r,R,egisteredFor_SMBGameBoardTileEntityDeallocNotification_didCallDealloc);
-//kRUNotifications_Synthesize_NotificationReadonlySetWithSelectorClearProperty(r,R,egisteredFor_SMBGameBoardTileEntityDeallocNotification_didCallDealloc)
+#pragma mark - register
+-(void)setRegisteredFor_SMBGameBoardTileEntityDeallocNotification_didCallDeallocOnWithNotificationSelector:(nonnull SEL)notificationSelector notificationObject:(nullable id)notificationObject;
+
+#pragma mark - clear
+-(void)clearRegisteredFor_SMBGameBoardTileEntityDeallocNotification_didCallDealloc_with_notificationObject:(nullable id)notificationObject;
 
 @end

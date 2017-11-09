@@ -9,6 +9,7 @@
 #import "NSObject+SMBGameBoardTileEntityDeallocNotifications.h"
 
 #import <ResplendentUtilities/NSString+RUMacros.h>
+#import <ResplendentUtilities/RUConditionalReturn.h>
 
 
 
@@ -23,8 +24,23 @@ NSString* const NSObject_SMBGameBoardTileEntityDeallocNotification__Notification
 
 @implementation NSObject (SMBGameBoardTileEntityDeallocNotifications)
 
-//-(void)setRegisteredFor_SMBGameBoardTileEntityDeallocNotification_didCallDeallocOnWithNotificationSelector:(SEL)notificationSelector notificationObject:(id)notificationObject
-kSMBNotificationCenterSynthesizations_Synthesize_NotificationGetterSetterNumberFromPrimative_Implementation_AssociatedKey(r,R,egisteredFor_SMBGameBoardTileEntityDeallocNotification_didCallDealloc, NSObject_SMBGameBoardTileEntityDeallocNotification__NotificationName__didCallDealloc);
-//kRUNotifications_Synthesize_NotificationGetterSetterNumberFromPrimative_Implementation_AssociatedKey(r,R,egisteredFor_SMBGameBoardTileEntityDeallocNotification_didCallDealloc, NSObject_SMBGameBoardTileEntityDeallocNotification__NotificationName__didCallDealloc, nil);
+#pragma mark - register
+-(void)setRegisteredFor_SMBGameBoardTileEntityDeallocNotification_didCallDeallocOnWithNotificationSelector:(nonnull SEL)notificationSelector notificationObject:(nullable id)notificationObject
+{
+	kRUConditionalReturn(notificationSelector == nil, YES);
+
+	[[NSNotificationCenter defaultCenter] addObserver:self
+											 selector:notificationSelector
+												 name:NSObject_SMBGameBoardTileEntityDeallocNotification__NotificationName__didCallDealloc
+											   object:notificationObject];
+}
+
+#pragma mark - clear
+-(void)clearRegisteredFor_SMBGameBoardTileEntityDeallocNotification_didCallDealloc_with_notificationObject:(nullable id)notificationObject
+{
+	[[NSNotificationCenter defaultCenter] removeObserver:self
+													name:NSObject_SMBGameBoardTileEntityDeallocNotification__NotificationName__didCallDealloc
+												  object:notificationObject];
+}
 
 @end

@@ -47,11 +47,6 @@
 
 @implementation SMBGameBoardTileEntitySpawnerPickerCollectionViewCell
 
-#pragma mark - NSObject
--(void)dealloc
-{
-}
-
 #pragma mark - UIView
 -(instancetype)initWithFrame:(CGRect)frame
 {
