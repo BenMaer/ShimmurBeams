@@ -31,5 +31,8 @@
 #pragma mark - gameBoardTileEntitySpawner_tapDelegate
 @property (nonatomic, assign, nullable) id<SMBGameBoardTileEntityPickerView__GameBoardTileEntitySpawner_TapDelegate> gameBoardTileEntitySpawner_tapDelegate;
 
+#pragma mark - trashButton_tapDelegate
+@property (nonatomic, assign, nullable) id<SMBGameBoardTileEntityPickerView__TrashButton_TapDelegate> trashButton_tapDelegate;
+
 @end
 

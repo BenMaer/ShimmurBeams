@@ -9,8 +9,9 @@
 #import "SMBGameLevel+SMBLevelEditor.h"
 #import "SMBGameBoard.h"
 #import "SMBGameBoardTileEntitySpawner.h"
-#import "SMBForcedBeamRedirectTileEntity.h"
 #import "SMBGameBoardTileEntitySpawnerManager.h"
+#import "SMBBeamCreatorTileEntity.h"
+#import "SMBForcedBeamRedirectTileEntity.h"
 
 
 
@@ -28,6 +29,20 @@
 	NSMutableArray<SMBGameBoardTileEntitySpawner*>* const gameBoardTileEntitySpawners = [NSMutableArray<SMBGameBoardTileEntitySpawner*> array];
 
 	SMBGameBoardTile__directions_enumerate(^(SMBGameBoardTile__direction direction) {
+
+		/* SMBBeamCreatorTileEntity */
+		[gameBoardTileEntitySpawners addObject:
+		 [[SMBGameBoardTileEntitySpawner alloc] init_with_spawnedGameBoardTileEntities_tracked_maximum:0
+																					  spawnEntityBlock:
+		  ^SMBGameBoardTileEntity * _Nullable{
+			  SMBBeamCreatorTileEntity* const beamCreatorTileEntity = [SMBBeamCreatorTileEntity new];
+			  [beamCreatorTileEntity setBeamDirection:direction];
+
+			  return beamCreatorTileEntity;
+		  }]
+		 ];
+
+		/* SMBForcedBeamRedirectTileEntity */
 		[gameBoardTileEntitySpawners addObject:
 		 [[SMBGameBoardTileEntitySpawner alloc] init_with_spawnedGameBoardTileEntities_tracked_maximum:0
 																					  spawnEntityBlock:
