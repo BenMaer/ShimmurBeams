@@ -583,13 +583,13 @@ static void* kSMBGameLevelView__KVOContext_gameLevelView_UserSelection = &kSMBGa
 	kRUConditionalReturn((self.selectedGameBoardTiles_HighlightData == selectedGameBoardTiles_HighlightData)
 						 ||
 						 [self.selectedGameBoardTiles_HighlightData isEqual:selectedGameBoardTiles_HighlightData], NO);
-	
+
 	[self.selectedGameBoardTiles_HighlightData enumerateObjectsUsingBlock:^(SMBGameLevelView_UserSelection_GameBoardTile_HighlightData * _Nonnull gameBoardTile_HighlightData, BOOL * _Nonnull stop) {
 		[self gameBoardTile_update_from_highlightData:gameBoardTile_HighlightData isHighlighted:NO];
 	}];
-	
+
 	_selectedGameBoardTiles_HighlightData = (selectedGameBoardTiles_HighlightData ? [NSSet<SMBGameLevelView_UserSelection_GameBoardTile_HighlightData*> setWithSet:selectedGameBoardTiles_HighlightData] : nil);
-	
+
 	[self.selectedGameBoardTiles_HighlightData enumerateObjectsUsingBlock:^(SMBGameLevelView_UserSelection_GameBoardTile_HighlightData * _Nonnull gameBoardTile_HighlightData, BOOL * _Nonnull stop) {
 		[self gameBoardTile_update_from_highlightData:gameBoardTile_HighlightData isHighlighted:YES];
 	}];
