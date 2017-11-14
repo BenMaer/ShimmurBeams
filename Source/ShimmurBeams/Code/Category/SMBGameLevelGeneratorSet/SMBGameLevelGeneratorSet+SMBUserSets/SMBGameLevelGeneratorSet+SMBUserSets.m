@@ -258,54 +258,54 @@
 //										   name:@"Power switches and door groups"];
 //}
 //
-//#if kSMBEnvironment__SMBGameLevel_SMBUnitTestLevels_unitTestLevels_enabled
-//
-//#pragma mark - unitTests
-//+(nonnull instancetype)smb_unitTests
-//{
-//	NSMutableArray<SMBGameLevelGenerator*>* const gameLevelGenerators = [NSMutableArray<SMBGameLevelGenerator*> array];
-//
-//	[gameLevelGenerators addObject:[[SMBGameLevelGenerator alloc] init_with_generateLevelBlock:^SMBGameLevel * _Nonnull{
-//		return [SMBGameLevel smb_initialBeamDrawing];
-//	}
-//																						  name:@"Initial beam drawing."
-//																						  hint:@"The beam should be drawn on half the tile that its beam creator is on."]];
-//
-//	[gameLevelGenerators addObject:[[SMBGameLevelGenerator alloc] init_with_generateLevelBlock:^SMBGameLevel * _Nonnull{
-//		return [SMBGameLevel smb_beamEntityOrder];
-//	}
-//																						  name:@"Beam entity order"
-//																						  hint:@"Place entity at A4. Should not cause death."]];
-//
-//	[gameLevelGenerators addObject:[[SMBGameLevelGenerator alloc] init_with_generateLevelBlock:^SMBGameLevel * _Nonnull{
-//		return [SMBGameLevel smb_buttonPoweredImmediately];
-//	}
-//																						  name:@"Initial power"
-//																						  hint:@"The button should be powered off the bat."]];
-//
-//	[gameLevelGenerators addObject:[[SMBGameLevelGenerator alloc] init_with_generateLevelBlock:^SMBGameLevel * _Nonnull{
-//		return [SMBGameLevel smb_beamCreatorPoweringItself];
-//	}
-//																						  name:@"Beam creator powering itself"
-//																						  hint:@"Powered the beam creator, let it be the only one powering itself, then change its path."]];
-//
-//	[gameLevelGenerators addObject:[[SMBGameLevelGenerator alloc] init_with_generateLevelBlock:^SMBGameLevel * _Nonnull{
-//		return [SMBGameLevel smb_laserPassesThroughMovedEntity];
-//	}
-//																						  name:@"Beam passes through moved entity"
-//																						  hint:@"Place entity at B2. Then move entity to D2. Shouldn't trigger death."]];
-//
-//	[gameLevelGenerators addObject:[[SMBGameLevelGenerator alloc] init_with_generateLevelBlock:^SMBGameLevel * _Nonnull{
-//		return [SMBGameLevel smb_powerToggle_beamEntityManagerStuck];
-//	}
-//																						  name:@"Beam Entity Manager Stuck"
-//																						  hint:@"Power entity at B3. The unpowered beam creator at E3 should now be powered. Leave level to hit unit test."]];
-//
-//	return
-//	[[self alloc] init_with_gameLevelGenerators:[NSArray<SMBGameLevelGenerator*> arrayWithArray:gameLevelGenerators]
-//										   name:@"UNIT TESTS"];
-//}
-//
-//#endif
+#if kSMBEnvironment__SMBGameLevel_SMBUnitTestLevels_unitTestLevels_enabled
+
+#pragma mark - unitTests
++(nonnull instancetype)smb_unitTests
+{
+	NSMutableArray<SMBGameLevelGenerator*>* const gameLevelGenerators = [NSMutableArray<SMBGameLevelGenerator*> array];
+
+	[gameLevelGenerators addObject:[[SMBGameLevelGenerator alloc] init_with_generateLevelBlock:^SMBGameLevel * _Nonnull{
+		return [SMBGameLevel smb_initialBeamDrawing];
+	}
+																						  name:@"Initial beam drawing."
+																						  hint:@"The beam should be drawn on half the tile that its beam creator is on."]];
+
+	[gameLevelGenerators addObject:[[SMBGameLevelGenerator alloc] init_with_generateLevelBlock:^SMBGameLevel * _Nonnull{
+		return [SMBGameLevel smb_beamEntityOrder];
+	}
+																						  name:@"Beam entity order"
+																						  hint:@"Place entity at A4. Should not cause death."]];
+
+	[gameLevelGenerators addObject:[[SMBGameLevelGenerator alloc] init_with_generateLevelBlock:^SMBGameLevel * _Nonnull{
+		return [SMBGameLevel smb_buttonPoweredImmediately];
+	}
+																						  name:@"Initial power"
+																						  hint:@"The button should be powered off the bat."]];
+
+	[gameLevelGenerators addObject:[[SMBGameLevelGenerator alloc] init_with_generateLevelBlock:^SMBGameLevel * _Nonnull{
+		return [SMBGameLevel smb_beamCreatorPoweringItself];
+	}
+																						  name:@"Beam creator powering itself"
+																						  hint:@"Powered the beam creator, let it be the only one powering itself, then change its path."]];
+
+	[gameLevelGenerators addObject:[[SMBGameLevelGenerator alloc] init_with_generateLevelBlock:^SMBGameLevel * _Nonnull{
+		return [SMBGameLevel smb_laserPassesThroughMovedEntity];
+	}
+																						  name:@"Beam passes through moved entity"
+																						  hint:@"Place entity at B2. Then move entity to D2. Shouldn't trigger death."]];
+
+	[gameLevelGenerators addObject:[[SMBGameLevelGenerator alloc] init_with_generateLevelBlock:^SMBGameLevel * _Nonnull{
+		return [SMBGameLevel smb_powerToggle_beamEntityManagerStuck];
+	}
+																						  name:@"Beam Entity Manager Stuck"
+																						  hint:@"Power entity at B3. The unpowered beam creator at E3 should now be powered. Leave level to hit unit test."]];
+
+	return
+	[[self alloc] init_with_gameLevelGenerators:[NSArray<SMBGameLevelGenerator*> arrayWithArray:gameLevelGenerators]
+										   name:@"UNIT TESTS"];
+}
+
+#endif
 
 @end
