@@ -42,7 +42,7 @@
 
 #pragma mark - gameBoardTileEntities_all
 @property (nonatomic, readonly, strong, nullable) SMBMappedDataCollection<SMBGameBoardTileEntity*>* gameBoardTileEntities_all;
-@property (nonatomic, assign) BOOL gameBoardTileEntities_all_isUpdating;
+@property (nonatomic, readonly, assign) BOOL gameBoardTileEntities_all_isUpdating;
 
 #pragma mark - gameBoardTileEntities
 -(void)gameBoardTileEntities_add:(nonnull SMBGameBoardTileEntity*)gameBoardTileEntity

@@ -60,6 +60,7 @@ static void* kSMBGameBoardTile__KVOContext_generalBeamEnterToExitDirectionRedire
  This is going to be used for meta data per tile (power, entry blockings, etc).
  */
 @property (nonatomic, strong, nullable) SMBMappedDataCollection<SMBGameBoardTileEntity*>* gameBoardTileEntities_all;
+@property (nonatomic, assign) BOOL gameBoardTileEntities_all_isUpdating;
 -(void)gameBoardTileEntities_all_update;
 -(SMBMappedDataCollection<SMBGameBoardTileEntity*>*)gameBoardTileEntities_all_generate;
 
