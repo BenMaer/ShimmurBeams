@@ -15,6 +15,7 @@
 #import "SMBWallTileEntity.h"
 #import "SMBBeamRotateTileEntity.h"
 #import "SMBDeathBlockTileEntity.h"
+#import "SMBGameBoardTileEntitySpawner+SMBInitMethods.h"
 
 
 
@@ -33,60 +34,47 @@
 	/* Entity spawners. */
 	NSMutableArray<SMBGameBoardTileEntitySpawner*>* const gameBoardTileEntitySpawners = [NSMutableArray<SMBGameBoardTileEntitySpawner*> array];
 
+	NSMutableArray<SMBGameBoardTileEntitySpawner_spawnEntityBlock>* const gameBoardTileEntitySpawner_spawnEntityBlocks_singleUse = [NSMutableArray<SMBGameBoardTileEntitySpawner_spawnEntityBlock> array];
+	
 	/* SMBBeamCreatorTileEntity */
 	SMBGameBoardTile__directions_enumerate(^(SMBGameBoardTile__direction direction) {
-		[gameBoardTileEntitySpawners addObject:
-		 [[SMBGameBoardTileEntitySpawner alloc] init_with_spawnedGameBoardTileEntities_tracked_maximum:0
-																					  spawnEntityBlock:
-		  ^SMBGameBoardTileEntity * _Nullable{
-			  SMBBeamCreatorTileEntity* const beamCreatorTileEntity = [SMBBeamCreatorTileEntity new];
-			  [beamCreatorTileEntity setBeamDirection:direction];
-			  
-			  return beamCreatorTileEntity;
-		  }]
-		 ];
+		[gameBoardTileEntitySpawner_spawnEntityBlocks_singleUse addObject:^SMBGameBoardTileEntity * _Nullable{
+			SMBBeamCreatorTileEntity* const beamCreatorTileEntity = [SMBBeamCreatorTileEntity new];
+			[beamCreatorTileEntity setBeamDirection:direction];
+			
+			return beamCreatorTileEntity;
+		}];
 	});
 
 	/* SMBForcedBeamRedirectTileEntity */
 	SMBGameBoardTile__directions_enumerate(^(SMBGameBoardTile__direction direction) {
-		[gameBoardTileEntitySpawners addObject:
-		 [[SMBGameBoardTileEntitySpawner alloc] init_with_spawnedGameBoardTileEntities_tracked_maximum:0
-																					  spawnEntityBlock:
-		  ^SMBGameBoardTileEntity * _Nullable{
-			  return [[SMBForcedBeamRedirectTileEntity alloc] init_with_forcedBeamExitDirection:direction];
-		  }]
-		 ];
+		[gameBoardTileEntitySpawner_spawnEntityBlocks_singleUse addObject:^SMBGameBoardTileEntity * _Nullable{
+			return [[SMBForcedBeamRedirectTileEntity alloc] init_with_forcedBeamExitDirection:direction];
+		}];
 	});
 
 	/* SMBWallTileEntity */
-	[gameBoardTileEntitySpawners addObject:
-	 [[SMBGameBoardTileEntitySpawner alloc] init_with_spawnedGameBoardTileEntities_tracked_maximum:0
-																				  spawnEntityBlock:
-	  ^SMBGameBoardTileEntity * _Nullable{
-		  return [SMBWallTileEntity new];
-	  }]
-	 ];
+	[gameBoardTileEntitySpawner_spawnEntityBlocks_singleUse addObject:^SMBGameBoardTileEntity * _Nullable{
+		return [SMBWallTileEntity new];
+	}];
 
 	/* SMBBeamRotateTileEntity */
 	SMBGameBoardTile__direction_rotations_enumerate(^(SMBGameBoardTile__direction_rotation direction_rotation) {
-		[gameBoardTileEntitySpawners addObject:
-		 [[SMBGameBoardTileEntitySpawner alloc] init_with_spawnedGameBoardTileEntities_tracked_maximum:0
-																					  spawnEntityBlock:
-		  ^SMBGameBoardTileEntity * _Nullable{
-			  return [[SMBBeamRotateTileEntity alloc] init_with_direction_rotation:direction_rotation];
-		  }]
-		 ];
+		[gameBoardTileEntitySpawner_spawnEntityBlocks_singleUse addObject:^SMBGameBoardTileEntity * _Nullable{
+			return [[SMBBeamRotateTileEntity alloc] init_with_direction_rotation:direction_rotation];
+		}];
 	});
 
 	/* SMBDeathBlockTileEntity */
-	[gameBoardTileEntitySpawners addObject:
-	 [[SMBGameBoardTileEntitySpawner alloc] init_with_spawnedGameBoardTileEntities_tracked_maximum:0
-																				  spawnEntityBlock:
-	  ^SMBGameBoardTileEntity * _Nullable{
-		  return [SMBDeathBlockTileEntity new];
-	  }]
-	 ];
+	[gameBoardTileEntitySpawner_spawnEntityBlocks_singleUse addObject:^SMBGameBoardTileEntity * _Nullable{
+		return [SMBDeathBlockTileEntity new];
+	}];
 
+	[gameBoardTileEntitySpawners addObjectsFromArray:
+	 [SMBGameBoardTileEntitySpawner smb_gameBoardTileEntitySpawners_with_spawnedGameBoardTileEntities_tracked_maximum:1
+																									spawnEntityBlocks:gameBoardTileEntitySpawner_spawnEntityBlocks_singleUse]];
+
+	/* Game level. */
 	return
 	[[self alloc] init_with_gameBoard:gameBoard
 	gameBoardTileEntitySpawnerManager:
