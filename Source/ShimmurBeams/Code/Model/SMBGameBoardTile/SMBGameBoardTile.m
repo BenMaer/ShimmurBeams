@@ -695,7 +695,6 @@ static void* kSMBGameBoardTile__KVOContext_generalBeamEnterToExitDirectionRedire
 -(void)gameBoardTileEntities_beamBlockers_mappedDataCollection_remove:(nonnull SMBGameBoardTileEntity<SMBBeamBlockerTileEntity>*)gameBoardTileEntity
 {
 	kRUConditionalReturn(gameBoardTileEntity == nil, YES);
-//	kRUConditionalReturn(self.gameBoardTileEntity_for_beamInteractions == gameBoardTileEntity, YES);
 	kRUConditionalReturn([self.gameBoardTileEntities_beamBlockers_mappedDataCollection mappableObject_exists:gameBoardTileEntity] == false, YES);
 
 	[self gameBoardTileEntity_beamBlockers:gameBoardTileEntity
