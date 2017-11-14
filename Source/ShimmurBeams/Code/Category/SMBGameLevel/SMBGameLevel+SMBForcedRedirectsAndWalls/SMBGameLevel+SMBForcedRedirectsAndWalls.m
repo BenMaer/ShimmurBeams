@@ -65,7 +65,9 @@
 +(nonnull instancetype)smb_forcedRedirects_twoForces_leftThenDown
 {
 	/* Game board. */
-	SMBGameBoard* const gameBoard = [[SMBGameBoard alloc] init_with_numberOfColumns:5
+		/* Game board. */
+SMBGameBoard* const gameBoard =
+[[SMBGameBoard alloc] init_with_numberOfColumns:5
 																	   numberOfRows:5];
 
 	/* Initial beam creator. */
@@ -83,7 +85,7 @@
 
 	/* Entity spawners. */
 	NSMutableArray<SMBGameBoardTileEntitySpawner*>* const gameBoardTileEntitySpawners = [NSMutableArray<SMBGameBoardTileEntitySpawner*> array];
-	
+
 	[gameBoardTileEntitySpawners addObject:
 	 [[SMBGameBoardTileEntitySpawner alloc] init_with_spawnedGameBoardTileEntities_tracked_maximum:1
 																				  spawnEntityBlock:
@@ -111,7 +113,9 @@
 +(nonnull instancetype)smb_forcedRedirectsAndWalls_oneWall_threeForces
 {
 	/* Game board. */
-	SMBGameBoard* const gameBoard = [[SMBGameBoard alloc] init_with_numberOfColumns:5
+		/* Game board. */
+SMBGameBoard* const gameBoard =
+[[SMBGameBoard alloc] init_with_numberOfColumns:5
 																	   numberOfRows:5];
 
 	/* Initial beam creator. */
@@ -317,6 +321,7 @@
 		return [[SMBForcedBeamRedirectTileEntity alloc] init_with_forcedBeamExitDirection:SMBGameBoardTile__direction_up];
 	}];
 
+#warning !!Duplicate entity! Can condense to a single spawner later.
 	[gameBoardTileEntitySpawner_spawnEntityBlocks_singleUse addObject:^SMBGameBoardTileEntity * _Nullable{
 		return [[SMBForcedBeamRedirectTileEntity alloc] init_with_forcedBeamExitDirection:SMBGameBoardTile__direction_right];
 	}];
@@ -411,7 +416,7 @@
 								   to_gameBoardTilePosition:
 	 [[SMBGameBoardTilePosition alloc] init_with_column:beamCreatorEntity.gameBoardTile.gameBoardTilePosition.column - 2
 													row:beamCreatorEntity.gameBoardTile.gameBoardTilePosition.row - 5]];
-	
+
 	[gameBoard gameBoardTileEntity_for_beamInteractions_set:[[SMBForcedBeamRedirectTileEntity alloc] init_with_forcedBeamExitDirection:SMBGameBoardTile__direction_left]
 								   to_gameBoardTilePosition:
 	 [[SMBGameBoardTilePosition alloc] init_with_column:beamCreatorEntity.gameBoardTile.gameBoardTilePosition.column + 3

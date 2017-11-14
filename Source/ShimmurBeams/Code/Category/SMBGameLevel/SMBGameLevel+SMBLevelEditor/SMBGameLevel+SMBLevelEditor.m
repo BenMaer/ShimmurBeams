@@ -13,6 +13,8 @@
 #import "SMBBeamCreatorTileEntity.h"
 #import "SMBForcedBeamRedirectTileEntity.h"
 #import "SMBWallTileEntity.h"
+#import "SMBBeamRotateTileEntity.h"
+#import "SMBDeathBlockTileEntity.h"
 
 
 
@@ -37,7 +39,7 @@
 		 [[SMBGameBoardTileEntitySpawner alloc] init_with_spawnedGameBoardTileEntities_tracked_maximum:0
 																					  spawnEntityBlock:
 		  ^SMBGameBoardTileEntity * _Nullable{
-			  SMBBeamCreatorTileEntity* const beamCreatorTileEntity = [SMBBeamCreatorTileEntity new];
+			  SMBBeamCreatorTileEntity* const beamCreatorTileEntity = [SMBBeamCreatorTileEntity alloc];
 			  [beamCreatorTileEntity setBeamDirection:direction];
 			  
 			  return beamCreatorTileEntity;
@@ -62,6 +64,26 @@
 																				  spawnEntityBlock:
 	  ^SMBGameBoardTileEntity * _Nullable{
 		  return [SMBWallTileEntity new];
+	  }]
+	 ];
+
+	/* SMBBeamRotateTileEntity */
+	SMBGameBoardTile__direction_rotations_enumerate(^(SMBGameBoardTile__direction_rotation direction_rotation) {
+		[gameBoardTileEntitySpawners addObject:
+		 [[SMBGameBoardTileEntitySpawner alloc] init_with_spawnedGameBoardTileEntities_tracked_maximum:0
+																					  spawnEntityBlock:
+		  ^SMBGameBoardTileEntity * _Nullable{
+			  return [[SMBBeamRotateTileEntity alloc] init_with_direction_rotation:direction_rotation];
+		  }]
+		 ];
+	});
+
+	/* SMBDeathBlockTileEntity */
+	[gameBoardTileEntitySpawners addObject:
+	 [[SMBGameBoardTileEntitySpawner alloc] init_with_spawnedGameBoardTileEntities_tracked_maximum:0
+																				  spawnEntityBlock:
+	  ^SMBGameBoardTileEntity * _Nullable{
+		  return [SMBDeathBlockTileEntity new];
 	  }]
 	 ];
 

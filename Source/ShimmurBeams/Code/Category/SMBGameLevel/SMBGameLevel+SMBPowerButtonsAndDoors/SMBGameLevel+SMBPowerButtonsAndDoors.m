@@ -78,7 +78,9 @@
 //
 //	/* Game board. */
 //
-//	SMBGameBoard* const gameBoard = [[SMBGameBoard alloc] init_with_numberOfColumns:7
+//        /* Game board. */
+//SMBGameBoard* const gameBoard =
+//[[SMBGameBoard alloc] init_with_numberOfColumns:7
 //																	   numberOfRows:(section_1_height + wall_between_sections_1_and_2_height + section_2_height)];
 //
 //	/*
@@ -171,7 +173,9 @@
 //{
 //	NSUInteger const numberOfChoices = 3;
 //	NSUInteger const wall_width = 1;
-//	SMBGameBoard* const gameBoard = [[SMBGameBoard alloc] init_with_numberOfColumns:(numberOfChoices * 2) + 1 + wall_width
+//        /* Game board. */
+//SMBGameBoard* const gameBoard =
+//[[SMBGameBoard alloc] init_with_numberOfColumns:(numberOfChoices * 2) + 1 + wall_width
 //																	   numberOfRows:(numberOfChoices * 2) - 1 + wall_width];
 //
 //	SMBBeamCreatorTileEntity* const beamCreatorEntity = [SMBBeamCreatorTileEntity new];
@@ -254,7 +258,9 @@
 //{
 //	NSUInteger const numberOfChoices = 3;
 //	NSUInteger const wall_width = 1;
-//	SMBGameBoard* const gameBoard = [[SMBGameBoard alloc] init_with_numberOfColumns:(numberOfChoices * 2) + 1 + wall_width
+//        /* Game board. */
+//SMBGameBoard* const gameBoard =
+//[[SMBGameBoard alloc] init_with_numberOfColumns:(numberOfChoices * 2) + 1 + wall_width
 //																	   numberOfRows:(numberOfChoices * 2) - 1 + wall_width];
 //
 //	SMBBeamCreatorTileEntity* const beamCreatorEntity = [SMBBeamCreatorTileEntity new];
@@ -346,7 +352,9 @@
 //	NSUInteger const cells_height = 3;
 //	NSUInteger const wall_width = 1;
 //
-//	SMBGameBoard* const gameBoard = [[SMBGameBoard alloc] init_with_numberOfColumns:(cells_width * cell_width) + ((cells_width * wall_width) - 1)
+//        /* Game board. */
+//SMBGameBoard* const gameBoard =
+//[[SMBGameBoard alloc] init_with_numberOfColumns:(cells_width * cell_width) + ((cells_width * wall_width) - 1)
 //																	   numberOfRows:(cells_height * cell_height) + ((cells_height * wall_width) - 1)];
 //
 //	SMBBeamCreatorTileEntity* const beamCreatorEntity = [SMBBeamCreatorTileEntity new];

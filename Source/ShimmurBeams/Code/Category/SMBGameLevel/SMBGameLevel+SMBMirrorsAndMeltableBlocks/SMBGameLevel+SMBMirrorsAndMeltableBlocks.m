@@ -27,7 +27,9 @@
 
 //+(nonnull instancetype)smb_mirrors_introduction
 //{
-//	SMBGameBoard* const gameBoard = [[SMBGameBoard alloc] init_with_numberOfColumns:5
+//		/* Game board. */
+//SMBGameBoard* const gameBoard =
+//[[SMBGameBoard alloc] init_with_numberOfColumns:5
 //																	   numberOfRows:5];
 //
 //	SMBBeamCreatorTileEntity* const beamCreatorEntity = [SMBBeamCreatorTileEntity new];
@@ -56,7 +58,9 @@
 //
 //+(nonnull instancetype)smb_mirror_man_in_the_mirror
 //{
-//	SMBGameBoard* const gameBoard = [[SMBGameBoard alloc] init_with_numberOfColumns:4
+//		/* Game board. */
+//SMBGameBoard* const gameBoard =
+//[[SMBGameBoard alloc] init_with_numberOfColumns:4
 //																	   numberOfRows:4];
 //
 //	SMBBeamCreatorTileEntity* const beamCreatorEntity = [SMBBeamCreatorTileEntity new];
@@ -127,7 +131,9 @@
 //
 //	/* Game board. */
 //
-//	SMBGameBoard* const gameBoard = [[SMBGameBoard alloc] init_with_numberOfColumns:5
+//		/* Game board. */
+//SMBGameBoard* const gameBoard =
+//[[SMBGameBoard alloc] init_with_numberOfColumns:5
 //																	   numberOfRows:5];
 //
 //	/* Initial beam creator. */
@@ -198,7 +204,9 @@
 //
 //	/* Game board. */
 //
-//	SMBGameBoard* const gameBoard = [[SMBGameBoard alloc] init_with_numberOfColumns:5
+//		/* Game board. */
+//SMBGameBoard* const gameBoard =
+//[[SMBGameBoard alloc] init_with_numberOfColumns:5
 //																	   numberOfRows:5];
 //
 //	/* Initial beam creator. */
@@ -331,7 +339,9 @@
 //	
 //	/* Game board. */
 //	
-//	SMBGameBoard* const gameBoard = [[SMBGameBoard alloc] init_with_numberOfColumns:7
+//		/* Game board. */
+//SMBGameBoard* const gameBoard =
+//[[SMBGameBoard alloc] init_with_numberOfColumns:7
 //																	   numberOfRows:7];
 //
 //	/* Initial beam creator. */

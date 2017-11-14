@@ -33,6 +33,17 @@ typedef NS_ENUM(NSInteger, SMBGameBoardTile__direction_rotation) {
 
 static inline RUEnumIsInRangeSynthesization_autoFirstLast(SMBGameBoardTile__direction_rotation);
 
+static inline void SMBGameBoardTile__direction_rotations_enumerate(void (^ _Nonnull enumerationBlock)(SMBGameBoardTile__direction_rotation direction_rotation)){
+	kRUConditionalReturn(enumerationBlock == nil, YES);
+	
+	for (SMBGameBoardTile__direction_rotation direction_rotation = SMBGameBoardTile__direction_rotation__first;
+		 direction_rotation <= SMBGameBoardTile__direction_rotation__last;
+		 direction_rotation = direction_rotation << 1)
+	{
+		enumerationBlock(direction_rotation);
+	}
+}
+
 static inline SMBGameBoardTile__direction SMBGameBoardTile__direction_rotation_direction_rotated_right(SMBGameBoardTile__direction direction){
 	switch (direction)
 	{

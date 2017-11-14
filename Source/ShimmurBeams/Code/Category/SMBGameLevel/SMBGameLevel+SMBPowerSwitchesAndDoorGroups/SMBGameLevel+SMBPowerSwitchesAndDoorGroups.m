@@ -76,7 +76,9 @@
 //
 //	/* Game board. */
 //
-//	SMBGameBoard* const gameBoard = [[SMBGameBoard alloc] init_with_numberOfColumns:7
+//	    /* Game board. */
+//SMBGameBoard* const gameBoard =
+//[[SMBGameBoard alloc] init_with_numberOfColumns:7
 //																	   numberOfRows:(section_1_height + wall_between_sections_1_and_2_height + section_2_height)];
 //
 //	/*
@@ -217,7 +219,9 @@
 //
 //	/* Game board. */
 //
-//	SMBGameBoard* const gameBoard = [[SMBGameBoard alloc] init_with_numberOfColumns:7
+//	    /* Game board. */
+//SMBGameBoard* const gameBoard =
+//[[SMBGameBoard alloc] init_with_numberOfColumns:7
 //																	   numberOfRows:(section_1_height + wall_between_sections_1_and_2_height + section_2_height)];
 //
 //	/* @Matt @Alex I want you guys to fill this in from the above diagrams */
@@ -365,7 +369,9 @@
 //
 //	/* Game board. */
 //
-//	SMBGameBoard* const gameBoard = [[SMBGameBoard alloc] init_with_numberOfColumns:5
+//	    /* Game board. */
+//SMBGameBoard* const gameBoard =
+//[[SMBGameBoard alloc] init_with_numberOfColumns:5
 //																	   numberOfRows:5];
 //
 //	/* Initial beam creator. */
@@ -478,7 +484,9 @@
 //
 //	/* Game board. */
 //
-//	SMBGameBoard* const gameBoard = [[SMBGameBoard alloc] init_with_numberOfColumns:7
+//	    /* Game board. */
+//SMBGameBoard* const gameBoard =
+//[[SMBGameBoard alloc] init_with_numberOfColumns:7
 //																	   numberOfRows:(section_1_height + wall_between_sections_1_and_2_height + section_2_height)];
 //
 //	/*
@@ -665,7 +673,9 @@
 //
 //	/* Game board. */
 //
-//	SMBGameBoard* const gameBoard = [[SMBGameBoard alloc] init_with_numberOfColumns:7
+//	    /* Game board. */
+//SMBGameBoard* const gameBoard =
+//[[SMBGameBoard alloc] init_with_numberOfColumns:7
 //																	   numberOfRows:(section_1_height + wall_between_sections_1_and_2_height + section_2_height)];
 //
 //	/*
@@ -911,7 +921,9 @@
 //
 //	/* Game board. */
 //
-//	SMBGameBoard* const gameBoard = [[SMBGameBoard alloc] init_with_numberOfColumns:7
+//	    /* Game board. */
+//SMBGameBoard* const gameBoard =
+//[[SMBGameBoard alloc] init_with_numberOfColumns:7
 //																	   numberOfRows:(section_1_height + wall_between_sections_1_and_2_height + section_2_height)];
 //
 //	/*
@@ -1176,7 +1188,9 @@
 //
 //	/* Game board. */
 //
-//	SMBGameBoard* const gameBoard = [[SMBGameBoard alloc] init_with_numberOfColumns:7
+//	    /* Game board. */
+//SMBGameBoard* const gameBoard =
+//[[SMBGameBoard alloc] init_with_numberOfColumns:7
 //																	   numberOfRows:(section_1_height + wall_between_sections_1_and_2_height + section_2_height)];
 //
 //	/*

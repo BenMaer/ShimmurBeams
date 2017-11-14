@@ -17,8 +17,8 @@
 #pragma mark - forcedRedirectsAndWalls
 +(nonnull instancetype)smb_forcedRedirectsAndWalls;
 
-//#pragma mark - rotatesAndDeathBlocks
-//+(nonnull instancetype)smb_rotatesAndDeathBlocks;
+#pragma mark - rotatesAndDeathBlocks
++(nonnull instancetype)smb_rotatesAndDeathBlocks;
 //
 //#pragma mark - mirrorsAndMeltableBlocks
 //+(nonnull instancetype)smb_mirrorsAndMeltableBlocks;

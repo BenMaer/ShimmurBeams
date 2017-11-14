@@ -128,7 +128,9 @@
 
 	/* Game board. */
 
-	SMBGameBoard* const gameBoard = [[SMBGameBoard alloc] init_with_numberOfColumns:3
+	    /* Game board. */
+SMBGameBoard* const gameBoard =
+[[SMBGameBoard alloc] init_with_numberOfColumns:3
 																	   numberOfRows:(section_1_height + wall_between_sections_1_and_2_height + section_2_height)];
 
 	/*
@@ -287,7 +289,9 @@
 
 	/* Game board. */
 
-	SMBGameBoard* const gameBoard = [[SMBGameBoard alloc] init_with_numberOfColumns:2
+	    /* Game board. */
+SMBGameBoard* const gameBoard =
+[[SMBGameBoard alloc] init_with_numberOfColumns:2
 																	   numberOfRows:2];
 
 	/* Initial beam creator. */
@@ -367,7 +371,9 @@
 
 	/* Game board. */
 
-	SMBGameBoard* const gameBoard = [[SMBGameBoard alloc] init_with_numberOfColumns:3
+	    /* Game board. */
+SMBGameBoard* const gameBoard =
+[[SMBGameBoard alloc] init_with_numberOfColumns:3
 																	   numberOfRows:3];
 
 	/* Initial beam creator. */
