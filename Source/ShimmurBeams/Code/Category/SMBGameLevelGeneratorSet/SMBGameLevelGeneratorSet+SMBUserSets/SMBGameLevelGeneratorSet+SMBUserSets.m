@@ -34,38 +34,37 @@
 																						  name:@"One force right"
 																						  hint:@"Select an entity from the bottom, and then tap an empty tile on the board to place it.\nGet the beam to the exit."]];
 
-//	[gameLevelGenerators addObject:[[SMBGameLevelGenerator alloc] init_with_generateLevelBlock:^SMBGameLevel * _Nonnull{
-//		return [SMBGameLevel smb_forcedRedirects_twoForces_leftThenDown];
-//	}
-//																						  name:@"Two forces"
-//																						  hint:@"Any piece that you placed on the board, can be selected again by tapping it on the board."]];
-//
-//	[gameLevelGenerators addObject:[[SMBGameLevelGenerator alloc] init_with_generateLevelBlock:^SMBGameLevel * _Nonnull{
-//		return [SMBGameLevel smb_forcedRedirectsAndWalls_oneWall_threeForces];
-//	}
-//																						  name:@"Wall in the way"]];
-//
-//	[gameLevelGenerators addObject:[[SMBGameLevelGenerator alloc] init_with_generateLevelBlock:^SMBGameLevel * _Nonnull{
-//		return [SMBGameLevel smb_forcedRedirectsAndWalls_twoWalls_threeForces];
-//	}
-//																						  name:@"Two walls in the way"]];
-//
-//	[gameLevelGenerators addObject:[[SMBGameLevelGenerator alloc] init_with_generateLevelBlock:^SMBGameLevel * _Nonnull{
-//		return [SMBGameLevel smb_forcedRedirects_oneForceNotMovable];
-//	}
-//																						  name:@"Already placed"
-//																						  hint:@"When an entity starts on the board, you cannot move it."]];
-//
-//	[gameLevelGenerators addObject:[[SMBGameLevelGenerator alloc] init_with_generateLevelBlock:^SMBGameLevel * _Nonnull{
-//		return [SMBGameLevel smb_forcedRedirects_wallsAndForces_threeForcesNotMovable];
-//	}
-//																						  name:@"Already placed tricky"]];
-//
-//	[gameLevelGenerators addObject:[[SMBGameLevelGenerator alloc] init_with_generateLevelBlock:^SMBGameLevel * _Nonnull{
-//		return [SMBGameLevel smb_forcedRedirectsAndWalls_wallsAndForces_twoForcesNotMovable_tricky];
-//	}
-//																						  name:@"Tricky"]];
+	[gameLevelGenerators addObject:[[SMBGameLevelGenerator alloc] init_with_generateLevelBlock:^SMBGameLevel * _Nonnull{
+		return [SMBGameLevel smb_forcedRedirects_twoForces_leftThenDown];
+	}
+																						  name:@"Two forces"
+																						  hint:@"Any piece that you placed on the board, can be selected again by tapping it on the board."]];
 
+	[gameLevelGenerators addObject:[[SMBGameLevelGenerator alloc] init_with_generateLevelBlock:^SMBGameLevel * _Nonnull{
+		return [SMBGameLevel smb_forcedRedirectsAndWalls_oneWall_threeForces];
+	}
+																						  name:@"Wall in the way"]];
+
+	[gameLevelGenerators addObject:[[SMBGameLevelGenerator alloc] init_with_generateLevelBlock:^SMBGameLevel * _Nonnull{
+		return [SMBGameLevel smb_forcedRedirectsAndWalls_twoWalls_threeForces];
+	}
+																						  name:@"Two walls in the way"]];
+
+	[gameLevelGenerators addObject:[[SMBGameLevelGenerator alloc] init_with_generateLevelBlock:^SMBGameLevel * _Nonnull{
+		return [SMBGameLevel smb_forcedRedirects_oneForceNotMovable];
+	}
+																						  name:@"Already placed"
+																						  hint:@"When an entity starts on the board, you cannot move it."]];
+
+	[gameLevelGenerators addObject:[[SMBGameLevelGenerator alloc] init_with_generateLevelBlock:^SMBGameLevel * _Nonnull{
+		return [SMBGameLevel smb_forcedRedirects_wallsAndForces_threeForcesNotMovable];
+	}
+																						  name:@"Already placed tricky"]];
+
+	[gameLevelGenerators addObject:[[SMBGameLevelGenerator alloc] init_with_generateLevelBlock:^SMBGameLevel * _Nonnull{
+		return [SMBGameLevel smb_forcedRedirectsAndWalls_wallsAndForces_twoForcesNotMovable_tricky];
+	}
+																						  name:@"Tricky"]];
 
 	return
 	[[self alloc] init_with_gameLevelGenerators:[NSArray<SMBGameLevelGenerator*> arrayWithArray:gameLevelGenerators]

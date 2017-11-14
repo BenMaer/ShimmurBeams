@@ -23,10 +23,12 @@
 #pragma mark - forcedRedirectsAndWalls
 +(nonnull instancetype)smb_levelEditor
 {
-	/* Game Board. */
-	SMBGameBoard* const gameBoard = [[SMBGameBoard alloc] init_with_numberOfColumns:11
-																	   numberOfRows:11];
+	/* Game board. */
+	SMBGameBoard* const gameBoard =
+	[[SMBGameBoard alloc] init_with_numberOfColumns:11
+									   numberOfRows:11];
 
+	/* Entity spawners. */
 	NSMutableArray<SMBGameBoardTileEntitySpawner*>* const gameBoardTileEntitySpawners = [NSMutableArray<SMBGameBoardTileEntitySpawner*> array];
 
 	/* SMBBeamCreatorTileEntity */
