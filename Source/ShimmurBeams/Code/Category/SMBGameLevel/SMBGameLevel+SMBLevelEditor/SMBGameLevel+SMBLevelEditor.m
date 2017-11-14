@@ -39,7 +39,7 @@
 		 [[SMBGameBoardTileEntitySpawner alloc] init_with_spawnedGameBoardTileEntities_tracked_maximum:0
 																					  spawnEntityBlock:
 		  ^SMBGameBoardTileEntity * _Nullable{
-			  SMBBeamCreatorTileEntity* const beamCreatorTileEntity = [SMBBeamCreatorTileEntity alloc];
+			  SMBBeamCreatorTileEntity* const beamCreatorTileEntity = [SMBBeamCreatorTileEntity new];
 			  [beamCreatorTileEntity setBeamDirection:direction];
 			  
 			  return beamCreatorTileEntity;
