@@ -200,7 +200,6 @@ static void* kSMBGameBoardTile__KVOContext_generalBeamEnterToExitDirectionRedire
 	kRUConditionalReturn(self.gameBoardTileEntity_for_beamInteractions == gameBoardTileEntity_for_beamInteractions, NO);
 
 	SMBGameBoardTileEntity* const gameBoardTileEntity_for_beamInteractions_old = self.gameBoardTileEntity_for_beamInteractions;
-	_gameBoardTileEntity_for_beamInteractions = gameBoardTileEntity_for_beamInteractions;
 
 	void(^gameBoardTileEntity_change_action)(SMBGameBoardTileEntity* _Nonnull gameBoardTileEntity, BOOL added) = ^(SMBGameBoardTileEntity* _Nonnull gameBoardTileEntity, BOOL added) {
 		SMBGameBoardTileEntity<SMBBeamBlockerTileEntity>* const gameBoardTileEntity_beamBlocker_orNull = [gameBoardTileEntity smb_beamBlocker_selfOrNull];
@@ -222,14 +221,19 @@ static void* kSMBGameBoardTile__KVOContext_generalBeamEnterToExitDirectionRedire
 		gameBoardTileEntity_change_action(gameBoardTileEntity_for_beamInteractions_old, NO);
 	}
 
+	if (gameBoardTileEntity_for_beamInteractions)
+	{
+		if (gameBoardTileEntity_for_beamInteractions.gameBoardTile)
+		{
+			[gameBoardTileEntity_for_beamInteractions.gameBoardTile gameBoardTileEntities_remove:gameBoardTileEntity_for_beamInteractions
+																					  entityType:SMBGameBoardTile__entityType_beamInteractions];
+		}
+	}
+
+	_gameBoardTileEntity_for_beamInteractions = gameBoardTileEntity_for_beamInteractions;
+
 	if (self.gameBoardTileEntity_for_beamInteractions)
 	{
-		if (self.gameBoardTileEntity_for_beamInteractions.gameBoardTile)
-		{
-			[self.gameBoardTileEntity_for_beamInteractions.gameBoardTile gameBoardTileEntities_remove:self.gameBoardTileEntity_for_beamInteractions
-																						   entityType:SMBGameBoardTile__entityType_beamInteractions];
-		}
-
 		gameBoardTileEntity_change_action(self.gameBoardTileEntity_for_beamInteractions, YES);
 	}
 
@@ -691,7 +695,7 @@ static void* kSMBGameBoardTile__KVOContext_generalBeamEnterToExitDirectionRedire
 -(void)gameBoardTileEntities_beamBlockers_mappedDataCollection_remove:(nonnull SMBGameBoardTileEntity<SMBBeamBlockerTileEntity>*)gameBoardTileEntity
 {
 	kRUConditionalReturn(gameBoardTileEntity == nil, YES);
-	kRUConditionalReturn(self.gameBoardTileEntity_for_beamInteractions == gameBoardTileEntity, YES);
+//	kRUConditionalReturn(self.gameBoardTileEntity_for_beamInteractions == gameBoardTileEntity, YES);
 	kRUConditionalReturn([self.gameBoardTileEntities_beamBlockers_mappedDataCollection mappableObject_exists:gameBoardTileEntity] == false, YES);
 
 	[self gameBoardTileEntity_beamBlockers:gameBoardTileEntity
