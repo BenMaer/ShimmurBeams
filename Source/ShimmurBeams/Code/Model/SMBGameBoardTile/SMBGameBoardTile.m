@@ -45,6 +45,9 @@ static void* kSMBGameBoardTile__KVOContext_generalBeamEnterToExitDirectionRedire
 
 @interface SMBGameBoardTile ()
 
+#pragma mark - gameBoardTileEntity
+-(void)gameBoardTileEntity_updateRelationship:(nonnull SMBGameBoardTileEntity*)gameBoardTileEntity;
+
 #pragma mark - gameBoardTileEntity_for_beamInteractions
 @property (nonatomic, strong, nullable) SMBGameBoardTileEntity* gameBoardTileEntity_for_beamInteractions;
 
@@ -179,10 +182,11 @@ static void* kSMBGameBoardTile__KVOContext_generalBeamEnterToExitDirectionRedire
 }
 
 #pragma mark - gameBoardTileEntity
--(void)gameBoardTileEntity:(nonnull SMBGameBoardTileEntity*)gameBoardTileEntity
-		updateRelationship:(BOOL)hasRelationship
+-(void)gameBoardTileEntity_updateRelationship:(nonnull SMBGameBoardTileEntity*)gameBoardTileEntity
 {
 	kRUConditionalReturn(gameBoardTileEntity == nil, YES);
+
+	BOOL const hasRelationship = [self.gameBoardTileEntities_all mappableObject_exists:gameBoardTileEntity];
 	kRUConditionalReturn((hasRelationship == false)
 						 &&
 						 (gameBoardTileEntity.gameBoardTile != self), NO);
@@ -385,8 +389,7 @@ static void* kSMBGameBoardTile__KVOContext_generalBeamEnterToExitDirectionRedire
 			}
 		}
 
-		[self gameBoardTileEntity:gameBoardTileEntity
-			   updateRelationship:added];
+		[self gameBoardTileEntity_updateRelationship:gameBoardTileEntity];
 	};
 
 	[gameBoardTileEntities_removed enumerateObjectsUsingBlock:^(SMBGameBoardTileEntity * _Nonnull gameBoardTileEntity_removed, NSUInteger idx, BOOL * _Nonnull stop) {
@@ -591,7 +594,8 @@ static void* kSMBGameBoardTile__KVOContext_generalBeamEnterToExitDirectionRedire
 
 		CGContextSaveGState(context);
 
-		CGFloat const lineWidth = 1.0f;
+		CGFloat const lineWidth = MIN(CGRectGetWidth(rect) / 20.0f,
+									  1.0f);
 
 		CGContextSetStrokeColorWithColor(context, highlightColor.CGColor);
 

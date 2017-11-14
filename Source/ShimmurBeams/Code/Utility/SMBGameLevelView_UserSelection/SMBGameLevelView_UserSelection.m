@@ -20,6 +20,7 @@
 
 
 static void* kSMBGameLevelView_UserSelection__KVOContext_selectedGameBoardTileEntitySpawner = &kSMBGameLevelView_UserSelection__KVOContext_selectedGameBoardTileEntitySpawner;
+static void* kSMBGameLevelView_UserSelection__KVOContext_selectedGameBoardTileEntities = &kSMBGameLevelView_UserSelection__KVOContext_selectedGameBoardTileEntities;
 
 
 
@@ -46,6 +47,9 @@ static void* kSMBGameLevelView_UserSelection__KVOContext_selectedGameBoardTileEn
 
 #pragma mark - selectedGameBoardTileEntities
 @property (nonatomic, copy, nullable) NSSet<SMBGameBoardTileEntity*>* selectedGameBoardTileEntities;
+-(void)SMBGameLevelView_UserSelection_selectedGameBoardTileEntities_setKVORegistered:(BOOL)registered;
+-(void)SMBGameLevelView_UserSelection_selectedGameBoardTileEntity:(nonnull SMBGameBoardTileEntity*)gameBoardTileEntity
+												 setKVORegistered:(BOOL)registered;
 -(void)selectedGameBoardTileEntities_update;
 -(nullable NSSet<SMBGameBoardTileEntity*>*)selectedGameBoardTileEntities_generate;
 
@@ -65,6 +69,7 @@ static void* kSMBGameLevelView_UserSelection__KVOContext_selectedGameBoardTileEn
 #pragma mark - NSObject
 -(void)dealloc
 {
+	[self SMBGameLevelView_UserSelection_selectedGameBoardTileEntities_setKVORegistered:NO];
 	[self SMBGameLevelView_UserSelection_selectedGameBoardTileEntitySpawner_setKVORegistered:NO];
 }
 
@@ -186,16 +191,6 @@ static void* kSMBGameLevelView_UserSelection__KVOContext_selectedGameBoardTileEn
 	return gameBoardTileEntitySpawner;
 }
 
-//-(void)selectedGameBoardTileEntitySpawner_update
-//{
-//	[self setSelectedGameBoardTileEntitySpawner:[self selectedGameBoardTileEntitySpawner_appropriate]];
-//}
-//
-//-(nullable SMBGameBoardTileEntitySpawner*)selectedGameBoardTileEntitySpawner_appropriate
-//{
-//	return self.gameBoardTileEntityPickerView.selectedGameBoardTileEntitySpawner;
-//}
-
 -(void)SMBGameLevelView_UserSelection_selectedGameBoardTileEntitySpawner_setKVORegistered:(BOOL)registered
 {
 	typeof(self.selectedGameBoardTileEntitySpawner) const selectedGameBoardTileEntitySpawner = self.selectedGameBoardTileEntitySpawner;
@@ -228,15 +223,58 @@ static void* kSMBGameLevelView_UserSelection__KVOContext_selectedGameBoardTileEn
 }
 
 #pragma mark - selectedGameBoardTileEntities
--(void)setSelectedGameBoardTileEntities:(nullable NSSet<SMBGameBoardTileEntity*>*)selectedGameBoardTileEntities
+-(void)setSelectedGameBoardTileEntities:(nullable NSSet<SMBGameBoardTileEntity*>* const)selectedGameBoardTileEntities
 {
 	kRUConditionalReturn((self.selectedGameBoardTileEntities == selectedGameBoardTileEntities)
 						 ||
 						 [self.selectedGameBoardTileEntities isEqual:selectedGameBoardTileEntities], NO);
 
+	[self SMBGameLevelView_UserSelection_selectedGameBoardTileEntities_setKVORegistered:NO];
+
 	_selectedGameBoardTileEntities = (selectedGameBoardTileEntities ? [NSSet<SMBGameBoardTileEntity*> setWithSet:selectedGameBoardTileEntities] : nil);
 
+	[self SMBGameLevelView_UserSelection_selectedGameBoardTileEntities_setKVORegistered:YES];
+
 	[self selectedGameBoardTiles_update];
+}
+
+-(void)SMBGameLevelView_UserSelection_selectedGameBoardTileEntities_setKVORegistered:(BOOL)registered
+{
+	[self.selectedGameBoardTileEntities enumerateObjectsUsingBlock:^(SMBGameBoardTileEntity * _Nonnull gameBoardTileEntity, BOOL * _Nonnull stop) {
+		[self SMBGameLevelView_UserSelection_selectedGameBoardTileEntity:gameBoardTileEntity
+														setKVORegistered:registered];
+	}];
+}
+
+-(void)SMBGameLevelView_UserSelection_selectedGameBoardTileEntity:(nonnull SMBGameBoardTileEntity* const)gameBoardTileEntity
+												 setKVORegistered:(BOOL)registered
+{
+	kRUConditionalReturn(gameBoardTileEntity == nil, YES);
+	
+	NSMutableDictionary<NSNumber*,NSMutableArray<NSString*>*>* const KVOOptions_to_propertiesToObserve_mapping = [NSMutableDictionary<NSNumber*,NSMutableArray<NSString*>*> dictionary];
+	
+	NSMutableArray<NSString*>* const propertiesToObserve = [NSMutableArray<NSString*> array];
+	/* Not doing initial for this property, because although we want it initially, we also want it when `selectedGameBoardTileEntitySpawner` is set to nil, and it's cleaner IMO to put the actions in the setter method without an if condition.*/
+	[propertiesToObserve addObject:[SMBGameBoardTileEntity_PropertiesForKVO gameBoardTile]];
+	[KVOOptions_to_propertiesToObserve_mapping setObject:propertiesToObserve forKey:@(0)];
+	
+	[KVOOptions_to_propertiesToObserve_mapping enumerateKeysAndObjectsUsingBlock:^(NSNumber * _Nonnull KVOOptions_number, NSMutableArray<NSString *> * _Nonnull propertiesToObserve, BOOL * _Nonnull stop) {
+		[propertiesToObserve enumerateObjectsUsingBlock:^(NSString * _Nonnull propertyToObserve, NSUInteger idx, BOOL * _Nonnull stop) {
+			if (registered)
+			{
+				[gameBoardTileEntity addObserver:self
+									  forKeyPath:propertyToObserve
+										 options:(KVOOptions_number.unsignedIntegerValue)
+										 context:&kSMBGameLevelView_UserSelection__KVOContext_selectedGameBoardTileEntities];
+			}
+			else
+			{
+				[gameBoardTileEntity removeObserver:self
+										 forKeyPath:propertyToObserve
+											context:&kSMBGameLevelView_UserSelection__KVOContext_selectedGameBoardTileEntities];
+			}
+		}];
+	}];
 }
 
 -(void)selectedGameBoardTileEntities_update
@@ -269,7 +307,7 @@ static void* kSMBGameLevelView_UserSelection__KVOContext_selectedGameBoardTileEn
 	NSMutableSet<SMBGameLevelView_UserSelection_GameBoardTile_HighlightData*>* const selectedGameBoardTiles = [NSMutableSet<SMBGameLevelView_UserSelection_GameBoardTile_HighlightData*> set];
 	[selectedGameBoardTileEntities enumerateObjectsUsingBlock:^(SMBGameBoardTileEntity * _Nonnull gameBoardTileEntity, BOOL * _Nonnull stop) {
 		SMBGameBoardTile* const gameBoardTile = gameBoardTileEntity.gameBoardTile;
-		kRUConditionalReturn(gameBoardTile == nil, YES);
+		kRUConditionalReturn(gameBoardTile == nil, NO);
 
 		SMBGameBoardTileEntity* const selectedGameBoardTileEntity = self.selectedGameBoardTileEntity;
 		SMBGameLevelView_UserSelection_GameBoardTile_HighlightData* const gameLevelView_UserSelection_GameBoardTile_HighlightData =
@@ -300,6 +338,24 @@ static void* kSMBGameLevelView_UserSelection__KVOContext_selectedGameBoardTileEn
 			if ([keyPath isEqualToString:[SMBGameBoardTileEntitySpawner_PropertiesForKVO spawnedGameBoardTileEntities_tracked]])
 			{
 				[self selectedGameBoardTileEntities_update];
+			}
+			else
+			{
+				NSAssert(false, @"unhandled keyPath %@",keyPath);
+			}
+		}
+		else
+		{
+			NSAssert(false, @"unhandled object %@",object);
+		}
+	}
+	else if (context == kSMBGameLevelView_UserSelection__KVOContext_selectedGameBoardTileEntities)
+	{
+		if ([self.selectedGameBoardTileEntities containsObject:object])
+		{
+			if ([keyPath isEqualToString:[SMBGameBoardTileEntity_PropertiesForKVO gameBoardTile]])
+			{
+				[self selectedGameBoardTiles_update];
 			}
 			else
 			{

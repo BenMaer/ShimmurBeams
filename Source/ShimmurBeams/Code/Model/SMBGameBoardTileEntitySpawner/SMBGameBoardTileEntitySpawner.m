@@ -557,7 +557,10 @@ typedef NS_ENUM(NSInteger, SMBGameBoardTileEntitySpawner__spawnNewEntityState) {
 		{
 			if ([keyPath isEqualToString:[SMBGameBoardTileEntity_PropertiesForKVO gameBoardTile]])
 			{
-				[self spawnedGameBoardTileEntities_tracked_mappedDataCollection_remove:kRUClassOrNil(object, SMBGameBoardTileEntity)];
+				SMBGameBoardTileEntity* const gameBoardTileEntity = kRUClassOrNil(object, SMBGameBoardTileEntity);
+				kRUConditionalReturn(gameBoardTileEntity.gameBoardTile != nil, NO);
+
+				[self spawnedGameBoardTileEntities_tracked_mappedDataCollection_remove:gameBoardTileEntity];
 			}
 			else
 			{
