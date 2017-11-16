@@ -17,6 +17,7 @@
 #import "SMBDeathBlockTileEntity.h"
 #import "SMBGameBoardTileEntitySpawner+SMBInitMethods.h"
 #import "SMBDiagonalMirrorTileEntity.h"
+#import "SMBMeltableWallTileEntity.h"
 
 
 
@@ -75,6 +76,17 @@
 	SMBDiagonalMirrorTileEntity__mirrorTypes_enumerate(^(SMBDiagonalMirrorTileEntity__mirrorType mirrorType) {
 		[gameBoardTileEntitySpawner_spawnEntityBlocks_singleUse addObject:^SMBGameBoardTileEntity * _Nullable{
 			return [[SMBDiagonalMirrorTileEntity alloc] init_with_mirrorType:mirrorType];
+		}];
+	});
+
+	/* SMBMeltableWallTileEntity */
+	[gameBoardTileEntitySpawner_spawnEntityBlocks_singleUse addObject:^SMBGameBoardTileEntity * _Nullable{
+		return [[SMBMeltableWallTileEntity alloc] init_with_meltableBeamEnterDirections:SMBGameBoardTile__directions_all()];
+	}];
+
+	SMBGameBoardTile__directions_enumerate(^(SMBGameBoardTile__direction direction) {
+		[gameBoardTileEntitySpawner_spawnEntityBlocks_singleUse addObject:^SMBGameBoardTileEntity * _Nullable{
+			return [[SMBMeltableWallTileEntity alloc] init_with_meltableBeamEnterDirections:direction];
 		}];
 	});
 
