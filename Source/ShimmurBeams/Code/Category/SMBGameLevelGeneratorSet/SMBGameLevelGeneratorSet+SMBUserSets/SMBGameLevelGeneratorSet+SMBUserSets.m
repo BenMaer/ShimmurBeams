@@ -121,43 +121,43 @@
 	[[self alloc] init_with_gameLevelGenerators:[NSArray<SMBGameLevelGenerator*> arrayWithArray:gameLevelGenerators]
 										   name:@"Rotates and Death Blocks"];
 }
-//
-//#pragma mark - mirrorsIntroduction
-//+(nonnull instancetype)smb_mirrorsAndMeltableBlocks
-//{
-//	NSMutableArray<SMBGameLevelGenerator*>* const gameLevelGenerators = [NSMutableArray<SMBGameLevelGenerator*> array];
-//
-//	[gameLevelGenerators addObject:[[SMBGameLevelGenerator alloc] init_with_generateLevelBlock:^SMBGameLevel * _Nonnull{
-//		return [SMBGameLevel smb_mirrors_introduction];
-//	}
-//																						  name:@"Mirror Introduction"]];
-//
-//	[gameLevelGenerators addObject:[[SMBGameLevelGenerator alloc] init_with_generateLevelBlock:^SMBGameLevel * _Nonnull{
-//		return [SMBGameLevel smb_mirror_man_in_the_mirror];
-//	}
-//																						  name:@"That Man In The Mirror"]];
-//
-//	[gameLevelGenerators addObject:[[SMBGameLevelGenerator alloc] init_with_generateLevelBlock:^SMBGameLevel * _Nonnull{
-//		return [SMBGameLevel smb_meltableWall_introduction];
-//	}
-//																						  name:@"Meltable Wall Introduction"
-//																						  hint:@"Focus your beam on the meltable wall for a couple seconds to destroy it."]];
-//
-//	[gameLevelGenerators addObject:[[SMBGameLevelGenerator alloc] init_with_generateLevelBlock:^SMBGameLevel * _Nonnull{
-//		return [SMBGameLevel smb_meltableWall_oneDirection];
-//	}
-//																						  name:@"One Direction"
-//																						  hint:@"Meltable walls can block some beam directions from entering."]];
-//
-//	[gameLevelGenerators addObject:[[SMBGameLevelGenerator alloc] init_with_generateLevelBlock:^SMBGameLevel * _Nonnull{
-//		return [SMBGameLevel smb_meltableWall_inTheWay];
-//	}
-//																						  name:@"In The Way"]];
-//
-//	return
-//	[[self alloc] init_with_gameLevelGenerators:[NSArray<SMBGameLevelGenerator*> arrayWithArray:gameLevelGenerators]
-//										   name:@"Mirrors and Meltable Walls"];
-//}
+
+#pragma mark - mirrorsIntroduction
++(nonnull instancetype)smb_mirrorsAndMeltableBlocks
+{
+	NSMutableArray<SMBGameLevelGenerator*>* const gameLevelGenerators = [NSMutableArray<SMBGameLevelGenerator*> array];
+
+	[gameLevelGenerators addObject:[[SMBGameLevelGenerator alloc] init_with_generateLevelBlock:^SMBGameLevel * _Nonnull{
+		return [SMBGameLevel smb_mirrors_introduction];
+	}
+																						  name:@"Mirror Introduction"]];
+
+	[gameLevelGenerators addObject:[[SMBGameLevelGenerator alloc] init_with_generateLevelBlock:^SMBGameLevel * _Nonnull{
+		return [SMBGameLevel smb_mirror_man_in_the_mirror];
+	}
+																						  name:@"That Man In The Mirror"]];
+
+	[gameLevelGenerators addObject:[[SMBGameLevelGenerator alloc] init_with_generateLevelBlock:^SMBGameLevel * _Nonnull{
+		return [SMBGameLevel smb_meltableWall_introduction];
+	}
+																						  name:@"Meltable Wall Introduction"
+																						  hint:@"Focus your beam on the meltable wall for a couple seconds to destroy it."]];
+
+	[gameLevelGenerators addObject:[[SMBGameLevelGenerator alloc] init_with_generateLevelBlock:^SMBGameLevel * _Nonnull{
+		return [SMBGameLevel smb_meltableWall_oneDirection];
+	}
+																						  name:@"One Direction"
+																						  hint:@"Meltable walls can block some beam directions from entering."]];
+
+	[gameLevelGenerators addObject:[[SMBGameLevelGenerator alloc] init_with_generateLevelBlock:^SMBGameLevel * _Nonnull{
+		return [SMBGameLevel smb_meltableWall_inTheWay];
+	}
+																						  name:@"In The Way"]];
+
+	return
+	[[self alloc] init_with_gameLevelGenerators:[NSArray<SMBGameLevelGenerator*> arrayWithArray:gameLevelGenerators]
+										   name:@"Mirrors and Meltable Walls"];
+}
 //
 //#pragma mark - powerButtonsAndDoors
 //+(nonnull instancetype)smb_powerButtonsAndDoors

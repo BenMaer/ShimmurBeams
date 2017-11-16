@@ -62,7 +62,7 @@
 	 [[SMBGameBoardTilePosition alloc] init_with_column:0
 													row:0]];
 
-	/* Usable game board tile entities. */
+	/* Entity spawners. */
 
 	return
 	[[self alloc] init_with_gameBoard:gameBoard
@@ -236,7 +236,7 @@ SMBGameBoard* const gameBoard =
 	 [[SMBGameBoardTilePosition alloc] init_with_column:NSMaxRange(gameBoardTilePosition_section_2_columns_range) - 1
 													row:NSMaxRange(gameBoardTilePosition_section_2_rows_range) - 1]];
 
-	/* Usable game board tile entities. */
+	/* Entity spawners. */
 
 	NSMutableArray<SMBGameBoardTileEntitySpawner*>* const gameBoardTileEntitySpawners = [NSMutableArray<SMBGameBoardTileEntitySpawner*> array];
 
@@ -403,7 +403,7 @@ SMBGameBoard* const gameBoard =
 	 [[SMBGameBoardTilePosition alloc] init_with_column:[gameBoard gameBoardTiles_numberOfColumns] - 1
 													row:[gameBoard gameBoardTiles_numberOfRows] - 1]];
 
-	/* Usable game board tile entities. */
+	/* Entity spawners. */
 
 	NSMutableArray<SMBGameBoardTileEntitySpawner*>* const gameBoardTileEntitySpawners = [NSMutableArray<SMBGameBoardTileEntitySpawner*> array];
 
@@ -501,7 +501,7 @@ SMBGameBoard* const gameBoard =
 	 [[SMBGameBoardTilePosition alloc] init_with_column:[gameBoard gameBoardTiles_numberOfColumns] - 1
 													row:[gameBoard gameBoardTiles_numberOfRows] - 1]];
 
-	/* Usable game board tile entities. */
+	/* Entity spawners. */
 
 	NSMutableArray<SMBGameBoardTileEntitySpawner*>* const gameBoardTileEntitySpawners = [NSMutableArray<SMBGameBoardTileEntitySpawner*> array];
 
@@ -709,7 +709,7 @@ SMBGameBoard* const gameBoard =
 	 [[SMBGameBoardTilePosition alloc] init_with_column:NSMaxRange(gameBoardTilePosition_section_1_columns_range) - 1
 													row:gameBoardTilePosition_section_1_rows_range.location]];
 
-	/* Usable game board tile entities. */
+	/* Entity spawners. */
 
 	NSMutableArray<SMBGameBoardTileEntitySpawner*>* const gameBoardTileEntitySpawners = [NSMutableArray<SMBGameBoardTileEntitySpawner*> array];
 

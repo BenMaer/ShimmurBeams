@@ -156,7 +156,7 @@
 //	 [[SMBGameBoardTilePosition alloc] init_with_column:NSMaxRange(gameBoardTilePosition_section_2_columns_range) - 2
 //													row:gameBoardTilePosition_section_2_rows_range.location]];
 //
-//	/* Usable game board tile entities. */
+//	/* Entity spawners. */
 //
 //	NSMutableArray<SMBGameBoardTileEntity*>* const gameBoardTileEntities = [NSMutableArray<SMBGameBoardTileEntity*> array];
 //	[gameBoardTileEntities addObject:[[SMBForcedBeamRedirectTileEntity alloc] init_with_forcedBeamExitDirection:SMBGameBoardTile__direction_up]];
@@ -318,7 +318,7 @@
 //     [[SMBGameBoardTilePosition alloc] init_with_column:NSMaxRange(gameBoardTilePosition_section_2_columns_range) - 2
 //                                                    row:gameBoardTilePosition_section_2_rows_range.location]];
 //
-//	/* Usable game board tile entities. */
+//	/* Entity spawners. */
 //
 //	NSMutableArray<SMBGameBoardTileEntity*>* const gameBoardTileEntities = [NSMutableArray<SMBGameBoardTileEntity*> array];
 //	[gameBoardTileEntities addObject:[[SMBForcedBeamRedirectTileEntity alloc] init_with_forcedBeamExitDirection:SMBGameBoardTile__direction_up]];
@@ -422,7 +422,7 @@
 //	 [[SMBGameBoardTilePosition alloc] init_with_column:3
 //													row:1]];
 //
-//	/* Usable game board tile entities. */
+//	/* Entity spawners. */
 //
 //	NSMutableArray<SMBGameBoardTileEntity*>* const gameBoardTileEntities = [NSMutableArray<SMBGameBoardTileEntity*> array];
 //	[gameBoardTileEntities addObject:[[SMBForcedBeamRedirectTileEntity alloc] init_with_forcedBeamExitDirection:SMBGameBoardTile__direction_right]];
@@ -603,7 +603,7 @@
 //	 [[SMBGameBoardTilePosition alloc] init_with_column:NSMaxRange(gameBoardTilePosition_section_2_columns_range) - 2
 //													row:gameBoardTilePosition_section_2_rows_range.location]];
 //
-//	/* Usable game board tile entities. */
+//	/* Entity spawners. */
 //
 //	NSMutableArray<SMBGameBoardTileEntity*>* const gameBoardTileEntities = [NSMutableArray<SMBGameBoardTileEntity*> array];
 //	[gameBoardTileEntities addObject:[[SMBForcedBeamRedirectTileEntity alloc] init_with_forcedBeamExitDirection:SMBGameBoardTile__direction_up]];
@@ -821,7 +821,7 @@
 //	 [[SMBGameBoardTilePosition alloc] init_with_column:NSMaxRange(gameBoardTilePosition_section_2_columns_range) - 2
 //													row:gameBoardTilePosition_section_2_rows_range.location]];
 //
-//	/* Usable game board tile entities. */
+//	/* Entity spawners. */
 //
 //	NSMutableArray<SMBGameBoardTileEntity*>* const gameBoardTileEntities = [NSMutableArray<SMBGameBoardTileEntity*> array];
 //	[gameBoardTileEntities addObject:[[SMBForcedBeamRedirectTileEntity alloc] init_with_forcedBeamExitDirection:SMBGameBoardTile__direction_up]];
@@ -1104,7 +1104,7 @@
 //	 [[SMBGameBoardTilePosition alloc] init_with_column:gameBoardTilePosition_section_2_columns_range.location + 3
 //													row:gameBoardTilePosition_section_2_rows_range.location]];
 //
-//	/* Usable game board tile entities. */
+//	/* Entity spawners. */
 //
 //	NSMutableArray<SMBGameBoardTileEntity*>* const gameBoardTileEntities = [NSMutableArray<SMBGameBoardTileEntity*> array];
 //	[gameBoardTileEntities addObject:[[SMBBeamRotateTileEntity alloc] init_with_direction_rotation:SMBGameBoardTile__direction_rotation_left]];
@@ -1349,7 +1349,7 @@
 //	 [[SMBGameBoardTilePosition alloc] init_with_column:gameBoardTilePosition_section_1_columns_range.location
 //													row:gameBoardTilePosition_section_1_rows_range.location]];
 //
-//	/* Usable game board tile entities. */
+//	/* Entity spawners. */
 //
 //	NSMutableArray<SMBGameBoardTileEntity*>* const gameBoardTileEntities = [NSMutableArray<SMBGameBoardTileEntity*> array];
 //	[gameBoardTileEntities addObject:[[SMBDiagonalMirrorTileEntity alloc] init_with_startingPosition:SMBDiagonalMirrorTileEntity_startingPosition_bottomLeft]];
