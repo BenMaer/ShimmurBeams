@@ -144,7 +144,7 @@ static void* kSMBGameBoardView__KVOContext = &kSMBGameBoardView__KVOContext;
 
 		_grid_shapeLayer = [CAShapeLayer layer];
 		[self.grid_shapeLayer setFillColor:nil];
-		[self.grid_shapeLayer setLineWidth:(1.0f / [UIScreen mainScreen].scale)];
+		[self.grid_shapeLayer setLineWidth:1.0f];
 		[self.grid_shapeLayer setStrokeColor:[UIColor colorWithWhite:0.5f alpha:0.5f].CGColor];
 		[self.contentView.layer addSublayer:self.grid_shapeLayer];
 	}
