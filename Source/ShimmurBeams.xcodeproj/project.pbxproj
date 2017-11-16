@@ -190,6 +190,7 @@
 		D770EF001F83036B00117FEE /* SMBGenericPowerOutputTileEntity_OutputPowerReceiver.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = SMBGenericPowerOutputTileEntity_OutputPowerReceiver.m; sourceTree = "<group>"; };
 		D77B86FB1F47A1D700144372 /* SMBPowerOutputTileEntity.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SMBPowerOutputTileEntity.h; sourceTree = "<group>"; };
 		D77B86FC1F47A1D700144372 /* SMBPowerOutputTileEntity.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SMBPowerOutputTileEntity.m; sourceTree = "<group>"; };
+		D77C925B1FBE0D1900E2C081 /* SMBDiagonalMirrorTileEntity__MirrorTypes.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SMBDiagonalMirrorTileEntity__MirrorTypes.h; sourceTree = "<group>"; };
 		D78B47A41FB1096E004C967B /* SMBGameBoardTileEntitySpawnerManager.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SMBGameBoardTileEntitySpawnerManager.h; sourceTree = "<group>"; };
 		D78B47A51FB1096E004C967B /* SMBGameBoardTileEntitySpawnerManager.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = SMBGameBoardTileEntitySpawnerManager.m; sourceTree = "<group>"; };
 		D78B47A81FB254C9004C967B /* SMBWeakPointerObject.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SMBWeakPointerObject.h; sourceTree = "<group>"; };
@@ -1175,6 +1176,7 @@
 		D7951D4F1F43BF7F00A33AB2 /* SMBDiagonalMirrorTileEntity */ = {
 			isa = PBXGroup;
 			children = (
+				D77C925B1FBE0D1900E2C081 /* SMBDiagonalMirrorTileEntity__MirrorTypes.h */,
 				D7951D501F43BF7F00A33AB2 /* SMBDiagonalMirrorTileEntity.h */,
 				D7951D511F43BF7F00A33AB2 /* SMBDiagonalMirrorTileEntity.m */,
 			);

@@ -1143,7 +1143,7 @@
 //	 *- direction: left
 //
 //	 Usable:
-//	 Diagonal Mirror (startingPosition: bottomLeft)
+//	 Diagonal Mirror (mirrorType: bottomLeft)
 //	 Beam Rotation (direction_rotation: left)
 //	 Beam Rotation (direction_rotation: right)
 //	 Forced Redirect (direction: down)
@@ -1352,7 +1352,7 @@
 //	/* Entity spawners. */
 //
 //	NSMutableArray<SMBGameBoardTileEntity*>* const gameBoardTileEntities = [NSMutableArray<SMBGameBoardTileEntity*> array];
-//	[gameBoardTileEntities addObject:[[SMBDiagonalMirrorTileEntity alloc] init_with_startingPosition:SMBDiagonalMirrorTileEntity_startingPosition_bottomLeft]];
+//	[gameBoardTileEntities addObject:[[SMBDiagonalMirrorTileEntity alloc] init_with_mirrorType:SMBDiagonalMirrorTileEntity__mirrorType_bottomLeft_to_topRight]];
 //	[gameBoardTileEntities addObject:[[SMBBeamRotateTileEntity alloc] init_with_direction_rotation:SMBGameBoardTile__direction_rotation_left]];
 //	[gameBoardTileEntities addObject:[[SMBBeamRotateTileEntity alloc] init_with_direction_rotation:SMBGameBoardTile__direction_rotation_right]];
 //	[gameBoardTileEntities addObject:[[SMBForcedBeamRedirectTileEntity alloc] init_with_forcedBeamExitDirection:SMBGameBoardTile__direction_down]];

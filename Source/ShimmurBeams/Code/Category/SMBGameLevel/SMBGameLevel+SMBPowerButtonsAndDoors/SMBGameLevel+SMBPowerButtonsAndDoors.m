@@ -854,7 +854,7 @@
 //	 Beam Rotation (direction_rotation: right)
 //	 Forced Redirect (direction: right)
 //	 Beam Rotation (direction_rotation: right)
-//	 Diagonal Mirror (startingPosition: topLeft)
+//	 Diagonal Mirror (mirrorType: topLeft)
 //
 //	 Sections and entities:
 //	 [BcU] [   ] [   ] [ 3 ] [   ] [   ] [BcU]
@@ -983,7 +983,7 @@
 //	 [[SMBGameBoardTilePosition alloc] init_with_column:beamCreatorEntity.gameBoardTile.gameBoardTilePosition.column - 1
 //													row:beamCreatorEntity.gameBoardTile.gameBoardTilePosition.row - 1]];
 //
-//	[gameBoard gameBoardTileEntity_add:[[SMBDiagonalMirrorTileEntity alloc] init_with_startingPosition:SMBDiagonalMirrorTileEntity_startingPosition_bottomLeft]
+//	[gameBoard gameBoardTileEntity_add:[[SMBDiagonalMirrorTileEntity alloc] init_with_mirrorType:SMBDiagonalMirrorTileEntity__mirrorType_bottomLeft_to_topRight]
 //							entityType:SMBGameBoardTile__entityType_beamInteractions
 //			  to_gameBoardTilePosition:
 //	 [[SMBGameBoardTilePosition alloc] init_with_column:beamCreatorEntity.gameBoardTile.gameBoardTilePosition.column
@@ -1093,7 +1093,7 @@
 //	[gameBoardTileEntities addObject:[[SMBBeamRotateTileEntity alloc] init_with_direction_rotation:SMBGameBoardTile__direction_rotation_right]];
 //	[gameBoardTileEntities addObject:[[SMBForcedBeamRedirectTileEntity alloc] init_with_forcedBeamExitDirection:SMBGameBoardTile__direction_up]];
 //	[gameBoardTileEntities addObject:[[SMBBeamRotateTileEntity alloc] init_with_direction_rotation:SMBGameBoardTile__direction_rotation_right]];
-//	[gameBoardTileEntities addObject:[[SMBDiagonalMirrorTileEntity alloc] init_with_startingPosition:SMBDiagonalMirrorTileEntity_startingPosition_topLeft]];
+//	[gameBoardTileEntities addObject:[[SMBDiagonalMirrorTileEntity alloc] init_with_mirrorType:SMBDiagonalMirrorTileEntity__mirrorType_topLeft_to_bottomRight]];
 //
 //	return
 //	[[self alloc] init_with_gameBoard:gameBoard
@@ -1144,9 +1144,9 @@
 //	 *- direction_rotation: left
 //	 *- Note: would like to find a better way to prevent the workaround in section 2.
 //	 - Dm1
-//	 *- startingPosition: bottomLeft
+//	 *- mirrorType: bottomLeft
 //	 - Dm2
-//	 *- startingPosition: topLeft
+//	 *- mirrorType: topLeft
 //
 //	 Usable:
 //	 Forced Redirect (direction: left)
@@ -1528,14 +1528,14 @@
 //	/* Diagonal Mirrors */
 //
 //	/* Gap between 1 and 4 0x0 */
-//	[gameBoard gameBoardTileEntity_add:[[SMBDiagonalMirrorTileEntity alloc] init_with_startingPosition:SMBDiagonalMirrorTileEntity_startingPosition_bottomLeft]
+//	[gameBoard gameBoardTileEntity_add:[[SMBDiagonalMirrorTileEntity alloc] init_with_mirrorType:SMBDiagonalMirrorTileEntity__mirrorType_bottomLeft_to_topRight]
 //							entityType:SMBGameBoardTile__entityType_beamInteractions
 //			  to_gameBoardTilePosition:
 //	 [[SMBGameBoardTilePosition alloc] init_with_column:gameBoardTilePosition_wall_gap_between_sections_1_and_4_columns_range.location
 //													row:gameBoardTilePosition_wall_gap_between_sections_1_and_4_rows_range.location]];
 //
 //	/* Gap between 1 and 4 0x-0 */
-//	[gameBoard gameBoardTileEntity_add:[[SMBDiagonalMirrorTileEntity alloc] init_with_startingPosition:SMBDiagonalMirrorTileEntity_startingPosition_topLeft]
+//	[gameBoard gameBoardTileEntity_add:[[SMBDiagonalMirrorTileEntity alloc] init_with_mirrorType:SMBDiagonalMirrorTileEntity__mirrorType_topLeft_to_bottomRight]
 //							entityType:SMBGameBoardTile__entityType_beamInteractions
 //			  to_gameBoardTilePosition:
 //	 [[SMBGameBoardTilePosition alloc] init_with_column:gameBoardTilePosition_wall_gap_between_sections_1_and_4_columns_range.location
