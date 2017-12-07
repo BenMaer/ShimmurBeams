@@ -18,7 +18,7 @@
 
 
 
-@protocol DRGenericTextFieldTableViewCell_textChangeDelegate <NSObject>
+@protocol SMBGenericTextFieldTableViewCell_textChangeDelegate <NSObject>
 
 -(void)genericTextFieldTableViewCell:(nonnull SMBGenericTextFieldTableViewCell*)genericTextFieldTableViewCell
 					   textDidChange:(nonnull NSString*)text;
@@ -29,7 +29,7 @@
 
 
 
-@protocol DRGenericTextFieldTableViewCell_keyboardDelegate <NSObject>
+@protocol SMBGenericTextFieldTableViewCell_keyboardDelegate <NSObject>
 
 @optional
 -(BOOL)genericTextFieldTableViewCell_shouldReturn:(nonnull SMBGenericTextFieldTableViewCell*)genericTextFieldTableViewCell;
@@ -43,7 +43,7 @@
 
 
 
-@protocol DRGenericTextFieldTableViewCell_textShouldChangeDelegate <NSObject>
+@protocol SMBGenericTextFieldTableViewCell_textShouldChangeDelegate <NSObject>
 
 -(BOOL)genericTextFieldTableViewCell:(nonnull SMBGenericTextFieldTableViewCell*)genericTextFieldTableViewCell
 						   textField:(nonnull UITextField*)textField
@@ -56,7 +56,7 @@
 
 
 
-@protocol DRGenericTextFieldTableViewCell_nextToolbarDelegate <NSObject>
+@protocol SMBGenericTextFieldTableViewCell_nextToolbarDelegate <NSObject>
 
 -(void)genericTextFieldTableViewCell_nextButtonWasPressed:(nonnull SMBGenericTextFieldTableViewCell*)genericTextFieldTableViewCell;
 

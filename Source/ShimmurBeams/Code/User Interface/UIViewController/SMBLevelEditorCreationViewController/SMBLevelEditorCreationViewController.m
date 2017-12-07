@@ -9,6 +9,10 @@
 #import "SMBLevelEditorCreationViewController.h"
 #import "SMBGenericLabelTableViewCell.h"
 #import "SMBGenericTextFieldTableViewCell.h"
+#import "SMBGenericButtonTableViewCell.h"
+#import "SMBGameLevelGeneratorViewController.h"
+#import "SMBGameLevelGenerator.h"
+#import "SMBGameLevel+SMBLevelEditor.h"
 
 #import <ResplendentUtilities/RUConditionalReturn.h>
 #import <ResplendentUtilities/NSString+RUMacros.h>
@@ -42,7 +46,7 @@ typedef NS_ENUM(NSInteger, SMBLevelEditorCreationViewController__tableSection) {
 
 
 
-@interface SMBLevelEditorCreationViewController () <UITableViewDataSource, UITableViewDelegate, RTSMTableSectionManager_SectionDelegate>
+@interface SMBLevelEditorCreationViewController () <UITableViewDataSource, UITableViewDelegate, RTSMTableSectionManager_SectionDelegate, SMBGenericButtonTableViewCell_genericButtonDelegate, SMBGenericTextFieldTableViewCell_textChangeDelegate>
 
 #pragma mark - tableSectionManager
 @property (nonatomic, readonly, strong, nonnull) RTSMTableSectionManager* tableSectionManager;
@@ -68,6 +72,10 @@ typedef NS_ENUM(NSInteger, SMBLevelEditorCreationViewController__tableSection) {
 														  placeholderAttributedText:(nullable NSAttributedString*)placeholderAttributedText
 																		 textInsets:(UIEdgeInsets)textInsets;
 
+#pragma mark - genericButtonTableViewCell
+-(nullable SMBGenericButtonTableViewCell*)genericButtonTableViewCell_with_attributedText:(nonnull NSAttributedString*)attributedText
+																			  textInsets:(UIEdgeInsets)textInsets;
+
 #pragma mark - tableViewCell
 -(nullable NSAttributedString*)tableViewCell_attributedText_for_tableSection:(SMBLevelEditorCreationViewController__tableSection)tableSection;
 -(nullable NSString*)tableViewCell_text_for_tableSection:(SMBLevelEditorCreationViewController__tableSection)tableSection;
@@ -80,6 +88,12 @@ typedef NS_ENUM(NSInteger, SMBLevelEditorCreationViewController__tableSection) {
 -(nullable RUAttributesDictionaryBuilder*)tableViewCell_placeholder_text_attributesDictionaryBuilder_for_tableSection:(SMBLevelEditorCreationViewController__tableSection)tableSection;
 
 -(UIEdgeInsets)tableViewCell_insets_for_tableSection:(SMBLevelEditorCreationViewController__tableSection)tableSection;
+
+#pragma mark - nextButton
+-(nullable NSString*)nextButton_errorMessage;
+
+#pragma mark - gameLevelGeneratorViewController
+-(void)gameLevelGeneratorViewController_push_attempt;
 
 @end
 
@@ -129,21 +143,6 @@ typedef NS_ENUM(NSInteger, SMBLevelEditorCreationViewController__tableSection) {
 #pragma mark - RTSMTableSectionManager_SectionDelegate
 -(BOOL)tableSectionManager:(nonnull RTSMTableSectionManager*)tableSectionManager sectionIsAvailable:(NSInteger)section
 {
-	SMBLevelEditorCreationViewController__tableSection const tableSection = (SMBLevelEditorCreationViewController__tableSection)section;
-	switch (tableSection)
-	{
-		case SMBLevelEditorCreationViewController__tableSection_columns_header:
-		case SMBLevelEditorCreationViewController__tableSection_columns:
-		case SMBLevelEditorCreationViewController__tableSection_rows_header:
-		case SMBLevelEditorCreationViewController__tableSection_rows:
-			return YES;
-			break;
-
-		case SMBLevelEditorCreationViewController__tableSection_next:
-			return NO;
-			break;
-	}
-
 	return YES;
 }
 
@@ -258,6 +257,8 @@ typedef NS_ENUM(NSInteger, SMBLevelEditorCreationViewController__tableSection) {
 			break;
 
 		case SMBLevelEditorCreationViewController__tableSection_next:
+			return [self genericButtonTableViewCell_with_attributedText:[self tableViewCell_attributedText_for_tableSection:tableSection]
+															 textInsets:[self tableViewCell_insets_for_tableSection:tableSection]];
 			break;
 	}
 
@@ -366,6 +367,7 @@ typedef NS_ENUM(NSInteger, SMBLevelEditorCreationViewController__tableSection) {
 			break;
 
 		case SMBLevelEditorCreationViewController__tableSection_next:
+			[self gameLevelGeneratorViewController_push_attempt];
 			break;
 	}
 }
@@ -420,7 +422,35 @@ typedef NS_ENUM(NSInteger, SMBLevelEditorCreationViewController__tableSection) {
 	[genericTextFieldTableViewCell.textField setKeyboardType:UIKeyboardTypeNumberPad];
 	[genericTextFieldTableViewCell setTextFieldFrameInsets:textInsets];
 
+	[genericTextFieldTableViewCell setTextChangeDelegate:self];
+
 	return genericTextFieldTableViewCell;
+}
+
+#pragma mark - genericButtonTableViewCell
+-(nullable SMBGenericButtonTableViewCell*)genericButtonTableViewCell_with_attributedText:(nonnull NSAttributedString*)attributedText
+																			  textInsets:(UIEdgeInsets)textInsets
+{
+	kRUDefineNSStringConstant(cellIdentifier_SMBGenericButtonTableViewCell);
+	SMBGenericButtonTableViewCell* const genericButtonTableViewCell =
+	([self.tableView dequeueReusableCellWithIdentifier:cellIdentifier_SMBGenericButtonTableViewCell]
+	 ?:
+	 [[SMBGenericButtonTableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:cellIdentifier_SMBGenericButtonTableViewCell]
+	 );
+	
+	[genericButtonTableViewCell setSelectionStyle:UITableViewCellSelectionStyleNone];
+	[genericButtonTableViewCell setBackgroundColor:[UIColor clearColor]];
+	[genericButtonTableViewCell.contentView setBackgroundColor:[UIColor clearColor]];
+	
+	[genericButtonTableViewCell setFullBoundsCustomView_edgeInsets:textInsets];
+	
+	[genericButtonTableViewCell setGenericButtonDelegate:self];
+	[genericButtonTableViewCell.genericButton setBackgroundColor:[UIColor clearColor]];
+	[genericButtonTableViewCell.genericButton setAttributedTitle:attributedText forState:UIControlStateNormal];
+	[genericButtonTableViewCell.genericButton.titleLabel setTextAlignment:NSTextAlignmentLeft];
+	[genericButtonTableViewCell.genericButton setContentHorizontalAlignment:UIControlContentHorizontalAlignmentLeft];
+	
+	return genericButtonTableViewCell;
 }
 
 #pragma mark - tableViewCell
@@ -576,6 +606,114 @@ typedef NS_ENUM(NSInteger, SMBLevelEditorCreationViewController__tableSection) {
 		.left	= padding_horizontal,
 		.right	= padding_horizontal,
 	};
+}
+
+#pragma mark - SMBGenericButtonTableViewCell_genericButtonDelegate
+-(void)genericButtonTableViewCell_didTouchUpInsideButton:(nonnull SMBGenericButtonTableViewCell*)genericButtonTableViewCell
+{
+	kRUConditionalReturn(genericButtonTableViewCell == nil, YES);
+	
+	NSIndexPath* const indexPath = [self.tableView indexPathForCell:genericButtonTableViewCell];
+	kRUConditionalReturn(indexPath == nil, YES);
+	
+	SMBLevelEditorCreationViewController__tableSection const tableSection = [self.tableSectionManager sectionForIndexPathSection:indexPath.section];
+	switch (tableSection)
+	{
+		case SMBLevelEditorCreationViewController__tableSection_next:
+			[self gameLevelGeneratorViewController_push_attempt];
+			break;
+
+		default:
+			NSAssert(false, @"unhandled tableSection %li",(long)tableSection);
+			break;
+	}
+}
+
+#pragma mark - nextButton
+-(nullable NSString*)nextButton_errorMessage
+{
+	id const columns = [self getDirtyValue_for_tableSection:SMBLevelEditorCreationViewController__tableSection_columns];
+	kRUConditionalReturn_ReturnValue(columns == nil, NO, @"You must enter an amount of columns.")
+
+	NSString* const columns_string = kRUStringOrNil(columns);
+	kRUConditionalReturn_ReturnValue(columns_string == nil, YES, @"Something is wrong with your columns input");
+
+	NSNumber* const columns_number = @(columns_string.integerValue);
+	kRUConditionalReturn_ReturnValue(columns_number.integerValue < 1, NO, @"You must enter at least one column.")
+
+	id const rows = [self getDirtyValue_for_tableSection:SMBLevelEditorCreationViewController__tableSection_rows];
+	kRUConditionalReturn_ReturnValue(rows == nil, NO, @"You must enter an amount of rows.")
+	
+	NSString* const rows_string = kRUStringOrNil(rows);
+	kRUConditionalReturn_ReturnValue(rows_string == nil, YES, @"Something is wrong with your rows input");
+	
+	NSNumber* const rows_number = @(rows_string.integerValue);
+	kRUConditionalReturn_ReturnValue(rows_number.integerValue < 1, NO, @"You must enter at least one row.")
+
+	return nil;
+}
+
+#pragma mark - gameLevelGeneratorViewController
+-(void)gameLevelGeneratorViewController_push_attempt
+{
+	NSString* const nextButton_errorMessage = [self nextButton_errorMessage];
+	if (nextButton_errorMessage != nil)
+	{
+		UIAlertController* const alertController =
+		[UIAlertController alertControllerWithTitle:@"Oops!"
+											message:nextButton_errorMessage
+									 preferredStyle:UIAlertControllerStyleAlert];
+
+		[alertController addAction:
+		 [UIAlertAction actionWithTitle:@"Okay"
+								  style:UIAlertActionStyleCancel
+								handler:nil]];
+
+		[self presentViewController:alertController animated:YES completion:nil];
+
+		return;
+	}
+
+	id const columns = [self getDirtyValue_for_tableSection:SMBLevelEditorCreationViewController__tableSection_columns];
+	kRUConditionalReturn(columns == nil, YES);
+
+	NSString* const columns_string = kRUStringOrNil(columns);
+	kRUConditionalReturn(columns_string == nil, YES);
+
+	NSNumber* const columns_number = @(columns_string.integerValue);
+	kRUConditionalReturn(columns_number == nil, YES);
+
+	id const rows = [self getDirtyValue_for_tableSection:SMBLevelEditorCreationViewController__tableSection_rows];
+	kRUConditionalReturn(rows == nil, YES);
+
+	NSString* const rows_string = kRUStringOrNil(rows);
+	kRUConditionalReturn(rows_string == nil, YES);
+
+	NSNumber* const rows_number = @(rows_string.integerValue);
+	kRUConditionalReturn(rows_number == nil, YES);
+
+	SMBGameLevelGeneratorViewController* const gameLevelGeneratorViewController = [SMBGameLevelGeneratorViewController new];
+	[gameLevelGeneratorViewController setGameLevelGenerator:
+	 [[SMBGameLevelGenerator alloc] init_with_generateLevelBlock:^SMBGameLevel * _Nonnull{
+		return [SMBGameLevel smb_levelEditor_with_numberOfColumns:columns_number.integerValue
+													 numberOfRows:rows_number.integerValue];
+	}
+															name:@"Level Editor"]];
+
+	[self.navigationController pushViewController:gameLevelGeneratorViewController animated:YES];
+}
+
+#pragma mark - SMBGenericTextFieldTableViewCell_textChangeDelegate
+-(void)genericTextFieldTableViewCell:(nonnull SMBGenericTextFieldTableViewCell*)genericTextFieldTableViewCell
+					   textDidChange:(nonnull NSString*)text
+{
+	kRUConditionalReturn(genericTextFieldTableViewCell == nil, YES);
+	
+	NSIndexPath* const indexPath = [self.tableView indexPathForRowAtPoint:genericTextFieldTableViewCell.center];
+	kRUConditionalReturn(indexPath == nil, YES);
+	
+	[self setDirtyValue:text
+	   for_tableSection:[self.tableSectionManager sectionForIndexPathSection:indexPath.section]];
 }
 
 @end

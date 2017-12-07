@@ -91,6 +91,7 @@
 		D7DDD0AC1FD9E5FF00CACB5B /* SMBGenericLabelTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = D7DDD0AB1FD9E5FF00CACB5B /* SMBGenericLabelTableViewCell.m */; };
 		D7DDD0B21FD9ECBE00CACB5B /* SMBFullBoundsCustomViewTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = D7DDD0B11FD9ECBE00CACB5B /* SMBFullBoundsCustomViewTableViewCell.m */; };
 		D7DDD0B61FD9ED4000CACB5B /* SMBGenericTextFieldTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = D7DDD0B51FD9ED4000CACB5B /* SMBGenericTextFieldTableViewCell.m */; };
+		D7DDD0BC1FD9F39300CACB5B /* SMBGenericButtonTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = D7DDD0BB1FD9F39300CACB5B /* SMBGenericButtonTableViewCell.m */; };
 		D7DFE4311FB41FD400A2C1CD /* NSString+SMBColumnNames.m in Sources */ = {isa = PBXBuildFile; fileRef = D7DFE4301FB41FD400A2C1CD /* NSString+SMBColumnNames.m */; };
 		D7DFE4351FB420C000A2C1CD /* NSString+SMBRowNames.m in Sources */ = {isa = PBXBuildFile; fileRef = D7DFE4341FB420C000A2C1CD /* NSString+SMBRowNames.m */; };
 		D7E0CD851FBBAC32008A17D2 /* SMBGameBoardTileEntitySpawner+SMBInitMethods.m in Sources */ = {isa = PBXBuildFile; fileRef = D7E0CD841FBBAC32008A17D2 /* SMBGameBoardTileEntitySpawner+SMBInitMethods.m */; };
@@ -296,6 +297,9 @@
 		D7DDD0B41FD9ED4000CACB5B /* SMBGenericTextFieldTableViewCell.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SMBGenericTextFieldTableViewCell.h; sourceTree = "<group>"; };
 		D7DDD0B51FD9ED4000CACB5B /* SMBGenericTextFieldTableViewCell.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = SMBGenericTextFieldTableViewCell.m; sourceTree = "<group>"; };
 		D7DDD0B71FD9ED6200CACB5B /* SMBGenericTextFieldTableViewCell__Protocols.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SMBGenericTextFieldTableViewCell__Protocols.h; sourceTree = "<group>"; };
+		D7DDD0BA1FD9F39300CACB5B /* SMBGenericButtonTableViewCell.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SMBGenericButtonTableViewCell.h; sourceTree = "<group>"; };
+		D7DDD0BB1FD9F39300CACB5B /* SMBGenericButtonTableViewCell.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = SMBGenericButtonTableViewCell.m; sourceTree = "<group>"; };
+		D7DDD0BD1FD9F3D700CACB5B /* SMBGenericButtonTableViewCell__Protocols.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SMBGenericButtonTableViewCell__Protocols.h; sourceTree = "<group>"; };
 		D7DFE42F1FB41FD400A2C1CD /* NSString+SMBColumnNames.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "NSString+SMBColumnNames.h"; sourceTree = "<group>"; };
 		D7DFE4301FB41FD400A2C1CD /* NSString+SMBColumnNames.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = "NSString+SMBColumnNames.m"; sourceTree = "<group>"; };
 		D7DFE4331FB420C000A2C1CD /* NSString+SMBRowNames.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "NSString+SMBRowNames.h"; sourceTree = "<group>"; };
@@ -1458,6 +1462,7 @@
 			children = (
 				D7DDD0B01FD9ECBE00CACB5B /* SMBFullBoundsCustomViewTableViewCell.h */,
 				D7DDD0B11FD9ECBE00CACB5B /* SMBFullBoundsCustomViewTableViewCell.m */,
+				D7DDD0B91FD9F38500CACB5B /* SMBGenericButtonTableViewCell */,
 				D7DDD0B31FD9ED2700CACB5B /* SMBGenericTextFieldTableViewCell */,
 			);
 			path = SMBFullBoundsCustomViewTableViewCell;
@@ -1471,6 +1476,16 @@
 				D7DDD0B51FD9ED4000CACB5B /* SMBGenericTextFieldTableViewCell.m */,
 			);
 			path = SMBGenericTextFieldTableViewCell;
+			sourceTree = "<group>";
+		};
+		D7DDD0B91FD9F38500CACB5B /* SMBGenericButtonTableViewCell */ = {
+			isa = PBXGroup;
+			children = (
+				D7DDD0BD1FD9F3D700CACB5B /* SMBGenericButtonTableViewCell__Protocols.h */,
+				D7DDD0BA1FD9F39300CACB5B /* SMBGenericButtonTableViewCell.h */,
+				D7DDD0BB1FD9F39300CACB5B /* SMBGenericButtonTableViewCell.m */,
+			);
+			path = SMBGenericButtonTableViewCell;
 			sourceTree = "<group>";
 		};
 		D7DFE42D1FB41F9500A2C1CD /* NSString */ = {
@@ -1750,6 +1765,7 @@
 				D78CD09F1F3D6E5800118FB4 /* SMBGameBoardEntity.m in Sources */,
 				D71765A41FB3ACF60084E09A /* SMBGameLevel+SMBLevelEditor.m in Sources */,
 				D77B86FD1F47A1D700144372 /* SMBPowerOutputTileEntity.m in Sources */,
+				D7DDD0BC1FD9F39300CACB5B /* SMBGenericButtonTableViewCell.m in Sources */,
 				D7951D191F43332C00A33AB2 /* SMBGameLevelCompletion.m in Sources */,
 				D7E511BB1F3CEC40008A6042 /* SMBGameLevelGeneratorSet+SMBUserSets.m in Sources */,
 				D78CD09E1F3D6E5800118FB4 /* SMBBeamEntityTileNode.m in Sources */,

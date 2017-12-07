@@ -28,16 +28,16 @@
 -(void)textField_textDidChange;
 
 #pragma mark - textChangeDelegate
-@property (nonatomic, assign, nullable) id<DRGenericTextFieldTableViewCell_textChangeDelegate> textChangeDelegate;
+@property (nonatomic, assign, nullable) id<SMBGenericTextFieldTableViewCell_textChangeDelegate> textChangeDelegate;
 
 #pragma mark - textShouldChangeDelegate
-@property (nonatomic, assign, nullable) id<DRGenericTextFieldTableViewCell_textShouldChangeDelegate> textShouldChangeDelegate;
+@property (nonatomic, assign, nullable) id<SMBGenericTextFieldTableViewCell_textShouldChangeDelegate> textShouldChangeDelegate;
 
 #pragma mark - keyboardDelegate
-@property (nonatomic, assign, nullable) id<DRGenericTextFieldTableViewCell_keyboardDelegate> keyboardDelegate;
+@property (nonatomic, assign, nullable) id<SMBGenericTextFieldTableViewCell_keyboardDelegate> keyboardDelegate;
 
 #pragma mark - nextToolbarDelegate
-@property (nonatomic, assign, nullable) id<DRGenericTextFieldTableViewCell_nextToolbarDelegate> nextToolbarDelegate;
+@property (nonatomic, assign, nullable) id<SMBGenericTextFieldTableViewCell_nextToolbarDelegate> nextToolbarDelegate;
 
 #pragma mark - UITextFieldDelegate
 -(BOOL)textFieldShouldReturn:(nonnull UITextField*)textField;
