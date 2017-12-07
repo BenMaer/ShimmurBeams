@@ -14,7 +14,8 @@
 
 @interface SMBGameLevel (SMBLevelEditor)
 
-#pragma mark - forcedRedirectsAndWalls
-+(nonnull instancetype)smb_levelEditor;
+#pragma mark - levelEditor
++(nonnull instancetype)smb_levelEditor_with_numberOfColumns:(NSUInteger)numberOfColumns
+											   numberOfRows:(NSUInteger)numberOfRows;
 
 @end

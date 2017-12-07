@@ -12,6 +12,7 @@
 #import "SMBGameLevelGeneratorViewController.h"
 #import "SMBGameLevelGenerator.h"
 #import "SMBGameLevel+SMBLevelEditor.h"
+#import "SMBLevelEditorCreationViewController.h"
 
 #import <ResplendentUtilities/RUConditionalReturn.h>
 #import <ResplendentUtilities/NSString+RUMacros.h>
@@ -104,7 +105,6 @@ typedef NS_ENUM(NSInteger, SMBGameLevelGeneratorSetsViewController__tableSection
 
 	return _tableSectionRangeManager;
 }
-
 
 #pragma mark - gameLevelGeneratorSets
 -(void)setGameLevelGeneratorSets:(nullable NSArray<SMBGameLevelGeneratorSet*>*)gameLevelGeneratorSets
@@ -225,14 +225,9 @@ typedef NS_ENUM(NSInteger, SMBGameLevelGeneratorSetsViewController__tableSection
 			
 		case SMBGameLevelGeneratorSetsViewController__tableSection_levelEditor:
 		{
-			SMBGameLevelGeneratorViewController* const gameLevelGeneratorViewController = [SMBGameLevelGeneratorViewController new];
-			[gameLevelGeneratorViewController setGameLevelGenerator:
-			 [[SMBGameLevelGenerator alloc] init_with_generateLevelBlock:^SMBGameLevel * _Nonnull{
-				return [SMBGameLevel smb_levelEditor];
-			}
-																	name:@"Level Editor"]];
+			SMBLevelEditorCreationViewController* const levelEditorCreationViewController = [SMBLevelEditorCreationViewController new];
 
-			[self.navigationController pushViewController:gameLevelGeneratorViewController animated:YES];
+			[self.navigationController pushViewController:levelEditorCreationViewController animated:YES];
 		}
 			break;
 	}

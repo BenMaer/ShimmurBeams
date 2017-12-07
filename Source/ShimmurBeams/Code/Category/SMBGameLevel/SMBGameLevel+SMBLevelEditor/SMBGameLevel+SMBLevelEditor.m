@@ -26,7 +26,8 @@
 @implementation SMBGameLevel (SMBLevelEditor)
 
 #pragma mark - forcedRedirectsAndWalls
-+(nonnull instancetype)smb_levelEditor
++(nonnull instancetype)smb_levelEditor_with_numberOfColumns:(NSUInteger)numberOfColumns
+											   numberOfRows:(NSUInteger)numberOfRows
 {
 	/* Game board. */
 	SMBGameBoard* const gameBoard =

@@ -34,7 +34,6 @@
 
 
 
-static void* kSMBGameLevelView__KVOContext_gameBoardTileEntityPickerView = &kSMBGameLevelView__KVOContext_gameBoardTileEntityPickerView;
 static void* kSMBGameLevelView__KVOContext_gameLevelView_UserSelection = &kSMBGameLevelView__KVOContext_gameLevelView_UserSelection;
 
 
