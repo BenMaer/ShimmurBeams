@@ -15,6 +15,7 @@
 @class SMBGameBoard;
 @class SMBGameBoardTileEntity;
 @class SMBGameLevelCompletion;
+@class SMBGameBoardTileEntitySpawnerManager;
 
 
 
@@ -25,12 +26,12 @@
 #pragma mark - gameBoard
 @property (nonatomic, readonly, strong, nullable) SMBGameBoard* gameBoard;
 
-#pragma mark - usableGameBoardTileEntities
-@property (nonatomic, readonly, copy, nullable) NSArray<SMBGameBoardTileEntity*>* usableGameBoardTileEntities;
+#pragma mark - gameBoardTileEntitySpawnerManager
+@property (nonatomic, readonly, strong, nullable) SMBGameBoardTileEntitySpawnerManager* gameBoardTileEntitySpawnerManager;
 
 #pragma mark - init
 -(nullable instancetype)init_with_gameBoard:(nonnull SMBGameBoard*)gameBoard
-				usableGameBoardTileEntities:(nullable NSArray<SMBGameBoardTileEntity*>*)usableGameBoardTileEntities NS_DESIGNATED_INITIALIZER;
+		  gameBoardTileEntitySpawnerManager:(nullable SMBGameBoardTileEntitySpawnerManager*)gameBoardTileEntitySpawnerManager NS_DESIGNATED_INITIALIZER;
 
 #pragma mark - gameLevelCompletion
 @property (nonatomic, strong, nullable) SMBGameLevelCompletion* completion;

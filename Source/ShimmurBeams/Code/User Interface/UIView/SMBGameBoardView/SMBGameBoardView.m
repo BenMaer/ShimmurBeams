@@ -16,6 +16,8 @@
 #import "SMBGameBoardEntity.h"
 #import "UIView+SMBCommonFraming.h"
 #import "SMBGameBoardTileView.h"
+#import "NSString+SMBColumnNames.h"
+#import "NSString+SMBRowNames.h"
 
 #import <ResplendentUtilities/RUConditionalReturn.h>
 #import <ResplendentUtilities/RUClassOrNilUtil.h>
@@ -142,7 +144,7 @@ static void* kSMBGameBoardView__KVOContext = &kSMBGameBoardView__KVOContext;
 
 		_grid_shapeLayer = [CAShapeLayer layer];
 		[self.grid_shapeLayer setFillColor:nil];
-		[self.grid_shapeLayer setLineWidth:(1.0f / [UIScreen mainScreen].scale)];
+		[self.grid_shapeLayer setLineWidth:1.0f];
 		[self.grid_shapeLayer setStrokeColor:[UIColor colorWithWhite:0.5f alpha:0.5f].CGColor];
 		[self.contentView.layer addSublayer:self.grid_shapeLayer];
 	}
@@ -205,25 +207,30 @@ static void* kSMBGameBoardView__KVOContext = &kSMBGameBoardView__KVOContext;
 	typeof(self.gameBoard) const gameBoard = self.gameBoard;
 	kRUConditionalReturn(gameBoard == nil, NO);
 
-	NSMutableArray<NSString*>* const propertiesToObserve = [NSMutableArray<NSString*> array];
-	[propertiesToObserve addObject:[SMBGameBoard_PropertiesForKVO gameBoardTiles]];
-	[propertiesToObserve addObject:[SMBGameBoard_PropertiesForKVO gameBoardTileEntities]];
-	[propertiesToObserve addObject:[SMBGameBoard_PropertiesForKVO gameBoardEntities]];
+	NSMutableDictionary<NSNumber*,NSMutableArray<NSString*>*>* const KVOOptions_to_propertiesToObserve_mapping = [NSMutableDictionary<NSNumber*,NSMutableArray<NSString*>*> dictionary];
 
-	[propertiesToObserve enumerateObjectsUsingBlock:^(NSString * _Nonnull propertyToObserve, NSUInteger idx, BOOL * _Nonnull stop) {
-		if (registered)
-		{
-			[gameBoard addObserver:self
-						forKeyPath:propertyToObserve
-						   options:(NSKeyValueObservingOptionInitial)
-						   context:&kSMBGameBoardView__KVOContext];
-		}
-		else
-		{
-			[gameBoard removeObserver:self
-						   forKeyPath:propertyToObserve
-							  context:&kSMBGameBoardView__KVOContext];
-		}
+	NSMutableArray<NSString*>* const propertiesToObserve_observe_initial = [NSMutableArray<NSString*> array];
+	[propertiesToObserve_observe_initial addObject:[SMBGameBoard_PropertiesForKVO gameBoardTiles]];
+	[propertiesToObserve_observe_initial addObject:[SMBGameBoard_PropertiesForKVO gameBoardTileEntities]];
+	[propertiesToObserve_observe_initial addObject:[SMBGameBoard_PropertiesForKVO gameBoardEntities]];
+	[KVOOptions_to_propertiesToObserve_mapping setObject:propertiesToObserve_observe_initial forKey:@(NSKeyValueObservingOptionInitial)];
+
+	[KVOOptions_to_propertiesToObserve_mapping enumerateKeysAndObjectsUsingBlock:^(NSNumber * _Nonnull KVOOptions_number, NSMutableArray<NSString *> * _Nonnull propertiesToObserve, BOOL * _Nonnull stop) {
+		[propertiesToObserve enumerateObjectsUsingBlock:^(NSString * _Nonnull propertyToObserve, NSUInteger idx, BOOL * _Nonnull stop) {
+			if (registered)
+			{
+				[gameBoard addObserver:self
+							forKeyPath:propertyToObserve
+							   options:(KVOOptions_number.unsignedIntegerValue)
+							   context:&kSMBGameBoardView__KVOContext];
+			}
+			else
+			{
+				[gameBoard removeObserver:self
+							   forKeyPath:propertyToObserve
+								  context:&kSMBGameBoardView__KVOContext];
+			}
+		}];
 	}];
 }
 
@@ -701,13 +708,12 @@ static void* kSMBGameBoardView__KVOContext = &kSMBGameBoardView__KVOContext;
 	NSUInteger const numberOfColumns = [self.gameBoard gameBoardTiles_numberOfColumns];
 	NSMutableArray<UILabel*>* const columnLabels = [NSMutableArray<UILabel*> arrayWithCapacity:numberOfColumns];
 
-	char const baseLetter = 'A';
 	for (NSUInteger column = 0;
 		 column < numberOfColumns;
 		 column++)
 	{
 		UILabel* const label = [self columnAndRowLabel_generate];
-		[label setText:RUStringWithFormat(@"%c",baseLetter + (char)column)];
+		[label setText:[NSString smb_columnName_for_columnIndex:column]];
 		[columnLabels addObject:label];
 	}
 
@@ -790,7 +796,7 @@ static void* kSMBGameBoardView__KVOContext = &kSMBGameBoardView__KVOContext;
 		 row++)
 	{
 		UILabel* const label = [self columnAndRowLabel_generate];
-		[label setText:RUStringWithFormat(@"%lu",(unsigned long)row + 1)];
+		[label setText:[NSString smb_rowName_for_rowIndex:row]];
 		[rowLabels addObject:label];
 	}
 	

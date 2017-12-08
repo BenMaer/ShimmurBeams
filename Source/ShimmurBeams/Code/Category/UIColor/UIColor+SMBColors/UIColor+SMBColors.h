@@ -15,6 +15,7 @@
 @interface UIColor (SMBColors)
 
 #pragma mark - selectedTileEntity
++(nullable instancetype)smb_selectedTileEntity_color_primary;
 +(nullable instancetype)smb_selectedTileEntity_color;
 
 @end

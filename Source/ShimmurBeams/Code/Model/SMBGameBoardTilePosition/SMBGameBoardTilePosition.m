@@ -7,6 +7,8 @@
 //
 
 #import "SMBGameBoardTilePosition.h"
+#import "NSString+SMBColumnNames.h"
+#import "NSString+SMBRowNames.h"
 
 #import <ResplendentUtilities/RUConditionalReturn.h>
 #import <ResplendentUtilities/RUClassOrNilUtil.h>
@@ -32,8 +34,8 @@
 {
 	NSMutableArray<NSString*>* const description_lines = [NSMutableArray<NSString*> array];
 	[description_lines ru_addObjectIfNotNil:[super description]];
-	[description_lines ru_addObjectIfNotNil:RUStringWithFormat(@"column %lu",(unsigned long)self.column)];
-	[description_lines ru_addObjectIfNotNil:RUStringWithFormat(@"row %lu",(unsigned long)self.row)];
+	[description_lines ru_addObjectIfNotNil:RUStringWithFormat(@"column %@",[NSString smb_columnName_for_columnIndex:self.column])];
+	[description_lines ru_addObjectIfNotNil:RUStringWithFormat(@"row %@",[NSString smb_rowName_for_rowIndex:self.row])];
 	
 	return [description_lines componentsJoinedByString:@"\n"];
 }
