@@ -26,9 +26,9 @@
 #pragma mark - powerButtonsAndDoors
 +(nonnull instancetype)smb_powerButtonsAndDoors;
 
-//#pragma mark - powerSwitchesAndDoorGroups
-//+(nonnull instancetype)smb_powerSwitchesAndDoorGroups;
-//
+#pragma mark - powerSwitchesAndDoorGroups
++(nonnull instancetype)smb_powerSwitchesAndDoorGroups;
+
 #if kSMBEnvironment__SMBGameLevel_SMBUnitTestLevels_unitTestLevels_enabled
 #pragma mark - unitTests
 +(nonnull instancetype)smb_unitTests;
