@@ -260,16 +260,7 @@ static void* kSMBGameLevelView__KVOContext_gameLevelView_UserSelection = &kSMBGa
 	 */
 	[gameBoardTileEntityPickerView_selectedGameBoardTileEntitySpawner gameBoardTileEntity_spawnNew_tracked_on_gameBoardTile:gameBoardTile];
 
-	/* User actions: 5.a */
-	if ([gameBoardTileEntityPickerView_selectedGameBoardTileEntitySpawner spawnedGameBoardTileEntities_tracked_atCapacity])
-	{
-		/* User actions: 5.a.i */
-		[self setGameLevelView_UserSelection:nil];
-	}
-	/* User actions: 5.b */
-	/* User actions: 5.b.i
-	 else{}
-	 */
+	[self gameLevelView_UserSelection_update_from_selectedGameBoardTileEntitySpawner:gameBoardTileEntityPickerView_selectedGameBoardTileEntitySpawner];
 }
 
 #pragma mark - gameBoardTileEntityPickerView_borderColorView
