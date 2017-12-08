@@ -15,6 +15,11 @@
 @implementation UIColor (SMBColors)
 
 #pragma mark - selectedTileEntity
++(nullable instancetype)smb_selectedTileEntity_color_primary
+{
+	return [self greenColor];
+}
+
 +(nullable instancetype)smb_selectedTileEntity_color
 {
 	return [self redColor];

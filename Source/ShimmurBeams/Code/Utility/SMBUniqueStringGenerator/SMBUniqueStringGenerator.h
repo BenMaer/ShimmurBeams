@@ -15,6 +15,6 @@
 @interface SMBUniqueStringGenerator : NSObject
 
 #pragma mark - uniqueId
--(nullable NSString*)uniqueId_next;
+-(nonnull NSString*)uniqueId_next;
 
 @end

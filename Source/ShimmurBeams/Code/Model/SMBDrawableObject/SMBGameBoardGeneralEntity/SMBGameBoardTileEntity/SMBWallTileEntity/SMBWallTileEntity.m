@@ -35,7 +35,9 @@
 	CGContextSaveGState(context);
 
 	CGContextSetFillColorWithColor(context, [UIColor darkGrayColor].CGColor);
-	CGContextFillRect(context, rect);
+
+	CGFloat const inset_ratio = 0.0f;
+	CGContextFillRect(context, CGRectInset(rect, CGRectGetWidth(rect) * inset_ratio, CGRectGetHeight(rect) * inset_ratio));
 
 	CGContextRestoreGState(context);
 }

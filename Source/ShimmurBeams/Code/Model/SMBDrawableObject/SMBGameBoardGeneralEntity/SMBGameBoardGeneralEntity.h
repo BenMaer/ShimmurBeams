@@ -25,6 +25,6 @@
 @interface SMBGameBoardGeneralEntity : SMBDrawableObject <SMBMappedDataCollection_MappableObject>
 
 #pragma mark - uniqueId
-@property (nonatomic, readonly, strong, nullable) NSString* uniqueId;
+@property (nonatomic, readonly, copy, nonnull) NSString* uniqueId;
 
 @end

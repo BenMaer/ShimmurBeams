@@ -57,15 +57,15 @@
 {
 	kRUConditionalReturn_ReturnValueNil(YES, YES);
 	
-	return [self init_with_startingPosition:SMBDiagonalMirrorTileEntity_startingPosition_topLeft];
+	return [self init_with_mirrorType:SMBDiagonalMirrorTileEntity__mirrorType_topLeft_to_bottomRight];
 }
 
 #pragma mark - init
--(nullable instancetype)init_with_startingPosition:(SMBDiagonalMirrorTileEntity_startingPosition)startingPosition
+-(nullable instancetype)init_with_mirrorType:(SMBDiagonalMirrorTileEntity__mirrorType)mirrorType
 {
 	if (self = [super init])
 	{
-		_startingPosition = startingPosition;
+		_mirrorType = mirrorType;
 		[self beamEnterToExitDirectionMapping_update];
 	}
 	
@@ -119,7 +119,7 @@
 -(CGFloat)draw_startingPoint_y_forFrame:(CGRect)frame
 {
 	CGFloat const padding = [[self class]paddingFromEdge_forRect:frame];
-	return (self.startingPosition == SMBDiagonalMirrorTileEntity_startingPosition_topLeft ? CGRectGetMinY(frame) + padding : CGRectGetMaxY(frame) - padding);
+	return (self.mirrorType == SMBDiagonalMirrorTileEntity__mirrorType_topLeft_to_bottomRight ? CGRectGetMinY(frame) + padding : CGRectGetMaxY(frame) - padding);
 }
 
 #pragma mark - draw_endingPoint
@@ -131,7 +131,7 @@
 -(CGFloat)draw_endingPoint_y_forFrame:(CGRect)frame
 {
 	CGFloat const padding = [[self class]paddingFromEdge_forRect:frame];
-	return (self.startingPosition == SMBDiagonalMirrorTileEntity_startingPosition_topLeft ? CGRectGetMaxY(frame) - padding : CGRectGetMinY(frame) + padding);
+	return (self.mirrorType == SMBDiagonalMirrorTileEntity__mirrorType_topLeft_to_bottomRight ? CGRectGetMaxY(frame) - padding : CGRectGetMinY(frame) + padding);
 }
 
 #pragma mark - paddingFromEdge
@@ -171,7 +171,7 @@
 -(SMBGameBoardTile__direction)beamEnterToExitDirectionMapping_beamExitDirection_for_beamEnterDirection:(SMBGameBoardTile__direction)beamEnterDirection
 {
 	SMBGameBoardTile__direction const enterDirection = beamEnterDirection;
-	BOOL const topLeftToBottomRight = (self.startingPosition == SMBDiagonalMirrorTileEntity_startingPosition_topLeft);
+	BOOL const topLeftToBottomRight = (self.mirrorType == SMBDiagonalMirrorTileEntity__mirrorType_topLeft_to_bottomRight);
 	
 	switch (enterDirection)
 	{
