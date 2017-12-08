@@ -77,6 +77,8 @@ static void* kSMBGameLevelView__KVOContext_gameLevelView_UserSelection = &kSMBGa
 -(void)gameLevelView_UserSelection_update_from_selectedGameBoardTileEntity:(nullable SMBGameBoardTileEntity*)selectedGameBoardTileEntity;
 -(void)gameLevelView_UserSelection_update_from_selectedGameBoardTileEntitySpawner:(nullable SMBGameBoardTileEntitySpawner*)selectedGameBoardTileEntitySpawner;
 
+-(void)gameLevelView_UserSelection_removeSelectedEntitiesFromBoard;
+
 #pragma mark - selectedGameBoardTiles_HighlightData
 @property (nonatomic, copy, nullable) NSSet<SMBGameLevelView_UserSelection_GameBoardTile_HighlightData*>* selectedGameBoardTiles_HighlightData;
 -(void)selectedGameBoardTiles_HighlightData_update;
@@ -90,9 +92,6 @@ static void* kSMBGameLevelView__KVOContext_gameLevelView_UserSelection = &kSMBGa
 
 #pragma mark - gameBoardTileEntities
 -(void)gameBoardTileEntity_removeFromTile:(nonnull SMBGameBoardTileEntity*)gameBoardTileEntity;
-
-#pragma mark - selectedGameBoardTileEntitySpawner
--(void)selectedGameBoardTileEntitySpawner_removeSpawnedEntitiesFromBoard;
 
 @end
 
@@ -544,6 +543,32 @@ static void* kSMBGameLevelView__KVOContext_gameLevelView_UserSelection = &kSMBGa
 	  )];
 }
 
+-(void)gameLevelView_UserSelection_removeSelectedEntitiesFromBoard
+{
+	SMBGameLevelView_UserSelection* const gameLevelView_UserSelection = self.gameLevelView_UserSelection;
+	kRUConditionalReturn(gameLevelView_UserSelection == nil, YES);
+
+	SMBGameBoardTileEntity* const selectedGameBoardTileEntity = gameLevelView_UserSelection.selectedGameBoardTileEntity;
+	/* 3.a */
+	/* 3.a.i */
+	if (selectedGameBoardTileEntity)
+	{
+		/* 3.a.i.1 */
+		[self gameBoardTileEntity_removeFromTile:selectedGameBoardTileEntity];
+	}
+	/* 3.a.ii.1.a */
+	else
+	{
+		SMBGameBoardTileEntitySpawner* const selectedGameBoardTileEntitySpawner = gameLevelView_UserSelection.selectedGameBoardTileEntitySpawner;
+		kRUConditionalReturn(selectedGameBoardTileEntitySpawner == nil, YES);
+
+		/* 3.a.ii.1.a.i */
+		[[selectedGameBoardTileEntitySpawner spawnedGameBoardTileEntities_tracked] enumerateObjectsUsingBlock:^(SMBGameBoardTileEntity * _Nonnull gameBoardTileEntity, NSUInteger idx, BOOL * _Nonnull stop) {
+			[self gameBoardTileEntity_removeFromTile:gameBoardTileEntity];
+		}];
+	}
+}
+
 #pragma mark - selectedGameBoardTiles_HighlightData
 -(void)setSelectedGameBoardTiles_HighlightData:(nullable NSSet<SMBGameLevelView_UserSelection_GameBoardTile_HighlightData*>*)selectedGameBoardTiles_HighlightData
 {
@@ -638,11 +663,12 @@ static void* kSMBGameLevelView__KVOContext_gameLevelView_UserSelection = &kSMBGa
 			break;
 			
 		case SMBGameBoardTileEntityPickerView__trashButton_type_clearBoard:
+			/* 3.a.ii.1.b.i */
 			[self gameBoardTileEntitySpawners_removeAllEntitiesFromTiles];
 			break;
 			
 		case SMBGameBoardTileEntityPickerView__trashButton_type_remove:
-			[self selectedGameBoardTileEntitySpawner_removeSpawnedEntitiesFromBoard];
+			[self gameLevelView_UserSelection_removeSelectedEntitiesFromBoard];
 			break;
 	}
 
@@ -669,20 +695,6 @@ static void* kSMBGameLevelView__KVOContext_gameLevelView_UserSelection = &kSMBGa
 	kRUConditionalReturn(gameBoardTile == nil, NO);
 	
 	[gameBoardTile gameBoardTileEntities_remove:gameBoardTileEntity entityType:SMBGameBoardTile__entityType_beamInteractions];
-}
-
-#pragma mark - selectedGameBoardTileEntitySpawner
--(void)selectedGameBoardTileEntitySpawner_removeSpawnedEntitiesFromBoard
-{
-	SMBGameLevelView_UserSelection* const gameLevelView_UserSelection = self.gameLevelView_UserSelection;
-	kRUConditionalReturn(gameLevelView_UserSelection == nil, YES);
-
-	SMBGameBoardTileEntitySpawner* const selectedGameBoardTileEntitySpawner = gameLevelView_UserSelection.selectedGameBoardTileEntitySpawner;
-	kRUConditionalReturn(selectedGameBoardTileEntitySpawner == nil, YES);
-
-	[[selectedGameBoardTileEntitySpawner spawnedGameBoardTileEntities_tracked] enumerateObjectsUsingBlock:^(SMBGameBoardTileEntity * _Nonnull gameBoardTileEntity, NSUInteger idx, BOOL * _Nonnull stop) {
-		[self gameBoardTileEntity_removeFromTile:gameBoardTileEntity];
-	}];
 }
 
 @end
