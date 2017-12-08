@@ -16,10 +16,10 @@
 
 @interface SMBUniqueStringGenerator ()
 
-#pragma mark - uniqueId_last
+#pragma mark - uniqueId
 @property (nonatomic, copy, nullable) NSString* uniqueId_last;
 -(nonnull NSString*)uniqueId_generate_initial;
--(nullable NSString*)uniqueId_generate_next:(nonnull NSString*)currentId;
+-(nonnull NSString*)uniqueId_generate_next;
 
 @end
 
@@ -28,21 +28,17 @@
 
 @implementation SMBUniqueStringGenerator
 
--(nullable NSString*)uniqueId_next
+#pragma mark - uniqueId
+-(nonnull NSString*)uniqueId_next
 {
-	NSString* const uniqueId_last = self.uniqueId_last;
-
-	NSString* const uniqueId_new =
-	(uniqueId_last
-	 ?
-	 [self uniqueId_generate_next:uniqueId_last]
-	 :
-	 [self uniqueId_generate_initial]
-	 );
-
-	kRUConditionalReturn_ReturnValueNil(uniqueId_new == nil, YES);
+	NSString* _Nonnull const uniqueId_new = [self uniqueId_generate_next];
 
 	[self setUniqueId_last:uniqueId_new];
+
+	if (uniqueId_new == nil)
+	{
+		@throw [NSException exceptionWithName:NSInternalInconsistencyException reason:@"Unable to generate a new unique id" userInfo:nil];
+	}
 
 	return uniqueId_new;
 }
@@ -53,12 +49,14 @@
 	return [NSString stringWithCharacters:&character length:1];
 }
 
--(nullable NSString*)uniqueId_generate_next:(nonnull NSString*)currentId
+-(nonnull NSString*)uniqueId_generate_next
 {
-	kRUConditionalReturn_ReturnValueNil(currentId == nil, YES);
-	kRUConditionalReturn_ReturnValueNil(currentId.length <= 0, YES);
+	NSString* const uniqueId_last = self.uniqueId_last;
 
-	unichar const character_last = [currentId characterAtIndex:currentId.length - 1];
+	kRUConditionalReturn_ReturnValue(uniqueId_last == nil, NO, [self uniqueId_generate_initial]);
+	kRUConditionalReturn_ReturnValue(uniqueId_last.length <= 0, YES, [self uniqueId_generate_initial]);
+
+	unichar const character_last = [uniqueId_last characterAtIndex:uniqueId_last.length - 1];
 	unichar const character_next = character_last + 1;
 
 	NSString* const string_suffix =
@@ -69,7 +67,7 @@
 	 [NSString stringWithCharacters:&character_next length:1]
 	 );
 
-	NSMutableString* const entityId_next = [NSMutableString stringWithString:currentId];
+	NSMutableString* const entityId_next = [NSMutableString stringWithString:uniqueId_last];
 
 	if (character_next == 0)
 	{

@@ -15,18 +15,6 @@
 
 
 
-@interface SMBGameBoardGeneralEntity ()
-
-#pragma mark - uniqueId
-@property (nonatomic, strong, nullable) NSString* uniqueId;
--(void)uniqueId_generate;
-
-@end
-
-
-
-
-
 @implementation SMBGameBoardGeneralEntity
 
 #pragma mark - NSObject
@@ -34,24 +22,28 @@
 {
 	if (self = [super init])
 	{
-		[self uniqueId_generate];
 		kRUConditionalReturn_ReturnValueNil(self.uniqueId == nil, YES);
-		kRUConditionalReturn_ReturnValueNil(self.uniqueId.length == 0, YES);
 	}
 	
 	return self;
 }
 
 #pragma mark - uniqueId
--(void)uniqueId_generate
+@synthesize uniqueId = _uniqueId;
+-(nonnull NSString*)uniqueId
 {
-	static SMBUniqueStringGenerator* uniqueStringGenerator = nil;
-	if (uniqueStringGenerator == nil)
+	if (_uniqueId == nil)
 	{
-		uniqueStringGenerator = [SMBUniqueStringGenerator new];
+		static SMBUniqueStringGenerator* uniqueStringGenerator = nil;
+		if (uniqueStringGenerator == nil)
+		{
+			uniqueStringGenerator = [SMBUniqueStringGenerator new];
+		}
+
+		_uniqueId = [uniqueStringGenerator uniqueId_next];
 	}
 	
-	[self setUniqueId:[uniqueStringGenerator uniqueId_next]];
+	return _uniqueId;
 }
 
 #pragma mark - SMBMappedDataCollection_MappableObject

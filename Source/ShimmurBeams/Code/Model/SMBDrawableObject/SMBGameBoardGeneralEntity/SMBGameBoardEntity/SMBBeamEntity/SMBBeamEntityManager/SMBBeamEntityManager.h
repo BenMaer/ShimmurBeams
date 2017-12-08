@@ -34,6 +34,9 @@
 -(void)beamEntity_forMarkingNodesReady_remove:(nonnull SMBBeamEntity*)beamEntity;
 -(BOOL)beamEntity_forMarkingNodesReady_exists:(nonnull SMBBeamEntity*)beamEntity;
 
+#pragma mark - isPaused
+@property (nonatomic, assign) BOOL isPaused;
+
 #if kSMBBeamEntityManager__beamEntity_forMarkingNodesReady_validation_general_enabled
 #pragma mark - beamEntity_forMarkingNodesReady_isNil_validate
 -(void)beamEntity_forMarkingNodesReady_isNil_validate;

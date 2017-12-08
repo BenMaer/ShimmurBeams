@@ -29,7 +29,4 @@
 #pragma mark - tileTapDelegate
 @property (nonatomic, assign, nullable) id<SMBGameBoardView_tileTapDelegate> tileTapDelegate;
 
-#pragma mark - gameBoardTilePosition
--(CGRect)gameBoardTilePosition_frame:(nonnull SMBGameBoardTilePosition*)gameBoardTilePosition;
-
 @end

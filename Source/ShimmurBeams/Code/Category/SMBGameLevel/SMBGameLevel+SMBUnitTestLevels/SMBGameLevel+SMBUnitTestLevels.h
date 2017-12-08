@@ -6,6 +6,8 @@
 //  Copyright © 2017 Shimmur. All rights reserved.
 //
 
+#if kSMBEnvironment__SMBGameLevel_SMBUnitTestLevels_unitTestLevels_enabled
+
 #import "SMBGameLevel.h"
 
 
@@ -26,7 +28,15 @@
 #pragma mark - beamCreatorPoweringItself
 +(nonnull instancetype)smb_beamCreatorPoweringItself;
 
+#pragma mark - laserPassesThroughMovedEntity
++(nonnull instancetype)smb_laserPassesThroughMovedEntity;
+
 #pragma mark - powerToggle_beamEntityManagerStuck
 +(nonnull instancetype)smb_powerToggle_beamEntityManagerStuck;
 
+#pragma mark - spawners_countsWork
++(nonnull instancetype)smb_spawners_countsWork;
+
 @end
+
+#endif

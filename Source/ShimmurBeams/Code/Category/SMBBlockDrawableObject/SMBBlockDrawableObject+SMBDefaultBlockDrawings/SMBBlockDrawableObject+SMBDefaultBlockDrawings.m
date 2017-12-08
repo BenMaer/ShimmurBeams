@@ -47,8 +47,7 @@ void SMBBlockDrawableObject_SMBDefaultBlockDrawings__beamCreatorTileEntity_draw(
 
 	CGFloat const half_line_offset_amount = [SMBBeamEntityTileNode half_line_offset_amount_for_rect:rect];
 
-	CGContextMoveToPoint(context, 0.0f, CGRectGetMaxY(rect)); /* Bottom left */
-	CGContextAddLineToPoint(context, box_inset_from_side, CGRectGetMaxY(rect)); /* Bottom left of machine */
+	CGContextMoveToPoint(context, box_inset_from_side, CGRectGetMaxY(rect)); /* Bottom left of machine */
 	CGContextAddLineToPoint(context, box_inset_from_side, CGRectGetMidY(rect)); /* Top left of machine */
 
 	CGContextAddLineToPoint(context,
@@ -73,7 +72,6 @@ void SMBBlockDrawableObject_SMBDefaultBlockDrawings__beamCreatorTileEntity_draw(
 
 	CGContextAddLineToPoint(context, CGRectGetMaxX(rect) - box_inset_from_side, CGRectGetMidY(rect)); /* Top right of machine */
 	CGContextAddLineToPoint(context, CGRectGetMaxX(rect) - box_inset_from_side, CGRectGetMaxY(rect)); /* Bottom right of machine */
-	CGContextAddLineToPoint(context, CGRectGetMaxX(rect), CGRectGetMaxY(rect)); /* Bottom right */
 
 	CGContextStrokePath(context);
 

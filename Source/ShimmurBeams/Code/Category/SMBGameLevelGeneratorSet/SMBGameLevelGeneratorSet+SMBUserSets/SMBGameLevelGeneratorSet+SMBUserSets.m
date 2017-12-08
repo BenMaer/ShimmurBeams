@@ -66,7 +66,6 @@
 	}
 																						  name:@"Tricky"]];
 
-
 	return
 	[[self alloc] init_with_gameLevelGenerators:[NSArray<SMBGameLevelGenerator*> arrayWithArray:gameLevelGenerators]
 										   name:@"Forced Redirects and Walls"];
@@ -258,6 +257,8 @@
 										   name:@"Power switches and door groups"];
 }
 
+#if kSMBEnvironment__SMBGameLevel_SMBUnitTestLevels_unitTestLevels_enabled
+
 #pragma mark - unitTests
 +(nonnull instancetype)smb_unitTests
 {
@@ -273,7 +274,7 @@
 		return [SMBGameLevel smb_beamEntityOrder];
 	}
 																						  name:@"Beam entity order"
-																						  hint:@"Place entity at 0x3. Should not cause death."]];
+																						  hint:@"Place entity at A4. Should not cause death."]];
 
 	[gameLevelGenerators addObject:[[SMBGameLevelGenerator alloc] init_with_generateLevelBlock:^SMBGameLevel * _Nonnull{
 		return [SMBGameLevel smb_buttonPoweredImmediately];
@@ -288,14 +289,28 @@
 																						  hint:@"Powered the beam creator, let it be the only one powering itself, then change its path."]];
 
 	[gameLevelGenerators addObject:[[SMBGameLevelGenerator alloc] init_with_generateLevelBlock:^SMBGameLevel * _Nonnull{
+		return [SMBGameLevel smb_laserPassesThroughMovedEntity];
+	}
+																						  name:@"Beam passes through moved entity"
+																						  hint:@"Place entity at B2. Then move entity to D2. Shouldn't trigger death."]];
+
+	[gameLevelGenerators addObject:[[SMBGameLevelGenerator alloc] init_with_generateLevelBlock:^SMBGameLevel * _Nonnull{
 		return [SMBGameLevel smb_powerToggle_beamEntityManagerStuck];
 	}
 																						  name:@"Beam Entity Manager Stuck"
-																						  hint:@"Power the button and switch. The unpowered beam creator at -0x-0 should now be powered. Leave level to hit unit test."]];
+																						  hint:@"Power entity at B3. The unpowered beam creator at E3 should now be powered. Leave level to hit unit test."]];
+
+	[gameLevelGenerators addObject:[[SMBGameLevelGenerator alloc] init_with_generateLevelBlock:^SMBGameLevel * _Nonnull{
+		return [SMBGameLevel smb_spawners_countsWork];
+	}
+																						  name:@"Spawners Counts Work"
+																						  hint:@"First spawner has max of 1, should show no text. Second spawner has max of 5, should show `[# spawned]/[max]`. Third spawner has max of 0 (infinity), should show `[# spawned]`."]];
 
 	return
 	[[self alloc] init_with_gameLevelGenerators:[NSArray<SMBGameLevelGenerator*> arrayWithArray:gameLevelGenerators]
 										   name:@"UNIT TESTS"];
 }
+
+#endif
 
 @end

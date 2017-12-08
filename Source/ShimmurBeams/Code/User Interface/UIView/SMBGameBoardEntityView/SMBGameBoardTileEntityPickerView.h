@@ -6,13 +6,15 @@
 //  Copyright © 2017 Shimmur. All rights reserved.
 //
 
+#import "SMBGameBoardTileEntityPickerView__Protocols.h"
+
 #import <UIKit/UIKit.h>
 
 
 
 
 
-@class SMBGameBoardTileEntity;
+@class SMBGameBoardTileEntitySpawner;
 
 
 
@@ -20,20 +22,17 @@
 
 @interface SMBGameBoardTileEntityPickerView : UIView
 
-#pragma mark - gameBoardTileEntities
-@property (nonatomic, copy, nullable) NSArray<SMBGameBoardTileEntity*>* gameBoardTileEntities;
+#pragma mark - gameBoardTileEntitySpawners
+@property (nonatomic, copy, nullable) NSArray<SMBGameBoardTileEntitySpawner*>* gameBoardTileEntitySpawners;
 
-#pragma mark - selectedGameBoardTileEntity
-@property (nonatomic, strong, nullable) SMBGameBoardTileEntity* selectedGameBoardTileEntity;
+#pragma mark - selectedGameBoardTileEntitySpawner
+@property (nonatomic, strong, nullable) SMBGameBoardTileEntitySpawner* selectedGameBoardTileEntitySpawner;
 
-@end
+#pragma mark - gameBoardTileEntitySpawner_tapDelegate
+@property (nonatomic, assign, nullable) id<SMBGameBoardTileEntityPickerView__GameBoardTileEntitySpawner_TapDelegate> gameBoardTileEntitySpawner_tapDelegate;
 
-
-
-
-
-@interface SMBGameBoardTileEntityPickerView_PropertiesForKVO : NSObject
-
-+(nonnull NSString*)selectedGameBoardTileEntity;
+#pragma mark - trashButton_tapDelegate
+@property (nonatomic, assign, nullable) id<SMBGameBoardTileEntityPickerView__TrashButton_TapDelegate> trashButton_tapDelegate;
 
 @end
+

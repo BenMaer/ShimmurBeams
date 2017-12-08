@@ -103,9 +103,6 @@ typedef NS_ENUM(NSInteger, SMBBeamEntityTileNode__state) {
 
 @interface SMBBeamEntityTileNode ()
 
-#pragma mark - beamEntity
--(BOOL)beamEntity_contains_self;
-
 #pragma mark - gameBoardTile
 -(BOOL)gameBoardTile_validateNew:(nullable SMBGameBoardTile*)gameBoardTile;
 -(void)SMBBeamEntityTileNode_gameBoardTile_setKVORegistered:(BOOL)registered;
@@ -204,9 +201,9 @@ typedef NS_ENUM(NSInteger, SMBBeamEntityTileNode__state) {
 {
 	NSMutableArray<NSString*>* const description_lines = [NSMutableArray<NSString*> array];
 	[description_lines ru_addObjectIfNotNil:[super description]];
-	[description_lines ru_addObjectIfNotNil:RUStringWithFormat(@"self.node_next_gameTilePosition: %@",self.node_next_gameTilePosition)];
-	[description_lines ru_addObjectIfNotNil:RUStringWithFormat(@"self.beamEnterDirection: %lu",(unsigned long)self.beamEnterDirection)];
-	[description_lines ru_addObjectIfNotNil:RUStringWithFormat(@"self.beamExitDirection: %lu",(unsigned long)self.beamExitDirection)];
+	[description_lines ru_addObjectIfNotNil:RUStringWithFormat(@"node_next_gameTilePosition: %@",self.node_next_gameTilePosition)];
+	[description_lines ru_addObjectIfNotNil:RUStringWithFormat(@"beamEnterDirection: %lu",(unsigned long)self.beamEnterDirection)];
+	[description_lines ru_addObjectIfNotNil:RUStringWithFormat(@"beamExitDirection: %lu",(unsigned long)self.beamExitDirection)];
 
 	return [description_lines componentsJoinedByString:@"\n"];
 }
@@ -230,15 +227,6 @@ typedef NS_ENUM(NSInteger, SMBBeamEntityTileNode__state) {
 	}
 
 	return self;
-}
-
-#pragma mark - beamEntity
--(BOOL)beamEntity_contains_self
-{
-	SMBBeamEntity* const beamEntity = self.beamEntity;
-	kRUConditionalReturn_ReturnValueFalse(beamEntity == nil, YES);
-
-	return [beamEntity beamEntityTileNodes_contains:self];
 }
 
 #pragma mark - gameBoardTile
@@ -272,25 +260,30 @@ typedef NS_ENUM(NSInteger, SMBBeamEntityTileNode__state) {
 	typeof(self.gameBoardTile) const gameBoardTile = self.gameBoardTile;
 	kRUConditionalReturn(gameBoardTile == nil, NO);
 
-	NSMutableArray<NSString*>* const propertiesToObserve = [NSMutableArray<NSString*> array];
-	[propertiesToObserve addObject:[SMBGameBoardTile_PropertiesForKVO gameBoardTileEntity_for_beamInteractions]];
-	[propertiesToObserve addObject:[SMBGameBoardTile_PropertiesForKVO beamEnterDirections_blocked]];
-	[propertiesToObserve addObject:[SMBGameBoardTile_PropertiesForKVO beamEnterToExitDirectionMapping]];
+	NSMutableDictionary<NSNumber*,NSMutableArray<NSString*>*>* const KVOOptions_to_propertiesToObserve_mapping = [NSMutableDictionary<NSNumber*,NSMutableArray<NSString*>*> dictionary];
 
-	[propertiesToObserve enumerateObjectsUsingBlock:^(NSString * _Nonnull propertyToObserve, NSUInteger idx, BOOL * _Nonnull stop) {
-		if (registered)
-		{
-			[gameBoardTile addObserver:self
-							forKeyPath:propertyToObserve
-							   options:(NSKeyValueObservingOptionInitial)
-							   context:&kSMBBeamEntityTileNode__KVOContext];
-		}
-		else
-		{
-			[gameBoardTile removeObserver:self
-							   forKeyPath:propertyToObserve
-								  context:&kSMBBeamEntityTileNode__KVOContext];
-		}
+	NSMutableArray<NSString*>* const propertiesToObserve_observe_initial = [NSMutableArray<NSString*> array];
+	[propertiesToObserve_observe_initial addObject:[SMBGameBoardTile_PropertiesForKVO gameBoardTileEntity_for_beamInteractions]];
+	[propertiesToObserve_observe_initial addObject:[SMBGameBoardTile_PropertiesForKVO beamEnterDirections_blocked]];
+	[propertiesToObserve_observe_initial addObject:[SMBGameBoardTile_PropertiesForKVO beamEnterToExitDirectionMapping]];
+	[KVOOptions_to_propertiesToObserve_mapping setObject:propertiesToObserve_observe_initial forKey:@(NSKeyValueObservingOptionInitial)];
+
+	[KVOOptions_to_propertiesToObserve_mapping enumerateKeysAndObjectsUsingBlock:^(NSNumber * _Nonnull KVOOptions_number, NSMutableArray<NSString *> * _Nonnull propertiesToObserve, BOOL * _Nonnull stop) {
+		[propertiesToObserve enumerateObjectsUsingBlock:^(NSString * _Nonnull propertyToObserve, NSUInteger idx, BOOL * _Nonnull stop) {
+			if (registered)
+			{
+				[gameBoardTile addObserver:self
+								forKeyPath:propertyToObserve
+								   options:(KVOOptions_number.unsignedIntegerValue)
+								   context:&kSMBBeamEntityTileNode__KVOContext];
+			}
+			else
+			{
+				[gameBoardTile removeObserver:self
+								   forKeyPath:propertyToObserve
+									  context:&kSMBBeamEntityTileNode__KVOContext];
+			}
+		}];
 	}];
 }
 
@@ -332,9 +325,13 @@ typedef NS_ENUM(NSInteger, SMBBeamEntityTileNode__state) {
 	{
 		if (gameBoardTileEntity_for_beamInteractions == nil)
 		{
-			BOOL const isError = [self beamEntity_contains_self];
-			NSAssert(isError != false, @"We should not be contained in the beam entity if there's no previous node, nor no beam creator on this entity.");
-			return (isError ? direction_error : SMBGameBoardTile__direction_none);
+			SMBBeamEntity* const beamEntity = self.beamEntity;
+			kRUConditionalReturn_ReturnValue(beamEntity == nil, YES, direction_error);
+			kRUConditionalReturn_ReturnValue((beamEntity.beamEntityManager != nil)
+											 &&
+											 [beamEntity beamEntityTileNodes_contains:self], YES, direction_error);
+
+			return SMBGameBoardTile__direction_none;
 		}
 
 		SMBBeamCreatorTileEntity* const beamCreatorTileEntity = kRUClassOrNil(gameBoardTileEntity_for_beamInteractions, SMBBeamCreatorTileEntity);
