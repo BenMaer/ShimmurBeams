@@ -158,59 +158,59 @@
 	[[self alloc] init_with_gameLevelGenerators:[NSArray<SMBGameLevelGenerator*> arrayWithArray:gameLevelGenerators]
 										   name:@"Mirrors and Meltable Walls"];
 }
-//
-//#pragma mark - powerButtonsAndDoors
-//+(nonnull instancetype)smb_powerButtonsAndDoors
-//{
-//	NSMutableArray<SMBGameLevelGenerator*>* const gameLevelGenerators = [NSMutableArray<SMBGameLevelGenerator*> array];
-//
-//	[gameLevelGenerators addObject:[[SMBGameLevelGenerator alloc] init_with_generateLevelBlock:^SMBGameLevel * _Nonnull{
-//		return [SMBGameLevel smb_powerButton_introduction];
-//	}
-//																						  name:@"Button Introduction"
-//																						  hint:@"Power up a button to turn it on. A powered button will power another tile on the board."]];
-//
-//	[gameLevelGenerators addObject:[[SMBGameLevelGenerator alloc] init_with_generateLevelBlock:^SMBGameLevel * _Nonnull{
-//		return [SMBGameLevel smb_powerButtons_3choices];
-//	}
-//																						  name:@"Button Choices"
-//																						  hint:@"Determine which button powers which tile."]];
-//
-//	[gameLevelGenerators addObject:[[SMBGameLevelGenerator alloc] init_with_generateLevelBlock:^SMBGameLevel * _Nonnull{
-//		return [SMBGameLevel smb_powerButtons_usableGameBoardTileEntities_choices];
-//	}
-//																						  name:@"Too Easy"]];
-//
-//	[gameLevelGenerators addObject:[[SMBGameLevelGenerator alloc] init_with_generateLevelBlock:^SMBGameLevel * _Nonnull{
-//		return [SMBGameLevel smb_powerButtons_windows_3x3];
-//	}
-//																						  name:@"Windows"]];
-//
-//	[gameLevelGenerators addObject:[[SMBGameLevelGenerator alloc] init_with_generateLevelBlock:^SMBGameLevel * _Nonnull{
-//		return [SMBGameLevel smb_powerButtons_and_door_introduction];
-//	}
-//																						  name:@"Door Introduction"]];
-//
-//	[gameLevelGenerators addObject:[[SMBGameLevelGenerator alloc] init_with_generateLevelBlock:^SMBGameLevel * _Nonnull{
-//		return [SMBGameLevel smb_powerButtons_and_door_selfPoweredBeamCreator];
-//	}
-//																						  name:@"Self Powered"]];
-//
-//	[gameLevelGenerators addObject:[[SMBGameLevelGenerator alloc] init_with_generateLevelBlock:^SMBGameLevel * _Nonnull{
-//		return [SMBGameLevel smb_powerButtons_and_doors_choices];
-//	}
-//																						  name:@"Buttons and Doors"]];
-//
-//	[gameLevelGenerators addObject:[[SMBGameLevelGenerator alloc] init_with_generateLevelBlock:^SMBGameLevel * _Nonnull{
-//		return [SMBGameLevel smb_powerButtons_and_doors_powerPlant];
-//	}
-//																						  name:@"Button Power Plant"]];
-//
-//	return
-//	[[self alloc] init_with_gameLevelGenerators:[NSArray<SMBGameLevelGenerator*> arrayWithArray:gameLevelGenerators]
-//										   name:@"Power buttons and doors"];
-//}
-//
+
+#pragma mark - powerButtonsAndDoors
++(nonnull instancetype)smb_powerButtonsAndDoors
+{
+	NSMutableArray<SMBGameLevelGenerator*>* const gameLevelGenerators = [NSMutableArray<SMBGameLevelGenerator*> array];
+
+	[gameLevelGenerators addObject:[[SMBGameLevelGenerator alloc] init_with_generateLevelBlock:^SMBGameLevel * _Nonnull{
+		return [SMBGameLevel smb_powerButton_introduction];
+	}
+																						  name:@"Button Introduction"
+																						  hint:@"Power up a button to turn it on. A powered button will power another tile on the board."]];
+
+	[gameLevelGenerators addObject:[[SMBGameLevelGenerator alloc] init_with_generateLevelBlock:^SMBGameLevel * _Nonnull{
+		return [SMBGameLevel smb_powerButtons_3choices];
+	}
+																						  name:@"Button Choices"
+																						  hint:@"Determine which button powers which tile."]];
+
+	[gameLevelGenerators addObject:[[SMBGameLevelGenerator alloc] init_with_generateLevelBlock:^SMBGameLevel * _Nonnull{
+		return [SMBGameLevel smb_powerButtons_usableGameBoardTileEntities_choices];
+	}
+																						  name:@"Too Easy"]];
+
+	[gameLevelGenerators addObject:[[SMBGameLevelGenerator alloc] init_with_generateLevelBlock:^SMBGameLevel * _Nonnull{
+		return [SMBGameLevel smb_powerButtons_windows_3x3];
+	}
+																						  name:@"Windows"]];
+
+	[gameLevelGenerators addObject:[[SMBGameLevelGenerator alloc] init_with_generateLevelBlock:^SMBGameLevel * _Nonnull{
+		return [SMBGameLevel smb_powerButtons_and_door_introduction];
+	}
+																						  name:@"Door Introduction"]];
+
+	[gameLevelGenerators addObject:[[SMBGameLevelGenerator alloc] init_with_generateLevelBlock:^SMBGameLevel * _Nonnull{
+		return [SMBGameLevel smb_powerButtons_and_door_selfPoweredBeamCreator];
+	}
+																						  name:@"Self Powered"]];
+
+	[gameLevelGenerators addObject:[[SMBGameLevelGenerator alloc] init_with_generateLevelBlock:^SMBGameLevel * _Nonnull{
+		return [SMBGameLevel smb_powerButtons_and_doors_choices];
+	}
+																						  name:@"Buttons and Doors"]];
+
+	[gameLevelGenerators addObject:[[SMBGameLevelGenerator alloc] init_with_generateLevelBlock:^SMBGameLevel * _Nonnull{
+		return [SMBGameLevel smb_powerButtons_and_doors_powerPlant];
+	}
+																						  name:@"Button Power Plant"]];
+
+	return
+	[[self alloc] init_with_gameLevelGenerators:[NSArray<SMBGameLevelGenerator*> arrayWithArray:gameLevelGenerators]
+										   name:@"Power buttons and doors"];
+}
+
 //#pragma mark - powerSwitchesAndDoorGroups
 //+(nonnull instancetype)smb_powerSwitchesAndDoorGroups
 //{
