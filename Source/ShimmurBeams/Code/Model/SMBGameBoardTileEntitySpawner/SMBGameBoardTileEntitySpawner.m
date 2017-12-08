@@ -23,7 +23,7 @@
 
 
 
-static void* SMBGameBoardTileEntitySpawner__KVOContext_spawnedGameBoardTileEntities_tracked = &SMBGameBoardTileEntitySpawner__KVOContext_spawnedGameBoardTileEntities_tracked;
+static void* SMBGameBoardTileEntitySpawner__KVOContext_gameBoardTileEntity = &SMBGameBoardTileEntitySpawner__KVOContext_gameBoardTileEntity;
 static void* SMBGameBoardTileEntitySpawner__KVOContext_spawnedGameBoardTileEntities_offBoard_tracked = &SMBGameBoardTileEntitySpawner__KVOContext_spawnedGameBoardTileEntities_offBoard_tracked;
 
 typedef NS_ENUM(NSInteger, SMBGameBoardTileEntitySpawner__spawnNewEntityState) {
@@ -325,13 +325,13 @@ typedef NS_ENUM(NSInteger, SMBGameBoardTileEntitySpawner__spawnNewEntityState) {
 				[gameBoardTileEntity addObserver:self
 									  forKeyPath:propertyToObserve
 										 options:(KVOOptions_number.unsignedIntegerValue)
-										 context:&SMBGameBoardTileEntitySpawner__KVOContext_spawnedGameBoardTileEntities_tracked];
+										 context:&SMBGameBoardTileEntitySpawner__KVOContext_gameBoardTileEntity];
 			}
 			else
 			{
 				[gameBoardTileEntity removeObserver:self
 										 forKeyPath:propertyToObserve
-											context:&SMBGameBoardTileEntitySpawner__KVOContext_spawnedGameBoardTileEntities_tracked];
+											context:&SMBGameBoardTileEntitySpawner__KVOContext_gameBoardTileEntity];
 			}
 		}];
 	}];
@@ -551,7 +551,7 @@ typedef NS_ENUM(NSInteger, SMBGameBoardTileEntitySpawner__spawnNewEntityState) {
 #pragma mark - KVO
 -(void)observeValueForKeyPath:(nullable NSString*)keyPath ofObject:(nullable id)object change:(nullable NSDictionary*)change context:(nullable void*)context
 {
-	if (context == SMBGameBoardTileEntitySpawner__KVOContext_spawnedGameBoardTileEntities_tracked)
+	if (context == SMBGameBoardTileEntitySpawner__KVOContext_gameBoardTileEntity)
 	{
 		if ([self.spawnedGameBoardTileEntities_tracked containsObject:object])
 		{
