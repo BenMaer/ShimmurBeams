@@ -281,6 +281,7 @@ static void* SMBGameBoardTileEntitySpawnerPickerCollectionViewCell__KVOContext_g
 -(void)amountUsedLabel_text_update
 {
 	[self.amountUsedLabel setText:[self amountUsedLabel_text_generate]];
+	[self setNeedsLayout];
 }
 
 -(nullable NSString*)amountUsedLabel_text_generate

@@ -34,6 +34,9 @@
 #pragma mark - powerToggle_beamEntityManagerStuck
 +(nonnull instancetype)smb_powerToggle_beamEntityManagerStuck;
 
+#pragma mark - spawners_countsWork
++(nonnull instancetype)smb_spawners_countsWork;
+
 @end
 
 #endif

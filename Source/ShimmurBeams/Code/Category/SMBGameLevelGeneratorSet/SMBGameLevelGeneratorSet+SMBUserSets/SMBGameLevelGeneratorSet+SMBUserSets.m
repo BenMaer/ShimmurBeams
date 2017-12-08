@@ -300,6 +300,12 @@
 																						  name:@"Beam Entity Manager Stuck"
 																						  hint:@"Power entity at B3. The unpowered beam creator at E3 should now be powered. Leave level to hit unit test."]];
 
+	[gameLevelGenerators addObject:[[SMBGameLevelGenerator alloc] init_with_generateLevelBlock:^SMBGameLevel * _Nonnull{
+		return [SMBGameLevel smb_spawners_countsWork];
+	}
+																						  name:@"Spawners Counts Work"
+																						  hint:@"First spawner has max of 1, should show no text. Second spawner has max of 5, should show `[# spawned]/[max]`. Third spawner has max of 0 (infinity), should show `[# spawned]`."]];
+
 	return
 	[[self alloc] init_with_gameLevelGenerators:[NSArray<SMBGameLevelGenerator*> arrayWithArray:gameLevelGenerators]
 										   name:@"UNIT TESTS"];
