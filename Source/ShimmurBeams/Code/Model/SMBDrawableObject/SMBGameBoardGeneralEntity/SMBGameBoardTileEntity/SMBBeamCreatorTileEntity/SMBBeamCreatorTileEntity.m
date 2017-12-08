@@ -41,6 +41,9 @@ static void* kSMBBeamCreatorTileEntity__KVOContext = &kSMBBeamCreatorTileEntity_
 #pragma mark - gameBoardTile
 -(BOOL)SMBBeamCreatorTileEntity_gameBoardTile_requiresKVO;
 -(void)SMBBeamCreatorTileEntity_gameBoardTile_setKVORegistered:(BOOL)registered;
+-(void)gameBoardTile:(nullable SMBGameBoardTile* const)gameBoardTile
+		  beamEntity:(nullable SMBBeamEntity* const)beamEntity
+gameBoard_gameBoardEntity_update:(BOOL)add;
 
 #pragma mark - beamEntity
 @property (nonatomic, strong, nullable) SMBBeamEntity* beamEntity;
@@ -88,7 +91,7 @@ static void* kSMBBeamCreatorTileEntity__KVOContext = &kSMBBeamCreatorTileEntity_
 
 		[self setBeamEnterDirections_blocked:SMBGameBoardTile__directions_all()];
 	}
-	
+
 	return self;
 }
 
@@ -116,13 +119,20 @@ static void* kSMBBeamCreatorTileEntity__KVOContext = &kSMBBeamCreatorTileEntity_
 #pragma mark - SMBGameBoardTileEntity: gameBoardTile
 -(void)setGameBoardTile:(nullable SMBGameBoardTile*)gameBoardTile
 {
-	SMBGameBoardTile* const gameBoardTile_old = self.gameBoardTile;
-
 	[self SMBBeamCreatorTileEntity_gameBoardTile_setKVORegistered:NO];
 
+	SMBGameBoardTile* const gameBoardTile_old = self.gameBoardTile;
 	[super setGameBoardTile:gameBoardTile];
 
+	[self gameBoardTile:gameBoardTile_old
+			 beamEntity:self.beamEntity
+gameBoard_gameBoardEntity_update:NO];
+
 	[self SMBBeamCreatorTileEntity_gameBoardTile_setKVORegistered:YES];
+
+	[self gameBoardTile:gameBoardTile
+			 beamEntity:self.beamEntity
+gameBoard_gameBoardEntity_update:YES];
 
 	kRUConditionalReturn(gameBoardTile_old == self.gameBoardTile, NO);
 
@@ -141,10 +151,10 @@ static void* kSMBBeamCreatorTileEntity__KVOContext = &kSMBBeamCreatorTileEntity_
 
 	typeof(self.gameBoardTile) const gameBoardTile = self.gameBoardTile;
 	kRUConditionalReturn(gameBoardTile == nil, NO);
-	
+
 	NSMutableArray<NSString*>* const propertiesToObserve = [NSMutableArray<NSString*> array];
 	[propertiesToObserve addObject:[SMBGameBoardTile_PropertiesForKVO isPowered]];
-	
+
 	[propertiesToObserve enumerateObjectsUsingBlock:^(NSString * _Nonnull propertyToObserve, NSUInteger idx, BOOL * _Nonnull stop) {
 		if (registered)
 		{
@@ -160,6 +170,35 @@ static void* kSMBBeamCreatorTileEntity__KVOContext = &kSMBBeamCreatorTileEntity_
 								  context:&kSMBBeamCreatorTileEntity__KVOContext];
 		}
 	}];
+}
+
+-(void)gameBoardTile:(nullable SMBGameBoardTile* const)gameBoardTile
+		  beamEntity:(nullable SMBBeamEntity* const)beamEntity
+gameBoard_gameBoardEntity_update:(BOOL)add
+{
+	kRUConditionalReturn(gameBoardTile == nil, NO);
+
+//	SMBBeamEntity* const beamEntity = self.beamEntity;
+	kRUConditionalReturn(beamEntity == nil, NO);
+
+//	SMBGameBoardTile* const gameBoardTile = self.gameBoardTile;
+//	kRUConditionalReturn(gameBoardTile == nil, NO);
+
+	SMBGameBoard* const gameBoard = gameBoardTile.gameBoard;
+	kRUConditionalReturn((add == YES)
+						 &&
+						 gameBoard == nil, YES);
+
+	kRUConditionalReturn(add == (beamEntity.gameBoard != nil), NO);
+
+	if (add)
+	{
+		[gameBoard gameBoardEntity_add:beamEntity];
+	}
+	else
+	{
+		[gameBoard gameBoardEntity_remove:beamEntity];
+	}
 }
 
 #pragma mark - KVO
@@ -191,21 +230,20 @@ static void* kSMBBeamCreatorTileEntity__KVOContext = &kSMBBeamCreatorTileEntity_
 }
 
 #pragma mark - beamEntity
--(void)setBeamEntity:(nullable SMBBeamEntity*)beamEntity
+-(void)setBeamEntity:(nullable SMBBeamEntity* const)beamEntity
 {
 	kRUConditionalReturn(self.beamEntity == beamEntity, NO);
 
-	if (self.beamEntity)
-	{
-		[self.gameBoardTile.gameBoard gameBoardEntity_remove:self.beamEntity];
-	}
-
+	SMBBeamEntity* const beamEntity_old = self.beamEntity;
 	_beamEntity = beamEntity;
 
-	if (self.beamEntity)
-	{
-		[self.gameBoardTile.gameBoard gameBoardEntity_add:self.beamEntity];
-	}
+	[self gameBoardTile:self.gameBoardTile
+			 beamEntity:beamEntity_old
+gameBoard_gameBoardEntity_update:NO];
+
+	[self gameBoardTile:self.gameBoardTile
+			 beamEntity:beamEntity
+gameBoard_gameBoardEntity_update:YES];
 
 	[self setNeedsRedraw];
 }

@@ -32,6 +32,7 @@
 {
 	NSString* const uniqueId_last = self.uniqueId_last;
 
+#warning Let's have this method return nonnull by nonnulling the next method, by putting initial inside it's fail cases.
 	NSString* const uniqueId_new =
 	(uniqueId_last
 	 ?

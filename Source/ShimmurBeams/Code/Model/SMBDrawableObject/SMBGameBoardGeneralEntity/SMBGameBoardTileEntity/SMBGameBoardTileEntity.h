@@ -39,6 +39,11 @@
  */
 @property (nonatomic, assign, nullable) SMBGameBoardTile* gameBoardTile;
 
+#if kSMBEnvironment__SMBGameBoardTileEntity_deallocIsOccuring_enabled
+#pragma mark - deallocIsOccuring
+@property (nonatomic, readonly, assign) BOOL deallocIsOccuring;
+#endif
+
 @end
 
 

@@ -1,6 +1,8 @@
 PODS:
   - RaptureXML (1.0.1)
   - ResplendentUtilities (0.5.3)
+  - RTSMTableSectionManager (0.1.9):
+    - ResplendentUtilities (~> 0.5.2)
   - RUTextSize (0.1.17):
     - ResplendentUtilities (~> 0.5.2)
   - UIImage+SVG (0.1):
@@ -8,15 +10,17 @@ PODS:
 
 DEPENDENCIES:
   - ResplendentUtilities (= 0.5.3)
+  - RTSMTableSectionManager (= 0.1.9)
   - RUTextSize (= 0.1.17)
   - UIImage+SVG (= 0.1)
 
 SPEC CHECKSUMS:
   RaptureXML: b5c33c04c1a4adfd8ad0d5463329a31820596e82
   ResplendentUtilities: d0b25000014152fb14f5a9b9d36c391dc788aeb3
+  RTSMTableSectionManager: 4abad47ed00794299ef6c10a2f3729147f005b04
   RUTextSize: 1a9e27d32b2cb4e5c9f10397076f4c65859ac285
   UIImage+SVG: 23a2edbb60b0f4c083068963086e309ebd8be592
 
-PODFILE CHECKSUM: 4ccbf2936e7f121edac2867e596dca30167c47d7
+PODFILE CHECKSUM: 5cb6b33912aa5c7f0d0064189fed260e2cc88d82
 
 COCOAPODS: 1.2.1

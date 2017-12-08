@@ -1,0 +1,1 @@
+../../../RTSMTableSectionManager/RTSMTableSectionManager/Classes/RTSMTableSectionManager/RTSMTableSectionManagerProtocols.h

@@ -1,8 +1,8 @@
 GCC_PREPROCESSOR_DEFINITIONS = $(inherited) COCOAPODS=1
-HEADER_SEARCH_PATHS = $(SDKROOT)/usr/include/libxml2 $(inherited) "${PODS_ROOT}/Headers/Public" "${PODS_ROOT}/Headers/Public/RUTextSize" "${PODS_ROOT}/Headers/Public/RaptureXML" "${PODS_ROOT}/Headers/Public/ResplendentUtilities" "${PODS_ROOT}/Headers/Public/UIImage+SVG"
-LIBRARY_SEARCH_PATHS = $(inherited) "$PODS_CONFIGURATION_BUILD_DIR/RUTextSize" "$PODS_CONFIGURATION_BUILD_DIR/RaptureXML" "$PODS_CONFIGURATION_BUILD_DIR/ResplendentUtilities" "$PODS_CONFIGURATION_BUILD_DIR/UIImage+SVG"
-OTHER_CFLAGS = $(inherited) -isystem "${PODS_ROOT}/Headers/Public" -isystem "${PODS_ROOT}/Headers/Public/RUTextSize" -isystem "${PODS_ROOT}/Headers/Public/RaptureXML" -isystem "${PODS_ROOT}/Headers/Public/ResplendentUtilities" -isystem "${PODS_ROOT}/Headers/Public/UIImage+SVG"
-OTHER_LDFLAGS = $(inherited) -ObjC -l"RUTextSize" -l"RaptureXML" -l"ResplendentUtilities" -l"UIImage+SVG" -l"xml2" -l"z"
+HEADER_SEARCH_PATHS = $(SDKROOT)/usr/include/libxml2 $(inherited) "${PODS_ROOT}/Headers/Public" "${PODS_ROOT}/Headers/Public/RTSMTableSectionManager" "${PODS_ROOT}/Headers/Public/RUTextSize" "${PODS_ROOT}/Headers/Public/RaptureXML" "${PODS_ROOT}/Headers/Public/ResplendentUtilities" "${PODS_ROOT}/Headers/Public/UIImage+SVG"
+LIBRARY_SEARCH_PATHS = $(inherited) "$PODS_CONFIGURATION_BUILD_DIR/RTSMTableSectionManager" "$PODS_CONFIGURATION_BUILD_DIR/RUTextSize" "$PODS_CONFIGURATION_BUILD_DIR/RaptureXML" "$PODS_CONFIGURATION_BUILD_DIR/ResplendentUtilities" "$PODS_CONFIGURATION_BUILD_DIR/UIImage+SVG"
+OTHER_CFLAGS = $(inherited) -isystem "${PODS_ROOT}/Headers/Public" -isystem "${PODS_ROOT}/Headers/Public/RTSMTableSectionManager" -isystem "${PODS_ROOT}/Headers/Public/RUTextSize" -isystem "${PODS_ROOT}/Headers/Public/RaptureXML" -isystem "${PODS_ROOT}/Headers/Public/ResplendentUtilities" -isystem "${PODS_ROOT}/Headers/Public/UIImage+SVG"
+OTHER_LDFLAGS = $(inherited) -ObjC -l"RTSMTableSectionManager" -l"RUTextSize" -l"RaptureXML" -l"ResplendentUtilities" -l"UIImage+SVG" -l"xml2" -l"z"
 PODS_BUILD_DIR = $BUILD_DIR
 PODS_CONFIGURATION_BUILD_DIR = $PODS_BUILD_DIR/$(CONFIGURATION)$(EFFECTIVE_PLATFORM_NAME)
 PODS_PODFILE_DIR_PATH = ${SRCROOT}/.

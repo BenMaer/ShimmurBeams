@@ -14,9 +14,15 @@
 #import "SMBGameBoardTile.h"
 #import "SMBGameBoardTileEntity.h"
 #import "SMBGameBoard+SMBAddEntity.h"
+#import "SMBGameBoardTileEntitySpawnerManager.h"
+#import "SMBGameBoardTileEntitySpawner.h"
+#import "SMBGameLevelView_UserSelection.h"
+#import "SMBGameLevelView_UserSelection_GameBoardTile_HighlightData.h"
 
 #import <ResplendentUtilities/RUConditionalReturn.h>
 #import <ResplendentUtilities/UIView+RUUtility.h>
+#import <ResplendentUtilities/RUClassOrNilUtil.h>
+
 
 #define kSMBGameLevelView__beamEntityManager_beamEntity_forMarkingNodesReady_validation_enabled (kSMBEnvironment__SMBGameLevelView_beamEntityManager_beamEntity_forMarkingNodesReady_validation_enabled && 1)
 
@@ -28,13 +34,13 @@
 
 
 
-static void* kSMBGameLevelView__KVOContext = &kSMBGameLevelView__KVOContext;
+static void* kSMBGameLevelView__KVOContext_gameLevelView_UserSelection = &kSMBGameLevelView__KVOContext_gameLevelView_UserSelection;
 
 
 
 
 
-@interface SMBGameLevelView () <SMBGameBoardView_tileTapDelegate>
+@interface SMBGameLevelView () <SMBGameBoardView_tileTapDelegate, SMBGameBoardTileEntityPickerView__GameBoardTileEntitySpawner_TapDelegate, SMBGameBoardTileEntityPickerView__TrashButton_TapDelegate>
 
 #pragma mark - content_inset
 -(CGFloat)content_inset;
@@ -45,12 +51,13 @@ static void* kSMBGameLevelView__KVOContext = &kSMBGameLevelView__KVOContext;
 -(CGRect)gameBoardView_frame_with_boundingSize:(CGSize)boundingSize;
 
 #pragma mark - gameBoardTileEntityPickerView
--(void)gameBoardTileEntityPickerView_setKVORegistered:(BOOL)registered;
-@property (nonatomic, readonly, strong, nullable) SMBGameBoardTileEntityPickerView* gameBoardTileEntityPickerView;
+@property (nonatomic, strong, nullable) SMBGameBoardTileEntityPickerView* gameBoardTileEntityPickerView;
+-(void)gameBoardTileEntityPickerView_generate;
 -(CGRect)gameBoardTileEntityPickerView_frame;
 -(CGRect)gameBoardTileEntityPickerView_frame_with_boundingWidth:(CGFloat)boundingWidth
 									   gameBoardView_frame_maxY:(CGFloat)gameBoardView_frame_maxY;
--(void)gameBoardTileEntityPickerView_selectedGameBoardTileEntity_move_to_tile:(nonnull SMBGameBoardTile*)gameBoardTile;
+-(void)gameBoardTileEntityPickerView_selectedGameBoardTileEntitySpawner_update_from_gameLevelView_UserSelection;
+-(void)gameBoardTileEntityPickerView_selectedGameBoardTileEntitySpawner_spawn_attempt_on_tile:(nonnull SMBGameBoardTile*)gameBoardTile;
 
 #pragma mark - gameBoardTileEntityPickerView_borderColorView
 @property (nonatomic, readonly, strong, nullable) UIView* gameBoardTileEntityPickerView_borderColorView;
@@ -63,10 +70,28 @@ static void* kSMBGameLevelView__KVOContext = &kSMBGameLevelView__KVOContext;
 -(void)gameBoardTileEntityPickerView_borderColorView_animate_cancel;
 -(void)gameBoardTileEntityPickerView_borderColorView_alpha_update_selected:(BOOL)selected;
 
+#pragma mark - gameLevelView_UserSelection
+@property (nonatomic, strong, nullable) SMBGameLevelView_UserSelection* gameLevelView_UserSelection;
+-(void)gameLevelView_UserSelection_setKVORegistered:(BOOL)registered;
+
+-(void)gameLevelView_UserSelection_update_from_selectedGameBoardTileEntity:(nullable SMBGameBoardTileEntity*)selectedGameBoardTileEntity;
+-(void)gameLevelView_UserSelection_update_from_selectedGameBoardTileEntitySpawner:(nullable SMBGameBoardTileEntitySpawner*)selectedGameBoardTileEntitySpawner;
+
+-(void)gameLevelView_UserSelection_removeSelectedEntitiesFromBoard;
+
+#pragma mark - selectedGameBoardTiles_HighlightData
+@property (nonatomic, copy, nullable) NSSet<SMBGameLevelView_UserSelection_GameBoardTile_HighlightData*>* selectedGameBoardTiles_HighlightData;
+-(void)selectedGameBoardTiles_HighlightData_update;
+
 #pragma mark - gameBoardTile
-@property (nonatomic, strong, nullable) SMBGameBoardTile* gameBoardTile_selected;
--(void)gameBoardTile_selected_update;
--(nullable SMBGameBoardTile*)gameBoardTile_selected_appropriate;
+-(void)gameBoardTile_update_from_highlightData:(nonnull SMBGameLevelView_UserSelection_GameBoardTile_HighlightData*)gameBoardTile_HighlightData
+								 isHighlighted:(BOOL)isHighlighted;
+
+#pragma mark - gameBoardTileEntitySpawners
+-(void)gameBoardTileEntitySpawners_removeAllEntitiesFromTiles;
+
+#pragma mark - gameBoardTileEntities
+-(void)gameBoardTileEntity_removeFromTile:(nonnull SMBGameBoardTileEntity*)gameBoardTileEntity;
 
 @end
 
@@ -79,7 +104,7 @@ static void* kSMBGameLevelView__KVOContext = &kSMBGameLevelView__KVOContext;
 #pragma mark - NSObject
 -(void)dealloc
 {
-	[self gameBoardTileEntityPickerView_setKVORegistered:NO];
+	[self gameLevelView_UserSelection_setKVORegistered:NO];
 }
 
 #pragma mark - UIView
@@ -89,10 +114,7 @@ static void* kSMBGameLevelView__KVOContext = &kSMBGameLevelView__KVOContext;
 	{
 		[self setBackgroundColor:[UIColor clearColor]];
 
-		_gameBoardTileEntityPickerView = [SMBGameBoardTileEntityPickerView new];
-		[self.gameBoardTileEntityPickerView setBackgroundColor:[UIColor clearColor]];
-		[self gameBoardTileEntityPickerView_setKVORegistered:YES];
-		[self addSubview:self.gameBoardTileEntityPickerView];
+		[self gameBoardTileEntityPickerView_generate];
 
 		_gameBoardTileEntityPickerView_borderColorView = [UIView new];
 		[self.gameBoardTileEntityPickerView_borderColorView setBackgroundColor:[UIColor clearColor]];
@@ -139,7 +161,11 @@ static void* kSMBGameLevelView__KVOContext = &kSMBGameLevelView__KVOContext;
 
 	_gameLevel = gameLevel;
 
-	[self.gameBoardTileEntityPickerView setGameBoardTileEntities:self.gameLevel.usableGameBoardTileEntities];
+	[self setGameLevelView_UserSelection:nil];
+
+	[self gameBoardTileEntityPickerView_generate];
+	[self.gameBoardTileEntityPickerView setGameBoardTileEntitySpawners:self.gameLevel.gameBoardTileEntitySpawnerManager.gameBoardTileEntitySpawners];
+
 	[self.gameBoardView setGameBoard:self.gameLevel.gameBoard];
 
 #if kSMBGameLevelView__beamEntityManager_beamEntity_forMarkingNodesReady_validation_enabled
@@ -154,29 +180,31 @@ static void* kSMBGameLevelView__KVOContext = &kSMBGameLevelView__KVOContext;
 }
 
 #pragma mark - gameBoardTileEntityPickerView
--(void)gameBoardTileEntityPickerView_setKVORegistered:(BOOL)registered
+-(void)setGameBoardTileEntityPickerView:(nullable SMBGameBoardTileEntityPickerView*)gameBoardTileEntityPickerView
 {
-	typeof(self.gameBoardTileEntityPickerView) const gameBoardTileEntityPickerView = self.gameBoardTileEntityPickerView;
-	kRUConditionalReturn(gameBoardTileEntityPickerView == nil, NO);
+	kRUConditionalReturn(self.gameBoardTileEntityPickerView == gameBoardTileEntityPickerView, NO);
 
-	NSMutableArray<NSString*>* const propertiesToObserve = [NSMutableArray<NSString*> array];
-	[propertiesToObserve addObject:[SMBGameBoardTileEntityPickerView_PropertiesForKVO selectedGameBoardTileEntity]];
+	if (self.gameBoardTileEntityPickerView)
+	{
+		[self.gameBoardTileEntityPickerView removeFromSuperview];
+	}
 
-	[propertiesToObserve enumerateObjectsUsingBlock:^(NSString * _Nonnull propertyToObserve, NSUInteger idx, BOOL * _Nonnull stop) {
-		if (registered)
-		{
-			[gameBoardTileEntityPickerView addObserver:self
-											forKeyPath:propertyToObserve
-											   options:(NSKeyValueObservingOptionInitial)
-											   context:&kSMBGameLevelView__KVOContext];
-		}
-		else
-		{
-			[gameBoardTileEntityPickerView removeObserver:self
-											   forKeyPath:propertyToObserve
-												  context:&kSMBGameLevelView__KVOContext];
-		}
-	}];
+	_gameBoardTileEntityPickerView = gameBoardTileEntityPickerView;
+
+	if (self.gameBoardTileEntityPickerView)
+	{
+		[self addSubview:self.gameBoardTileEntityPickerView];
+	}
+}
+
+-(void)gameBoardTileEntityPickerView_generate
+{
+	SMBGameBoardTileEntityPickerView* const gameBoardTileEntityPickerView = [SMBGameBoardTileEntityPickerView new];
+	[gameBoardTileEntityPickerView setBackgroundColor:[UIColor clearColor]];
+	[gameBoardTileEntityPickerView setGameBoardTileEntitySpawner_tapDelegate:self];
+	[gameBoardTileEntityPickerView setTrashButton_tapDelegate:self];
+
+	[self setGameBoardTileEntityPickerView:gameBoardTileEntityPickerView];
 }
 
 -(CGRect)gameBoardTileEntityPickerView_frame
@@ -203,22 +231,36 @@ static void* kSMBGameLevelView__KVOContext = &kSMBGameLevelView__KVOContext;
 	});
 }
 
--(void)gameBoardTileEntityPickerView_selectedGameBoardTileEntity_move_to_tile:(nonnull SMBGameBoardTile*)gameBoardTile
+-(void)gameBoardTileEntityPickerView_selectedGameBoardTileEntitySpawner_update_from_gameLevelView_UserSelection
 {
+	[self.gameBoardTileEntityPickerView setSelectedGameBoardTileEntitySpawner:self.gameLevelView_UserSelection.selectedGameBoardTileEntitySpawner];
+}
+
+-(void)gameBoardTileEntityPickerView_selectedGameBoardTileEntitySpawner_spawn_attempt_on_tile:(nonnull SMBGameBoardTile*)gameBoardTile
+{
+	/*
+	 Refer to document `User facing actions` for details on expected logic.
+	 https://docs.google.com/a/shimmur.com/document/d/1XXJqmIBKHtOcW3BhYKM5rFmT7ciu0J8-2ZjjPGTynUg/edit?usp=sharing
+
+	 This is covering User actions:
+	 - 5
+
+	 Coming from User taps:
+	 - 2.b.i.1
+	 */
+
 	kRUConditionalReturn(gameBoardTile == nil, YES);
 
-	SMBGameBoardTileEntity* const gameBoardTileEntityPickerView_selectedGameBoardTileEntity = self.gameBoardTileEntityPickerView.selectedGameBoardTileEntity;
-	kRUConditionalReturn(gameBoardTileEntityPickerView_selectedGameBoardTileEntity == nil, NO);
+	SMBGameBoardTileEntitySpawner* const gameBoardTileEntityPickerView_selectedGameBoardTileEntitySpawner = self.gameBoardTileEntityPickerView.selectedGameBoardTileEntitySpawner;
+	kRUConditionalReturn(gameBoardTileEntityPickerView_selectedGameBoardTileEntitySpawner == nil, YES);
 
-	SMBGameBoardTileEntity* const gameBoardTileEntity_for_beamInteractions_old = gameBoardTile.gameBoardTileEntity_for_beamInteractions;
-	kRUConditionalReturn((gameBoardTileEntity_for_beamInteractions_old != nil)
-						 &&
-						 ([self.gameBoardTileEntityPickerView.gameBoardTileEntities containsObject:gameBoardTileEntity_for_beamInteractions_old] == false), NO);
+	/*
+	 User taps: 2.a.i.1
+	 User taps: 2.a.ii.1.b.i
+	 */
+	[gameBoardTileEntityPickerView_selectedGameBoardTileEntitySpawner gameBoardTileEntity_spawnNew_tracked_on_gameBoardTile:gameBoardTile];
 
-	[gameBoardTile gameBoardTileEntities_add:gameBoardTileEntityPickerView_selectedGameBoardTileEntity
-								  entityType:SMBGameBoardTile__entityType_beamInteractions];
-
-	[self.gameBoardTileEntityPickerView setSelectedGameBoardTileEntity:nil];
+	[self gameLevelView_UserSelection_update_from_selectedGameBoardTileEntitySpawner:gameBoardTileEntityPickerView_selectedGameBoardTileEntitySpawner];
 }
 
 #pragma mark - gameBoardTileEntityPickerView_borderColorView
@@ -323,25 +365,71 @@ static void* kSMBGameLevelView__KVOContext = &kSMBGameLevelView__KVOContext;
 -(void)gameBoardView:(nonnull SMBGameBoardView*)gameBoardView
 	  tile_wasTapped:(nonnull SMBGameBoardTile*)gameBoardTile
 {
-	/**
-	 If we are tapping a game board tile, and `gameBoardTileEntityPickerView` has a non nil `selectedGameBoardTileEntity`, let's move that `selectedGameBoardTileEntity` to the game board tile.
+	/*
+	 Refer to document `User facing actions` for details on expected logic.
+	 https://docs.google.com/a/shimmur.com/document/d/1XXJqmIBKHtOcW3BhYKM5rFmT7ciu0J8-2ZjjPGTynUg/edit?usp=sharing
+
+	 This is covering: User taps: 2)
 	 */
-	if (self.gameBoardTileEntityPickerView.selectedGameBoardTileEntity)
+
+	SMBGameBoardTileEntity* const gameBoardTileEntity = gameBoardTile.gameBoardTileEntity_for_beamInteractions;
+	/* User taps: 2.a */
+	if (gameBoardTileEntity)
 	{
-		[self gameBoardTileEntityPickerView_selectedGameBoardTileEntity_move_to_tile:gameBoardTile];
+		SMBGameBoardTileEntitySpawner* const gameBoardTileEntitySpawner = [self.gameLevel.gameBoardTileEntitySpawnerManager gameBoardTileEntitySpawner_for_entity:gameBoardTileEntity];
+		/* User taps: 2.a.i */
+		if (gameBoardTileEntitySpawner)
+		{
+			SMBGameLevelView_UserSelection* const gameLevelView_UserSelection = self.gameLevelView_UserSelection;
+			/* User taps: 2.a.i.1 */
+			if ((gameLevelView_UserSelection != nil)
+				&&
+				(gameLevelView_UserSelection.selectedGameBoardTileEntity == gameBoardTileEntity))
+			{
+				/* User taps: 2.a.i.1.a */
+				[self gameLevelView_UserSelection_update_from_selectedGameBoardTileEntity:nil];
+			}
+			/* User taps: 2.a.i.2 */
+			else
+			{
+				/* User taps: 2.a.i.2.a */
+				[self gameLevelView_UserSelection_update_from_selectedGameBoardTileEntity:gameBoardTileEntity];
+			}
+		}
+		/* User taps: 2.a.ii
+		 else{}
+		 */
 	}
+	/* User taps: 2.b */
 	else
 	{
-		SMBGameBoardTileEntity* const gameBoardTileEntity = gameBoardTile.gameBoardTileEntity_for_beamInteractions;
-		if ((gameBoardTileEntity == nil)
-			||
-			([self.gameLevel.usableGameBoardTileEntities containsObject:gameBoardTileEntity] == false))
+		SMBGameLevelView_UserSelection* const gameLevelView_UserSelection = self.gameLevelView_UserSelection;
+		SMBGameBoardTileEntity* const selectedGameBoardTileEntity = gameLevelView_UserSelection.selectedGameBoardTileEntity;
+		/* User taps: 2.b.i */
+		/* User taps: 2.b.i.1 */
+		if (selectedGameBoardTileEntity)
 		{
-			[self gameBoardTileEntityPickerView_borderColorView_animate];
+			/* User taps: 2.b.i.1.a */
+			[gameBoardTile gameBoardTileEntities_add:selectedGameBoardTileEntity
+										  entityType:SMBGameBoardTile__entityType_beamInteractions];
 		}
+		/* User taps: 2.b.i.2 */
 		else
 		{
-			[self.gameBoardTileEntityPickerView setSelectedGameBoardTileEntity:gameBoardTileEntity];
+			SMBGameBoardTileEntitySpawner* const selectedGameBoardTileEntitySpawner = gameLevelView_UserSelection.selectedGameBoardTileEntitySpawner;
+			/* User taps: 2.b.i.2.a */
+			/* User taps: 2.b.i.2.a.i */
+			if (selectedGameBoardTileEntitySpawner)
+			{
+				/* User taps: 2.b.i.2.a.i.1 */
+				[self gameBoardTileEntityPickerView_selectedGameBoardTileEntitySpawner_spawn_attempt_on_tile:gameBoardTile];
+			}
+			/* User taps: 2.b.i.2.a.ii */
+			else
+			{
+				/* User taps: 2.b.i.2.a.ii.1 */
+				[self gameBoardTileEntityPickerView_borderColorView_animate];
+			}
 		}
 	}
 
@@ -353,13 +441,13 @@ static void* kSMBGameLevelView__KVOContext = &kSMBGameLevelView__KVOContext;
 #pragma mark - KVO
 -(void)observeValueForKeyPath:(nullable NSString*)keyPath ofObject:(nullable id)object change:(nullable NSDictionary*)change context:(nullable void*)context
 {
-	if (context == kSMBGameLevelView__KVOContext)
+	if (context == kSMBGameLevelView__KVOContext_gameLevelView_UserSelection)
 	{
-		if (object == self.gameBoardTileEntityPickerView)
+		if (object == self.gameLevelView_UserSelection)
 		{
-			if ([keyPath isEqualToString:[SMBGameBoardTileEntityPickerView_PropertiesForKVO selectedGameBoardTileEntity]])
+			if ([keyPath isEqualToString:[SMBGameLevelView_UserSelection_PropertiesForKVO selectedGameBoardTiles_HighlightData]])
 			{
-				[self gameBoardTile_selected_update];
+				[self selectedGameBoardTiles_HighlightData_update];
 			}
 			else
 			{
@@ -377,38 +465,227 @@ static void* kSMBGameLevelView__KVOContext = &kSMBGameLevelView__KVOContext;
 	}
 }
 
+#pragma mark - gameLevelView_UserSelection
+-(void)setGameLevelView_UserSelection:(nullable SMBGameLevelView_UserSelection*)gameLevelView_UserSelection
+{
+	kRUConditionalReturn(self.gameLevelView_UserSelection == gameLevelView_UserSelection, NO);
+
+	[self gameLevelView_UserSelection_setKVORegistered:NO];
+
+	_gameLevelView_UserSelection = gameLevelView_UserSelection;
+
+	[self gameLevelView_UserSelection_setKVORegistered:YES];
+
+	[self selectedGameBoardTiles_HighlightData_update];
+	[self gameBoardTileEntityPickerView_selectedGameBoardTileEntitySpawner_update_from_gameLevelView_UserSelection];
+}
+
+-(void)gameLevelView_UserSelection_setKVORegistered:(BOOL)registered
+{
+	typeof(self.gameLevelView_UserSelection) const gameLevelView_UserSelection = self.gameLevelView_UserSelection;
+	kRUConditionalReturn(gameLevelView_UserSelection == nil, NO);
+
+	NSMutableDictionary<NSNumber*,NSMutableArray<NSString*>*>* const KVOOptions_to_propertiesToObserve_mapping = [NSMutableDictionary<NSNumber*,NSMutableArray<NSString*>*> dictionary];
+
+	NSMutableArray<NSString*>* const propertiesToObserve = [NSMutableArray<NSString*> array];
+	[propertiesToObserve addObject:[SMBGameLevelView_UserSelection_PropertiesForKVO selectedGameBoardTiles_HighlightData]];
+	[KVOOptions_to_propertiesToObserve_mapping setObject:propertiesToObserve forKey:@(0)];
+
+	[KVOOptions_to_propertiesToObserve_mapping enumerateKeysAndObjectsUsingBlock:^(NSNumber * _Nonnull KVOOptions_number, NSMutableArray<NSString *> * _Nonnull propertiesToObserve, BOOL * _Nonnull stop) {
+		[propertiesToObserve enumerateObjectsUsingBlock:^(NSString * _Nonnull propertyToObserve, NSUInteger idx, BOOL * _Nonnull stop) {
+			if (registered)
+			{
+				[gameLevelView_UserSelection addObserver:self
+											  forKeyPath:propertyToObserve
+												 options:(KVOOptions_number.unsignedIntegerValue)
+												 context:&kSMBGameLevelView__KVOContext_gameLevelView_UserSelection];
+			}
+			else
+			{
+				[gameLevelView_UserSelection removeObserver:self
+												 forKeyPath:propertyToObserve
+													context:&kSMBGameLevelView__KVOContext_gameLevelView_UserSelection];
+			}
+		}];
+	}];
+}
+
+-(void)gameLevelView_UserSelection_update_from_selectedGameBoardTileEntity:(nullable SMBGameBoardTileEntity*)selectedGameBoardTileEntity
+{
+	[self setGameLevelView_UserSelection:
+	 (selectedGameBoardTileEntity
+	  ?
+	  [[SMBGameLevelView_UserSelection alloc] init_with_gameBoardTileEntitySpawnerManager:self.gameLevel.gameBoardTileEntitySpawnerManager
+															  selectedGameBoardTileEntity:selectedGameBoardTileEntity]
+	  :
+	  nil
+	 )];
+}
+
+-(void)gameLevelView_UserSelection_update_from_selectedGameBoardTileEntitySpawner:(nullable SMBGameBoardTileEntitySpawner*)selectedGameBoardTileEntitySpawner
+{
+	[self setGameLevelView_UserSelection:
+	 (selectedGameBoardTileEntitySpawner
+	  ?
+	  [[SMBGameLevelView_UserSelection alloc] init_with_gameBoardTileEntitySpawnerManager:self.gameLevel.gameBoardTileEntitySpawnerManager
+													   selectedGameBoardTileEntitySpawner:selectedGameBoardTileEntitySpawner]
+	  :
+	  nil
+	  )];
+}
+
+-(void)gameLevelView_UserSelection_removeSelectedEntitiesFromBoard
+{
+	SMBGameLevelView_UserSelection* const gameLevelView_UserSelection = self.gameLevelView_UserSelection;
+	kRUConditionalReturn(gameLevelView_UserSelection == nil, YES);
+
+	SMBGameBoardTileEntity* const selectedGameBoardTileEntity = gameLevelView_UserSelection.selectedGameBoardTileEntity;
+	/* 3.a */
+	/* 3.a.i */
+	if (selectedGameBoardTileEntity)
+	{
+		/* 3.a.i.1 */
+		[self gameBoardTileEntity_removeFromTile:selectedGameBoardTileEntity];
+	}
+	/* 3.a.ii.1.a */
+	else
+	{
+		SMBGameBoardTileEntitySpawner* const selectedGameBoardTileEntitySpawner = gameLevelView_UserSelection.selectedGameBoardTileEntitySpawner;
+		kRUConditionalReturn(selectedGameBoardTileEntitySpawner == nil, YES);
+
+		/* 3.a.ii.1.a.i */
+		[[selectedGameBoardTileEntitySpawner spawnedGameBoardTileEntities_tracked] enumerateObjectsUsingBlock:^(SMBGameBoardTileEntity * _Nonnull gameBoardTileEntity, NSUInteger idx, BOOL * _Nonnull stop) {
+			[self gameBoardTileEntity_removeFromTile:gameBoardTileEntity];
+		}];
+	}
+}
+
+#pragma mark - selectedGameBoardTiles_HighlightData
+-(void)setSelectedGameBoardTiles_HighlightData:(nullable NSSet<SMBGameLevelView_UserSelection_GameBoardTile_HighlightData*>*)selectedGameBoardTiles_HighlightData
+{
+	kRUConditionalReturn((self.selectedGameBoardTiles_HighlightData == selectedGameBoardTiles_HighlightData)
+						 ||
+						 [self.selectedGameBoardTiles_HighlightData isEqual:selectedGameBoardTiles_HighlightData], NO);
+
+	[self.selectedGameBoardTiles_HighlightData enumerateObjectsUsingBlock:^(SMBGameLevelView_UserSelection_GameBoardTile_HighlightData * _Nonnull gameBoardTile_HighlightData, BOOL * _Nonnull stop) {
+		[self gameBoardTile_update_from_highlightData:gameBoardTile_HighlightData isHighlighted:NO];
+	}];
+
+	_selectedGameBoardTiles_HighlightData = (selectedGameBoardTiles_HighlightData ? [NSSet<SMBGameLevelView_UserSelection_GameBoardTile_HighlightData*> setWithSet:selectedGameBoardTiles_HighlightData] : nil);
+
+	[self.selectedGameBoardTiles_HighlightData enumerateObjectsUsingBlock:^(SMBGameLevelView_UserSelection_GameBoardTile_HighlightData * _Nonnull gameBoardTile_HighlightData, BOOL * _Nonnull stop) {
+		[self gameBoardTile_update_from_highlightData:gameBoardTile_HighlightData isHighlighted:YES];
+	}];
+}
+
+-(void)selectedGameBoardTiles_HighlightData_update
+{
+	[self setSelectedGameBoardTiles_HighlightData:[self.gameLevelView_UserSelection selectedGameBoardTiles_HighlightData]];
+}
+
 #pragma mark - gameBoardTile
--(void)setGameBoardTile_selected:(nullable SMBGameBoardTile*)gameBoardTile_selected
+-(void)gameBoardTile_update_from_highlightData:(nonnull SMBGameLevelView_UserSelection_GameBoardTile_HighlightData*)gameBoardTile_HighlightData
+								 isHighlighted:(BOOL)isHighlighted
 {
-	kRUConditionalReturn(self.gameBoardTile_selected == gameBoardTile_selected, NO);
+	kRUConditionalReturn(gameBoardTile_HighlightData == nil, YES);
 
-	if (self.gameBoardTile_selected)
+	SMBGameBoardTile* const gameBoardTile = gameBoardTile_HighlightData.gameBoardTile;
+	kRUConditionalReturn(gameBoardTile == nil, YES);
+
+	[gameBoardTile setHighlightColor:
+	 (isHighlighted
+	  ?
+	  gameBoardTile_HighlightData.highlightColor
+	  :
+	  nil
+	  )];
+}
+
+#pragma mark - SMBGameBoardTileEntityPickerView__GameBoardTileEntitySpawner_TapDelegate
+-(void)gameBoardTileEntityPickerView:(nonnull SMBGameBoardTileEntityPickerView*)gameBoardTileEntityPickerView
+   didTap_gameBoardTileEntitySpawner:(nonnull SMBGameBoardTileEntitySpawner*)gameBoardTileEntitySpawner
+{
+	kRUConditionalReturn(gameBoardTileEntitySpawner == nil, YES);
+
+	/*
+	 Refer to document `User facing actions` for details on expected logic.
+	 https://docs.google.com/a/shimmur.com/document/d/1XXJqmIBKHtOcW3BhYKM5rFmT7ciu0J8-2ZjjPGTynUg/edit?usp=sharing
+
+	 This is covering: User taps: 1)
+	 */
+
+	SMBGameLevelView_UserSelection* const gameLevelView_UserSelection = self.gameLevelView_UserSelection;
+	/* User actions: 1.a) */
+	/* User actions: 1.a.i) */
+	if ((gameLevelView_UserSelection != nil)
+		&&
+		(gameLevelView_UserSelection.selectedGameBoardTileEntitySpawner == gameBoardTileEntitySpawner)
+		)
 	{
-		[self.gameBoardTile_selected setIsHighlighted:NO];
+		/* User actions: 1.a.i.1) */
+		/* User actions: 1.a.i.1.a) */
+		if (gameLevelView_UserSelection.selectedGameBoardTileEntity)
+		{
+			/* User actions: 1.a.i.1.a.i) */
+			[self gameLevelView_UserSelection_update_from_selectedGameBoardTileEntitySpawner:gameBoardTileEntitySpawner];
+		}
+		/* User actions: 1.a.i.1.b) */
+		else
+		{
+			/* User actions: 1.a.i.1.b.i) */
+			[self gameLevelView_UserSelection_update_from_selectedGameBoardTileEntitySpawner:nil];
+		}
 	}
-
-	_gameBoardTile_selected = gameBoardTile_selected;
-
-	if (self.gameBoardTile_selected)
+	/* User actions: 1.a.ii) */
+	else
 	{
-		[self.gameBoardTile_selected setIsHighlighted:YES];
+		[self gameLevelView_UserSelection_update_from_selectedGameBoardTileEntitySpawner:gameBoardTileEntitySpawner];
 	}
 }
 
--(void)gameBoardTile_selected_update
+#pragma mark - SMBGameBoardTileEntityPickerView__TrashButton_TapDelegate
+-(void)gameBoardTileEntityPickerView:(nonnull SMBGameBoardTileEntityPickerView*)gameBoardTileEntityPickerView
+		didTap_trashButton_with_type:(SMBGameBoardTileEntityPickerView__trashButton_type)trashButton_type
 {
-	[self setGameBoardTile_selected:[self gameBoardTile_selected_appropriate]];
+	switch (trashButton_type)
+	{
+		case SMBGameBoardTileEntityPickerView__trashButton_type_none:
+			NSAssert(false, @"unhandled trashButton_type %li",(long)trashButton_type);
+			break;
+			
+		case SMBGameBoardTileEntityPickerView__trashButton_type_clearBoard:
+			/* 3.a.ii.1.b.i */
+			[self gameBoardTileEntitySpawners_removeAllEntitiesFromTiles];
+			break;
+			
+		case SMBGameBoardTileEntityPickerView__trashButton_type_remove:
+			[self gameLevelView_UserSelection_removeSelectedEntitiesFromBoard];
+			break;
+	}
+
+	[self setGameLevelView_UserSelection:nil];
 }
 
--(nullable SMBGameBoardTile*)gameBoardTile_selected_appropriate
+#pragma mark - gameBoardTileEntitySpawners
+-(void)gameBoardTileEntitySpawners_removeAllEntitiesFromTiles
 {
-	SMBGameBoardTileEntityPickerView* const gameBoardTileEntityPickerView = self.gameBoardTileEntityPickerView;
-	kRUConditionalReturn_ReturnValueNil(gameBoardTileEntityPickerView == nil, YES);
+	[self.gameLevel.gameBoardTileEntitySpawnerManager.gameBoardTileEntitySpawners enumerateObjectsUsingBlock:^(SMBGameBoardTileEntitySpawner * _Nonnull gameBoardTileEntitySpawner, NSUInteger idx, BOOL * _Nonnull stop) {
+		[[gameBoardTileEntitySpawner spawnedGameBoardTileEntities_tracked] enumerateObjectsUsingBlock:^(SMBGameBoardTileEntity * _Nonnull gameBoardTileEntity, NSUInteger idx, BOOL * _Nonnull stop) {
+			[self gameBoardTileEntity_removeFromTile:gameBoardTileEntity];
+		}];
+	}];
 
-	SMBGameBoardTileEntity* const selectedGameBoardTileEntity = gameBoardTileEntityPickerView.selectedGameBoardTileEntity;
-	kRUConditionalReturn_ReturnValueNil(selectedGameBoardTileEntity == nil, NO);
+}
 
-	return selectedGameBoardTileEntity.gameBoardTile;
+#pragma mark - gameBoardTileEntities
+-(void)gameBoardTileEntity_removeFromTile:(nonnull SMBGameBoardTileEntity*)gameBoardTileEntity
+{
+	kRUConditionalReturn(gameBoardTileEntity == nil, YES);
+
+	SMBGameBoardTile* const gameBoardTile = gameBoardTileEntity.gameBoardTile;
+	kRUConditionalReturn(gameBoardTile == nil, NO);
+	
+	[gameBoardTile gameBoardTileEntities_remove:gameBoardTileEntity entityType:SMBGameBoardTile__entityType_beamInteractions];
 }
 
 @end

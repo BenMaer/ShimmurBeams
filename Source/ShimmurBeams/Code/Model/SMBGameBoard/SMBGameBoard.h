@@ -31,6 +31,10 @@
 @interface SMBGameBoard : NSObject
 
 #pragma mark - gameLevel
+/**
+ Should only be set by the `SMBGameLevel` instance who owns this `SMBGameBoard` instands.
+ This property should be set to nil by the `SMBGameLevel` instance when it dies.
+ */
 @property (nonatomic, assign, nullable) SMBGameLevel* gameLevel;
 
 #pragma mark - init

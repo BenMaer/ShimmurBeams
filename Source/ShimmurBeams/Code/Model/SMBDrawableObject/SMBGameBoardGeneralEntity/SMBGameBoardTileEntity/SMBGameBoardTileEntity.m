@@ -9,6 +9,7 @@
 #import "SMBGameBoardTileEntity.h"
 #import "SMBGameBoardTile.h"
 #import "SMBMappedDataCollection.h"
+#import "NSObject+SMBGameBoardTileEntityDeallocNotifications.h"
 
 #import <ResplendentUtilities/RUConditionalReturn.h>
 #import <ResplendentUtilities/NSMutableArray+RUAddObjectIfNotNil.h>
@@ -26,6 +27,11 @@
 
 @interface SMBGameBoardTileEntity ()
 
+#if kSMBEnvironment__SMBGameBoardTileEntity_deallocIsOccuring_enabled
+#pragma mark - deallocIsOccuring
+@property (nonatomic, assign) BOOL deallocIsOccuring;
+#endif
+
 #if kSMBGameBoardTileEntity_gameBoardTileOwnership_validation_enabled
 #pragma mark - gameBoardTile
 -(BOOL)belongsTo_gameBoardTile:(nonnull SMBGameBoardTile*)gameBoardTile;
@@ -40,6 +46,16 @@
 @implementation SMBGameBoardTileEntity
 
 #pragma mark - NSObject
+-(void)dealloc
+{
+#if kSMBEnvironment__SMBGameBoardTileEntity_deallocIsOccuring_enabled
+#pragma mark - deallocIsOccuring
+	[self setDeallocIsOccuring:YES];
+#endif
+
+	[[NSNotificationCenter defaultCenter] postNotificationName:NSObject_SMBGameBoardTileEntityDeallocNotification__NotificationName__didCallDealloc object:self];
+}
+
 -(nonnull NSString*)description
 {
 	NSMutableArray<NSString*>* const description_lines = [NSMutableArray<NSString*> array];
