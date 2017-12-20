@@ -437,7 +437,7 @@ static void* kSMBGameLevelGeneratorViewController__KVOContext__gameBoard_forKVO 
 	[self.leastMovesBarButtonItem_label setText:
 	 RUStringWithFormat(@"%lu/%lu",
 						(unsigned long)self.SMBGameLevelGeneratorViewController_gameBoard_forKVO.currentNumberOfMoves,
-						(unsigned long)1)];
+						(unsigned long)self.SMBGameLevelGeneratorViewController_gameBoard_forKVO.leastNumberOfMoves)];
 
 	[self.leastMovesBarButtonItem_label sizeToFit];
 	[self leastMovesBarButtonItem_update];

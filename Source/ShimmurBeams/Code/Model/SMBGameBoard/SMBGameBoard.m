@@ -88,20 +88,25 @@ static void* kSMBGameBoard__KVOContext = &kSMBGameBoard__KVOContext;
 	kRUConditionalReturn_ReturnValueNil(YES, YES);
 
 	return [self init_with_numberOfColumns:0
-							  numberOfRows:0];
+							  numberOfRows:0
+						leastNumberOfMoves:0];
 }
 
 #pragma mark - init
 -(nullable instancetype)init_with_numberOfColumns:(NSUInteger)numberOfColumns
 									 numberOfRows:(NSUInteger)numberOfRows
+							   leastNumberOfMoves:(NSUInteger)leastNumberOfMoves
 {
 	kRUConditionalReturn_ReturnValueNil(numberOfColumns <= 0, YES);
 	kRUConditionalReturn_ReturnValueNil(numberOfRows <= 0, YES);
+	kRUConditionalReturn_ReturnValueNil(leastNumberOfMoves <= 0, YES);
 
 	if (self = [super init])
 	{
 		[self setGameBoardTiles:[self gameBoardTiles_generate_with_numberOfRows:numberOfRows
 																numberOfColumns:numberOfColumns]];
+
+		_leastNumberOfMoves = leastNumberOfMoves;
 	}
 
 	return self;

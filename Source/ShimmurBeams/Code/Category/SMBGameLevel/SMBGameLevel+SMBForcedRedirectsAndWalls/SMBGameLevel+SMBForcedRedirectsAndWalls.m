@@ -26,10 +26,20 @@
 #pragma mark - forcedRedirectsAndWalls
 +(nonnull instancetype)smb_forcedRedirects_oneForce_right
 {
+	/*
+	 Usable:
+	 1) Forced Redirect (direction: right)
+
+	 Answer:
+	 1) Usable 1) Forced Redirect (direction: right): B2
+
+	 */
+
 	/* Game board. */
 	SMBGameBoard* const gameBoard =
 	[[SMBGameBoard alloc] init_with_numberOfColumns:5
-									   numberOfRows:5];
+									   numberOfRows:5
+								 leastNumberOfMoves:1];
 
 	/* Initial beam creator. */
 	SMBBeamCreatorTileEntity* const beamCreatorEntity = [SMBBeamCreatorTileEntity new];
@@ -64,11 +74,22 @@
 
 +(nonnull instancetype)smb_forcedRedirects_twoForces_leftThenDown
 {
+	/*
+	 Usable:
+	 1) Forced Redirect (direction: left)
+	 2) Forced Redirect (direction: down)
+
+	 Answer:
+	 1) Usable 1) Forced Redirect (direction: left): D2
+	 2) Usable 2) Forced Redirect (direction: down): B2
+
+	 */
+
 	/* Game board. */
-		/* Game board. */
-SMBGameBoard* const gameBoard =
-[[SMBGameBoard alloc] init_with_numberOfColumns:5
-																	   numberOfRows:5];
+	SMBGameBoard* const gameBoard =
+	[[SMBGameBoard alloc] init_with_numberOfColumns:5
+									   numberOfRows:5
+								 leastNumberOfMoves:2];
 
 	/* Initial beam creator. */
 	SMBBeamCreatorTileEntity* const beamCreatorEntity = [SMBBeamCreatorTileEntity new];
@@ -112,11 +133,24 @@ SMBGameBoard* const gameBoard =
 
 +(nonnull instancetype)smb_forcedRedirectsAndWalls_oneWall_threeForces
 {
+	/*
+	 Usable:
+	 1) Forced Redirect (direction: right)
+	 2) Forced Redirect (direction: up)
+	 3) Forced Redirect (direction: left)
+
+	 Answer:
+	 1) Usable 1) Forced Redirect (direction: right): C4
+	 2) Usable 2) Forced Redirect (direction: up): D4
+	 3) Usable 3) Forced Redirect (direction: left): D1
+
+	 */
+
 	/* Game board. */
-		/* Game board. */
-SMBGameBoard* const gameBoard =
-[[SMBGameBoard alloc] init_with_numberOfColumns:5
-																	   numberOfRows:5];
+	SMBGameBoard* const gameBoard =
+	[[SMBGameBoard alloc] init_with_numberOfColumns:5
+									   numberOfRows:5
+								 leastNumberOfMoves:3];
 
 	/* Initial beam creator. */
 	SMBBeamCreatorTileEntity* const beamCreatorEntity = [SMBBeamCreatorTileEntity new];
@@ -165,10 +199,24 @@ SMBGameBoard* const gameBoard =
 
 +(nonnull instancetype)smb_forcedRedirectsAndWalls_twoWalls_threeForces
 {
+	/*
+	 Usable:
+	 1) Forced Redirect (direction: left)
+	 2) Forced Redirect (direction: up)
+	 3) Forced Redirect (direction: right)
+	 
+	 Answer:
+	 1) Usable 1) Forced Redirect (direction: left): C4
+	 2) Usable 2) Forced Redirect (direction: up): B4
+	 3) Usable 3) Forced Redirect (direction: right): B1
+	 
+	 */
+
 	/* Game board. */
 	SMBGameBoard* const gameBoard =
 	[[SMBGameBoard alloc] init_with_numberOfColumns:5
-									   numberOfRows:5];
+									   numberOfRows:5
+								 leastNumberOfMoves:3];
 
 	/* Initial beam creator. */
 	SMBBeamCreatorTileEntity* const beamCreatorEntity = [SMBBeamCreatorTileEntity new];
@@ -222,10 +270,26 @@ SMBGameBoard* const gameBoard =
 
 +(nonnull instancetype)smb_forcedRedirectsAndWalls_wallsAndForces_twoForcesNotMovable_tricky
 {
+	/*
+	 Usable:
+	 1) Forced Redirect (direction: right)
+	 2) Forced Redirect (direction: up)
+	 3) Forced Redirect (direction: right)
+	 4) Forced Redirect (direction: left)
+
+	 Answer:
+	 1) Usable 4) Forced Redirect (direction: left): F8
+	 2) Usable 2) Forced Redirect (direction: up): D8
+	 3) Usable 1) Forced Redirect (direction: right): D5
+	 4) Usable 3) Forced Redirect (direction: right): E1
+
+	 */
+
 	/* Game board. */
 	SMBGameBoard* const gameBoard =
 	[[SMBGameBoard alloc] init_with_numberOfColumns:11
-									   numberOfRows:11];
+									   numberOfRows:11
+								 leastNumberOfMoves:1];
 
 	/* Initial beam creator. */
 	SMBBeamCreatorTileEntity* const beamCreatorEntity = [SMBBeamCreatorTileEntity new];
@@ -344,10 +408,22 @@ SMBGameBoard* const gameBoard =
 #pragma mark - forces not movable
 +(nonnull instancetype)smb_forcedRedirects_oneForceNotMovable
 {
+	/*
+	 Usable:
+	 1) Forced Redirect (direction: up)
+	 2) Forced Redirect (direction: left)
+	 
+	 Answer:
+	 1) Usable 1) Forced Redirect (direction: up): D3
+	 2) Usable 2) Forced Redirect (direction: left): D1
+	 
+	 */
+
 	/* Game board. */
 	SMBGameBoard* const gameBoard =
 	[[SMBGameBoard alloc] init_with_numberOfColumns:5
-									   numberOfRows:5];
+									   numberOfRows:5
+								 leastNumberOfMoves:2];
 
 	/* Initial beam creator. */
 	SMBBeamCreatorTileEntity* const beamCreatorEntity = [SMBBeamCreatorTileEntity new];
@@ -393,10 +469,22 @@ SMBGameBoard* const gameBoard =
 
 +(nonnull instancetype)smb_forcedRedirects_wallsAndForces_threeForcesNotMovable
 {
+	/*
+	 Usable:
+	 1) Forced Redirect (direction: up)
+	 2) Forced Redirect (direction: right)
+	 
+	 Answer:
+	 1) Usable 2) Forced Redirect (direction: right): D5
+	 2) Usable 1) Forced Redirect (direction: up): G5
+	 
+	 */
+
 	/* Game board. */
 	SMBGameBoard* const gameBoard =
 	[[SMBGameBoard alloc] init_with_numberOfColumns:7
-									   numberOfRows:7];
+									   numberOfRows:7
+								 leastNumberOfMoves:2];
 
 	/* Initial beam creator. */
 	SMBBeamCreatorTileEntity* const beamCreatorEntity = [SMBBeamCreatorTileEntity new];
