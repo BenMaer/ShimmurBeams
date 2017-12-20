@@ -62,8 +62,14 @@ static void* kSMBGameLevelGeneratorViewController__KVOContext = &kSMBGameLevelGe
 -(void)levelSuccessBarButtonItem_update;
 -(nullable UIBarButtonItem*)levelSuccessBarButtonItem_generate;
 
-#pragma mark - levelSuccessBarButtonItem
+#pragma mark - resetBarButtonItem
 @property (nonatomic, readonly, strong, nullable) UIBarButtonItem* resetBarButtonItem;
+
+#pragma mark - leastMovesBarButtonItem
+@property (nonatomic, strong, nullable) UIBarButtonItem* leastMovesBarButtonItem;
+-(void)leastMovesBarButtonItem_update;
+@property (nonatomic, readonly, strong, nullable) UILabel* leastMovesBarButtonItem_label;
+-(void)leastMovesBarButtonItem_label_text_update;
 
 @end
 
@@ -76,7 +82,10 @@ static void* kSMBGameLevelGeneratorViewController__KVOContext = &kSMBGameLevelGe
 #pragma mark - NSObject
 -(void)dealloc
 {
-	[self gameLevelGenerator_gameLevel_setKVORegistered:NO];
+	if (self.isViewLoaded)
+	{
+		[self gameLevelGenerator_gameLevel_setKVORegistered:NO];
+	}
 }
 
 #pragma mark - UIViewController
@@ -86,6 +95,7 @@ static void* kSMBGameLevelGeneratorViewController__KVOContext = &kSMBGameLevelGe
 
 	[self setEdgesForExtendedLayout:UIRectEdgeNone];
 	[self setAutomaticallyAdjustsScrollViewInsets:NO];
+	[self.navigationItem setLeftItemsSupplementBackButton:YES];
 
 	[self.view setBackgroundColor:[UIColor whiteColor]];
 
@@ -110,6 +120,14 @@ static void* kSMBGameLevelGeneratorViewController__KVOContext = &kSMBGameLevelGe
 									action:@selector(navigationItem_resetButton_action_didFire)];
 
 	[self navigationItem_rightBarButtonItems_update];
+
+	_leastMovesBarButtonItem_label = [UILabel new];
+	[self.leastMovesBarButtonItem_label setFont:[UIFont systemFontOfSize:8.0f]];
+	[self.leastMovesBarButtonItem_label setTextColor:[UIColor darkTextColor]];
+	[self.leastMovesBarButtonItem_label setBackgroundColor:[UIColor clearColor]];
+	[self leastMovesBarButtonItem_label_text_update];
+
+	[self gameLevelGenerator_gameLevel_setKVORegistered:YES];
 }
 
 -(void)viewWillLayoutSubviews
@@ -138,13 +156,20 @@ static void* kSMBGameLevelGeneratorViewController__KVOContext = &kSMBGameLevelGe
 {
 	kRUConditionalReturn(self.gameLevelGenerator_gameLevel == gameLevelGenerator_gameLevel, NO)
 
-	[self gameLevelGenerator_gameLevel_setKVORegistered:NO];
+	if (self.isViewLoaded)
+	{
+		[self gameLevelGenerator_gameLevel_setKVORegistered:NO];
+	}
 
 	_gameLevelGenerator_gameLevel = gameLevelGenerator_gameLevel;
 
-	[self gameLevelGenerator_gameLevel_setKVORegistered:YES];
+	if (self.isViewLoaded)
+	{
+		[self gameLevelGenerator_gameLevel_setKVORegistered:YES];
+	}
 
 	[self gameLevelView_level_update];
+	[self leastMovesBarButtonItem_label_text_update];
 }
 
 -(void)gameLevelGenerator_gameLevel_update
@@ -355,6 +380,35 @@ static void* kSMBGameLevelGeneratorViewController__KVOContext = &kSMBGameLevelGe
 	kRUConditionalReturn_ReturnValueNil(levelSuccessBarButtonItemDelegate == nil, YES);
 
 	return [levelSuccessBarButtonItemDelegate gameLevelGeneratorViewController_levelSuccessBarButtonItem:self];
+}
+
+#pragma mark - leastMovesBarButtonItem
+-(void)setLeastMovesBarButtonItem:(nullable UIBarButtonItem*)leastMovesBarButtonItem
+{
+	kRUConditionalReturn(self.leastMovesBarButtonItem == leastMovesBarButtonItem, NO);
+
+	_leastMovesBarButtonItem = leastMovesBarButtonItem;
+
+	[self.navigationItem setLeftBarButtonItem:self.leastMovesBarButtonItem];
+}
+
+-(void)leastMovesBarButtonItem_update
+{
+	[self setLeastMovesBarButtonItem:[[UIBarButtonItem alloc] initWithCustomView:self.leastMovesBarButtonItem_label]];
+}
+
+-(void)leastMovesBarButtonItem_label_text_update
+{
+	UILabel* const leastMovesBarButtonItem_label = self.leastMovesBarButtonItem_label;
+	kRUConditionalReturn(leastMovesBarButtonItem_label == nil, NO);
+
+	[self.leastMovesBarButtonItem_label setText:
+	 RUStringWithFormat(@"%lu/%lu",
+						(unsigned long)0,
+						(unsigned long)1)];
+
+	[self.leastMovesBarButtonItem_label sizeToFit];
+	[self leastMovesBarButtonItem_update];
 }
 
 @end
