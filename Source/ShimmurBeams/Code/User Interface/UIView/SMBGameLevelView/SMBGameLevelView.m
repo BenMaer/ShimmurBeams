@@ -18,6 +18,7 @@
 #import "SMBGameBoardTileEntitySpawner.h"
 #import "SMBGameLevelView_UserSelection.h"
 #import "SMBGameLevelView_UserSelection_GameBoardTile_HighlightData.h"
+#import "SMBMoveEntityToTileGameBoardMove.h"
 
 #import <ResplendentUtilities/RUConditionalReturn.h>
 #import <ResplendentUtilities/UIView+RUUtility.h>
@@ -49,6 +50,8 @@ static void* kSMBGameLevelView__KVOContext_gameLevelView_UserSelection = &kSMBGa
 @property (nonatomic, readonly, strong, nullable) SMBGameBoardView* gameBoardView;
 -(CGRect)gameBoardView_frame;
 -(CGRect)gameBoardView_frame_with_boundingSize:(CGSize)boundingSize;
+-(void)gameBoardView:(nonnull SMBGameBoardView*)gameBoardView
+		move_perform:(nonnull id<SMBGameBoardMove>)gameBoardMove;
 
 #pragma mark - gameBoardTileEntityPickerView
 @property (nonatomic, strong, nullable) SMBGameBoardTileEntityPickerView* gameBoardTileEntityPickerView;
@@ -361,73 +364,125 @@ static void* kSMBGameLevelView__KVOContext_gameLevelView_UserSelection = &kSMBGa
 	});
 }
 
+-(void)gameBoardView:(nonnull SMBGameBoardView*)gameBoardView
+		move_perform:(nonnull id<SMBGameBoardMove>)gameBoardMove
+{
+	kRUConditionalReturn(gameBoardView == nil, YES);
+	kRUConditionalReturn(gameBoardMove == nil, YES);
+	
+	SMBGameBoard* const gameBoard = gameBoardView.gameBoard;
+	kRUConditionalReturn(gameBoard == nil, YES);
+	
+	[gameBoard gameBoardMove_perform:gameBoardMove];
+}
+
 #pragma mark - SMBGameBoardView_tileTapDelegate
 -(void)gameBoardView:(nonnull SMBGameBoardView*)gameBoardView
 	  tile_wasTapped:(nonnull SMBGameBoardTile*)gameBoardTile
 {
 	/*
-	 Refer to document `User facing actions` for details on expected logic.
-	 https://docs.google.com/a/shimmur.com/document/d/1XXJqmIBKHtOcW3BhYKM5rFmT7ciu0J8-2ZjjPGTynUg/edit?usp=sharing
+	 Refer to flowchart `Game Level user interactions` for details on expected logic.
+	 https://drive.google.com/open?id=1Z5-msMLVy2HWi4XcrrWzJ6bWIYCU_Bz0
 
-	 This is covering: User taps: 2)
+	 This is covering:
+	  - Tap game level view
+	   - 2)
 	 */
 
 	SMBGameBoardTileEntity* const gameBoardTileEntity = gameBoardTile.gameBoardTileEntity_for_beamInteractions;
-	/* User taps: 2.a */
+	/*
+	 Game Level user interactions - Tap game level view - 2.a) Does the board tile have an entity for beam interactions?
+	 Game Level user interactions - Tap game level view - 2.a.i) Yes
+	 */
 	if (gameBoardTileEntity)
 	{
 		SMBGameBoardTileEntitySpawner* const gameBoardTileEntitySpawner = [self.gameLevel.gameBoardTileEntitySpawnerManager gameBoardTileEntitySpawner_for_entity:gameBoardTileEntity];
-		/* User taps: 2.a.i */
+		/*
+		 Game Level user interactions - Tap game level view - 2.a.i.1) Was that entity spawned from an entity spawner?
+		 Game Level user interactions - Tap game level view - 2.a.i.1.a) Yes
+		 */
 		if (gameBoardTileEntitySpawner)
 		{
 			SMBGameLevelView_UserSelection* const gameLevelView_UserSelection = self.gameLevelView_UserSelection;
-			/* User taps: 2.a.i.1 */
+			/*
+			 Game Level user interactions - Tap game level view - 2.a.i.1.a.i) Is that entity selected?
+			 Game Level user interactions - Tap game level view - 2.a.i.1.a.i.1) Is that entity selected?
+			 */
 			if ((gameLevelView_UserSelection != nil)
 				&&
 				(gameLevelView_UserSelection.selectedGameBoardTileEntity == gameBoardTileEntity))
 			{
-				/* User taps: 2.a.i.1.a */
+				/*
+				 Game Level user interactions - Tap game level view - 2.a.i.1.a.i.1.a) Deselect that entity
+				 */
 				[self gameLevelView_UserSelection_update_from_selectedGameBoardTileEntity:nil];
 			}
-			/* User taps: 2.a.i.2 */
+			/*
+			 Game Level user interactions - Tap game level view - 2.a.i.1.a.i.2) No
+			 */
 			else
 			{
-				/* User taps: 2.a.i.2.a */
+				/*
+				 Game Level user interactions - Tap game level view - 2.a.i.1.a.i.2.a) Select that entity
+				 */
 				[self gameLevelView_UserSelection_update_from_selectedGameBoardTileEntity:gameBoardTileEntity];
 			}
 		}
-		/* User taps: 2.a.ii
-		 else{}
+		/*
+		 Game Level user interactions - Tap game level view - 2.a.i.1.b) No
+		 Game Level user interactions - Tap game level view - 2.a.i.1.b.i) Do Nothing
 		 */
 	}
-	/* User taps: 2.b */
+	/*
+	 Game Level user interactions - Tap game level view - 2.a.ii) No
+	 */
 	else
 	{
 		SMBGameLevelView_UserSelection* const gameLevelView_UserSelection = self.gameLevelView_UserSelection;
 		SMBGameBoardTileEntity* const selectedGameBoardTileEntity = gameLevelView_UserSelection.selectedGameBoardTileEntity;
-		/* User taps: 2.b.i */
-		/* User taps: 2.b.i.1 */
+		/*
+		 Game Level user interactions - Tap game level view - 2.a.ii.1) Is an entity selected?
+		 Game Level user interactions - Tap game level view - 2.a.ii.1.a) Yes
+		 */
 		if (selectedGameBoardTileEntity)
 		{
-			/* User taps: 2.b.i.1.a */
-			[gameBoardTile gameBoardTileEntities_add:selectedGameBoardTileEntity
-										  entityType:SMBGameBoardTile__entityType_beamInteractions];
+			/*
+			 Game Level user interactions - Tap game level view - 2.a.ii.1.a.i) Move the selected entity to this tile.
+			 */
+			SMBMoveEntityToTileGameBoardMove* const moveEntityToTileGameBoardMove =
+			[[SMBMoveEntityToTileGameBoardMove alloc] init_with_gameBoardTilePosition:gameBoardTile.gameBoardTilePosition
+																  gameBoardTileEntity:selectedGameBoardTileEntity];
+
+			[self gameBoardView:gameBoardView
+				   move_perform:moveEntityToTileGameBoardMove];
+//			[gameBoardTile gameBoardTileEntities_add:selectedGameBoardTileEntity
+//										  entityType:SMBGameBoardTile__entityType_beamInteractions];
 		}
-		/* User taps: 2.b.i.2 */
+		/*
+		 Game Level user interactions - Tap game level view - 2.a.ii.1.b) No
+		 */
 		else
 		{
 			SMBGameBoardTileEntitySpawner* const selectedGameBoardTileEntitySpawner = gameLevelView_UserSelection.selectedGameBoardTileEntitySpawner;
-			/* User taps: 2.b.i.2.a */
-			/* User taps: 2.b.i.2.a.i */
+			/*
+			 Game Level user interactions - Tap game level view - 2.a.ii.1.b.i) Is an entity spawner selected?
+			 Game Level user interactions - Tap game level view - 2.a.ii.1.b.i.1) Yes
+			 */
 			if (selectedGameBoardTileEntitySpawner)
 			{
-				/* User taps: 2.b.i.2.a.i.1 */
+				/*
+				 Game Level user interactions - Tap game level view - 2.a.ii.1.b.i.1.a) Spawn an entity on that tile.
+				 */
 				[self gameBoardTileEntityPickerView_selectedGameBoardTileEntitySpawner_spawn_attempt_on_tile:gameBoardTile];
 			}
-			/* User taps: 2.b.i.2.a.ii */
+			/*
+			 Game Level user interactions - Tap game level view - 2.a.ii.1.b.i.2) No
+			 */
 			else
 			{
-				/* User taps: 2.b.i.2.a.ii.1 */
+				/*
+				 Game Level user interactions - Tap game level view - 2.a.ii.1.b.i.2.a) Animate the picker view
+				 */
 				[self gameBoardTileEntityPickerView_borderColorView_animate];
 			}
 		}

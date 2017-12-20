@@ -17,6 +17,7 @@
 #import "NSSet+SMBChanges.h"
 #import "SMBGenericPowerOutputTileEntity_OutputPowerReceiver.h"
 #import "SMBBeamEntityManager.h"
+#import "SMBGameBoardMove.h"
 
 #import <ResplendentUtilities/RUConditionalReturn.h>
 #import <ResplendentUtilities/RUClassOrNilUtil.h>
@@ -58,6 +59,9 @@ static void* kSMBGameBoard__KVOContext = &kSMBGameBoard__KVOContext;
 #pragma mark - deallocWasCalled
 @property (nonatomic, assign) BOOL deallocWasCalled;
 #endif
+
+#pragma mark - currentNumberOfMoves
+@property (nonatomic, assign) NSUInteger currentNumberOfMoves;
 
 @end
 
@@ -501,6 +505,16 @@ static void* kSMBGameBoard__KVOContext = &kSMBGameBoard__KVOContext;
 	return _beamEntityManager;
 }
 
+#pragma mark - gameBoardMove
+-(void)gameBoardMove_perform:(nonnull id<SMBGameBoardMove>)gameBoardMove
+{
+	kRUConditionalReturn(gameBoardMove == nil, YES);
+
+	kRUConditionalReturn([gameBoardMove move_perform_on_gameBoard:self] == false, YES);
+
+	[self setCurrentNumberOfMoves:self.currentNumberOfMoves + 1];
+}
+
 @end
 
 
@@ -513,5 +527,6 @@ static void* kSMBGameBoard__KVOContext = &kSMBGameBoard__KVOContext;
 +(nonnull NSString*)gameBoardTileEntities{return NSStringFromSelector(_cmd);}
 +(nonnull NSString*)gameBoardEntities{return NSStringFromSelector(_cmd);}
 +(nonnull NSString*)outputPowerReceivers{return NSStringFromSelector(_cmd);}
++(nonnull NSString*)currentNumberOfMoves{return NSStringFromSelector(_cmd);}
 
 @end

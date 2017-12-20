@@ -23,6 +23,7 @@
 @class SMBGameLevel;
 @class SMBGenericPowerOutputTileEntity_OutputPowerReceiver;
 @class SMBBeamEntityManager;
+@protocol SMBGameBoardMove;
 
 
 
@@ -83,6 +84,12 @@
 #pragma mark - beamEntityManager
 @property (nonatomic, readonly, strong, nonnull) SMBBeamEntityManager* beamEntityManager;
 
+#pragma mark - currentNumberOfMoves
+@property (nonatomic, readonly, assign) NSUInteger currentNumberOfMoves;
+
+#pragma mark - gameBoardMove
+-(void)gameBoardMove_perform:(nonnull id<SMBGameBoardMove>)gameBoardMove;
+
 @end
 
 
@@ -95,5 +102,6 @@
 +(nonnull NSString*)gameBoardTileEntities;
 +(nonnull NSString*)gameBoardEntities;
 +(nonnull NSString*)outputPowerReceivers;
++(nonnull NSString*)currentNumberOfMoves;
 
 @end
