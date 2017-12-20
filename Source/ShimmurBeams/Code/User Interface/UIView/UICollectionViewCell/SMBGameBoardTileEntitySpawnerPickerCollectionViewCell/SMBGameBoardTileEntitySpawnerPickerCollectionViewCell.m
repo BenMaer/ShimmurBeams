@@ -54,6 +54,9 @@ static void* SMBGameBoardTileEntitySpawnerPickerCollectionViewCell__KVOContext_g
 -(void)amountUsedLabel_text_update;
 -(nullable NSString*)amountUsedLabel_text_generate;
 
+#pragma mark - gameBoardTileEntitySpawner
+-(void)SMBGameBoardTileEntitySpawnerPickerCollectionViewCell_gameBoardTileEntitySpawner_setKVORegistered:(BOOL)registered;
+
 @end
 
 
