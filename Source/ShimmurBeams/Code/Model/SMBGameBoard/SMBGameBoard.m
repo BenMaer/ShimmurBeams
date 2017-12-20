@@ -99,7 +99,7 @@ static void* kSMBGameBoard__KVOContext = &kSMBGameBoard__KVOContext;
 {
 	kRUConditionalReturn_ReturnValueNil(numberOfColumns <= 0, YES);
 	kRUConditionalReturn_ReturnValueNil(numberOfRows <= 0, YES);
-	kRUConditionalReturn_ReturnValueNil(leastNumberOfMoves <= 0, YES);
+	kRUConditionalReturn_ReturnValueNil(leastNumberOfMoves < 0, YES);
 
 	if (self = [super init])
 	{

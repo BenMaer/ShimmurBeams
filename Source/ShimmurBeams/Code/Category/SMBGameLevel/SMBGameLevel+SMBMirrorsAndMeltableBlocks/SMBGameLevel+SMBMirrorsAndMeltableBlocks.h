@@ -14,12 +14,12 @@
 
 @interface SMBGameLevel (SMBMirrorsAndMeltableBlocks)
 
-+(nonnull instancetype)smb_mirrors_introduction;
-+(nonnull instancetype)smb_mirror_man_in_the_mirror;
-
-#pragma mark - meltableWall
-+(nonnull instancetype)smb_meltableWall_introduction;
-+(nonnull instancetype)smb_meltableWall_oneDirection;
-+(nonnull instancetype)smb_meltableWall_inTheWay;
+//+(nonnull instancetype)smb_mirrors_introduction;
+//+(nonnull instancetype)smb_mirror_man_in_the_mirror;
+//
+//#pragma mark - meltableWall
+//+(nonnull instancetype)smb_meltableWall_introduction;
+//+(nonnull instancetype)smb_meltableWall_oneDirection;
+//+(nonnull instancetype)smb_meltableWall_inTheWay;
 
 @end

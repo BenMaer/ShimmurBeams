@@ -71,191 +71,191 @@
 										   name:@"Forced Redirects and Walls"];
 }
 
-#pragma mark - rotatesAndDeathBlocks
-+(nonnull instancetype)smb_rotatesAndDeathBlocks
-{
-	NSMutableArray<SMBGameLevelGenerator*>* const gameLevelGenerators = [NSMutableArray<SMBGameLevelGenerator*> array];
-
-	[gameLevelGenerators addObject:[[SMBGameLevelGenerator alloc] init_with_generateLevelBlock:^SMBGameLevel * _Nonnull{
-		return [SMBGameLevel smb_rotates_oneRotate_right];
-	}
-																						  name:@"One rotate right"
-																						  hint:@"Rotate blocks change the direction of the beam based on the direction the beam enters."]];
-
-	[gameLevelGenerators addObject:[[SMBGameLevelGenerator alloc] init_with_generateLevelBlock:^SMBGameLevel * _Nonnull{
-		return [SMBGameLevel smb_rotates_two_left];
-	}
-																						  name:@"Two rotates left"]];
-
-	[gameLevelGenerators addObject:[[SMBGameLevelGenerator alloc] init_with_generateLevelBlock:^SMBGameLevel * _Nonnull{
-		return [SMBGameLevel smb_rotates_oneRight_forced_oneRight];
-	}
-																						  name:@"Rotate and forced right"]];
-	[gameLevelGenerators addObject:[[SMBGameLevelGenerator alloc] init_with_generateLevelBlock:^SMBGameLevel * _Nonnull{
-		return [SMBGameLevel smb_rotates_oneLeft_twoRight_wall_oneCenter];
-	}
-																						  name:@"Rotate around wall"]];
-
-	[gameLevelGenerators addObject:[[SMBGameLevelGenerator alloc] init_with_generateLevelBlock:^SMBGameLevel * _Nonnull{
-		return [SMBGameLevel smb_rotates_twoRight_deathBlock_one];
-	}
-																						  name:@"Thorn"
-																						  hint:@"Avoid letting your beam hit a death block."]];
-
-	[gameLevelGenerators addObject:[[SMBGameLevelGenerator alloc] init_with_generateLevelBlock:^SMBGameLevel * _Nonnull{
-		return [SMBGameLevel smb_rotates_twoRight_twoLeft_deathBlocks_surrounded_and_someBlocking];
-	}
-																						  name:@"Surrounded"]];
-
-	[gameLevelGenerators addObject:[[SMBGameLevelGenerator alloc]init_with_generateLevelBlock:^SMBGameLevel * _Nonnull{
-		return [SMBGameLevel smb_rotates_deathBlocks_blackAnglesMatter];
-	}
-																						 name:@"Black Angles Matter"]];
-
-	[gameLevelGenerators addObject:[[SMBGameLevelGenerator alloc] init_with_generateLevelBlock:^SMBGameLevel * _Nonnull{
-		return [SMBGameLevel smb_rotates_deathBlocks_scattered];
-	}
-																						  name:@"Scattered"]];
-
-	return
-	[[self alloc] init_with_gameLevelGenerators:[NSArray<SMBGameLevelGenerator*> arrayWithArray:gameLevelGenerators]
-										   name:@"Rotates and Death Blocks"];
-}
-
-#pragma mark - mirrorsIntroduction
-+(nonnull instancetype)smb_mirrorsAndMeltableBlocks
-{
-	NSMutableArray<SMBGameLevelGenerator*>* const gameLevelGenerators = [NSMutableArray<SMBGameLevelGenerator*> array];
-
-	[gameLevelGenerators addObject:[[SMBGameLevelGenerator alloc] init_with_generateLevelBlock:^SMBGameLevel * _Nonnull{
-		return [SMBGameLevel smb_mirrors_introduction];
-	}
-																						  name:@"Mirror Introduction"]];
-
-	[gameLevelGenerators addObject:[[SMBGameLevelGenerator alloc] init_with_generateLevelBlock:^SMBGameLevel * _Nonnull{
-		return [SMBGameLevel smb_mirror_man_in_the_mirror];
-	}
-																						  name:@"That Man In The Mirror"]];
-
-	[gameLevelGenerators addObject:[[SMBGameLevelGenerator alloc] init_with_generateLevelBlock:^SMBGameLevel * _Nonnull{
-		return [SMBGameLevel smb_meltableWall_introduction];
-	}
-																						  name:@"Meltable Wall Introduction"
-																						  hint:@"Focus your beam on the meltable wall for a couple seconds to destroy it."]];
-
-	[gameLevelGenerators addObject:[[SMBGameLevelGenerator alloc] init_with_generateLevelBlock:^SMBGameLevel * _Nonnull{
-		return [SMBGameLevel smb_meltableWall_oneDirection];
-	}
-																						  name:@"One Direction"
-																						  hint:@"Meltable walls can block some beam directions from entering."]];
-
-	[gameLevelGenerators addObject:[[SMBGameLevelGenerator alloc] init_with_generateLevelBlock:^SMBGameLevel * _Nonnull{
-		return [SMBGameLevel smb_meltableWall_inTheWay];
-	}
-																						  name:@"In The Way"]];
-
-	return
-	[[self alloc] init_with_gameLevelGenerators:[NSArray<SMBGameLevelGenerator*> arrayWithArray:gameLevelGenerators]
-										   name:@"Mirrors and Meltable Walls"];
-}
-
-#pragma mark - powerButtonsAndDoors
-+(nonnull instancetype)smb_powerButtonsAndDoors
-{
-	NSMutableArray<SMBGameLevelGenerator*>* const gameLevelGenerators = [NSMutableArray<SMBGameLevelGenerator*> array];
-
-	[gameLevelGenerators addObject:[[SMBGameLevelGenerator alloc] init_with_generateLevelBlock:^SMBGameLevel * _Nonnull{
-		return [SMBGameLevel smb_powerButton_introduction];
-	}
-																						  name:@"Button Introduction"
-																						  hint:@"Power up a button to turn it on. A powered button will power another tile on the board."]];
-
-	[gameLevelGenerators addObject:[[SMBGameLevelGenerator alloc] init_with_generateLevelBlock:^SMBGameLevel * _Nonnull{
-		return [SMBGameLevel smb_powerButtons_3choices];
-	}
-																						  name:@"Button Choices"
-																						  hint:@"Determine which button powers which tile."]];
-
-	[gameLevelGenerators addObject:[[SMBGameLevelGenerator alloc] init_with_generateLevelBlock:^SMBGameLevel * _Nonnull{
-		return [SMBGameLevel smb_powerButtons_usableGameBoardTileEntities_choices];
-	}
-																						  name:@"Too Easy"]];
-
-	[gameLevelGenerators addObject:[[SMBGameLevelGenerator alloc] init_with_generateLevelBlock:^SMBGameLevel * _Nonnull{
-		return [SMBGameLevel smb_powerButtons_windows_3x3];
-	}
-																						  name:@"Windows"]];
-
-	[gameLevelGenerators addObject:[[SMBGameLevelGenerator alloc] init_with_generateLevelBlock:^SMBGameLevel * _Nonnull{
-		return [SMBGameLevel smb_powerButtons_and_door_introduction];
-	}
-																						  name:@"Door Introduction"]];
-
-	[gameLevelGenerators addObject:[[SMBGameLevelGenerator alloc] init_with_generateLevelBlock:^SMBGameLevel * _Nonnull{
-		return [SMBGameLevel smb_powerButtons_and_door_selfPoweredBeamCreator];
-	}
-																						  name:@"Self Powered"]];
-
-	[gameLevelGenerators addObject:[[SMBGameLevelGenerator alloc] init_with_generateLevelBlock:^SMBGameLevel * _Nonnull{
-		return [SMBGameLevel smb_powerButtons_and_doors_choices];
-	}
-																						  name:@"Buttons and Doors"]];
-
-	[gameLevelGenerators addObject:[[SMBGameLevelGenerator alloc] init_with_generateLevelBlock:^SMBGameLevel * _Nonnull{
-		return [SMBGameLevel smb_powerButtons_and_doors_powerPlant];
-	}
-																						  name:@"Button Power Plant"]];
-
-	return
-	[[self alloc] init_with_gameLevelGenerators:[NSArray<SMBGameLevelGenerator*> arrayWithArray:gameLevelGenerators]
-										   name:@"Power buttons and doors"];
-}
-
-#pragma mark - powerSwitchesAndDoorGroups
-+(nonnull instancetype)smb_powerSwitchesAndDoorGroups
-{
-	NSMutableArray<SMBGameLevelGenerator*>* const gameLevelGenerators = [NSMutableArray<SMBGameLevelGenerator*> array];
-
-	[gameLevelGenerators addObject:[[SMBGameLevelGenerator alloc] init_with_generateLevelBlock:^SMBGameLevel * _Nonnull{
-		return [SMBGameLevel smb_powerSwitch_introduction];
-	}
-																						  name:@"Switch Introduction"
-																						  hint:@"Power up a switch to toggle its power. A powered switch will power another tile on the board."]];
-
-	[gameLevelGenerators addObject:[[SMBGameLevelGenerator alloc] init_with_generateLevelBlock:^SMBGameLevel * _Nonnull{
-		return [SMBGameLevel smb_powerSwitch_and_button_and_door];
-	}
-																						  name:@"Switch and Button Choice"]];
-
-	[gameLevelGenerators addObject:[[SMBGameLevelGenerator alloc] init_with_generateLevelBlock:^SMBGameLevel * _Nonnull{
-		return [SMBGameLevel smb_doorGroup_introduction];
-	}
-																						  name:@"Door Group Introduction"]];
-
-	[gameLevelGenerators addObject:[[SMBGameLevelGenerator alloc] init_with_generateLevelBlock:^SMBGameLevel * _Nonnull{
-		return [SMBGameLevel smb_powerSwitch_and_doorGroup_combo];
-	}
-																						  name:@"Combo"]];
-
-	[gameLevelGenerators addObject:[[SMBGameLevelGenerator alloc] init_with_generateLevelBlock:^SMBGameLevel * _Nonnull{
-		return [SMBGameLevel smb_doorGroups_introduction];
-	}
-																						  name:@"Up and Down"]];
-
-	[gameLevelGenerators addObject:[[SMBGameLevelGenerator alloc] init_with_generateLevelBlock:^SMBGameLevel * _Nonnull{
-		return [SMBGameLevel smb_powerSwitches_and_doorGroups_beamCreatorGroup];
-	}
-																						  name:@"Beam Creator Group Toggle"]];
-
-	[gameLevelGenerators addObject:[[SMBGameLevelGenerator alloc] init_with_generateLevelBlock:^SMBGameLevel * _Nonnull{
-		return [SMBGameLevel smb_powerSwitches_and_doorGroups_deathLane];
-	}
-																						  name:@"Death lane"]];
-
-	return
-	[[self alloc] init_with_gameLevelGenerators:[NSArray<SMBGameLevelGenerator*> arrayWithArray:gameLevelGenerators]
-										   name:@"Power switches and door groups"];
-}
+//#pragma mark - rotatesAndDeathBlocks
+//+(nonnull instancetype)smb_rotatesAndDeathBlocks
+//{
+//	NSMutableArray<SMBGameLevelGenerator*>* const gameLevelGenerators = [NSMutableArray<SMBGameLevelGenerator*> array];
+//
+//	[gameLevelGenerators addObject:[[SMBGameLevelGenerator alloc] init_with_generateLevelBlock:^SMBGameLevel * _Nonnull{
+//		return [SMBGameLevel smb_rotates_oneRotate_right];
+//	}
+//																						  name:@"One rotate right"
+//																						  hint:@"Rotate blocks change the direction of the beam based on the direction the beam enters."]];
+//
+//	[gameLevelGenerators addObject:[[SMBGameLevelGenerator alloc] init_with_generateLevelBlock:^SMBGameLevel * _Nonnull{
+//		return [SMBGameLevel smb_rotates_two_left];
+//	}
+//																						  name:@"Two rotates left"]];
+//
+//	[gameLevelGenerators addObject:[[SMBGameLevelGenerator alloc] init_with_generateLevelBlock:^SMBGameLevel * _Nonnull{
+//		return [SMBGameLevel smb_rotates_oneRight_forced_oneRight];
+//	}
+//																						  name:@"Rotate and forced right"]];
+//	[gameLevelGenerators addObject:[[SMBGameLevelGenerator alloc] init_with_generateLevelBlock:^SMBGameLevel * _Nonnull{
+//		return [SMBGameLevel smb_rotates_oneLeft_twoRight_wall_oneCenter];
+//	}
+//																						  name:@"Rotate around wall"]];
+//
+//	[gameLevelGenerators addObject:[[SMBGameLevelGenerator alloc] init_with_generateLevelBlock:^SMBGameLevel * _Nonnull{
+//		return [SMBGameLevel smb_rotates_twoRight_deathBlock_one];
+//	}
+//																						  name:@"Thorn"
+//																						  hint:@"Avoid letting your beam hit a death block."]];
+//
+//	[gameLevelGenerators addObject:[[SMBGameLevelGenerator alloc] init_with_generateLevelBlock:^SMBGameLevel * _Nonnull{
+//		return [SMBGameLevel smb_rotates_twoRight_twoLeft_deathBlocks_surrounded_and_someBlocking];
+//	}
+//																						  name:@"Surrounded"]];
+//
+//	[gameLevelGenerators addObject:[[SMBGameLevelGenerator alloc]init_with_generateLevelBlock:^SMBGameLevel * _Nonnull{
+//		return [SMBGameLevel smb_rotates_deathBlocks_blackAnglesMatter];
+//	}
+//																						 name:@"Black Angles Matter"]];
+//
+//	[gameLevelGenerators addObject:[[SMBGameLevelGenerator alloc] init_with_generateLevelBlock:^SMBGameLevel * _Nonnull{
+//		return [SMBGameLevel smb_rotates_deathBlocks_scattered];
+//	}
+//																						  name:@"Scattered"]];
+//
+//	return
+//	[[self alloc] init_with_gameLevelGenerators:[NSArray<SMBGameLevelGenerator*> arrayWithArray:gameLevelGenerators]
+//										   name:@"Rotates and Death Blocks"];
+//}
+//
+//#pragma mark - mirrorsIntroduction
+//+(nonnull instancetype)smb_mirrorsAndMeltableBlocks
+//{
+//	NSMutableArray<SMBGameLevelGenerator*>* const gameLevelGenerators = [NSMutableArray<SMBGameLevelGenerator*> array];
+//
+//	[gameLevelGenerators addObject:[[SMBGameLevelGenerator alloc] init_with_generateLevelBlock:^SMBGameLevel * _Nonnull{
+//		return [SMBGameLevel smb_mirrors_introduction];
+//	}
+//																						  name:@"Mirror Introduction"]];
+//
+//	[gameLevelGenerators addObject:[[SMBGameLevelGenerator alloc] init_with_generateLevelBlock:^SMBGameLevel * _Nonnull{
+//		return [SMBGameLevel smb_mirror_man_in_the_mirror];
+//	}
+//																						  name:@"That Man In The Mirror"]];
+//
+//	[gameLevelGenerators addObject:[[SMBGameLevelGenerator alloc] init_with_generateLevelBlock:^SMBGameLevel * _Nonnull{
+//		return [SMBGameLevel smb_meltableWall_introduction];
+//	}
+//																						  name:@"Meltable Wall Introduction"
+//																						  hint:@"Focus your beam on the meltable wall for a couple seconds to destroy it."]];
+//
+//	[gameLevelGenerators addObject:[[SMBGameLevelGenerator alloc] init_with_generateLevelBlock:^SMBGameLevel * _Nonnull{
+//		return [SMBGameLevel smb_meltableWall_oneDirection];
+//	}
+//																						  name:@"One Direction"
+//																						  hint:@"Meltable walls can block some beam directions from entering."]];
+//
+//	[gameLevelGenerators addObject:[[SMBGameLevelGenerator alloc] init_with_generateLevelBlock:^SMBGameLevel * _Nonnull{
+//		return [SMBGameLevel smb_meltableWall_inTheWay];
+//	}
+//																						  name:@"In The Way"]];
+//
+//	return
+//	[[self alloc] init_with_gameLevelGenerators:[NSArray<SMBGameLevelGenerator*> arrayWithArray:gameLevelGenerators]
+//										   name:@"Mirrors and Meltable Walls"];
+//}
+//
+//#pragma mark - powerButtonsAndDoors
+//+(nonnull instancetype)smb_powerButtonsAndDoors
+//{
+//	NSMutableArray<SMBGameLevelGenerator*>* const gameLevelGenerators = [NSMutableArray<SMBGameLevelGenerator*> array];
+//
+//	[gameLevelGenerators addObject:[[SMBGameLevelGenerator alloc] init_with_generateLevelBlock:^SMBGameLevel * _Nonnull{
+//		return [SMBGameLevel smb_powerButton_introduction];
+//	}
+//																						  name:@"Button Introduction"
+//																						  hint:@"Power up a button to turn it on. A powered button will power another tile on the board."]];
+//
+//	[gameLevelGenerators addObject:[[SMBGameLevelGenerator alloc] init_with_generateLevelBlock:^SMBGameLevel * _Nonnull{
+//		return [SMBGameLevel smb_powerButtons_3choices];
+//	}
+//																						  name:@"Button Choices"
+//																						  hint:@"Determine which button powers which tile."]];
+//
+//	[gameLevelGenerators addObject:[[SMBGameLevelGenerator alloc] init_with_generateLevelBlock:^SMBGameLevel * _Nonnull{
+//		return [SMBGameLevel smb_powerButtons_usableGameBoardTileEntities_choices];
+//	}
+//																						  name:@"Too Easy"]];
+//
+//	[gameLevelGenerators addObject:[[SMBGameLevelGenerator alloc] init_with_generateLevelBlock:^SMBGameLevel * _Nonnull{
+//		return [SMBGameLevel smb_powerButtons_windows_3x3];
+//	}
+//																						  name:@"Windows"]];
+//
+//	[gameLevelGenerators addObject:[[SMBGameLevelGenerator alloc] init_with_generateLevelBlock:^SMBGameLevel * _Nonnull{
+//		return [SMBGameLevel smb_powerButtons_and_door_introduction];
+//	}
+//																						  name:@"Door Introduction"]];
+//
+//	[gameLevelGenerators addObject:[[SMBGameLevelGenerator alloc] init_with_generateLevelBlock:^SMBGameLevel * _Nonnull{
+//		return [SMBGameLevel smb_powerButtons_and_door_selfPoweredBeamCreator];
+//	}
+//																						  name:@"Self Powered"]];
+//
+//	[gameLevelGenerators addObject:[[SMBGameLevelGenerator alloc] init_with_generateLevelBlock:^SMBGameLevel * _Nonnull{
+//		return [SMBGameLevel smb_powerButtons_and_doors_choices];
+//	}
+//																						  name:@"Buttons and Doors"]];
+//
+//	[gameLevelGenerators addObject:[[SMBGameLevelGenerator alloc] init_with_generateLevelBlock:^SMBGameLevel * _Nonnull{
+//		return [SMBGameLevel smb_powerButtons_and_doors_powerPlant];
+//	}
+//																						  name:@"Button Power Plant"]];
+//
+//	return
+//	[[self alloc] init_with_gameLevelGenerators:[NSArray<SMBGameLevelGenerator*> arrayWithArray:gameLevelGenerators]
+//										   name:@"Power buttons and doors"];
+//}
+//
+//#pragma mark - powerSwitchesAndDoorGroups
+//+(nonnull instancetype)smb_powerSwitchesAndDoorGroups
+//{
+//	NSMutableArray<SMBGameLevelGenerator*>* const gameLevelGenerators = [NSMutableArray<SMBGameLevelGenerator*> array];
+//
+//	[gameLevelGenerators addObject:[[SMBGameLevelGenerator alloc] init_with_generateLevelBlock:^SMBGameLevel * _Nonnull{
+//		return [SMBGameLevel smb_powerSwitch_introduction];
+//	}
+//																						  name:@"Switch Introduction"
+//																						  hint:@"Power up a switch to toggle its power. A powered switch will power another tile on the board."]];
+//
+//	[gameLevelGenerators addObject:[[SMBGameLevelGenerator alloc] init_with_generateLevelBlock:^SMBGameLevel * _Nonnull{
+//		return [SMBGameLevel smb_powerSwitch_and_button_and_door];
+//	}
+//																						  name:@"Switch and Button Choice"]];
+//
+//	[gameLevelGenerators addObject:[[SMBGameLevelGenerator alloc] init_with_generateLevelBlock:^SMBGameLevel * _Nonnull{
+//		return [SMBGameLevel smb_doorGroup_introduction];
+//	}
+//																						  name:@"Door Group Introduction"]];
+//
+//	[gameLevelGenerators addObject:[[SMBGameLevelGenerator alloc] init_with_generateLevelBlock:^SMBGameLevel * _Nonnull{
+//		return [SMBGameLevel smb_powerSwitch_and_doorGroup_combo];
+//	}
+//																						  name:@"Combo"]];
+//
+//	[gameLevelGenerators addObject:[[SMBGameLevelGenerator alloc] init_with_generateLevelBlock:^SMBGameLevel * _Nonnull{
+//		return [SMBGameLevel smb_doorGroups_introduction];
+//	}
+//																						  name:@"Up and Down"]];
+//
+//	[gameLevelGenerators addObject:[[SMBGameLevelGenerator alloc] init_with_generateLevelBlock:^SMBGameLevel * _Nonnull{
+//		return [SMBGameLevel smb_powerSwitches_and_doorGroups_beamCreatorGroup];
+//	}
+//																						  name:@"Beam Creator Group Toggle"]];
+//
+//	[gameLevelGenerators addObject:[[SMBGameLevelGenerator alloc] init_with_generateLevelBlock:^SMBGameLevel * _Nonnull{
+//		return [SMBGameLevel smb_powerSwitches_and_doorGroups_deathLane];
+//	}
+//																						  name:@"Death lane"]];
+//
+//	return
+//	[[self alloc] init_with_gameLevelGenerators:[NSArray<SMBGameLevelGenerator*> arrayWithArray:gameLevelGenerators]
+//										   name:@"Power switches and door groups"];
+//}
 
 #if kSMBEnvironment__SMBGameLevel_SMBUnitTestLevels_unitTestLevels_enabled
 
