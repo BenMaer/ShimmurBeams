@@ -6,6 +6,8 @@
 //  Copyright © 2018 Shimmur. All rights reserved.
 //
 
+#import "SMBGameBoardMove.h"
+
 #import <Foundation/Foundation.h>
 
 
@@ -18,6 +20,6 @@
 
 
 
-@interface SMBRemoveAllEntitiesFromBoardGameBoardMove : NSObject
+@interface SMBRemoveAllEntitiesFromBoardGameBoardMove : NSObject <SMBGameBoardMove>
 
 @end

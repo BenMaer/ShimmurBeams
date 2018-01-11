@@ -13,6 +13,9 @@
 		D71765A41FB3ACF60084E09A /* SMBGameLevel+SMBLevelEditor.m in Sources */ = {isa = PBXBuildFile; fileRef = D71765A31FB3ACF60084E09A /* SMBGameLevel+SMBLevelEditor.m */; };
 		D71765A81FB3AF660084E09A /* SMBGameLevelView_UserSelection.m in Sources */ = {isa = PBXBuildFile; fileRef = D71765A71FB3AF660084E09A /* SMBGameLevelView_UserSelection.m */; };
 		D71765B01FB3DF4F0084E09A /* SMBGameLevelView_UserSelection_GameBoardTile_HighlightData.m in Sources */ = {isa = PBXBuildFile; fileRef = D71765AF1FB3DF4F0084E09A /* SMBGameLevelView_UserSelection_GameBoardTile_HighlightData.m */; };
+		D718DFA32008150E0081594A /* SMBCustomLevelsListViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = D718DFA22008150E0081594A /* SMBCustomLevelsListViewController.m */; };
+		D718DFA7200827050081594A /* SMBLevelEditorViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = D718DFA6200827050081594A /* SMBLevelEditorViewController.m */; };
+		D718DFAB200828D40081594A /* SMBLevelEditorCreationData.m in Sources */ = {isa = PBXBuildFile; fileRef = D718DFAA200828D40081594A /* SMBLevelEditorCreationData.m */; };
 		D722CE371FB0C68C00DF6136 /* SMBGameBoardTileEntitySpawner.m in Sources */ = {isa = PBXBuildFile; fileRef = D722CE361FB0C68C00DF6136 /* SMBGameBoardTileEntitySpawner.m */; };
 		D722CE401FB0D64300DF6136 /* SMBGameBoardTileEntitySpawnerPickerCollectionViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = D722CE3F1FB0D64300DF6136 /* SMBGameBoardTileEntitySpawnerPickerCollectionViewCell.m */; };
 		D733A4761F576767007A8E6F /* SMBImageDrawableObject.m in Sources */ = {isa = PBXBuildFile; fileRef = D733A4751F576767007A8E6F /* SMBImageDrawableObject.m */; };
@@ -121,6 +124,12 @@
 		D71765AF1FB3DF4F0084E09A /* SMBGameLevelView_UserSelection_GameBoardTile_HighlightData.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = SMBGameLevelView_UserSelection_GameBoardTile_HighlightData.m; sourceTree = "<group>"; };
 		D71765B11FB4087D0084E09A /* SMBGameBoardTileEntityPickerView__Protocols.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SMBGameBoardTileEntityPickerView__Protocols.h; sourceTree = "<group>"; };
 		D71765B21FB4140A0084E09A /* SMBGameBoardTileEntityPickerView__trashButton_types.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SMBGameBoardTileEntityPickerView__trashButton_types.h; sourceTree = "<group>"; };
+		D718DFA12008150E0081594A /* SMBCustomLevelsListViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SMBCustomLevelsListViewController.h; sourceTree = "<group>"; };
+		D718DFA22008150E0081594A /* SMBCustomLevelsListViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = SMBCustomLevelsListViewController.m; sourceTree = "<group>"; };
+		D718DFA5200827050081594A /* SMBLevelEditorViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SMBLevelEditorViewController.h; sourceTree = "<group>"; };
+		D718DFA6200827050081594A /* SMBLevelEditorViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = SMBLevelEditorViewController.m; sourceTree = "<group>"; };
+		D718DFA9200828D40081594A /* SMBLevelEditorCreationData.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SMBLevelEditorCreationData.h; sourceTree = "<group>"; };
+		D718DFAA200828D40081594A /* SMBLevelEditorCreationData.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = SMBLevelEditorCreationData.m; sourceTree = "<group>"; };
 		D722CE351FB0C68C00DF6136 /* SMBGameBoardTileEntitySpawner.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SMBGameBoardTileEntitySpawner.h; sourceTree = "<group>"; };
 		D722CE361FB0C68C00DF6136 /* SMBGameBoardTileEntitySpawner.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = SMBGameBoardTileEntitySpawner.m; sourceTree = "<group>"; };
 		D722CE381FB0C99C00DF6136 /* SMBGameBoardTileEntitySpawner__Blocks.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SMBGameBoardTileEntitySpawner__Blocks.h; sourceTree = "<group>"; };
@@ -407,6 +416,33 @@
 				D71765AF1FB3DF4F0084E09A /* SMBGameLevelView_UserSelection_GameBoardTile_HighlightData.m */,
 			);
 			path = SMBGameLevelView_UserSelection_GameBoardTile_HighlightData;
+			sourceTree = "<group>";
+		};
+		D718DFA0200815010081594A /* SMBCustomLevelsListViewController */ = {
+			isa = PBXGroup;
+			children = (
+				D718DFA12008150E0081594A /* SMBCustomLevelsListViewController.h */,
+				D718DFA22008150E0081594A /* SMBCustomLevelsListViewController.m */,
+			);
+			path = SMBCustomLevelsListViewController;
+			sourceTree = "<group>";
+		};
+		D718DFA4200826F60081594A /* SMBLevelEditorViewController */ = {
+			isa = PBXGroup;
+			children = (
+				D718DFA5200827050081594A /* SMBLevelEditorViewController.h */,
+				D718DFA6200827050081594A /* SMBLevelEditorViewController.m */,
+			);
+			path = SMBLevelEditorViewController;
+			sourceTree = "<group>";
+		};
+		D718DFA8200828BC0081594A /* SMBLevelEditorCreationData */ = {
+			isa = PBXGroup;
+			children = (
+				D718DFA9200828D40081594A /* SMBLevelEditorCreationData.h */,
+				D718DFAA200828D40081594A /* SMBLevelEditorCreationData.m */,
+			);
+			path = SMBLevelEditorCreationData;
 			sourceTree = "<group>";
 		};
 		D722CE341FB0C68000DF6136 /* SMBGameBoardTileEntitySpawner */ = {
@@ -699,6 +735,7 @@
 		D761FE461F3AC2FF0083842A /* Model */ = {
 			isa = PBXGroup;
 			children = (
+				D718DFA8200828BC0081594A /* SMBLevelEditorCreationData */,
 				D761FE471F3AC2FF0083842A /* DataCollection */,
 				D78CD07A1F3D6DB200118FB4 /* SMBDrawableObject */,
 				D761FE4F1F3AC2FF0083842A /* SMBGameBoard */,
@@ -879,10 +916,12 @@
 		D761FE8A1F3AC2FF0083842A /* UIViewController */ = {
 			isa = PBXGroup;
 			children = (
+				D718DFA0200815010081594A /* SMBCustomLevelsListViewController */,
 				D7C8C3DD1F3CE24A006D378E /* SMBGameLevelGeneratorSetsViewController */,
 				D7E511BC1F3CEE56008A6042 /* SMBGameLevelGeneratorSetViewController */,
 				D7951D051F41F77600A33AB2 /* SMBGameLevelGeneratorViewController */,
 				D77C925C1FBE149300E2C081 /* SMBLevelEditorCreationViewController */,
+				D718DFA4200826F60081594A /* SMBLevelEditorViewController */,
 				D7C8C3E11F3CE278006D378E /* UINavigationController */,
 			);
 			path = UIViewController;
@@ -1818,6 +1857,7 @@
 				D73CF9941F54B3D2002A70EB /* SMBDoorTileEntity.m in Sources */,
 				D7C8C3CC1F3B91FB006D378E /* SMBGameBoardTileView.m in Sources */,
 				D77C925F1FBE149C00E2C081 /* SMBLevelEditorCreationViewController.m in Sources */,
+				D718DFAB200828D40081594A /* SMBLevelEditorCreationData.m in Sources */,
 				D733A4AF1F5F2E4B007A8E6F /* SMBGenericPowerOutputTileEntity_OutputPowerReceiver_GameBoardTilePowerProvider.m in Sources */,
 				D7951D4A1F43ADAC00A33AB2 /* SMBWallTileEntity.m in Sources */,
 				D78CD0A91F3D6EB500118FB4 /* SMBDrawableObjectView.m in Sources */,
@@ -1836,6 +1876,7 @@
 				D7951D191F43332C00A33AB2 /* SMBGameLevelCompletion.m in Sources */,
 				D7E511BB1F3CEC40008A6042 /* SMBGameLevelGeneratorSet+SMBUserSets.m in Sources */,
 				D78CD09E1F3D6E5800118FB4 /* SMBBeamEntityTileNode.m in Sources */,
+				D718DFA7200827050081594A /* SMBLevelEditorViewController.m in Sources */,
 				D7951D431F43ADAC00A33AB2 /* SMBBeamCreatorTileEntity.m in Sources */,
 				D761FE931F3AC2FF0083842A /* SMBGameBoard+SMBAddEntity.m in Sources */,
 				D761FE951F3AC2FF0083842A /* SMBMappedDataCollection.m in Sources */,
@@ -1848,6 +1889,7 @@
 				D761FEA21F3AC2FF0083842A /* SMBGameLevel.m in Sources */,
 				D7951D461F43ADAC00A33AB2 /* SMBForcedBeamRedirectTileEntity.m in Sources */,
 				D78CD0A01F3D6E5800118FB4 /* SMBGameBoardGeneralEntity.m in Sources */,
+				D718DFA32008150E0081594A /* SMBCustomLevelsListViewController.m in Sources */,
 				D7035AFE1F9957300023399B /* SMBGameBoardTileBeamEnterToExitDirectionMapping.m in Sources */,
 				D78B47A61FB1096E004C967B /* SMBGameBoardTileEntitySpawnerManager.m in Sources */,
 				D733A4761F576767007A8E6F /* SMBImageDrawableObject.m in Sources */,

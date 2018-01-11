@@ -10,14 +10,15 @@
 #import "SMBGenericLabelTableViewCell.h"
 #import "SMBGenericTextFieldTableViewCell.h"
 #import "SMBGenericButtonTableViewCell.h"
-#import "SMBGameLevelGeneratorViewController.h"
 #import "SMBGameLevelGenerator.h"
-#import "SMBGameLevel+SMBLevelEditor.h"
+#import "SMBLevelEditorCreationData.h"
+#import "SMBLevelEditorViewController.h"
 
 #import <ResplendentUtilities/RUConditionalReturn.h>
 #import <ResplendentUtilities/NSString+RUMacros.h>
 #import <ResplendentUtilities/NSMutableDictionary+RUUtil.h>
 #import <ResplendentUtilities/RUClassOrNilUtil.h>
+#import <ResplendentUtilities/RUConstants.h>
 
 #import <RTSMTableSectionManager/RTSMTableSectionManager.h>
 
@@ -51,12 +52,11 @@ typedef NS_ENUM(NSInteger, SMBLevelEditorCreationViewController__tableSection) {
 #pragma mark - tableSectionManager
 @property (nonatomic, readonly, strong, nonnull) RTSMTableSectionManager* tableSectionManager;
 
-#pragma mark - Dirty Values
-@property (nonatomic, readonly) NSMutableDictionary<NSNumber*,id>* __nonnull dirtyValues;
--(BOOL)validateDirtyValue:(id)dirtyValue for_tableSection:(SMBLevelEditorCreationViewController__tableSection)tableSection;
--(void)setDirtyValue:(nullable id)dirtyValue for_tableSection:(SMBLevelEditorCreationViewController__tableSection)tableSection;
--(nullable id)getDirtyValue_for_tableSection:(SMBLevelEditorCreationViewController__tableSection)tableSection;
--(void)updateForDirtyValueChange_for_tableSection:(SMBLevelEditorCreationViewController__tableSection)tableSection;
+#pragma mark - levelEditorCreationData
+@property (nonatomic, readonly, strong, nonnull) SMBLevelEditorCreationData* levelEditorCreationData;
+-(NSUInteger)levelEditorCreationData_unsignedInteger_for_tableSection:(SMBLevelEditorCreationViewController__tableSection)tableSection;
+-(void)levelEditorCreationData_set_unsignedInteger:(NSUInteger)unsignedInteger
+								  for_tableSection:(SMBLevelEditorCreationViewController__tableSection)tableSection;
 
 #pragma mark - tableView
 @property (nonatomic, readonly, strong, nullable) UITableView* tableView;
@@ -146,75 +146,57 @@ typedef NS_ENUM(NSInteger, SMBLevelEditorCreationViewController__tableSection) {
 	return YES;
 }
 
-#pragma mark - Dirty Values
-@synthesize dirtyValues = _dirtyValues;
--(NSMutableDictionary<NSNumber *,id> *)dirtyValues
+#pragma mark - levelEditorCreationData
+@synthesize levelEditorCreationData = _levelEditorCreationData;
+-(nonnull SMBLevelEditorCreationData*)levelEditorCreationData
 {
-	if (_dirtyValues == nil)
+	if (_levelEditorCreationData == nil)
 	{
-		_dirtyValues = [NSMutableDictionary dictionary];
-	}
-	
-	return _dirtyValues;
-}
-
--(void)setDirtyValue:(nullable id)dirtyValue for_tableSection:(SMBLevelEditorCreationViewController__tableSection)tableSection
-{
-	kRUConditionalReturn([self validateDirtyValue:dirtyValue for_tableSection:tableSection] == false, YES);
-	
-	[self.dirtyValues setObjectOrRemoveIfNil:dirtyValue forKey:@(tableSection)];
-	
-	[self updateForDirtyValueChange_for_tableSection:tableSection];
-}
-
--(BOOL)validateDirtyValue:(id)dirtyValue for_tableSection:(SMBLevelEditorCreationViewController__tableSection)tableSection
-{
-	if (dirtyValue)
-	{
-		switch (tableSection)
-		{
-			case SMBLevelEditorCreationViewController__tableSection_columns_header:
-			case SMBLevelEditorCreationViewController__tableSection_rows_header:
-			case SMBLevelEditorCreationViewController__tableSection_next:
-				NSAssert(false, @"unhandled tableSection %li",(long)tableSection);
-				break;
-				
-			case SMBLevelEditorCreationViewController__tableSection_columns:
-			case SMBLevelEditorCreationViewController__tableSection_rows:
-				return (kRUStringOrNil(dirtyValue) != nil);
-				break;
-		}
+		_levelEditorCreationData = [SMBLevelEditorCreationData new];
 	}
 
-	return YES;
+	return _levelEditorCreationData;
 }
 
--(nullable id)getDirtyValue_for_tableSection:(SMBLevelEditorCreationViewController__tableSection)tableSection
+-(NSUInteger)levelEditorCreationData_unsignedInteger_for_tableSection:(SMBLevelEditorCreationViewController__tableSection)tableSection
 {
-	id dirtyValue = [self.dirtyValues objectForKey:@(tableSection)];
-	
-	kRUConditionalReturn_ReturnValueNil([self validateDirtyValue:dirtyValue for_tableSection:tableSection] == false, YES);
-	
-	return dirtyValue;
-}
-
--(void)updateForDirtyValueChange_for_tableSection:(SMBLevelEditorCreationViewController__tableSection)tableSection
-{
-	[self.view setNeedsLayout];
-	
 	switch (tableSection)
 	{
-		case SMBLevelEditorCreationViewController__tableSection_columns:
-		case SMBLevelEditorCreationViewController__tableSection_rows:
-		{
-			NSInteger const indexPathSection = [self.tableSectionManager indexPathSectionForSection:SMBLevelEditorCreationViewController__tableSection_next];
-			kRUConditionalReturn(indexPathSection == NSNotFound, YES);
-
-			[self.tableView reloadSections:[NSIndexSet indexSetWithIndex:indexPathSection] withRowAnimation:UITableViewRowAnimationNone];
-		}
+		case SMBLevelEditorCreationViewController__tableSection_columns_header:
+		case SMBLevelEditorCreationViewController__tableSection_rows_header:
+		case SMBLevelEditorCreationViewController__tableSection_next:
 			break;
 			
-		default:
+		case SMBLevelEditorCreationViewController__tableSection_columns:
+			return self.levelEditorCreationData.columns;
+			break;
+			
+		case SMBLevelEditorCreationViewController__tableSection_rows:
+			return self.levelEditorCreationData.rows;
+			break;
+	}
+
+	NSAssert(false, @"unhandled tableSection %li",(long)tableSection);
+	return 0;
+}
+
+-(void)levelEditorCreationData_set_unsignedInteger:(NSUInteger)unsignedInteger
+								  for_tableSection:(SMBLevelEditorCreationViewController__tableSection)tableSection
+{
+	switch (tableSection)
+	{
+		case SMBLevelEditorCreationViewController__tableSection_columns_header:
+		case SMBLevelEditorCreationViewController__tableSection_rows_header:
+		case SMBLevelEditorCreationViewController__tableSection_next:
+			NSAssert(false, @"unhandled tableSection %li",(long)tableSection);
+			break;
+			
+		case SMBLevelEditorCreationViewController__tableSection_columns:
+			[self.levelEditorCreationData setColumns:unsignedInteger];
+			break;
+			
+		case SMBLevelEditorCreationViewController__tableSection_rows:
+			[self.levelEditorCreationData setRows:unsignedInteger];
 			break;
 	}
 }
@@ -481,14 +463,9 @@ typedef NS_ENUM(NSInteger, SMBLevelEditorCreationViewController__tableSection) {
 		case SMBLevelEditorCreationViewController__tableSection_columns:
 		case SMBLevelEditorCreationViewController__tableSection_rows:
 		{
-			id const dirtyValue = [self getDirtyValue_for_tableSection:tableSection];
-			kRUConditionalReturn_ReturnValueNil(dirtyValue == nil, NO);
+			NSUInteger const levelEditorCreationData_unsignedInteger = [self levelEditorCreationData_unsignedInteger_for_tableSection:tableSection];
 
-			NSString* const dirtyValue_string = kRUStringOrNil(dirtyValue);
-			kRUConditionalReturn_ReturnValueNil(dirtyValue_string == nil, YES);
-			kRUConditionalReturn_ReturnValueNil(dirtyValue_string.length == 0, NO);
-
-			return dirtyValue_string;
+			return RUStringWithFormat(@"%lu",levelEditorCreationData_unsignedInteger);
 		}
 			break;
 
@@ -632,22 +609,13 @@ typedef NS_ENUM(NSInteger, SMBLevelEditorCreationViewController__tableSection) {
 #pragma mark - nextButton
 -(nullable NSString*)nextButton_errorMessage
 {
-	id const columns = [self getDirtyValue_for_tableSection:SMBLevelEditorCreationViewController__tableSection_columns];
-	kRUConditionalReturn_ReturnValue(columns == nil, NO, @"You must enter an amount of columns.")
+	SMBLevelEditorCreationData* const levelEditorCreationData = self.levelEditorCreationData;
+	kRUConditionalReturn_ReturnValue(levelEditorCreationData == nil, YES, @"developer issue: levelEditorCreationData is nil.")
 
-	NSString* const columns_string = kRUStringOrNil(columns);
-	kRUConditionalReturn_ReturnValue(columns_string == nil, YES, @"Something is wrong with your columns input");
-
-	NSNumber* const columns_number = @(columns_string.integerValue);
+	NSNumber* const columns_number = @(levelEditorCreationData.columns);
 	kRUConditionalReturn_ReturnValue(columns_number.integerValue < 1, NO, @"You must enter at least one column.")
 
-	id const rows = [self getDirtyValue_for_tableSection:SMBLevelEditorCreationViewController__tableSection_rows];
-	kRUConditionalReturn_ReturnValue(rows == nil, NO, @"You must enter an amount of rows.")
-	
-	NSString* const rows_string = kRUStringOrNil(rows);
-	kRUConditionalReturn_ReturnValue(rows_string == nil, YES, @"Something is wrong with your rows input");
-	
-	NSNumber* const rows_number = @(rows_string.integerValue);
+	NSNumber* const rows_number = @(levelEditorCreationData.rows);
 	kRUConditionalReturn_ReturnValue(rows_number.integerValue < 1, NO, @"You must enter at least one row.")
 
 	return nil;
@@ -674,33 +642,19 @@ typedef NS_ENUM(NSInteger, SMBLevelEditorCreationViewController__tableSection) {
 		return;
 	}
 
-	id const columns = [self getDirtyValue_for_tableSection:SMBLevelEditorCreationViewController__tableSection_columns];
-	kRUConditionalReturn(columns == nil, YES);
+	SMBLevelEditorCreationData* const levelEditorCreationData = self.levelEditorCreationData;
+	kRUConditionalReturn(levelEditorCreationData == nil, YES)
 
-	NSString* const columns_string = kRUStringOrNil(columns);
-	kRUConditionalReturn(columns_string == nil, YES);
+	NSNumber* const columns_number = @(levelEditorCreationData.columns);
+	kRUConditionalReturn(columns_number.integerValue < 1, NO)
 
-	NSNumber* const columns_number = @(columns_string.integerValue);
-	kRUConditionalReturn(columns_number == nil, YES);
+	NSNumber* const rows_number = @(levelEditorCreationData.rows);
+	kRUConditionalReturn(rows_number.integerValue < 1, NO);
 
-	id const rows = [self getDirtyValue_for_tableSection:SMBLevelEditorCreationViewController__tableSection_rows];
-	kRUConditionalReturn(rows == nil, YES);
+	SMBLevelEditorViewController* const levelEditorViewController = [SMBLevelEditorViewController new];
+	[levelEditorViewController setLevelEditorCreationData:levelEditorCreationData];
 
-	NSString* const rows_string = kRUStringOrNil(rows);
-	kRUConditionalReturn(rows_string == nil, YES);
-
-	NSNumber* const rows_number = @(rows_string.integerValue);
-	kRUConditionalReturn(rows_number == nil, YES);
-
-	SMBGameLevelGeneratorViewController* const gameLevelGeneratorViewController = [SMBGameLevelGeneratorViewController new];
-	[gameLevelGeneratorViewController setGameLevelGenerator:
-	 [[SMBGameLevelGenerator alloc] init_with_generateLevelBlock:^SMBGameLevel * _Nonnull{
-		return [SMBGameLevel smb_levelEditor_with_numberOfColumns:columns_number.integerValue
-													 numberOfRows:rows_number.integerValue];
-	}
-															name:@"Level Editor"]];
-
-	[self.navigationController pushViewController:gameLevelGeneratorViewController animated:YES];
+	[self.navigationController pushViewController:levelEditorViewController animated:YES];
 }
 
 #pragma mark - SMBGenericTextFieldTableViewCell_textChangeDelegate
@@ -712,8 +666,26 @@ typedef NS_ENUM(NSInteger, SMBLevelEditorCreationViewController__tableSection) {
 	NSIndexPath* const indexPath = [self.tableView indexPathForRowAtPoint:genericTextFieldTableViewCell.center];
 	kRUConditionalReturn(indexPath == nil, YES);
 	
-	[self setDirtyValue:text
-	   for_tableSection:[self.tableSectionManager sectionForIndexPathSection:indexPath.section]];
+	SMBLevelEditorCreationViewController__tableSection const tableSection = [self.tableSectionManager sectionForIndexPathSection:indexPath.section];
+
+	switch (tableSection)
+	{
+		case SMBLevelEditorCreationViewController__tableSection_columns_header:
+		case SMBLevelEditorCreationViewController__tableSection_rows_header:
+		case SMBLevelEditorCreationViewController__tableSection_next:
+			NSAssert(false, @"unhandled tableSection %li",(long)tableSection);
+			break;
+			
+		case SMBLevelEditorCreationViewController__tableSection_columns:
+		case SMBLevelEditorCreationViewController__tableSection_rows:
+		{
+			NSInteger const text_integerValue = text.integerValue;
+			NSInteger const unintegerValue = (text_integerValue >= 0 ? text_integerValue : -text_integerValue);
+			[self levelEditorCreationData_set_unsignedInteger:unintegerValue
+											 for_tableSection:tableSection];
+		}
+			break;
+	}
 }
 
 @end
