@@ -52,7 +52,8 @@
 
 	SMBGameBoard* const gameBoard =
 	[[SMBGameBoard alloc] init_with_numberOfColumns:1
-									   numberOfRows:1];
+									   numberOfRows:1
+								 leastNumberOfMoves:0];
 	/* Initial beam creator. */
 
 	SMBBeamCreatorTileEntity* const beamCreatorEntity = [SMBBeamCreatorTileEntity new];
@@ -127,11 +128,10 @@
 	NSUInteger const section_2_height = 2;
 
 	/* Game board. */
-
-	    /* Game board. */
-SMBGameBoard* const gameBoard =
-[[SMBGameBoard alloc] init_with_numberOfColumns:3
-																	   numberOfRows:(section_1_height + wall_between_sections_1_and_2_height + section_2_height)];
+	SMBGameBoard* const gameBoard =
+	[[SMBGameBoard alloc] init_with_numberOfColumns:3
+									   numberOfRows:(section_1_height + wall_between_sections_1_and_2_height + section_2_height)
+								 leastNumberOfMoves:0];
 
 	/*
 	 Section values.
@@ -288,11 +288,10 @@ SMBGameBoard* const gameBoard =
 	 */
 
 	/* Game board. */
-
-	    /* Game board. */
-SMBGameBoard* const gameBoard =
-[[SMBGameBoard alloc] init_with_numberOfColumns:2
-																	   numberOfRows:2];
+	SMBGameBoard* const gameBoard =
+	[[SMBGameBoard alloc] init_with_numberOfColumns:2
+									   numberOfRows:2
+								 leastNumberOfMoves:0];
 
 	/* Initial beam creator. */
 
@@ -370,11 +369,10 @@ SMBGameBoard* const gameBoard =
 	 */
 
 	/* Game board. */
-
-	    /* Game board. */
-SMBGameBoard* const gameBoard =
-[[SMBGameBoard alloc] init_with_numberOfColumns:3
-																	   numberOfRows:3];
+	SMBGameBoard* const gameBoard =
+	[[SMBGameBoard alloc] init_with_numberOfColumns:3
+									   numberOfRows:3
+								 leastNumberOfMoves:0];
 
 	/* Initial beam creator. */
 
@@ -463,10 +461,10 @@ SMBGameBoard* const gameBoard =
 	 */
 
 	/* Game board. */
-
 	SMBGameBoard* const gameBoard =
 	[[SMBGameBoard alloc] init_with_numberOfColumns:5
-									   numberOfRows:2];
+									   numberOfRows:2
+								 leastNumberOfMoves:0];
 
 	/* Initial beam creator. */
 
@@ -587,7 +585,6 @@ SMBGameBoard* const gameBoard =
 	NSUInteger const section_2_width = 2;
 
 	/* Game board. */
-
 	SMBGameBoard* const gameBoard =
 	[[SMBGameBoard alloc] init_with_numberOfColumns:
 	 (section_1_width
@@ -596,7 +593,8 @@ SMBGameBoard* const gameBoard =
 	  +
 	  section_2_width
 	  )
-									   numberOfRows:3];
+									   numberOfRows:3
+								 leastNumberOfMoves:0];
 
 	/*
 	 Section values.
@@ -733,7 +731,8 @@ SMBGameBoard* const gameBoard =
 	/* Game board. */
 	SMBGameBoard* const gameBoard =
 	[[SMBGameBoard alloc] init_with_numberOfColumns:5
-									   numberOfRows:5];
+									   numberOfRows:5
+								 leastNumberOfMoves:0];
 
 	/* Entity spawners. */
 	NSMutableArray<SMBGameBoardTileEntitySpawner*>* const gameBoardTileEntitySpawners = [NSMutableArray<SMBGameBoardTileEntitySpawner*> array];

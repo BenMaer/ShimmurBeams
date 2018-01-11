@@ -78,11 +78,10 @@
 	NSUInteger const section_2_height = 3;
 
 	/* Game board. */
-
-	    /* Game board. */
-SMBGameBoard* const gameBoard =
-[[SMBGameBoard alloc] init_with_numberOfColumns:7
-																	   numberOfRows:(section_1_height + wall_between_sections_1_and_2_height + section_2_height)];
+	SMBGameBoard* const gameBoard =
+	[[SMBGameBoard alloc] init_with_numberOfColumns:7
+									   numberOfRows:(section_1_height + wall_between_sections_1_and_2_height + section_2_height)
+								 leastNumberOfMoves:2];
 
 	/*
 	 Section values.
@@ -230,11 +229,10 @@ spawnEntityBlocks:gameBoardTileEntitySpawner_spawnEntityBlocks_singleUse]];
 	NSUInteger const section_2_height = 3;
 
 	/* Game board. */
-
-	    /* Game board. */
-SMBGameBoard* const gameBoard =
-[[SMBGameBoard alloc] init_with_numberOfColumns:7
-																	   numberOfRows:(section_1_height + wall_between_sections_1_and_2_height + section_2_height)];
+	SMBGameBoard* const gameBoard =
+	[[SMBGameBoard alloc] init_with_numberOfColumns:7
+									   numberOfRows:(section_1_height + wall_between_sections_1_and_2_height + section_2_height)
+								 leastNumberOfMoves:2];
 
 	/* @Matt @Alex I want you guys to fill this in from the above diagrams */
 
@@ -389,11 +387,10 @@ spawnEntityBlocks:gameBoardTileEntitySpawner_spawnEntityBlocks_singleUse]];
 	 */
 
 	/* Game board. */
-
-	    /* Game board. */
-SMBGameBoard* const gameBoard =
-[[SMBGameBoard alloc] init_with_numberOfColumns:5
-																	   numberOfRows:5];
+	SMBGameBoard* const gameBoard =
+	[[SMBGameBoard alloc] init_with_numberOfColumns:5
+									   numberOfRows:5
+								 leastNumberOfMoves:2];
 
 	/* Initial beam creator. */
 
@@ -513,11 +510,10 @@ spawnEntityBlocks:gameBoardTileEntitySpawner_spawnEntityBlocks_singleUse]];
 	NSUInteger const section_2_height = 3;
 
 	/* Game board. */
-
-	    /* Game board. */
-SMBGameBoard* const gameBoard =
-[[SMBGameBoard alloc] init_with_numberOfColumns:7
-																	   numberOfRows:(section_1_height + wall_between_sections_1_and_2_height + section_2_height)];
+	SMBGameBoard* const gameBoard =
+	[[SMBGameBoard alloc] init_with_numberOfColumns:7
+									   numberOfRows:(section_1_height + wall_between_sections_1_and_2_height + section_2_height)
+								 leastNumberOfMoves:3];
 
 	/*
 	 Section values.
@@ -711,11 +707,10 @@ spawnEntityBlocks:gameBoardTileEntitySpawner_spawnEntityBlocks_singleUse]];
 	NSUInteger const section_2_height = 3;
 
 	/* Game board. */
-
-	    /* Game board. */
-SMBGameBoard* const gameBoard =
-[[SMBGameBoard alloc] init_with_numberOfColumns:7
-																	   numberOfRows:(section_1_height + wall_between_sections_1_and_2_height + section_2_height)];
+	SMBGameBoard* const gameBoard =
+	[[SMBGameBoard alloc] init_with_numberOfColumns:7
+									   numberOfRows:(section_1_height + wall_between_sections_1_and_2_height + section_2_height)
+								 leastNumberOfMoves:4];
 
 	/*
 	 Section values.
@@ -968,11 +963,10 @@ spawnEntityBlocks:gameBoardTileEntitySpawner_spawnEntityBlocks_singleUse]];
 	NSUInteger const section_2_height = 3;
 
 	/* Game board. */
-
-	    /* Game board. */
-SMBGameBoard* const gameBoard =
-[[SMBGameBoard alloc] init_with_numberOfColumns:7
-																	   numberOfRows:(section_1_height + wall_between_sections_1_and_2_height + section_2_height)];
+	SMBGameBoard* const gameBoard =
+	[[SMBGameBoard alloc] init_with_numberOfColumns:7
+									   numberOfRows:(section_1_height + wall_between_sections_1_and_2_height + section_2_height)
+								 leastNumberOfMoves:5];
 
 	/*
 	 Section values.
@@ -1251,11 +1245,10 @@ spawnEntityBlocks:gameBoardTileEntitySpawner_spawnEntityBlocks_singleUse]];
 	NSUInteger const section_2_height = 3;
 
 	/* Game board. */
-
-	    /* Game board. */
-SMBGameBoard* const gameBoard =
-[[SMBGameBoard alloc] init_with_numberOfColumns:7
-																	   numberOfRows:(section_1_height + wall_between_sections_1_and_2_height + section_2_height)];
+	SMBGameBoard* const gameBoard =
+	[[SMBGameBoard alloc] init_with_numberOfColumns:7
+									   numberOfRows:(section_1_height + wall_between_sections_1_and_2_height + section_2_height)
+								 leastNumberOfMoves:8];
 
 	/*
 	 Section values.

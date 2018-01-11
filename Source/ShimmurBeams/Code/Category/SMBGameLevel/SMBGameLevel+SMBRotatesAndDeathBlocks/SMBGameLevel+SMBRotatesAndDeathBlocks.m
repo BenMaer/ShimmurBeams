@@ -27,10 +27,20 @@
 
 +(nonnull instancetype)smb_rotates_oneRotate_right
 {
+	/*
+	 Usable:
+	 1) Beam Rotation (direction_rotation: right)
+	 
+	 Answer:
+	 1) Usable 1) Beam Rotation (direction_rotation: right): B2
+	 
+	 */
+
 	/* Game board. */
 	SMBGameBoard* const gameBoard =
 	[[SMBGameBoard alloc] init_with_numberOfColumns:5
-									   numberOfRows:5];
+									   numberOfRows:5
+								 leastNumberOfMoves:1];
 
 	/* Initial beam creator. */
 	SMBBeamCreatorTileEntity* const beamCreatorEntity = [SMBBeamCreatorTileEntity new];
@@ -50,7 +60,7 @@
 
 	NSMutableArray<SMBGameBoardTileEntitySpawner_spawnEntityBlock>* const gameBoardTileEntitySpawner_spawnEntityBlocks_singleUse = [NSMutableArray<SMBGameBoardTileEntitySpawner_spawnEntityBlock> array];
 	[gameBoardTileEntitySpawner_spawnEntityBlocks_singleUse addObject:^SMBGameBoardTileEntity * _Nullable{
-		return [[SMBBeamRotateTileEntity alloc] init_with_direction_rotation:SMBGameBoardTile__direction_rotation_right];;
+		return [[SMBBeamRotateTileEntity alloc] init_with_direction_rotation:SMBGameBoardTile__direction_rotation_right];
 	}];
 
 	[gameBoardTileEntitySpawners addObjectsFromArray:
@@ -66,10 +76,22 @@
 
 +(nonnull instancetype)smb_rotates_two_left
 {
+	/*
+	 Usable:
+	 1) Beam Rotation (direction_rotation: left)
+	 2) Beam Rotation (direction_rotation: left)
+
+	 Answer:
+	 1) Usable 1) Beam Rotation (direction_rotation: left): D2
+	 2) Usable 2) Beam Rotation (direction_rotation: left): B2
+
+	 */
+
 	/* Game board. */
 	SMBGameBoard* const gameBoard =
 	[[SMBGameBoard alloc] init_with_numberOfColumns:5
-									   numberOfRows:5];
+									   numberOfRows:5
+								 leastNumberOfMoves:2];
 
 	/* Initial beam creator. */
 	SMBBeamCreatorTileEntity* const beamCreatorEntity = [SMBBeamCreatorTileEntity new];
@@ -110,10 +132,22 @@
 #pragma mark - rotates and forced
 +(nonnull instancetype)smb_rotates_oneRight_forced_oneRight
 {
+	/*
+	 Usable:
+	 1) Beam Rotation (direction_rotation: right)
+	 2) Forced Redirect (direction: right)
+	 
+	 Answer:
+	 1) Usable 2) Forced Redirect (direction: right): B2
+	 2) Usable 1) Beam Rotation (direction_rotation: right): D2
+	 
+	 */
+
 	/* Game board. */
 	SMBGameBoard* const gameBoard =
 	[[SMBGameBoard alloc] init_with_numberOfColumns:5
-									   numberOfRows:5];
+									   numberOfRows:5
+								 leastNumberOfMoves:2];
 
 	/* Initial beam creator. */
 	SMBBeamCreatorTileEntity* const beamCreatorEntity = [SMBBeamCreatorTileEntity new];
@@ -154,10 +188,24 @@
 #pragma mark - rotates and wall
 +(nonnull instancetype)smb_rotates_oneLeft_twoRight_wall_oneCenter
 {
+	/*
+	 Usable:
+	 1) Beam Rotation (direction_rotation: right).
+	 2) Beam Rotation (direction_rotation: left).
+	 3) Beam Rotation (direction_rotation: right).
+
+	 Answer:
+	 1) Usable 2) Beam Rotation (direction_rotation: left): D5
+	 2) Usable 1) Beam Rotation (direction_rotation: right): C5
+	 3) Usable 3) Beam Rotation (direction_rotation: right): C1
+
+	 */
+
 	/* Game board. */
 	SMBGameBoard* const gameBoard =
 	[[SMBGameBoard alloc] init_with_numberOfColumns:7
-									   numberOfRows:7];
+									   numberOfRows:7
+								 leastNumberOfMoves:3];
 
 	/* Initial beam creator. */
 	SMBBeamCreatorTileEntity* const beamCreatorEntity = [SMBBeamCreatorTileEntity new];
@@ -205,10 +253,22 @@
 #pragma mark - rotates and death blocks
 +(nonnull instancetype)smb_rotates_twoRight_deathBlock_one
 {
+	/*
+	 Usable:
+	 1) Beam Rotation (direction_rotation: right).
+	 2) Beam Rotation (direction_rotation: right).
+	 
+	 Answer:
+	 1) Usable 1) Beam Rotation (direction_rotation: right): B2
+	 2) Usable 2) Beam Rotation (direction_rotation: right): F2
+	 
+	 */
+
 	/* Game board. */
 	SMBGameBoard* const gameBoard =
 	[[SMBGameBoard alloc] init_with_numberOfColumns:7
-									   numberOfRows:7];
+									   numberOfRows:7
+								 leastNumberOfMoves:3];
 
 	/* Initial beam creator. */
 	SMBBeamCreatorTileEntity* const beamCreatorEntity = [SMBBeamCreatorTileEntity new];
@@ -254,10 +314,26 @@
 
 +(nonnull instancetype)smb_rotates_twoRight_twoLeft_deathBlocks_surrounded_and_someBlocking
 {
+	/*
+	 Usable:
+	 1) Beam Rotation (direction_rotation: right).
+	 2) Beam Rotation (direction_rotation: right).
+	 3) Beam Rotation (direction_rotation: left).
+	 4) Beam Rotation (direction_rotation: left).
+
+	 Answer:
+	 1) Usable 1) Beam Rotation (direction_rotation: right): D3
+	 2) Usable 3) Beam Rotation (direction_rotation: left): E3
+	 3) Usable 4) Beam Rotation (direction_rotation: left): E5
+	 4) Usable 2) Beam Rotation (direction_rotation: right): D5
+
+	 */
+
 	/* Game board. */
 	SMBGameBoard* const gameBoard =
 	[[SMBGameBoard alloc] init_with_numberOfColumns:7
-									   numberOfRows:7];
+									   numberOfRows:7
+								 leastNumberOfMoves:4];
 
 	/* Initial beam creator. */
 	SMBBeamCreatorTileEntity* const beamCreatorEntity = [SMBBeamCreatorTileEntity new];
@@ -338,10 +414,22 @@
 
 +(nonnull instancetype)smb_rotates_deathBlocks_blackAnglesMatter
 {
+	/*
+	 Usable:
+	 1) Forced Redirect (direction: down).
+	 2) Forced Redirect (direction: up).
+
+	 Answer:
+	 1) Usable 2) Forced Redirect (direction: up): B4
+	 2) Usable 1) Forced Redirect (direction: down): B1
+
+	 */
+
 	/* Game board. */
 	SMBGameBoard* const gameBoard =
 	[[SMBGameBoard alloc] init_with_numberOfColumns:5
-									   numberOfRows:5];
+									   numberOfRows:5
+								 leastNumberOfMoves:2];
 
 	/* Initial beam creator. */
 	SMBBeamCreatorTileEntity* const beamCreatorEntity = [SMBBeamCreatorTileEntity new];
@@ -400,10 +488,26 @@
 
 +(nonnull instancetype)smb_rotates_deathBlocks_scattered
 {
+	/*
+	 Usable:
+	 1) Beam Rotation (direction_rotation: right)
+	 2) Beam Rotation (direction_rotation: left)
+	 3) Beam Rotation (direction_rotation: left)
+	 4) Forced Redirect (direction: right).
+
+	 Answer:
+	 1) Usable 4) Forced Redirect (direction: right): E3
+	 2) Usable 2) Beam Rotation (direction_rotation: left): F8
+	 3) Usable 1) Beam Rotation (direction_rotation: right): B5
+	 4) Usable 3) Beam Rotation (direction_rotation: left): B11
+
+	 */
+
 	/* Game board. */
 	SMBGameBoard* const gameBoard =
 	[[SMBGameBoard alloc] init_with_numberOfColumns:11
-									   numberOfRows:11];
+									   numberOfRows:11
+								 leastNumberOfMoves:4];
 
 	/* Initial beam creator. */
 	SMBBeamCreatorTileEntity* const beamCreatorEntity = [SMBBeamCreatorTileEntity new];

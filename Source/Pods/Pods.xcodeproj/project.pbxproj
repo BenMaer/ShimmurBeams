@@ -427,7 +427,7 @@
 		1DAC407AF0824EE09C73D0B4B732A9F4 /* UINavigationController+RUColoredNavigationBar.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; name = "UINavigationController+RUColoredNavigationBar.m"; path = "Pod/Classes/Category/UINavigationController/UINavigationController+RUColoredNavigationBar.m"; sourceTree = "<group>"; };
 		1F0582CA33E27AF87664FB88AF96DC55 /* RUDebugging.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = RUDebugging.h; path = Pod/Classes/Misc/RUDebugging.h; sourceTree = "<group>"; };
 		1F3CAE306362613F109364B6506357B8 /* UITextField+RUAttributesDictionaryBuilder.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = "UITextField+RUAttributesDictionaryBuilder.h"; path = "RUTextSize/Classes/Category/UITextField/UITextField+RUAttributesDictionaryBuilder/UITextField+RUAttributesDictionaryBuilder.h"; sourceTree = "<group>"; };
-		206598C255301A234A8DADC303A8F019 /* libRaptureXML.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; name = libRaptureXML.a; path = libRaptureXML.a; sourceTree = BUILT_PRODUCTS_DIR; };
+		206598C255301A234A8DADC303A8F019 /* libRaptureXML.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libRaptureXML.a; sourceTree = BUILT_PRODUCTS_DIR; };
 		234ECD5E90E620A42A1BD737E48D5FED /* RUKeyboardAdjustmentHelperProtocols.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = RUKeyboardAdjustmentHelperProtocols.h; path = Pod/Classes/Objects/KeyboardAdjustmentHelper/RUKeyboardAdjustmentHelperProtocols.h; sourceTree = "<group>"; };
 		2519C810AFEE2A2922E73A4B66AF365C /* RUSlideMenuNavigationController.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = RUSlideMenuNavigationController.h; path = Pod/Classes/View/UIViewController/UINavigationController/RUSlideMenuNavigationController.h; sourceTree = "<group>"; };
 		259666C0438FEEC2F43B3C53A5569AE3 /* RUNotifications.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = RUNotifications.h; path = Pod/Classes/Misc/RUNotifications.h; sourceTree = "<group>"; };
@@ -489,7 +489,7 @@
 		5243517E74BED8CA021B4DA2E965BFA8 /* UIColor+RUUtility.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = "UIColor+RUUtility.h"; path = "Pod/Classes/Category/UIColor/UIColor+RUUtility.h"; sourceTree = "<group>"; };
 		5311C0B181833847E611B1C221381F6D /* RUColorPickerViewProtocols.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = RUColorPickerViewProtocols.h; path = Pod/Classes/View/ColorPicker/RUColorPickerViewProtocols.h; sourceTree = "<group>"; };
 		533A0EB9A0F07D7E76AF10149F126336 /* RUAttributesDictionaryBuilder.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; name = RUAttributesDictionaryBuilder.m; path = RUTextSize/Classes/Utility/RUAttributesDictionaryBuilder.m; sourceTree = "<group>"; };
-		53D269594992B2DDA73D20A3F69E7EE8 /* libRTSMTableSectionManager.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; name = libRTSMTableSectionManager.a; path = libRTSMTableSectionManager.a; sourceTree = BUILT_PRODUCTS_DIR; };
+		53D269594992B2DDA73D20A3F69E7EE8 /* libRTSMTableSectionManager.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libRTSMTableSectionManager.a; sourceTree = BUILT_PRODUCTS_DIR; };
 		53DA4662B102256C804E24BE0A18403E /* Pods-ShimmurBeams-resources.sh */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.script.sh; path = "Pods-ShimmurBeams-resources.sh"; sourceTree = "<group>"; };
 		53EA5852727FD7D05101F96C40812E31 /* RURadioButtonView.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = RURadioButtonView.h; path = Pod/Classes/View/RadioButtonView/RURadioButtonView.h; sourceTree = "<group>"; };
 		540780EE538D9C8B92A75FEE33816718 /* UIViewController+RUNavigationBarColorSetterDelegate.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; name = "UIViewController+RUNavigationBarColorSetterDelegate.m"; path = "Pod/Classes/Category/UIViewController/UIViewController+RUNavigationBarColorSetterDelegate.m"; sourceTree = "<group>"; };
@@ -567,13 +567,13 @@
 		8440B9543A3CCFA4D6C57F8828727BB8 /* NSArray+RUReversing.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; name = "NSArray+RUReversing.m"; path = "Pod/Classes/Category/NSArray/NSArray+RUReversing.m"; sourceTree = "<group>"; };
 		85B9709AB2670223C915B8DC9CB53A60 /* UIActionSheet+RUShowUtil.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = "UIActionSheet+RUShowUtil.h"; path = "Pod/Classes/Category/UIActionSheet+RUShowUtil.h"; sourceTree = "<group>"; };
 		86CA54F039A45B22AA16B8B0DD0BCCA4 /* CALayer+RUCornerRadius.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; name = "CALayer+RUCornerRadius.m"; path = "Pod/Classes/Category/CALayer/CALayer+RUCornerRadius/CALayer+RUCornerRadius.m"; sourceTree = "<group>"; };
-		86F08E21602FE819BD9A15B16552F930 /* libUIImage+SVG.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; name = "libUIImage+SVG.a"; path = "libUIImage+SVG.a"; sourceTree = BUILT_PRODUCTS_DIR; };
+		86F08E21602FE819BD9A15B16552F930 /* libUIImage+SVG.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libUIImage+SVG.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		870ED9AC8ACA123BD5533500A9C9A829 /* UIViewController+RUDismissOrPop.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = "UIViewController+RUDismissOrPop.h"; path = "Pod/Classes/Category/UIViewController/UIViewController+RUDismissOrPop.h"; sourceTree = "<group>"; };
 		8734497321083ABE7E8A9887737BE444 /* RUTextViewWithPlaceholderContainerView.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = RUTextViewWithPlaceholderContainerView.h; path = RUTextSize/Classes/UIView/RUTextViewWithPlaceholderContainerView.h; sourceTree = "<group>"; };
 		87B107AE96A5F404CD41F6437F4FD7F6 /* Pods-ShimmurBeams.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = "Pods-ShimmurBeams.release.xcconfig"; sourceTree = "<group>"; };
 		881187ED5D2759991D76AF25FF2972AC /* NSAttributedString+RUTextSize.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; name = "NSAttributedString+RUTextSize.m"; path = "RUTextSize/Classes/Category/NSAttributedString+RUTextSize.m"; sourceTree = "<group>"; };
 		88704E056CBEDADBFBD57259BBD24CA6 /* RaptureXML-dummy.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; path = "RaptureXML-dummy.m"; sourceTree = "<group>"; };
-		88E8B579649AF19EC75951CD2205528F /* libResplendentUtilities.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; name = libResplendentUtilities.a; path = libResplendentUtilities.a; sourceTree = BUILT_PRODUCTS_DIR; };
+		88E8B579649AF19EC75951CD2205528F /* libResplendentUtilities.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libResplendentUtilities.a; sourceTree = BUILT_PRODUCTS_DIR; };
 		89D25EC3764FDBC9F94E084865C623F6 /* RTSMTableSectionRangeManager_SectionLengthDelegate.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = RTSMTableSectionRangeManager_SectionLengthDelegate.h; path = RTSMTableSectionManager/Classes/RTSMTableSectionRangeManager/RTSMTableSectionRangeManager_SectionLengthDelegate.h; sourceTree = "<group>"; };
 		8A9EE4BB0E50A979FD3F2212EBD26579 /* UIViewController+RUStatusBarHeight.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; name = "UIViewController+RUStatusBarHeight.m"; path = "Pod/Classes/Category/UIViewController/UIViewController+RUStatusBarHeight.m"; sourceTree = "<group>"; };
 		8AED99149D887AD7D0055BE041AD75D8 /* UIImage+RUSaveToAssetsLibrary.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = "UIImage+RUSaveToAssetsLibrary.h"; path = "Pod/Classes/Category/UIImage/UIImage+RUSaveToAssetsLibrary.h"; sourceTree = "<group>"; };
@@ -589,7 +589,7 @@
 		9245BDC87AD768C9970294DB6312570E /* RUHorizontalTitlePagingView.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; name = RUHorizontalTitlePagingView.m; path = Pod/Classes/View/HorizontalTitlePagingView/RUHorizontalTitlePagingView.m; sourceTree = "<group>"; };
 		930F64991723BDDE5AAC176DE93C11A4 /* UIFont+RUHelvetica.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = "UIFont+RUHelvetica.h"; path = "Pod/Classes/Category/UIFont+RUHelvetica.h"; sourceTree = "<group>"; };
 		938731477940228F47F3B715B33BDD75 /* UIImage+SVG.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; name = "UIImage+SVG.m"; path = "Classes/UIImage+SVG.m"; sourceTree = "<group>"; };
-		93A4A3777CF96A4AAC1D13BA6DCCEA73 /* Podfile */ = {isa = PBXFileReference; explicitFileType = text.script.ruby; includeInIndex = 1; lastKnownFileType = text; name = Podfile; path = ../Podfile; sourceTree = SOURCE_ROOT; xcLanguageSpecificationIdentifier = xcode.lang.ruby; };
+		93A4A3777CF96A4AAC1D13BA6DCCEA73 /* Podfile */ = {isa = PBXFileReference; explicitFileType = text.script.ruby; includeInIndex = 1; name = Podfile; path = ../Podfile; sourceTree = SOURCE_ROOT; xcLanguageSpecificationIdentifier = xcode.lang.ruby; };
 		93C0562E0506D77CFB94AE6F0CF3CC0E /* RXMLElement.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = RXMLElement.h; path = RaptureXML/RXMLElement.h; sourceTree = "<group>"; };
 		945870ED58DC5F4FECE7BD94B0498302 /* RTSMTableSectionManager.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; name = RTSMTableSectionManager.m; path = RTSMTableSectionManager/Classes/RTSMTableSectionManager/RTSMTableSectionManager.m; sourceTree = "<group>"; };
 		9583A936844D2B4E9FA0C892434B23F0 /* RUGradientButton.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; name = RUGradientButton.m; path = Pod/Classes/View/Buttons/RUGradientButton.m; sourceTree = "<group>"; };
@@ -611,7 +611,7 @@
 		A50CD4B3EB0B1235A51773DA796AA0BA /* NSString+RUEmailValidation.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; name = "NSString+RUEmailValidation.m"; path = "Pod/Classes/Category/NSString/NSString+RUEmailValidation.m"; sourceTree = "<group>"; };
 		A5C2B4D426AAAC8DCB8C2E239738D5C2 /* NSAttributedString+RUTextSize.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = "NSAttributedString+RUTextSize.h"; path = "RUTextSize/Classes/Category/NSAttributedString+RUTextSize.h"; sourceTree = "<group>"; };
 		A698578FA68E452F4635759CF1F3FC57 /* RUColoredNavigationBar.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; name = RUColoredNavigationBar.m; path = Pod/Classes/View/UINavigationBar/RUColoredNavigationBar.m; sourceTree = "<group>"; };
-		A7D28041E85940353BB0268A796902E0 /* libPods-ShimmurBeams.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; name = "libPods-ShimmurBeams.a"; path = "libPods-ShimmurBeams.a"; sourceTree = BUILT_PRODUCTS_DIR; };
+		A7D28041E85940353BB0268A796902E0 /* libPods-ShimmurBeams.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-ShimmurBeams.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		A7F18FAB585A6F22EEADCCCD1B714A1D /* RURadioButtonGroupProtocols.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = RURadioButtonGroupProtocols.h; path = Pod/Classes/Objects/RURadioButtonGroup/RURadioButtonGroupProtocols.h; sourceTree = "<group>"; };
 		A84FB526F70DBEA6C76319CC7B823A03 /* UINavigationController+RUColoredStatusBarView.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; name = "UINavigationController+RUColoredStatusBarView.m"; path = "Pod/Classes/Category/UINavigationController/UINavigationController+RUColoredStatusBarView.m"; sourceTree = "<group>"; };
 		A91A8A5504F0819F31C40E4F7CD18341 /* UIView+RUSuperviews.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; name = "UIView+RUSuperviews.m"; path = "Pod/Classes/Category/UIView/UIView+RUSuperviews.m"; sourceTree = "<group>"; };
@@ -682,7 +682,7 @@
 		E0B1F9AED90A63F922514033A114EDBC /* UILabel+RUAttributes.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = "UILabel+RUAttributes.h"; path = "Pod/Classes/Category/UILabel/UILabel+RUAttributes.h"; sourceTree = "<group>"; };
 		E15D144A3E76C38EED9EE8FAC2089B4D /* UIImage+SVG.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = "UIImage+SVG.h"; path = "Classes/UIImage+SVG.h"; sourceTree = "<group>"; };
 		E38AB8F2950FA9694ED3D3BDB22B75D3 /* RUGradientView.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = RUGradientView.h; path = Pod/Classes/View/Gradients/RUGradientView.h; sourceTree = "<group>"; };
-		E47F5AF605967BA9C65F87B61D1C80A8 /* libRUTextSize.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; name = libRUTextSize.a; path = libRUTextSize.a; sourceTree = BUILT_PRODUCTS_DIR; };
+		E47F5AF605967BA9C65F87B61D1C80A8 /* libRUTextSize.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libRUTextSize.a; sourceTree = BUILT_PRODUCTS_DIR; };
 		E511925E62D19B46F8934B3127705C65 /* NSObject+RUKeyboardNotifications.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; name = "NSObject+RUKeyboardNotifications.m"; path = "Pod/Classes/Category/Notifications/NSObject+RUKeyboardNotifications.m"; sourceTree = "<group>"; };
 		E5E74DF9422764F3D53D5A043ACDFC8E /* UIButton+RUAsynchronousImageFetching.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = "UIButton+RUAsynchronousImageFetching.h"; path = "Pod/Classes/View/ImageFetching/UIButton+RUAsynchronousImageFetching.h"; sourceTree = "<group>"; };
 		E71FC9C2F4A8E13344910B690DBABA8F /* RUSlideMenuNavigationControllerProtocols.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = RUSlideMenuNavigationControllerProtocols.h; path = Pod/Classes/View/UIViewController/UINavigationController/RUSlideMenuNavigationControllerProtocols.h; sourceTree = "<group>"; };
@@ -841,7 +841,6 @@
 				CAE02A844157549B316BA1DFA22A9B11 /* UITextView+RUTextSize.m */,
 				84C4C6DC9AE9684378DDC768F9A71269 /* Support Files */,
 			);
-			name = RUTextSize;
 			path = RUTextSize;
 			sourceTree = "<group>";
 		};
@@ -893,7 +892,6 @@
 				F7392CAB2650E9655769D62D241F80BF /* UITableView+RTSMEmptySpace.m */,
 				00F23D60D29C88811E2D9A43469BEC7C /* Support Files */,
 			);
-			name = RTSMTableSectionManager;
 			path = RTSMTableSectionManager;
 			sourceTree = "<group>";
 		};
@@ -1177,7 +1175,6 @@
 				8A9EE4BB0E50A979FD3F2212EBD26579 /* UIViewController+RUStatusBarHeight.m */,
 				6FFF041E5DD2C443491D4F78E9F319DC /* Support Files */,
 			);
-			name = ResplendentUtilities;
 			path = ResplendentUtilities;
 			sourceTree = "<group>";
 		};
@@ -1192,7 +1189,6 @@
 				938731477940228F47F3B715B33BDD75 /* UIImage+SVG.m */,
 				2B74B97788B3BBD6E9C26F965DD35CEC /* Support Files */,
 			);
-			name = "UIImage+SVG";
 			path = "UIImage+SVG";
 			sourceTree = "<group>";
 		};
@@ -1211,7 +1207,6 @@
 				43CDE78654043227A6F8E73304526790 /* RXMLElement.m */,
 				F04979ADE0B524E77D2638F40147F8FF /* Support Files */,
 			);
-			name = RaptureXML;
 			path = RaptureXML;
 			sourceTree = "<group>";
 		};
@@ -1559,7 +1554,7 @@
 			isa = PBXProject;
 			attributes = {
 				LastSwiftUpdateCheck = 0830;
-				LastUpgradeCheck = 0700;
+				LastUpgradeCheck = 0920;
 			};
 			buildConfigurationList = 2D8E8EC45A3A1A1D94AE762CB5028504 /* Build configuration list for PBXProject "Pods" */;
 			compatibilityVersion = "Xcode 3.2";
@@ -1827,7 +1822,7 @@
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
 				GCC_NO_COMMON_BLOCKS = YES;
 				GCC_PREFIX_HEADER = "Target Support Files/RaptureXML/RaptureXML-prefix.pch";
-				IPHONEOS_DEPLOYMENT_TARGET = 4.3;
+				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				MTL_ENABLE_DEBUG_INFO = YES;
 				OTHER_LDFLAGS = "";
 				OTHER_LIBTOOLFLAGS = "";
@@ -1850,7 +1845,7 @@
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
 				GCC_NO_COMMON_BLOCKS = YES;
 				GCC_PREFIX_HEADER = "Target Support Files/ResplendentUtilities/ResplendentUtilities-prefix.pch";
-				IPHONEOS_DEPLOYMENT_TARGET = 6.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				MTL_ENABLE_DEBUG_INFO = YES;
 				OTHER_LDFLAGS = "";
 				OTHER_LIBTOOLFLAGS = "";
@@ -1873,7 +1868,7 @@
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
 				GCC_NO_COMMON_BLOCKS = YES;
 				GCC_PREFIX_HEADER = "Target Support Files/UIImage+SVG/UIImage+SVG-prefix.pch";
-				IPHONEOS_DEPLOYMENT_TARGET = 6.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				MTL_ENABLE_DEBUG_INFO = NO;
 				OTHER_LDFLAGS = "";
 				OTHER_LIBTOOLFLAGS = "";
@@ -1896,7 +1891,7 @@
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
 				GCC_NO_COMMON_BLOCKS = YES;
 				GCC_PREFIX_HEADER = "Target Support Files/RTSMTableSectionManager/RTSMTableSectionManager-prefix.pch";
-				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				MTL_ENABLE_DEBUG_INFO = YES;
 				OTHER_LDFLAGS = "";
 				OTHER_LIBTOOLFLAGS = "";
@@ -1919,7 +1914,7 @@
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
 				GCC_NO_COMMON_BLOCKS = YES;
 				GCC_PREFIX_HEADER = "Target Support Files/ResplendentUtilities/ResplendentUtilities-prefix.pch";
-				IPHONEOS_DEPLOYMENT_TARGET = 6.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				MTL_ENABLE_DEBUG_INFO = NO;
 				OTHER_LDFLAGS = "";
 				OTHER_LIBTOOLFLAGS = "";
@@ -1941,7 +1936,9 @@
 				CLANG_CXX_LIBRARY = "libc++";
 				CLANG_ENABLE_MODULES = YES;
 				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
 				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
 				CLANG_WARN_CONSTANT_CONVERSION = YES;
 				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES;
 				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
@@ -1949,15 +1946,21 @@
 				CLANG_WARN_ENUM_CONVERSION = YES;
 				CLANG_WARN_INFINITE_RECURSION = YES;
 				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
 				CLANG_WARN_OBJC_ROOT_CLASS = YES;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
 				CLANG_WARN_SUSPICIOUS_MOVE = YES;
 				CLANG_WARN_UNREACHABLE_CODE = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
 				CODE_SIGNING_REQUIRED = NO;
 				COPY_PHASE_STRIP = NO;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
 				ENABLE_TESTABILITY = YES;
 				GCC_C_LANGUAGE_STANDARD = gnu99;
 				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_NO_COMMON_BLOCKS = YES;
 				GCC_OPTIMIZATION_LEVEL = 0;
 				GCC_PREPROCESSOR_DEFINITIONS = (
 					"POD_CONFIGURATION_DEBUG=1",
@@ -1990,7 +1993,7 @@
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
 				GCC_NO_COMMON_BLOCKS = YES;
 				GCC_PREFIX_HEADER = "Target Support Files/RUTextSize/RUTextSize-prefix.pch";
-				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				MTL_ENABLE_DEBUG_INFO = NO;
 				OTHER_LDFLAGS = "";
 				OTHER_LIBTOOLFLAGS = "";
@@ -2013,7 +2016,7 @@
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
 				GCC_NO_COMMON_BLOCKS = YES;
 				GCC_PREFIX_HEADER = "Target Support Files/UIImage+SVG/UIImage+SVG-prefix.pch";
-				IPHONEOS_DEPLOYMENT_TARGET = 6.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				MTL_ENABLE_DEBUG_INFO = YES;
 				OTHER_LDFLAGS = "";
 				OTHER_LIBTOOLFLAGS = "";
@@ -2082,7 +2085,7 @@
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
 				GCC_NO_COMMON_BLOCKS = YES;
 				GCC_PREFIX_HEADER = "Target Support Files/RaptureXML/RaptureXML-prefix.pch";
-				IPHONEOS_DEPLOYMENT_TARGET = 4.3;
+				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				MTL_ENABLE_DEBUG_INFO = NO;
 				OTHER_LDFLAGS = "";
 				OTHER_LIBTOOLFLAGS = "";
@@ -2104,7 +2107,9 @@
 				CLANG_CXX_LIBRARY = "libc++";
 				CLANG_ENABLE_MODULES = YES;
 				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
 				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
 				CLANG_WARN_CONSTANT_CONVERSION = YES;
 				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES;
 				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
@@ -2112,14 +2117,20 @@
 				CLANG_WARN_ENUM_CONVERSION = YES;
 				CLANG_WARN_INFINITE_RECURSION = YES;
 				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
 				CLANG_WARN_OBJC_ROOT_CLASS = YES;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
 				CLANG_WARN_SUSPICIOUS_MOVE = YES;
 				CLANG_WARN_UNREACHABLE_CODE = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
 				CODE_SIGNING_REQUIRED = NO;
 				COPY_PHASE_STRIP = YES;
 				ENABLE_NS_ASSERTIONS = NO;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
 				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_NO_COMMON_BLOCKS = YES;
 				GCC_PREPROCESSOR_DEFINITIONS = (
 					"POD_CONFIGURATION_RELEASE=1",
 					"$(inherited)",
@@ -2149,7 +2160,7 @@
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
 				GCC_NO_COMMON_BLOCKS = YES;
 				GCC_PREFIX_HEADER = "Target Support Files/RUTextSize/RUTextSize-prefix.pch";
-				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				MTL_ENABLE_DEBUG_INFO = YES;
 				OTHER_LDFLAGS = "";
 				OTHER_LIBTOOLFLAGS = "";
@@ -2172,7 +2183,7 @@
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
 				GCC_NO_COMMON_BLOCKS = YES;
 				GCC_PREFIX_HEADER = "Target Support Files/RTSMTableSectionManager/RTSMTableSectionManager-prefix.pch";
-				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				MTL_ENABLE_DEBUG_INFO = NO;
 				OTHER_LDFLAGS = "";
 				OTHER_LIBTOOLFLAGS = "";

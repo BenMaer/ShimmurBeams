@@ -81,7 +81,8 @@
 	/* Game board. */
 	SMBGameBoard* const gameBoard =
 	[[SMBGameBoard alloc] init_with_numberOfColumns:7
-									   numberOfRows:(section_1_height + wall_between_sections_1_and_2_height + section_2_height)];
+									   numberOfRows:(section_1_height + wall_between_sections_1_and_2_height + section_2_height)
+								 leastNumberOfMoves:2];
 
 	/* Section values. */
 	NSRange const gameBoardTilePosition_section_1_columns_range = (NSRange){
@@ -188,7 +189,8 @@
 	/* Game board. */
 	SMBGameBoard* const gameBoard =
 	[[SMBGameBoard alloc] init_with_numberOfColumns:(numberOfChoices * 2) + 1 + wall_width
-									   numberOfRows:(numberOfChoices * 2) - 1 + wall_width];
+									   numberOfRows:(numberOfChoices * 2) - 1 + wall_width
+								 leastNumberOfMoves:2];
 
 	/* Initial beam creator. */
 	SMBBeamCreatorTileEntity* const beamCreatorEntity = [SMBBeamCreatorTileEntity new];
@@ -298,7 +300,8 @@
 	/* Game board. */
 	SMBGameBoard* const gameBoard =
 	[[SMBGameBoard alloc] init_with_numberOfColumns:(numberOfChoices * 2) + 1 + wall_width
-									   numberOfRows:(numberOfChoices * 2) - 1 + wall_width];
+									   numberOfRows:(numberOfChoices * 2) - 1 + wall_width
+								 leastNumberOfMoves:2];
 
 	/* Initial beam creator. */
 	SMBBeamCreatorTileEntity* const beamCreatorEntity = [SMBBeamCreatorTileEntity new];
@@ -407,7 +410,8 @@
 	/* Game board. */
 	SMBGameBoard* const gameBoard =
 	[[SMBGameBoard alloc] init_with_numberOfColumns:(cells_width * cell_width) + ((cells_width * wall_width) - 1)
-									   numberOfRows:(cells_height * cell_height) + ((cells_height * wall_width) - 1)];
+									   numberOfRows:(cells_height * cell_height) + ((cells_height * wall_width) - 1)
+								 leastNumberOfMoves:4];
 
 	SMBBeamCreatorTileEntity* const beamCreatorEntity = [SMBBeamCreatorTileEntity new];
 	[beamCreatorEntity setBeamDirection:SMBGameBoardTile__direction_up];
@@ -720,7 +724,8 @@
 	NSUInteger const topHallway_height = 1;
 	SMBGameBoard* const gameBoard =
 	[[SMBGameBoard alloc] init_with_numberOfColumns:5
-									   numberOfRows:4 + topHallway_height];
+									   numberOfRows:4 + topHallway_height
+								 leastNumberOfMoves:3];
 
 	SMBBeamCreatorTileEntity* const beamCreatorEntity = [SMBBeamCreatorTileEntity new];
 	[beamCreatorEntity setBeamDirection:SMBGameBoardTile__direction_up];
@@ -867,7 +872,8 @@
 
 	SMBGameBoard* const gameBoard =
 	[[SMBGameBoard alloc] init_with_numberOfColumns:7
-									   numberOfRows:4];
+									   numberOfRows:4
+								 leastNumberOfMoves:2];
 
 	/* Initial beam creator. */
 
@@ -993,7 +999,8 @@
 
 	SMBGameBoard* const gameBoard =
 	[[SMBGameBoard alloc] init_with_numberOfColumns:(section_1_width + section_2_width) + 1
-									   numberOfRows:7 + section_3_height];
+									   numberOfRows:7 + section_3_height
+								 leastNumberOfMoves:5];
 
 	/*
 	 Section values.
@@ -1341,7 +1348,8 @@
 	  wall_between_sections_1_and_3_height
 	  +
 	  section_3_height
-	  )];
+	  )
+								 leastNumberOfMoves:9];
 
 	/*
 	 Section values.

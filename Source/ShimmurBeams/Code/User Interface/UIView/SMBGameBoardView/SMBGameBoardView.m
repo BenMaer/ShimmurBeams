@@ -167,8 +167,11 @@ static void* kSMBGameBoardView__KVOContext = &kSMBGameBoardView__KVOContext;
 
 	[self gameBoardTileViews_layout_with_gameBoardTileEntityView_size:gameBoardTileEntityView_size];
 	[self gameBoardTileEntityView_mappedDataCollection_layout_with_gameBoardTileEntityView_size:gameBoardTileEntityView_size];
+
+#if kSMBEnvironment__SMBGameBoardView_showColumnAndRowValues_enabled
 	[self columnLabels_layout_with_gameBoardTileEntityView_size:gameBoardTileEntityView_size];
 	[self rowLabels_layout_with_gameBoardTileEntityView_size:gameBoardTileEntityView_size];
+#endif
 
 	[self gameBoardEntityView_mappedDataCollection_layout];
 }
@@ -196,8 +199,10 @@ static void* kSMBGameBoardView__KVOContext = &kSMBGameBoardView__KVOContext;
 
 	[self gameBoard_setKVORegistered:YES];
 
+#if kSMBEnvironment__SMBGameBoardView_showColumnAndRowValues_enabled
 	[self columnLabels_update];
 	[self rowLabels_update];
+#endif
 
 	[self setNeedsLayout];
 }
@@ -545,7 +550,7 @@ static void* kSMBGameBoardView__KVOContext = &kSMBGameBoardView__KVOContext;
 		.origin.x	= CGRectGetHorizontallyAlignedXCoordForWidthOnWidth(size.width, boundingSize.width),
 		.origin.y	= CGRectGetVerticallyAlignedYCoordForHeightOnHeight(size.height, boundingSize.height),
 		.size		= size,
-	});;
+	});
 }
 
 #pragma mark - gameBoardTileViews
@@ -579,7 +584,7 @@ static void* kSMBGameBoardView__KVOContext = &kSMBGameBoardView__KVOContext;
 
 -(nullable NSArray<SMBGameBoardTileView*>*)gameBoardTileViews_generate
 {
-	NSMutableArray<SMBGameBoardTileView*>* const gameBoardTileViews = [NSMutableArray<SMBGameBoardTileView*> array];;
+	NSMutableArray<SMBGameBoardTileView*>* const gameBoardTileViews = [NSMutableArray<SMBGameBoardTileView*> array];
 
 	[self.gameBoard gameBoardTiles_enumerate:^(SMBGameBoardTile * _Nonnull gameBoardTile, NSUInteger column, NSUInteger row, BOOL * _Nonnull stop) {
 		SMBGameBoardTileView* const gameBoardTileView = [[SMBGameBoardTileView alloc] init_with_gameBoardTile:gameBoardTile];

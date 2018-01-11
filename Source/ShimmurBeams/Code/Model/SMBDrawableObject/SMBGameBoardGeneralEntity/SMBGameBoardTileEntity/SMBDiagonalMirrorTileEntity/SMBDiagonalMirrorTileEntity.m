@@ -125,7 +125,7 @@
 #pragma mark - draw_endingPoint
 -(CGFloat)draw_endingPoint_x_forFrame:(CGRect)frame
 {
-	return CGRectGetMaxX(frame) - [[self class]paddingFromEdge_forRect:frame];;
+	return CGRectGetMaxX(frame) - [[self class]paddingFromEdge_forRect:frame];
 }
 
 -(CGFloat)draw_endingPoint_y_forFrame:(CGRect)frame

@@ -49,7 +49,7 @@
 
 #define kSMBEnvironment__SMBBeamCreatorTileEntity_beamCreator_drawing_useSVG (0)
 
-#define kSMBEnvironment__SMBGameBoardView_showColumnAndRowValues_enabled (DEBUG && 1)
+#define kSMBEnvironment__SMBGameBoardView_showColumnAndRowValues_enabled (1)
 
 #define kSMBEnvironment__SMBGameLevel_SMBUnitTestLevels_unitTestLevels_enabled (DEBUG && 1)
 

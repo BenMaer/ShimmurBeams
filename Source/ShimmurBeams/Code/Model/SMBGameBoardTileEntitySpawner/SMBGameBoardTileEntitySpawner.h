@@ -27,9 +27,11 @@
  */
 @interface SMBGameBoardTileEntitySpawner : NSObject
 
-#pragma mark - init
+#pragma mark - NSObject
 +(nonnull instancetype)new NS_UNAVAILABLE;
 -(nonnull instancetype)init NS_UNAVAILABLE;
+
+#pragma mark - init
 -(nullable instancetype)init_with_spawnedGameBoardTileEntities_tracked_maximum:(NSUInteger)spawnedGameBoardTileEntities_tracked_maximum
 															  spawnEntityBlock:(nonnull SMBGameBoardTileEntitySpawner_spawnEntityBlock)spawnEntityBlock NS_DESIGNATED_INITIALIZER;
 
