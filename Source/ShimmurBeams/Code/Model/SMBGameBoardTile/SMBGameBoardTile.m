@@ -54,7 +54,7 @@ static void* kSMBGameBoardTile__KVOContext_generalBeamEnterToExitDirectionRedire
 #pragma mark - gameBoardTileEntities_many
 @property (nonatomic, copy, nullable) NSArray<SMBGameBoardTileEntity*>* gameBoardTileEntities_many;
 -(void)gameBoardTileEntities_many_add:(nonnull SMBGameBoardTileEntity*)gameBoardTileEntity;
--(void)gameBoardTileEntities_many_remove:(nonnull SMBGameBoardTileEntity*)gameBoardTileEntity;
+-(BOOL)gameBoardTileEntities_many_remove:(nonnull SMBGameBoardTileEntity*)gameBoardTileEntity;
 -(void)gameBoardTileEntities_many_update;
 @property (nonatomic, readonly, strong, nullable) SMBMutableMappedDataCollection<SMBGameBoardTileEntity*>* gameBoardTileEntities_many_mappedDataCollection;
 
@@ -267,13 +267,15 @@ static void* kSMBGameBoardTile__KVOContext_generalBeamEnterToExitDirectionRedire
 	[self gameBoardTileEntities_many_update];
 }
 
--(void)gameBoardTileEntities_many_remove:(nonnull SMBGameBoardTileEntity*)gameBoardTileEntity
+-(BOOL)gameBoardTileEntities_many_remove:(nonnull SMBGameBoardTileEntity*)gameBoardTileEntity
 {
-	kRUConditionalReturn(gameBoardTileEntity == nil, YES);
+	kRUConditionalReturn_ReturnValueFalse(gameBoardTileEntity == nil, YES);
 
 	[self.gameBoardTileEntities_many_mappedDataCollection mappableObject_remove:gameBoardTileEntity];
 
 	[self gameBoardTileEntities_many_update];
+
+	return YES;
 }
 
 #pragma mark - gameBoardTileEntities
@@ -309,27 +311,31 @@ static void* kSMBGameBoardTile__KVOContext_generalBeamEnterToExitDirectionRedire
 	}
 }
 
--(void)gameBoardTileEntities_remove:(nonnull SMBGameBoardTileEntity*)gameBoardTileEntity
+-(BOOL)gameBoardTileEntities_remove:(nonnull SMBGameBoardTileEntity*)gameBoardTileEntity
 						 entityType:(SMBGameBoardTile__entityType)entityType
 {
 	switch (entityType)
 	{
 		case SMBGameBoardTile__entityType_none:
-			NSAssert(false, @"unhandled entityType %li",(long)entityType);
-			return;
 			break;
 
 		case SMBGameBoardTile__entityType_many:
-			[self gameBoardTileEntities_many_remove:gameBoardTileEntity];
+			return [self gameBoardTileEntities_many_remove:gameBoardTileEntity];
 			break;
 
 		case SMBGameBoardTile__entityType_beamInteractions:
 		{
-			kRUConditionalReturn(self.gameBoardTileEntity_for_beamInteractions != gameBoardTileEntity, YES);
+			kRUConditionalReturn_ReturnValueFalse(self.gameBoardTileEntity_for_beamInteractions != gameBoardTileEntity, YES);
 			[self setGameBoardTileEntity_for_beamInteractions:nil];
+			BOOL const success = (self.gameBoardTileEntity_for_beamInteractions == nil);
+			NSAssert(success, @"should have set `gameBoardTileEntity_for_beamInteractions` to nil");
+			return success;
 		}
 			break;
 	}
+
+	NSAssert(false, @"unhandled entityType %li",(long)entityType);
+	return NO;
 }
 
 -(SMBGameBoardTile__entityType)gameBoardTileEntity_currentType:(nonnull SMBGameBoardTileEntity*)gameBoardTileEntity

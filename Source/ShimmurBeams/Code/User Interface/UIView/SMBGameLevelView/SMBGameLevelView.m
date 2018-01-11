@@ -20,6 +20,7 @@
 #import "SMBGameLevelView_UserSelection_GameBoardTile_HighlightData.h"
 #import "SMBMoveEntityToTileGameBoardMove.h"
 #import "SMBSpawnEntityOnTileGameBoardMove.h"
+#import "SMBRemoveEntityFromTileGameBoardMove.h"
 
 #import <ResplendentUtilities/RUConditionalReturn.h>
 #import <ResplendentUtilities/UIView+RUUtility.h>
@@ -597,6 +598,7 @@ static void* kSMBGameLevelView__KVOContext_gameLevelView_UserSelection = &kSMBGa
 	/* 3.a.i */
 	if (selectedGameBoardTileEntity)
 	{
+		
 		/* 3.a.i.1 */
 		[self gameBoardTileEntity_removeFromTile:selectedGameBoardTileEntity];
 	}
@@ -735,10 +737,10 @@ static void* kSMBGameLevelView__KVOContext_gameLevelView_UserSelection = &kSMBGa
 {
 	kRUConditionalReturn(gameBoardTileEntity == nil, YES);
 
-	SMBGameBoardTile* const gameBoardTile = gameBoardTileEntity.gameBoardTile;
-	kRUConditionalReturn(gameBoardTile == nil, NO);
-	
-	[gameBoardTile gameBoardTileEntities_remove:gameBoardTileEntity entityType:SMBGameBoardTile__entityType_beamInteractions];
+	SMBRemoveEntityFromTileGameBoardMove* const removeEntityFromTileGameBoardMove =
+	[[SMBRemoveEntityFromTileGameBoardMove alloc] init_with_gameBoardTileEntity:gameBoardTileEntity];
+
+	[self gameBoard_move_perform:removeEntityFromTileGameBoardMove];
 }
 
 @end

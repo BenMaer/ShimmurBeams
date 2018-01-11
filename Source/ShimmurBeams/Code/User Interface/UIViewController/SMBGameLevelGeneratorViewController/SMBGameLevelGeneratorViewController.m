@@ -205,6 +205,18 @@ static void* kSMBGameLevelGeneratorViewController__KVOContext__gameBoard_forKVO 
 
 	[self.view setUserInteractionEnabled:NO];
 
+	/*
+	 If the level was successfully completed in less moves than what we thought was the least number of moves... we should probably updates least number of moves.
+	 */
+	NSAssert((gameLevelGenerator_gameLevel.completion.failureReason != SMBGameLevelCompletion__completionType_success)
+			 ||
+			 (
+			  self.SMBGameLevelGeneratorViewController_gameBoard_forKVO.currentNumberOfMoves
+			  >=
+			  self.SMBGameLevelGeneratorViewController_gameBoard_forKVO.leastNumberOfMoves
+			  ),
+			 @"The least number of moves is wrong!");
+
 	[gameLevelDidCompleteDelegate gameLevelGeneratorViewController:self
 											  gameLevelDidComplete:gameLevelGenerator_gameLevel];
 }
@@ -219,13 +231,6 @@ static void* kSMBGameLevelGeneratorViewController__KVOContext__gameBoard_forKVO 
 	kRUConditionalReturn(gameLevelGenerator_gameLevel == nil, YES);
 
 	kRUConditionalReturn(gameLevelGenerator_gameLevel.completion == NO, NO);
-
-	/*
-	 If the level was completed in less moves than what we thought was the least number of moves... we should probably updates least number of moves.
-	 */
-	NSAssert(SMBGameLevelGeneratorViewController_gameBoard_forKVO.currentNumberOfMoves
-			 >=
-			 SMBGameLevelGeneratorViewController_gameBoard_forKVO.leastNumberOfMoves, @"The least number of moves is wrong!");
 
 	[self gameLevelGenerator_gameLevel_didComplete];
 }

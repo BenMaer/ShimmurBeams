@@ -6,6 +6,8 @@
 //  Copyright © 2017 Shimmur. All rights reserved.
 //
 
+#import "SMBGameLevelCompletion__completionTypes.h"
+
 #import <Foundation/Foundation.h>
 
 
@@ -17,7 +19,6 @@
  
  If `failureReason` is nil, then this completion should be considered a success, otherwise it should be considered a failure.
  */
-
 @interface SMBGameLevelCompletion : NSObject
 
 #pragma mark - failureReason
@@ -25,5 +26,8 @@
 
 #pragma mark - init
 -(nullable instancetype)init_with_failureReason:(nullable NSString*)failureReason;
+
+#pragma mark - completionType
+-(SMBGameLevelCompletion__completionType)completionType;
 
 @end
