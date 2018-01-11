@@ -21,6 +21,7 @@
 #import "SMBMoveEntityToTileGameBoardMove.h"
 #import "SMBSpawnEntityOnTileGameBoardMove.h"
 #import "SMBRemoveEntityFromTileGameBoardMove.h"
+#import "SMBRemoveAllEntitiesFromBoardGameBoardMove.h"
 
 #import <ResplendentUtilities/RUConditionalReturn.h>
 #import <ResplendentUtilities/UIView+RUUtility.h>
@@ -724,12 +725,9 @@ static void* kSMBGameLevelView__KVOContext_gameLevelView_UserSelection = &kSMBGa
 #pragma mark - gameBoardTileEntitySpawners
 -(void)gameBoardTileEntitySpawners_removeAllEntitiesFromTiles
 {
-	[self.gameLevel.gameBoardTileEntitySpawnerManager.gameBoardTileEntitySpawners enumerateObjectsUsingBlock:^(SMBGameBoardTileEntitySpawner * _Nonnull gameBoardTileEntitySpawner, NSUInteger idx, BOOL * _Nonnull stop) {
-		[[gameBoardTileEntitySpawner spawnedGameBoardTileEntities_tracked] enumerateObjectsUsingBlock:^(SMBGameBoardTileEntity * _Nonnull gameBoardTileEntity, NSUInteger idx, BOOL * _Nonnull stop) {
-			[self gameBoardTileEntity_removeFromTile:gameBoardTileEntity];
-		}];
-	}];
+	SMBRemoveAllEntitiesFromBoardGameBoardMove* const removeAllEntitiesFromBoardGameBoardMove = [SMBRemoveAllEntitiesFromBoardGameBoardMove new];
 
+	[self gameBoard_move_perform:removeAllEntitiesFromBoardGameBoardMove];
 }
 
 #pragma mark - gameBoardTileEntities
