@@ -19,9 +19,9 @@
 
 #pragma mark - rotatesAndDeathBlocks
 +(nonnull instancetype)smb_rotatesAndDeathBlocks;
-//
-//#pragma mark - mirrorsAndMeltableBlocks
-//+(nonnull instancetype)smb_mirrorsAndMeltableBlocks;
+
+#pragma mark - mirrorsAndMeltableBlocks
++(nonnull instancetype)smb_mirrorsAndMeltableBlocks;
 //
 //#pragma mark - powerButtonsAndDoors
 //+(nonnull instancetype)smb_powerButtonsAndDoors;
