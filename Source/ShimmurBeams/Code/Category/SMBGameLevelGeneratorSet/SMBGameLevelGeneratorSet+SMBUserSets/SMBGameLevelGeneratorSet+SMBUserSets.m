@@ -210,52 +210,52 @@
 	[[self alloc] init_with_gameLevelGenerators:[NSArray<SMBGameLevelGenerator*> arrayWithArray:gameLevelGenerators]
 										   name:@"Power buttons and doors"];
 }
-//
-//#pragma mark - powerSwitchesAndDoorGroups
-//+(nonnull instancetype)smb_powerSwitchesAndDoorGroups
-//{
-//	NSMutableArray<SMBGameLevelGenerator*>* const gameLevelGenerators = [NSMutableArray<SMBGameLevelGenerator*> array];
-//
-//	[gameLevelGenerators addObject:[[SMBGameLevelGenerator alloc] init_with_generateLevelBlock:^SMBGameLevel * _Nonnull{
-//		return [SMBGameLevel smb_powerSwitch_introduction];
-//	}
-//																						  name:@"Switch Introduction"
-//																						  hint:@"Power up a switch to toggle its power. A powered switch will power another tile on the board."]];
-//
-//	[gameLevelGenerators addObject:[[SMBGameLevelGenerator alloc] init_with_generateLevelBlock:^SMBGameLevel * _Nonnull{
-//		return [SMBGameLevel smb_powerSwitch_and_button_and_door];
-//	}
-//																						  name:@"Switch and Button Choice"]];
-//
-//	[gameLevelGenerators addObject:[[SMBGameLevelGenerator alloc] init_with_generateLevelBlock:^SMBGameLevel * _Nonnull{
-//		return [SMBGameLevel smb_doorGroup_introduction];
-//	}
-//																						  name:@"Door Group Introduction"]];
-//
-//	[gameLevelGenerators addObject:[[SMBGameLevelGenerator alloc] init_with_generateLevelBlock:^SMBGameLevel * _Nonnull{
-//		return [SMBGameLevel smb_powerSwitch_and_doorGroup_combo];
-//	}
-//																						  name:@"Combo"]];
-//
-//	[gameLevelGenerators addObject:[[SMBGameLevelGenerator alloc] init_with_generateLevelBlock:^SMBGameLevel * _Nonnull{
-//		return [SMBGameLevel smb_doorGroups_introduction];
-//	}
-//																						  name:@"Up and Down"]];
-//
-//	[gameLevelGenerators addObject:[[SMBGameLevelGenerator alloc] init_with_generateLevelBlock:^SMBGameLevel * _Nonnull{
-//		return [SMBGameLevel smb_powerSwitches_and_doorGroups_beamCreatorGroup];
-//	}
-//																						  name:@"Beam Creator Group Toggle"]];
-//
-//	[gameLevelGenerators addObject:[[SMBGameLevelGenerator alloc] init_with_generateLevelBlock:^SMBGameLevel * _Nonnull{
-//		return [SMBGameLevel smb_powerSwitches_and_doorGroups_deathLane];
-//	}
-//																						  name:@"Death lane"]];
-//
-//	return
-//	[[self alloc] init_with_gameLevelGenerators:[NSArray<SMBGameLevelGenerator*> arrayWithArray:gameLevelGenerators]
-//										   name:@"Power switches and door groups"];
-//}
+
+#pragma mark - powerSwitchesAndDoorGroups
++(nonnull instancetype)smb_powerSwitchesAndDoorGroups
+{
+	NSMutableArray<SMBGameLevelGenerator*>* const gameLevelGenerators = [NSMutableArray<SMBGameLevelGenerator*> array];
+
+	[gameLevelGenerators addObject:[[SMBGameLevelGenerator alloc] init_with_generateLevelBlock:^SMBGameLevel * _Nonnull{
+		return [SMBGameLevel smb_powerSwitch_introduction];
+	}
+																						  name:@"Switch Introduction"
+																						  hint:@"Power up a switch to toggle its power. A powered switch will power another tile on the board."]];
+
+	[gameLevelGenerators addObject:[[SMBGameLevelGenerator alloc] init_with_generateLevelBlock:^SMBGameLevel * _Nonnull{
+		return [SMBGameLevel smb_powerSwitch_and_button_and_door];
+	}
+																						  name:@"Switch and Button Choice"]];
+
+	[gameLevelGenerators addObject:[[SMBGameLevelGenerator alloc] init_with_generateLevelBlock:^SMBGameLevel * _Nonnull{
+		return [SMBGameLevel smb_doorGroup_introduction];
+	}
+																						  name:@"Door Group Introduction"]];
+
+	[gameLevelGenerators addObject:[[SMBGameLevelGenerator alloc] init_with_generateLevelBlock:^SMBGameLevel * _Nonnull{
+		return [SMBGameLevel smb_powerSwitch_and_doorGroup_combo];
+	}
+																						  name:@"Combo"]];
+
+	[gameLevelGenerators addObject:[[SMBGameLevelGenerator alloc] init_with_generateLevelBlock:^SMBGameLevel * _Nonnull{
+		return [SMBGameLevel smb_doorGroups_introduction];
+	}
+																						  name:@"Up and Down"]];
+
+	[gameLevelGenerators addObject:[[SMBGameLevelGenerator alloc] init_with_generateLevelBlock:^SMBGameLevel * _Nonnull{
+		return [SMBGameLevel smb_powerSwitches_and_doorGroups_beamCreatorGroup];
+	}
+																						  name:@"Beam Creator Group Toggle"]];
+
+	[gameLevelGenerators addObject:[[SMBGameLevelGenerator alloc] init_with_generateLevelBlock:^SMBGameLevel * _Nonnull{
+		return [SMBGameLevel smb_powerSwitches_and_doorGroups_deathLane];
+	}
+																						  name:@"Death lane"]];
+
+	return
+	[[self alloc] init_with_gameLevelGenerators:[NSArray<SMBGameLevelGenerator*> arrayWithArray:gameLevelGenerators]
+										   name:@"Power switches and door groups"];
+}
 
 #if kSMBEnvironment__SMBGameLevel_SMBUnitTestLevels_unitTestLevels_enabled
 
