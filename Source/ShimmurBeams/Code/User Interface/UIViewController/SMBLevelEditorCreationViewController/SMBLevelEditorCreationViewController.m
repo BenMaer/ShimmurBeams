@@ -683,6 +683,11 @@ typedef NS_ENUM(NSInteger, SMBLevelEditorCreationViewController__tableSection) {
 			NSInteger const unintegerValue = (text_integerValue >= 0 ? text_integerValue : -text_integerValue);
 			[self levelEditorCreationData_set_unsignedInteger:unintegerValue
 											 for_tableSection:tableSection];
+
+			NSInteger const tableSection_next_indexPathSection = [self.tableSectionManager indexPathSectionForSection:SMBLevelEditorCreationViewController__tableSection_next];
+			kRUConditionalReturn(tableSection_next_indexPathSection == NSNotFound, YES);
+
+			[self.tableView reloadSections:[NSIndexSet indexSetWithIndex:tableSection_next_indexPathSection] withRowAnimation:UITableViewRowAnimationNone];
 		}
 			break;
 	}
