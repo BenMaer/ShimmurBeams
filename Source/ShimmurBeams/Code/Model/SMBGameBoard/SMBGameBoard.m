@@ -514,8 +514,13 @@ static void* kSMBGameBoard__KVOContext = &kSMBGameBoard__KVOContext;
 -(void)gameBoardMove_perform:(nonnull id<SMBGameBoardMove>)gameBoardMove
 {
 	kRUConditionalReturn(gameBoardMove == nil, YES);
+	kRUConditionalReturn(self.gameBoardMove_isProcessing == YES, YES);
+
+	[self setGameBoardMove_isProcessing:YES];
 
 	kRUConditionalReturn([gameBoardMove move_perform_on_gameBoard:self] == false, YES);
+
+	[self setGameBoardMove_isProcessing:NO];
 
 	[self setCurrentNumberOfMoves:self.currentNumberOfMoves + 1];
 }

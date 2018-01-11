@@ -92,6 +92,7 @@
 @property (nonatomic, readonly, assign) NSUInteger currentNumberOfMoves;
 
 #pragma mark - gameBoardMove
+@property (nonatomic, assign) BOOL gameBoardMove_isProcessing;
 -(void)gameBoardMove_perform:(nonnull id<SMBGameBoardMove>)gameBoardMove;
 
 @end

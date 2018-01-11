@@ -36,6 +36,7 @@ static void* kSMBGameLevelGeneratorViewController__KVOContext__gameBoard_forKVO 
 -(void)gameLevelGenerator_gameLevel_update;
 -(nullable SMBGameLevel*)gameLevelGenerator_gameLevel_generate;
 -(void)gameLevelGenerator_gameLevel_didComplete;
+-(void)gameLevelGenerator_gameLevel_didComplete_check;
 -(void)gameLevelGenerator_gameLevel_setKVORegistered:(BOOL)registered;
 
 #pragma mark - hintLabel
@@ -208,6 +209,27 @@ static void* kSMBGameLevelGeneratorViewController__KVOContext__gameBoard_forKVO 
 											  gameLevelDidComplete:gameLevelGenerator_gameLevel];
 }
 
+-(void)gameLevelGenerator_gameLevel_didComplete_check
+{
+	SMBGameBoard* const SMBGameLevelGeneratorViewController_gameBoard_forKVO = self.SMBGameLevelGeneratorViewController_gameBoard_forKVO;
+	kRUConditionalReturn(SMBGameLevelGeneratorViewController_gameBoard_forKVO == nil, YES);
+	kRUConditionalReturn(SMBGameLevelGeneratorViewController_gameBoard_forKVO.gameBoardMove_isProcessing == YES, NO);
+
+	SMBGameLevel* const gameLevelGenerator_gameLevel = self.gameLevelGenerator_gameLevel;
+	kRUConditionalReturn(gameLevelGenerator_gameLevel == nil, YES);
+
+	kRUConditionalReturn(gameLevelGenerator_gameLevel.completion == NO, NO);
+
+	/*
+	 If the level was completed in less moves than what we thought was the least number of moves... we should probably updates least number of moves.
+	 */
+	NSAssert(SMBGameLevelGeneratorViewController_gameBoard_forKVO.currentNumberOfMoves
+			 >=
+			 SMBGameLevelGeneratorViewController_gameBoard_forKVO.leastNumberOfMoves, @"The least number of moves is wrong!");
+
+	[self gameLevelGenerator_gameLevel_didComplete];
+}
+
 -(void)gameLevelGenerator_gameLevel_setKVORegistered:(BOOL)registered
 {
 	typeof(self.gameLevelGenerator_gameLevel) const gameLevelGenerator_gameLevel = self.gameLevelGenerator_gameLevel;
@@ -322,13 +344,8 @@ static void* kSMBGameLevelGeneratorViewController__KVOContext__gameBoard_forKVO 
 			if ([keyPath isEqualToString:[SMBGameLevel_PropertiesForKVO completion]])
 			{
 				[self levelSuccessBarButtonItem_update];
-				
-				SMBGameLevel* const gameLevelGenerator_gameLevel = self.gameLevelGenerator_gameLevel;
-				kRUConditionalReturn(gameLevelGenerator_gameLevel == nil, YES);
-				
-				kRUConditionalReturn(gameLevelGenerator_gameLevel.completion == NO, NO);
-				
-				[self gameLevelGenerator_gameLevel_didComplete];
+
+				[self gameLevelGenerator_gameLevel_didComplete_check];
 			}
 			else
 			{
@@ -347,6 +364,10 @@ static void* kSMBGameLevelGeneratorViewController__KVOContext__gameBoard_forKVO 
 			if ([keyPath isEqualToString:[SMBGameBoard_PropertiesForKVO currentNumberOfMoves]])
 			{
 				[self leastMovesBarButtonItem_label_text_update];
+
+				kRUConditionalReturn(self.SMBGameLevelGeneratorViewController_gameBoard_forKVO.gameBoardMove_isProcessing == YES, YES);
+
+				[self gameLevelGenerator_gameLevel_didComplete_check];
 			}
 			else
 			{
