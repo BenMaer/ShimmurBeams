@@ -51,7 +51,7 @@
 	[gameLevelGeneratorSets addObject:[SMBGameLevelGeneratorSet smb_forcedRedirectsAndWalls]];
 	[gameLevelGeneratorSets addObject:[SMBGameLevelGeneratorSet smb_rotatesAndDeathBlocks]];
 	[gameLevelGeneratorSets addObject:[SMBGameLevelGeneratorSet smb_mirrorsAndMeltableBlocks]];
-//	[gameLevelGeneratorSets addObject:[SMBGameLevelGeneratorSet smb_powerButtonsAndDoors]];
+	[gameLevelGeneratorSets addObject:[SMBGameLevelGeneratorSet smb_powerButtonsAndDoors]];
 //	[gameLevelGeneratorSets addObject:[SMBGameLevelGeneratorSet smb_powerSwitchesAndDoorGroups]];
 #if kSMBEnvironment__SMBGameLevel_SMBUnitTestLevels_unitTestLevels_enabled
 	[gameLevelGeneratorSets addObject:[SMBGameLevelGeneratorSet smb_unitTests]];
