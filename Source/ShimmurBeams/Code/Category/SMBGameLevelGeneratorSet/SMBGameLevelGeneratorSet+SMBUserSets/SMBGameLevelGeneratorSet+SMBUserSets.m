@@ -138,6 +138,11 @@
 																						  name:@"That Man In The Mirror"]];
 
 	[gameLevelGenerators addObject:[[SMBGameLevelGenerator alloc] init_with_generateLevelBlock:^SMBGameLevel * _Nonnull{
+		return [SMBGameLevel smb_mirrors_hallOfMirrors];
+	}
+																						  name:@"Mirror Trickle"]];
+
+	[gameLevelGenerators addObject:[[SMBGameLevelGenerator alloc] init_with_generateLevelBlock:^SMBGameLevel * _Nonnull{
 		return [SMBGameLevel smb_meltableWall_introduction];
 	}
 																						  name:@"Meltable Wall Introduction"

@@ -127,6 +127,278 @@
 	 [[SMBGameBoardTileEntitySpawnerManager alloc] init_with_gameBoardTileEntitySpawners:gameBoardTileEntitySpawners]];
 }
 
++(nonnull instancetype)smb_mirrors_hallOfMirrors
+{
+	/*
+	 Numbers = Sections
+	 
+	 Entities:
+	 Bc[x]	Beam Creator
+	 Exi	Level Exit
+	 Dm[x]	Diagonal Mirror
+
+	 Entity Notes:
+	 - Bc1
+	 *- direction: up
+	 - Dm1
+	 *- startingPosition: topLeft
+
+	 Usable:
+	 Diagonal Mirror (startingPosition: bottomLeft)
+
+	 Sections and entities:
+	 [   ] [   ] [   ] [   ] [   ] [   ] [   ]
+
+	    A     B     C     D     E     F     G
+	 1[   ] [   ] [ / ] [   ] [   ] [   ] [ \ ]
+	 2[ / ] [   ] [   ] [   ] [   ] [ \ ] [   ]
+	 3[   ] [   ] [   ] [   ] [   ] [   ] [   ]
+	 4[   ] [   ] [   ] [   ] [   ] [   ] [   ]
+	 5[   ] [   ] [   ] [Wal] [   ] [   ] [   ]
+	 6[   ] [   ] [ / ] [Exi] [ / ] [   ] [   ]
+	 7[   ] [   ] [   ] [Wal] [   ] [ / ] [   ]
+	 8[   ] [   ] [   ] [   ] [   ] [   ] [   ]
+	 9[   ] [   ] [   ] [ / ] [   ] [   ] [ / ]
+	 0[ \ ] [   ] [   ] [   ] [ / ] [   ] [   ]
+	 1[   ] [   ] [   ] [Bc1] [   ] [   ] [   ]
+
+
+	 0[ \ ] [   ] [   ] [   ] [ / ] [   ] [   ]
+	 1[Bc1] [   ] [   ] [ / ] [   ] [   ] [   ]
+
+
+	    A     B     C     D     E     F     G
+	 1[   ] [   ] [   ] [   ] [ / ] [   ] [ \ ]
+	 2[   ] [   ] [   ] [   ] [ \ ] [ \ ] [   ]
+	 3[Exi] [ / ] [ / ] [ / ] [ / ] [   ] [   ]
+	 4[ / ] [   ] [ / ] [ / ] [ / ] [   ] [ / ]
+	 5[ / ] [ / ] [ / ] [ / ] [ / ] [   ] [   ]
+	 6[ \ ] [   ] [   ] [Bc1] [   ] [   ] [   ]
+
+
+	 Answer
+	    A     B     C     D     E     F     G
+	 1[   ] [   ] [   ] [   ] [   ] [   ] [   ]
+	 2[   ] [   ] [   ] [   ] [   ] [   ] [   ]
+	 3[   ] [   ] [   ] [   ] [   ] [   ] [ \ ]
+	 4[   ] [   ] [   ] [   ] [   ] [   ] [   ]
+	 5[   ] [   ] [   ] [   ] [   ] [   ] [   ]
+	 6[   ] [ \ ] [ / ] [   ] [   ] [   ] [   ]
+
+
+	 
+	 
+	 
+	    A     B     C     D     E     F     G
+	 1[   ] [Exi] [   ] [   ] [ / ] [   ] [ \ ]
+	 2[   ] [   ] [   ] [   ] [   ] [   ] [   ]
+	 3[   ] [   ] [   ] [   ] [   ] [   ] [   ]
+	 4[   ] [   ] [ / ] [ / ] [ / ] [   ] [   ]
+	 5[   ] [ / ] [ / ] [ / ] [ / ] [   ] [   ]
+	 6[ / ] [   ] [ / ] [ / ] [ / ] [   ] [ / ]
+	 7[ / ] [ / ] [ / ] [ / ] [ / ] [   ] [   ]
+	 8[ \ ] [   ] [   ] [Bc1] [   ] [   ] [   ]
+	 
+	 
+	 Answer
+	 1[   ] [   ] [   ] [   ] [   ] [   ] [   ]
+	 2[   ] [   ] [   ] [   ] [   ] [   ] [   ]
+	 3[   ] [   ] [   ] [   ] [   ] [   ] [   ]
+	 4[   ] [   ] [   ] [   ] [   ] [   ] [   ]
+	 5[   ] [   ] [   ] [   ] [   ] [   ] [ \ ]
+	 6[   ] [   ] [   ] [   ] [   ] [   ] [   ]
+	 7[   ] [   ] [   ] [   ] [   ] [   ] [   ]
+	 8[   ] [ \ ] [ / ] [   ] [   ] [   ] [   ]
+
+	 */
+
+	/* Game board. */
+	
+	SMBGameBoard* const gameBoard = [[SMBGameBoard alloc] init_with_numberOfColumns:7
+																	   numberOfRows:9
+																 leastNumberOfMoves:3];
+	
+	/* Initial beam creator. */
+	
+	SMBBeamCreatorTileEntity* const beamCreatorEntity = [SMBBeamCreatorTileEntity new];
+	[beamCreatorEntity setBeamDirection:SMBGameBoardTile__direction_up];
+	
+	[gameBoard gameBoardTileEntity_for_beamInteractions_set:beamCreatorEntity
+								   to_gameBoardTilePosition:
+	 [[SMBGameBoardTilePosition alloc] init_with_column:floor((double)[gameBoard gameBoardTiles_numberOfColumns] / 2.0f)
+													row:[gameBoard gameBoardTiles_numberOfRows] - 1]];
+
+	/* Diagonal Mirrors. */
+	[gameBoard gameBoardTileEntity_add:[[SMBDiagonalMirrorTileEntity alloc] init_with_mirrorType:SMBDiagonalMirrorTileEntity__mirrorType_bottomLeft_to_topRight]
+							entityType:SMBGameBoardTile__entityType_beamInteractions
+			  to_gameBoardTilePosition:
+	 [[SMBGameBoardTilePosition alloc] init_with_column:beamCreatorEntity.gameBoardTile.gameBoardTilePosition.column
+													row:beamCreatorEntity.gameBoardTile.gameBoardTilePosition.row - 1]];
+
+	[gameBoard gameBoardTileEntity_add:[[SMBDiagonalMirrorTileEntity alloc] init_with_mirrorType:SMBDiagonalMirrorTileEntity__mirrorType_bottomLeft_to_topRight]
+							entityType:SMBGameBoardTile__entityType_beamInteractions
+			  to_gameBoardTilePosition:
+	 [[SMBGameBoardTilePosition alloc] init_with_column:beamCreatorEntity.gameBoardTile.gameBoardTilePosition.column + 1
+													row:beamCreatorEntity.gameBoardTile.gameBoardTilePosition.row - 1]];
+
+	[gameBoard gameBoardTileEntity_add:[[SMBDiagonalMirrorTileEntity alloc] init_with_mirrorType:SMBDiagonalMirrorTileEntity__mirrorType_bottomLeft_to_topRight]
+							entityType:SMBGameBoardTile__entityType_beamInteractions
+			  to_gameBoardTilePosition:
+	 [[SMBGameBoardTilePosition alloc] init_with_column:beamCreatorEntity.gameBoardTile.gameBoardTilePosition.column - 1
+													row:beamCreatorEntity.gameBoardTile.gameBoardTilePosition.row - 1]];
+
+	[gameBoard gameBoardTileEntity_add:[[SMBDiagonalMirrorTileEntity alloc] init_with_mirrorType:SMBDiagonalMirrorTileEntity__mirrorType_bottomLeft_to_topRight]
+							entityType:SMBGameBoardTile__entityType_beamInteractions
+			  to_gameBoardTilePosition:
+	 [[SMBGameBoardTilePosition alloc] init_with_column:beamCreatorEntity.gameBoardTile.gameBoardTilePosition.column
+													row:beamCreatorEntity.gameBoardTile.gameBoardTilePosition.row - 2]];
+	
+	[gameBoard gameBoardTileEntity_add:[[SMBDiagonalMirrorTileEntity alloc] init_with_mirrorType:SMBDiagonalMirrorTileEntity__mirrorType_bottomLeft_to_topRight]
+							entityType:SMBGameBoardTile__entityType_beamInteractions
+			  to_gameBoardTilePosition:
+	 [[SMBGameBoardTilePosition alloc] init_with_column:beamCreatorEntity.gameBoardTile.gameBoardTilePosition.column + 1
+													row:beamCreatorEntity.gameBoardTile.gameBoardTilePosition.row - 2]];
+	
+	[gameBoard gameBoardTileEntity_add:[[SMBDiagonalMirrorTileEntity alloc] init_with_mirrorType:SMBDiagonalMirrorTileEntity__mirrorType_bottomLeft_to_topRight]
+							entityType:SMBGameBoardTile__entityType_beamInteractions
+			  to_gameBoardTilePosition:
+	 [[SMBGameBoardTilePosition alloc] init_with_column:beamCreatorEntity.gameBoardTile.gameBoardTilePosition.column - 1
+													row:beamCreatorEntity.gameBoardTile.gameBoardTilePosition.row - 2]];
+
+	[gameBoard gameBoardTileEntity_add:[[SMBDiagonalMirrorTileEntity alloc] init_with_mirrorType:SMBDiagonalMirrorTileEntity__mirrorType_bottomLeft_to_topRight]
+							entityType:SMBGameBoardTile__entityType_beamInteractions
+			  to_gameBoardTilePosition:
+	 [[SMBGameBoardTilePosition alloc] init_with_column:beamCreatorEntity.gameBoardTile.gameBoardTilePosition.column
+													row:beamCreatorEntity.gameBoardTile.gameBoardTilePosition.row - 3]];
+	
+	[gameBoard gameBoardTileEntity_add:[[SMBDiagonalMirrorTileEntity alloc] init_with_mirrorType:SMBDiagonalMirrorTileEntity__mirrorType_bottomLeft_to_topRight]
+							entityType:SMBGameBoardTile__entityType_beamInteractions
+			  to_gameBoardTilePosition:
+	 [[SMBGameBoardTilePosition alloc] init_with_column:beamCreatorEntity.gameBoardTile.gameBoardTilePosition.column + 1
+													row:beamCreatorEntity.gameBoardTile.gameBoardTilePosition.row - 3]];
+	
+	[gameBoard gameBoardTileEntity_add:[[SMBDiagonalMirrorTileEntity alloc] init_with_mirrorType:SMBDiagonalMirrorTileEntity__mirrorType_bottomLeft_to_topRight]
+							entityType:SMBGameBoardTile__entityType_beamInteractions
+			  to_gameBoardTilePosition:
+	 [[SMBGameBoardTilePosition alloc] init_with_column:beamCreatorEntity.gameBoardTile.gameBoardTilePosition.column - 1
+													row:beamCreatorEntity.gameBoardTile.gameBoardTilePosition.row - 3]];
+
+	[gameBoard gameBoardTileEntity_add:[[SMBDiagonalMirrorTileEntity alloc] init_with_mirrorType:SMBDiagonalMirrorTileEntity__mirrorType_bottomLeft_to_topRight]
+							entityType:SMBGameBoardTile__entityType_beamInteractions
+			  to_gameBoardTilePosition:
+	 [[SMBGameBoardTilePosition alloc] init_with_column:beamCreatorEntity.gameBoardTile.gameBoardTilePosition.column
+													row:beamCreatorEntity.gameBoardTile.gameBoardTilePosition.row - 4]];
+	
+	[gameBoard gameBoardTileEntity_add:[[SMBDiagonalMirrorTileEntity alloc] init_with_mirrorType:SMBDiagonalMirrorTileEntity__mirrorType_bottomLeft_to_topRight]
+							entityType:SMBGameBoardTile__entityType_beamInteractions
+			  to_gameBoardTilePosition:
+	 [[SMBGameBoardTilePosition alloc] init_with_column:beamCreatorEntity.gameBoardTile.gameBoardTilePosition.column - 1
+													row:beamCreatorEntity.gameBoardTile.gameBoardTilePosition.row - 4]];
+
+	[gameBoard gameBoardTileEntity_add:[[SMBDiagonalMirrorTileEntity alloc] init_with_mirrorType:SMBDiagonalMirrorTileEntity__mirrorType_bottomLeft_to_topRight]
+							entityType:SMBGameBoardTile__entityType_beamInteractions
+			  to_gameBoardTilePosition:
+	 [[SMBGameBoardTilePosition alloc] init_with_column:beamCreatorEntity.gameBoardTile.gameBoardTilePosition.column + 1
+													row:beamCreatorEntity.gameBoardTile.gameBoardTilePosition.row - 4]];
+
+	/* E4 */
+	[gameBoard gameBoardTileEntity_add:[[SMBDiagonalMirrorTileEntity alloc] init_with_mirrorType:SMBDiagonalMirrorTileEntity__mirrorType_topLeft_to_bottomRight]
+							entityType:SMBGameBoardTile__entityType_beamInteractions
+			  to_gameBoardTilePosition:
+	 [[SMBGameBoardTilePosition alloc] init_with_column:beamCreatorEntity.gameBoardTile.gameBoardTilePosition.column + 1
+													row:beamCreatorEntity.gameBoardTile.gameBoardTilePosition.row - 5]];
+
+	/* A3 */
+	[gameBoard gameBoardTileEntity_add:[[SMBDiagonalMirrorTileEntity alloc] init_with_mirrorType:SMBDiagonalMirrorTileEntity__mirrorType_topLeft_to_bottomRight]
+							entityType:SMBGameBoardTile__entityType_beamInteractions
+			  to_gameBoardTilePosition:
+	 [[SMBGameBoardTilePosition alloc] init_with_column:0
+													row:beamCreatorEntity.gameBoardTile.gameBoardTilePosition.row - 6]];
+
+	/* A5 */
+	[gameBoard gameBoardTileEntity_add:[[SMBDiagonalMirrorTileEntity alloc] init_with_mirrorType:SMBDiagonalMirrorTileEntity__mirrorType_bottomLeft_to_topRight]
+							entityType:SMBGameBoardTile__entityType_beamInteractions
+			  to_gameBoardTilePosition:
+	 [[SMBGameBoardTilePosition alloc] init_with_column:0
+													row:beamCreatorEntity.gameBoardTile.gameBoardTilePosition.row - 4]];
+
+	[gameBoard gameBoardTileEntity_add:[[SMBDiagonalMirrorTileEntity alloc] init_with_mirrorType:SMBDiagonalMirrorTileEntity__mirrorType_bottomLeft_to_topRight]
+							entityType:SMBGameBoardTile__entityType_beamInteractions
+			  to_gameBoardTilePosition:
+	 [[SMBGameBoardTilePosition alloc] init_with_column:[gameBoard gameBoardTiles_numberOfColumns] - 1
+													row:beamCreatorEntity.gameBoardTile.gameBoardTilePosition.row - 2]];
+
+	[gameBoard gameBoardTileEntity_add:[[SMBDiagonalMirrorTileEntity alloc] init_with_mirrorType:SMBDiagonalMirrorTileEntity__mirrorType_topLeft_to_bottomRight]
+							entityType:SMBGameBoardTile__entityType_beamInteractions
+			  to_gameBoardTilePosition:
+	 [[SMBGameBoardTilePosition alloc] init_with_column:[gameBoard gameBoardTiles_numberOfColumns] - 1
+													row:0]];
+
+	[gameBoard gameBoardTileEntity_add:[[SMBDiagonalMirrorTileEntity alloc] init_with_mirrorType:SMBDiagonalMirrorTileEntity__mirrorType_bottomLeft_to_topRight]
+							entityType:SMBGameBoardTile__entityType_beamInteractions
+			  to_gameBoardTilePosition:
+	 [[SMBGameBoardTilePosition alloc] init_with_column:[gameBoard gameBoardTiles_numberOfColumns] - 3
+													row:1]];
+
+	[gameBoard gameBoardTileEntity_add:[[SMBDiagonalMirrorTileEntity alloc] init_with_mirrorType:SMBDiagonalMirrorTileEntity__mirrorType_bottomLeft_to_topRight]
+							entityType:SMBGameBoardTile__entityType_beamInteractions
+			  to_gameBoardTilePosition:
+	 [[SMBGameBoardTilePosition alloc] init_with_column:[gameBoard gameBoardTiles_numberOfColumns] - 2
+													row:0]];
+
+	[gameBoard gameBoardTileEntity_add:[[SMBDiagonalMirrorTileEntity alloc] init_with_mirrorType:SMBDiagonalMirrorTileEntity__mirrorType_bottomLeft_to_topRight]
+							entityType:SMBGameBoardTile__entityType_beamInteractions
+			  to_gameBoardTilePosition:
+	 [[SMBGameBoardTilePosition alloc] init_with_column:beamCreatorEntity.gameBoardTile.gameBoardTilePosition.column - 2
+													row:beamCreatorEntity.gameBoardTile.gameBoardTilePosition.row - 1]];
+
+	[gameBoard gameBoardTileEntity_add:[[SMBDiagonalMirrorTileEntity alloc] init_with_mirrorType:SMBDiagonalMirrorTileEntity__mirrorType_bottomLeft_to_topRight]
+							entityType:SMBGameBoardTile__entityType_beamInteractions
+			  to_gameBoardTilePosition:
+	 [[SMBGameBoardTilePosition alloc] init_with_column:beamCreatorEntity.gameBoardTile.gameBoardTilePosition.column - 3
+													row:beamCreatorEntity.gameBoardTile.gameBoardTilePosition.row - 1]];
+
+	[gameBoard gameBoardTileEntity_add:[[SMBDiagonalMirrorTileEntity alloc] init_with_mirrorType:SMBDiagonalMirrorTileEntity__mirrorType_bottomLeft_to_topRight]
+							entityType:SMBGameBoardTile__entityType_beamInteractions
+			  to_gameBoardTilePosition:
+	 [[SMBGameBoardTilePosition alloc] init_with_column:beamCreatorEntity.gameBoardTile.gameBoardTilePosition.column - 2
+													row:beamCreatorEntity.gameBoardTile.gameBoardTilePosition.row - 2]];
+
+	/* Level exit. */
+
+	/* A4 */
+	[gameBoard gameBoardTileEntity_add_levelExit_to_gameBoardTilePosition:
+	 [[SMBGameBoardTilePosition alloc] init_with_column:0
+													row:beamCreatorEntity.gameBoardTile.gameBoardTilePosition.row - 5]];
+
+	/* Usable game board tile entities. */
+
+	/* Entity spawners. */
+	NSMutableArray<SMBGameBoardTileEntitySpawner*>* const gameBoardTileEntitySpawners = [NSMutableArray<SMBGameBoardTileEntitySpawner*> array];
+	NSMutableArray<SMBGameBoardTileEntitySpawner_spawnEntityBlock>* const gameBoardTileEntitySpawner_spawnEntityBlocks_singleUse = [NSMutableArray<SMBGameBoardTileEntitySpawner_spawnEntityBlock> array];
+	[gameBoardTileEntitySpawner_spawnEntityBlocks_singleUse addObject:^SMBGameBoardTileEntity * _Nullable{
+		return [[SMBDiagonalMirrorTileEntity alloc] init_with_mirrorType:SMBDiagonalMirrorTileEntity__mirrorType_bottomLeft_to_topRight];
+	}];
+
+	[gameBoardTileEntitySpawner_spawnEntityBlocks_singleUse addObject:^SMBGameBoardTileEntity * _Nullable{
+		return [[SMBDiagonalMirrorTileEntity alloc] init_with_mirrorType:SMBDiagonalMirrorTileEntity__mirrorType_topLeft_to_bottomRight];
+	}];
+
+	[gameBoardTileEntitySpawner_spawnEntityBlocks_singleUse addObject:^SMBGameBoardTileEntity * _Nullable{
+		return [[SMBDiagonalMirrorTileEntity alloc] init_with_mirrorType:SMBDiagonalMirrorTileEntity__mirrorType_topLeft_to_bottomRight];
+	}];
+
+	[gameBoardTileEntitySpawners addObjectsFromArray:
+	 [SMBGameBoardTileEntitySpawner smb_gameBoardTileEntitySpawners_with_spawnedGameBoardTileEntities_tracked_maximum:1
+																									spawnEntityBlocks:gameBoardTileEntitySpawner_spawnEntityBlocks_singleUse]];
+	
+	/* Game level. */
+	return
+	[[self alloc] init_with_gameBoard:gameBoard
+	gameBoardTileEntitySpawnerManager:
+	 [[SMBGameBoardTileEntitySpawnerManager alloc] init_with_gameBoardTileEntitySpawners:gameBoardTileEntitySpawners]];
+}
+
 #pragma mark - meltableWall
 +(nonnull instancetype)smb_meltableWall_introduction
 {
