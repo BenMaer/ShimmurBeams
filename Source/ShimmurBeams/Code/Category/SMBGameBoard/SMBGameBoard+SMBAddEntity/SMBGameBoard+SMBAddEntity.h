@@ -24,7 +24,7 @@
 @interface SMBGameBoard (SMBAddEntity)
 
 #pragma mark - gameBoardTileEntity
--(void)gameBoardTileEntity_add:(nonnull SMBGameBoardTileEntity*)gameBoardTileEntity
+-(BOOL)gameBoardTileEntity_add:(nonnull SMBGameBoardTileEntity*)gameBoardTileEntity
 					entityType:(SMBGameBoardTile__entityType)entityType
 	  to_gameBoardTilePosition:(nonnull SMBGameBoardTilePosition*)gameBoardTilePosition;
 
@@ -35,7 +35,7 @@
 -(void)gameBoardTileEntity_add:(nonnull SMBGameBoardTileEntity*)gameBoardTileEntity
 	  to_gameBoardTilePosition:(nonnull SMBGameBoardTilePosition*)gameBoardTilePosition;
 
--(void)gameBoardTileEntity_for_beamInteractions_set:(nonnull SMBGameBoardTileEntity*)gameBoardTileEntity
+-(BOOL)gameBoardTileEntity_for_beamInteractions_set:(nonnull SMBGameBoardTileEntity*)gameBoardTileEntity
 						   to_gameBoardTilePosition:(nonnull SMBGameBoardTilePosition*)gameBoardTilePosition;
 
 -(void)gameBoardTileEntities_add:(nonnull SMBGameBoard_addEntity_createTileEntityAtPosition_block)createTileEntityAtPosition_block

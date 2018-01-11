@@ -25,20 +25,22 @@
 @implementation SMBGameBoard (SMBAddEntity)
 
 #pragma mark - gameBoardTileEntity
--(void)gameBoardTileEntity_add:(nonnull SMBGameBoardTileEntity*)gameBoardTileEntity
+-(BOOL)gameBoardTileEntity_add:(nonnull SMBGameBoardTileEntity*)gameBoardTileEntity
 					entityType:(SMBGameBoardTile__entityType)entityType
 	  to_gameBoardTilePosition:(nonnull SMBGameBoardTilePosition*)gameBoardTilePosition
 {
-	kRUConditionalReturn(gameBoardTileEntity == nil, YES);
-	kRUConditionalReturn(gameBoardTilePosition == nil, YES);
+	kRUConditionalReturn_ReturnValueFalse(gameBoardTileEntity == nil, YES);
+	kRUConditionalReturn_ReturnValueFalse(gameBoardTilePosition == nil, YES);
 	
 	SMBGameBoardTile* const gameBoardTile =
 	[self gameBoardTile_at_position:gameBoardTilePosition];
 
-	kRUConditionalReturn(gameBoardTile == nil, YES);
+	kRUConditionalReturn_ReturnValueFalse(gameBoardTile == nil, YES);
 	
 	[gameBoardTile gameBoardTileEntities_add:gameBoardTileEntity
 								  entityType:entityType];
+
+	return YES;
 }
 
 -(void)gameBoardTileEntities_add:(nonnull SMBGameBoard_addEntity_createTileEntityAtPosition_block)createTileEntityAtPosition_block
@@ -66,9 +68,10 @@
 		 to_gameBoardTilePosition:gameBoardTilePosition];
 }
 
--(void)gameBoardTileEntity_for_beamInteractions_set:(nonnull SMBGameBoardTileEntity*)gameBoardTileEntity
+-(BOOL)gameBoardTileEntity_for_beamInteractions_set:(nonnull SMBGameBoardTileEntity*)gameBoardTileEntity
 						   to_gameBoardTilePosition:(nonnull SMBGameBoardTilePosition*)gameBoardTilePosition
 {
+	return
 	[self gameBoardTileEntity_add:gameBoardTileEntity
 					   entityType:SMBGameBoardTile__entityType_beamInteractions
 		 to_gameBoardTilePosition:gameBoardTilePosition];

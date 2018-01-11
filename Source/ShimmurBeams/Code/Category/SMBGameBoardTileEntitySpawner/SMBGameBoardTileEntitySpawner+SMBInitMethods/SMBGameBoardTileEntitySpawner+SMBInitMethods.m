@@ -32,7 +32,7 @@
 		[gameBoardTileEntitySpawners addObject:gameBoardTileEntitySpawner];
 	}];
 
-	return [NSArray<SMBGameBoardTileEntitySpawner*> arrayWithArray:gameBoardTileEntitySpawners];;
+	return [NSArray<SMBGameBoardTileEntitySpawner*> arrayWithArray:gameBoardTileEntitySpawners];
 }
 
 @end

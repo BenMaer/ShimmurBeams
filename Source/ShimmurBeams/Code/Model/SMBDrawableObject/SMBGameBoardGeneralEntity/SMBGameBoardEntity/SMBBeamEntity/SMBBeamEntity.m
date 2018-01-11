@@ -163,7 +163,7 @@ typedef NS_ENUM(NSInteger, SMBBeamEntity__drawingPiece) {
 	SMBBeamEntityTileNode* const beamEntityTileNode_initial = self.beamEntityTileNode_initial;
 	kRUConditionalReturn(beamEntityTileNode_initial == nil, YES);
 
-	SMBGameBoardTile* const beamEntityTileNode_initial_gameBoardTile_current = beamEntityTileNode_initial.gameBoardTile;;
+	SMBGameBoardTile* const beamEntityTileNode_initial_gameBoardTile_current = beamEntityTileNode_initial.gameBoardTile;
 	SMBGameBoardTile* const beamEntityTileNode_initial_gameBoardTile = [self beamEntityTileNode_initial_gameBoardTile_appropriate];
 	kRUConditionalReturn(beamEntityTileNode_initial_gameBoardTile == beamEntityTileNode_initial_gameBoardTile_current, NO);
 

@@ -23,6 +23,7 @@
 @class SMBGameLevel;
 @class SMBGenericPowerOutputTileEntity_OutputPowerReceiver;
 @class SMBBeamEntityManager;
+@protocol SMBGameBoardMove;
 
 
 
@@ -46,7 +47,8 @@
  @return The initialized instance if there were no issues, otherwise nil.
  */
 -(nullable instancetype)init_with_numberOfColumns:(NSUInteger)numberOfColumns
-									 numberOfRows:(NSUInteger)numberOfRows NS_DESIGNATED_INITIALIZER;
+									 numberOfRows:(NSUInteger)numberOfRows
+							   leastNumberOfMoves:(NSUInteger)leastNumberOfMoves NS_DESIGNATED_INITIALIZER;
 
 #pragma mark - gameBoardTiles
 @property (nonatomic, readonly, copy, nullable) NSArray<NSArray<SMBGameBoardTile*>*>* gameBoardTiles;
@@ -83,6 +85,16 @@
 #pragma mark - beamEntityManager
 @property (nonatomic, readonly, strong, nonnull) SMBBeamEntityManager* beamEntityManager;
 
+#pragma mark - leastNumberOfMoves
+@property (nonatomic, readonly, assign) NSUInteger leastNumberOfMoves;
+
+#pragma mark - currentNumberOfMoves
+@property (nonatomic, readonly, assign) NSUInteger currentNumberOfMoves;
+
+#pragma mark - gameBoardMove
+@property (nonatomic, assign) BOOL gameBoardMove_isProcessing;
+-(void)gameBoardMove_perform:(nonnull id<SMBGameBoardMove>)gameBoardMove;
+
 @end
 
 
@@ -95,5 +107,6 @@
 +(nonnull NSString*)gameBoardTileEntities;
 +(nonnull NSString*)gameBoardEntities;
 +(nonnull NSString*)outputPowerReceivers;
++(nonnull NSString*)currentNumberOfMoves;
 
 @end

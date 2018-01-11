@@ -11,6 +11,7 @@
 #import "SMBGameLevelView.h"
 #import "SMBGameLevel.h"
 #import "SMBGameLevelCompletion.h"
+#import "SMBGameBoard.h"
 
 #import <ResplendentUtilities/RUConditionalReturn.h>
 #import <ResplendentUtilities/UIView+RUUtility.h>
@@ -21,7 +22,8 @@
 
 
 
-static void* kSMBGameLevelGeneratorViewController__KVOContext = &kSMBGameLevelGeneratorViewController__KVOContext;
+static void* kSMBGameLevelGeneratorViewController__KVOContext__gameLevelGenerator_gameLevel = &kSMBGameLevelGeneratorViewController__KVOContext__gameLevelGenerator_gameLevel;
+static void* kSMBGameLevelGeneratorViewController__KVOContext__gameBoard_forKVO = &kSMBGameLevelGeneratorViewController__KVOContext__gameBoard_forKVO;
 
 
 
@@ -34,6 +36,7 @@ static void* kSMBGameLevelGeneratorViewController__KVOContext = &kSMBGameLevelGe
 -(void)gameLevelGenerator_gameLevel_update;
 -(nullable SMBGameLevel*)gameLevelGenerator_gameLevel_generate;
 -(void)gameLevelGenerator_gameLevel_didComplete;
+-(void)gameLevelGenerator_gameLevel_didComplete_check;
 -(void)gameLevelGenerator_gameLevel_setKVORegistered:(BOOL)registered;
 
 #pragma mark - hintLabel
@@ -62,8 +65,20 @@ static void* kSMBGameLevelGeneratorViewController__KVOContext = &kSMBGameLevelGe
 -(void)levelSuccessBarButtonItem_update;
 -(nullable UIBarButtonItem*)levelSuccessBarButtonItem_generate;
 
-#pragma mark - levelSuccessBarButtonItem
+#pragma mark - resetBarButtonItem
 @property (nonatomic, readonly, strong, nullable) UIBarButtonItem* resetBarButtonItem;
+
+#pragma mark - leastMovesBarButtonItem
+@property (nonatomic, strong, nullable) UIBarButtonItem* leastMovesBarButtonItem;
+-(void)leastMovesBarButtonItem_update;
+@property (nonatomic, readonly, strong, nullable) UILabel* leastMovesBarButtonItem_label;
+-(void)leastMovesBarButtonItem_label_text_update;
+
+#pragma mark - SMBGameLevelGeneratorViewController_gameBoard_forKVO
+@property (nonatomic, strong, nullable) SMBGameBoard* SMBGameLevelGeneratorViewController_gameBoard_forKVO;
+-(void)SMBGameLevelGeneratorViewController_gameBoard_forKVO_update;
+-(nullable SMBGameBoard*)SMBGameLevelGeneratorViewController_gameBoard_forKVO_appropriate;
+-(void)SMBGameLevelGeneratorViewController_gameBoard_setKVORegistered:(BOOL)registered;
 
 @end
 
@@ -76,7 +91,11 @@ static void* kSMBGameLevelGeneratorViewController__KVOContext = &kSMBGameLevelGe
 #pragma mark - NSObject
 -(void)dealloc
 {
-	[self gameLevelGenerator_gameLevel_setKVORegistered:NO];
+	if (self.isViewLoaded)
+	{
+		[self gameLevelGenerator_gameLevel_setKVORegistered:NO];
+		[self SMBGameLevelGeneratorViewController_gameBoard_setKVORegistered:NO];
+	}
 }
 
 #pragma mark - UIViewController
@@ -86,6 +105,7 @@ static void* kSMBGameLevelGeneratorViewController__KVOContext = &kSMBGameLevelGe
 
 	[self setEdgesForExtendedLayout:UIRectEdgeNone];
 	[self setAutomaticallyAdjustsScrollViewInsets:NO];
+	[self.navigationItem setLeftItemsSupplementBackButton:YES];
 
 	[self.view setBackgroundColor:[UIColor whiteColor]];
 
@@ -110,6 +130,14 @@ static void* kSMBGameLevelGeneratorViewController__KVOContext = &kSMBGameLevelGe
 									action:@selector(navigationItem_resetButton_action_didFire)];
 
 	[self navigationItem_rightBarButtonItems_update];
+
+	_leastMovesBarButtonItem_label = [UILabel new];
+	[self.leastMovesBarButtonItem_label setFont:[UIFont systemFontOfSize:8.0f]];
+	[self.leastMovesBarButtonItem_label setTextColor:[UIColor darkTextColor]];
+	[self.leastMovesBarButtonItem_label setBackgroundColor:[UIColor clearColor]];
+
+	[self gameLevelGenerator_gameLevel_setKVORegistered:YES];
+	[self SMBGameLevelGeneratorViewController_gameBoard_setKVORegistered:YES];
 }
 
 -(void)viewWillLayoutSubviews
@@ -138,12 +166,19 @@ static void* kSMBGameLevelGeneratorViewController__KVOContext = &kSMBGameLevelGe
 {
 	kRUConditionalReturn(self.gameLevelGenerator_gameLevel == gameLevelGenerator_gameLevel, NO)
 
-	[self gameLevelGenerator_gameLevel_setKVORegistered:NO];
+	if (self.isViewLoaded)
+	{
+		[self gameLevelGenerator_gameLevel_setKVORegistered:NO];
+	}
 
 	_gameLevelGenerator_gameLevel = gameLevelGenerator_gameLevel;
 
-	[self gameLevelGenerator_gameLevel_setKVORegistered:YES];
+	if (self.isViewLoaded)
+	{
+		[self gameLevelGenerator_gameLevel_setKVORegistered:YES];
+	}
 
+	[self SMBGameLevelGeneratorViewController_gameBoard_forKVO_update];
 	[self gameLevelView_level_update];
 }
 
@@ -170,8 +205,34 @@ static void* kSMBGameLevelGeneratorViewController__KVOContext = &kSMBGameLevelGe
 
 	[self.view setUserInteractionEnabled:NO];
 
+	/*
+	 If the level was successfully completed in less moves than what we thought was the least number of moves... we should probably updates least number of moves.
+	 */
+	NSAssert((gameLevelGenerator_gameLevel.completion.failureReason != SMBGameLevelCompletion__completionType_success)
+			 ||
+			 (
+			  self.SMBGameLevelGeneratorViewController_gameBoard_forKVO.currentNumberOfMoves
+			  >=
+			  self.SMBGameLevelGeneratorViewController_gameBoard_forKVO.leastNumberOfMoves
+			  ),
+			 @"The least number of moves is wrong!");
+
 	[gameLevelDidCompleteDelegate gameLevelGeneratorViewController:self
 											  gameLevelDidComplete:gameLevelGenerator_gameLevel];
+}
+
+-(void)gameLevelGenerator_gameLevel_didComplete_check
+{
+	SMBGameBoard* const SMBGameLevelGeneratorViewController_gameBoard_forKVO = self.SMBGameLevelGeneratorViewController_gameBoard_forKVO;
+	kRUConditionalReturn(SMBGameLevelGeneratorViewController_gameBoard_forKVO == nil, YES);
+	kRUConditionalReturn(SMBGameLevelGeneratorViewController_gameBoard_forKVO.gameBoardMove_isProcessing == YES, NO);
+
+	SMBGameLevel* const gameLevelGenerator_gameLevel = self.gameLevelGenerator_gameLevel;
+	kRUConditionalReturn(gameLevelGenerator_gameLevel == nil, YES);
+
+	kRUConditionalReturn(gameLevelGenerator_gameLevel.completion == NO, NO);
+
+	[self gameLevelGenerator_gameLevel_didComplete];
 }
 
 -(void)gameLevelGenerator_gameLevel_setKVORegistered:(BOOL)registered
@@ -179,23 +240,28 @@ static void* kSMBGameLevelGeneratorViewController__KVOContext = &kSMBGameLevelGe
 	typeof(self.gameLevelGenerator_gameLevel) const gameLevelGenerator_gameLevel = self.gameLevelGenerator_gameLevel;
 	kRUConditionalReturn(gameLevelGenerator_gameLevel == nil, NO);
 
-	NSMutableArray<NSString*>* const propertiesToObserve = [NSMutableArray<NSString*> array];
-	[propertiesToObserve addObject:[SMBGameLevel_PropertiesForKVO completion]];
+	NSMutableDictionary<NSNumber*,NSMutableArray<NSString*>*>* const KVOOptions_to_propertiesToObserve_mapping = [NSMutableDictionary<NSNumber*,NSMutableArray<NSString*>*> dictionary];
+	
+	NSMutableArray<NSString*>* const propertiesToObserve_observe_initial = [NSMutableArray<NSString*> array];
+	[propertiesToObserve_observe_initial addObject:[SMBGameLevel_PropertiesForKVO completion]];
+	[KVOOptions_to_propertiesToObserve_mapping setObject:propertiesToObserve_observe_initial forKey:@(NSKeyValueObservingOptionInitial)];
 
-	[propertiesToObserve enumerateObjectsUsingBlock:^(NSString * _Nonnull propertyToObserve, NSUInteger idx, BOOL * _Nonnull stop) {
-		if (registered)
-		{
-			[gameLevelGenerator_gameLevel addObserver:self
-										   forKeyPath:propertyToObserve
-											  options:(NSKeyValueObservingOptionInitial)
-											  context:&kSMBGameLevelGeneratorViewController__KVOContext];
-		}
-		else
-		{
-			[gameLevelGenerator_gameLevel removeObserver:self
-											  forKeyPath:propertyToObserve
-												 context:&kSMBGameLevelGeneratorViewController__KVOContext];
-		}
+	[KVOOptions_to_propertiesToObserve_mapping enumerateKeysAndObjectsUsingBlock:^(NSNumber * _Nonnull KVOOptions_number, NSMutableArray<NSString *> * _Nonnull propertiesToObserve, BOOL * _Nonnull stop) {
+		[propertiesToObserve enumerateObjectsUsingBlock:^(NSString * _Nonnull propertyToObserve, NSUInteger idx, BOOL * _Nonnull stop) {
+			if (registered)
+			{
+				[gameLevelGenerator_gameLevel addObserver:self
+											 forKeyPath:propertyToObserve
+												options:(KVOOptions_number.unsignedIntegerValue)
+												context:&kSMBGameLevelGeneratorViewController__KVOContext__gameLevelGenerator_gameLevel];
+			}
+			else
+			{
+				[gameLevelGenerator_gameLevel removeObserver:self
+												forKeyPath:propertyToObserve
+												   context:&kSMBGameLevelGeneratorViewController__KVOContext__gameLevelGenerator_gameLevel];
+			}
+		}];
 	}];
 }
 
@@ -276,7 +342,7 @@ static void* kSMBGameLevelGeneratorViewController__KVOContext = &kSMBGameLevelGe
 #pragma mark - KVO
 -(void)observeValueForKeyPath:(nullable NSString*)keyPath ofObject:(nullable id)object change:(nullable NSDictionary*)change context:(nullable void*)context
 {
-	if (context == kSMBGameLevelGeneratorViewController__KVOContext)
+	if (context == kSMBGameLevelGeneratorViewController__KVOContext__gameLevelGenerator_gameLevel)
 	{
 		if (object == self.gameLevelGenerator_gameLevel)
 		{
@@ -284,12 +350,29 @@ static void* kSMBGameLevelGeneratorViewController__KVOContext = &kSMBGameLevelGe
 			{
 				[self levelSuccessBarButtonItem_update];
 
-				SMBGameLevel* const gameLevelGenerator_gameLevel = self.gameLevelGenerator_gameLevel;
-				kRUConditionalReturn(gameLevelGenerator_gameLevel == nil, YES);
+				[self gameLevelGenerator_gameLevel_didComplete_check];
+			}
+			else
+			{
+				NSAssert(false, @"unhandled keyPath %@",keyPath);
+			}
+		}
+		else
+		{
+			NSAssert(false, @"unhandled object %@",object);
+		}
+	}
+	else if (context == kSMBGameLevelGeneratorViewController__KVOContext__gameBoard_forKVO)
+	{
+		if (object == self.SMBGameLevelGeneratorViewController_gameBoard_forKVO)
+		{
+			if ([keyPath isEqualToString:[SMBGameBoard_PropertiesForKVO currentNumberOfMoves]])
+			{
+				[self leastMovesBarButtonItem_label_text_update];
 
-				kRUConditionalReturn(gameLevelGenerator_gameLevel.completion == NO, NO);
+				kRUConditionalReturn(self.SMBGameLevelGeneratorViewController_gameBoard_forKVO.gameBoardMove_isProcessing == YES, YES);
 
-				[self gameLevelGenerator_gameLevel_didComplete];
+				[self gameLevelGenerator_gameLevel_didComplete_check];
 			}
 			else
 			{
@@ -355,6 +438,100 @@ static void* kSMBGameLevelGeneratorViewController__KVOContext = &kSMBGameLevelGe
 	kRUConditionalReturn_ReturnValueNil(levelSuccessBarButtonItemDelegate == nil, YES);
 
 	return [levelSuccessBarButtonItemDelegate gameLevelGeneratorViewController_levelSuccessBarButtonItem:self];
+}
+
+#pragma mark - leastMovesBarButtonItem
+-(void)setLeastMovesBarButtonItem:(nullable UIBarButtonItem*)leastMovesBarButtonItem
+{
+	kRUConditionalReturn(self.leastMovesBarButtonItem == leastMovesBarButtonItem, NO);
+
+	_leastMovesBarButtonItem = leastMovesBarButtonItem;
+
+	[self.navigationItem setLeftBarButtonItem:self.leastMovesBarButtonItem];
+}
+
+-(void)leastMovesBarButtonItem_update
+{
+	[self setLeastMovesBarButtonItem:[[UIBarButtonItem alloc] initWithCustomView:self.leastMovesBarButtonItem_label]];
+}
+
+-(void)leastMovesBarButtonItem_label_text_update
+{
+	UILabel* const leastMovesBarButtonItem_label = self.leastMovesBarButtonItem_label;
+	kRUConditionalReturn(leastMovesBarButtonItem_label == nil, NO);
+
+	NSUInteger const leastNumberOfMoves = self.SMBGameLevelGeneratorViewController_gameBoard_forKVO.leastNumberOfMoves;
+	[self.leastMovesBarButtonItem_label setText:
+	 ((leastNumberOfMoves > 0)
+	  ?
+	  RUStringWithFormat(@"%lu/%lu",
+						 (unsigned long)self.SMBGameLevelGeneratorViewController_gameBoard_forKVO.currentNumberOfMoves,
+						 (unsigned long)leastNumberOfMoves)
+	  :
+	  nil
+	  )];
+
+	[self.leastMovesBarButtonItem_label sizeToFit];
+	[self leastMovesBarButtonItem_update];
+}
+
+#pragma mark - SMBGameLevelGeneratorViewController_gameBoard_forKVO
+-(void)setSMBGameLevelGeneratorViewController_gameBoard_forKVO:(nullable SMBGameBoard*)SMBGameLevelGeneratorViewController_gameBoard_forKVO
+{
+	kRUConditionalReturn(self.SMBGameLevelGeneratorViewController_gameBoard_forKVO == SMBGameLevelGeneratorViewController_gameBoard_forKVO, NO);
+
+	if (self.isViewLoaded)
+	{
+		[self SMBGameLevelGeneratorViewController_gameBoard_setKVORegistered:NO];
+	}
+
+	_SMBGameLevelGeneratorViewController_gameBoard_forKVO = SMBGameLevelGeneratorViewController_gameBoard_forKVO;
+
+	if (self.isViewLoaded)
+	{
+		[self SMBGameLevelGeneratorViewController_gameBoard_setKVORegistered:YES];
+	}
+}
+
+-(void)SMBGameLevelGeneratorViewController_gameBoard_forKVO_update
+{
+	[self setSMBGameLevelGeneratorViewController_gameBoard_forKVO:[self SMBGameLevelGeneratorViewController_gameBoard_forKVO_appropriate]];
+}
+
+-(nullable SMBGameBoard*)SMBGameLevelGeneratorViewController_gameBoard_forKVO_appropriate
+{
+	SMBGameLevel* const gameLevelGenerator_gameLevel = self.gameLevelGenerator_gameLevel;
+	kRUConditionalReturn_ReturnValueNil(gameLevelGenerator_gameLevel == nil, NO);
+
+	SMBGameBoard* const gameBoard = gameLevelGenerator_gameLevel.gameBoard;
+	kRUConditionalReturn_ReturnValueNil(gameBoard == nil, YES);
+
+	return gameBoard;
+}
+
+-(void)SMBGameLevelGeneratorViewController_gameBoard_setKVORegistered:(BOOL)registered
+{
+	typeof(self.SMBGameLevelGeneratorViewController_gameBoard_forKVO) const gameBoard_forKVO = self.SMBGameLevelGeneratorViewController_gameBoard_forKVO;
+	kRUConditionalReturn(gameBoard_forKVO == nil, NO);
+	
+	NSMutableArray<NSString*>* const propertiesToObserve = [NSMutableArray<NSString*> array];
+	[propertiesToObserve addObject:[SMBGameBoard_PropertiesForKVO currentNumberOfMoves]];
+	
+	[propertiesToObserve enumerateObjectsUsingBlock:^(NSString * _Nonnull propertyToObserve, NSUInteger idx, BOOL * _Nonnull stop) {
+		if (registered)
+		{
+			[gameBoard_forKVO addObserver:self
+							   forKeyPath:propertyToObserve
+								  options:(NSKeyValueObservingOptionInitial)
+								  context:&kSMBGameLevelGeneratorViewController__KVOContext__gameBoard_forKVO];
+		}
+		else
+		{
+			[gameBoard_forKVO removeObserver:self
+								  forKeyPath:propertyToObserve
+									 context:&kSMBGameLevelGeneratorViewController__KVOContext__gameBoard_forKVO];
+		}
+	}];
 }
 
 @end

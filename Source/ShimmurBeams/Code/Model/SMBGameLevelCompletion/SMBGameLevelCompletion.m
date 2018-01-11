@@ -8,6 +8,8 @@
 
 #import "SMBGameLevelCompletion.h"
 
+#import <ResplendentUtilities/RUConditionalReturn.h>
+
 
 
 
@@ -23,6 +25,14 @@
 	}
 
 	return self;
+}
+
+#pragma mark - completionType
+-(SMBGameLevelCompletion__completionType)completionType
+{
+	kRUConditionalReturn_ReturnValue(self.failureReason != nil, NO, SMBGameLevelCompletion__completionType_defeat);
+
+	return SMBGameLevelCompletion__completionType_success;
 }
 
 @end

@@ -47,7 +47,7 @@
 #pragma mark - gameBoardTileEntities
 -(void)gameBoardTileEntities_add:(nonnull SMBGameBoardTileEntity*)gameBoardTileEntity
 					  entityType:(SMBGameBoardTile__entityType)entityType;
--(void)gameBoardTileEntities_remove:(nonnull SMBGameBoardTileEntity*)gameBoardTileEntity
+-(BOOL)gameBoardTileEntities_remove:(nonnull SMBGameBoardTileEntity*)gameBoardTileEntity
 						 entityType:(SMBGameBoardTile__entityType)entityType;
 -(SMBGameBoardTile__entityType)gameBoardTileEntity_currentType:(nonnull SMBGameBoardTileEntity*)gameBoardTileEntity;
 -(void)gameBoardTileEntities_remove:(nonnull SMBGameBoardTileEntity*)gameBoardTileEntity;

@@ -550,7 +550,7 @@ static void* kSMBGameBoardView__KVOContext = &kSMBGameBoardView__KVOContext;
 		.origin.x	= CGRectGetHorizontallyAlignedXCoordForWidthOnWidth(size.width, boundingSize.width),
 		.origin.y	= CGRectGetVerticallyAlignedYCoordForHeightOnHeight(size.height, boundingSize.height),
 		.size		= size,
-	});;
+	});
 }
 
 #pragma mark - gameBoardTileViews
@@ -584,7 +584,7 @@ static void* kSMBGameBoardView__KVOContext = &kSMBGameBoardView__KVOContext;
 
 -(nullable NSArray<SMBGameBoardTileView*>*)gameBoardTileViews_generate
 {
-	NSMutableArray<SMBGameBoardTileView*>* const gameBoardTileViews = [NSMutableArray<SMBGameBoardTileView*> array];;
+	NSMutableArray<SMBGameBoardTileView*>* const gameBoardTileViews = [NSMutableArray<SMBGameBoardTileView*> array];
 
 	[self.gameBoard gameBoardTiles_enumerate:^(SMBGameBoardTile * _Nonnull gameBoardTile, NSUInteger column, NSUInteger row, BOOL * _Nonnull stop) {
 		SMBGameBoardTileView* const gameBoardTileView = [[SMBGameBoardTileView alloc] init_with_gameBoardTile:gameBoardTile];

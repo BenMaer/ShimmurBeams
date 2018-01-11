@@ -32,7 +32,8 @@
 	/* Game board. */
 	SMBGameBoard* const gameBoard =
 	[[SMBGameBoard alloc] init_with_numberOfColumns:numberOfColumns
-									   numberOfRows:numberOfRows];
+									   numberOfRows:numberOfRows
+								 leastNumberOfMoves:0];
 
 	/* Entity spawners. */
 	NSMutableArray<SMBGameBoardTileEntitySpawner*>* const gameBoardTileEntitySpawners = [NSMutableArray<SMBGameBoardTileEntitySpawner*> array];
