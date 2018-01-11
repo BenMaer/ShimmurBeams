@@ -215,8 +215,8 @@
 	/* Game board. */
 	
 	SMBGameBoard* const gameBoard = [[SMBGameBoard alloc] init_with_numberOfColumns:7
-																	   numberOfRows:8
-																 leastNumberOfMoves:0];
+																	   numberOfRows:9
+																 leastNumberOfMoves:3];
 	
 	/* Initial beam creator. */
 	
@@ -301,6 +301,27 @@
 	 [[SMBGameBoardTilePosition alloc] init_with_column:beamCreatorEntity.gameBoardTile.gameBoardTilePosition.column + 1
 													row:beamCreatorEntity.gameBoardTile.gameBoardTilePosition.row - 4]];
 
+	/* E4 */
+	[gameBoard gameBoardTileEntity_add:[[SMBDiagonalMirrorTileEntity alloc] init_with_mirrorType:SMBDiagonalMirrorTileEntity__mirrorType_topLeft_to_bottomRight]
+							entityType:SMBGameBoardTile__entityType_beamInteractions
+			  to_gameBoardTilePosition:
+	 [[SMBGameBoardTilePosition alloc] init_with_column:beamCreatorEntity.gameBoardTile.gameBoardTilePosition.column + 1
+													row:beamCreatorEntity.gameBoardTile.gameBoardTilePosition.row - 5]];
+
+	/* A3 */
+	[gameBoard gameBoardTileEntity_add:[[SMBDiagonalMirrorTileEntity alloc] init_with_mirrorType:SMBDiagonalMirrorTileEntity__mirrorType_topLeft_to_bottomRight]
+							entityType:SMBGameBoardTile__entityType_beamInteractions
+			  to_gameBoardTilePosition:
+	 [[SMBGameBoardTilePosition alloc] init_with_column:0
+													row:beamCreatorEntity.gameBoardTile.gameBoardTilePosition.row - 6]];
+
+	/* A5 */
+	[gameBoard gameBoardTileEntity_add:[[SMBDiagonalMirrorTileEntity alloc] init_with_mirrorType:SMBDiagonalMirrorTileEntity__mirrorType_bottomLeft_to_topRight]
+							entityType:SMBGameBoardTile__entityType_beamInteractions
+			  to_gameBoardTilePosition:
+	 [[SMBGameBoardTilePosition alloc] init_with_column:0
+													row:beamCreatorEntity.gameBoardTile.gameBoardTilePosition.row - 4]];
+
 	[gameBoard gameBoardTileEntity_add:[[SMBDiagonalMirrorTileEntity alloc] init_with_mirrorType:SMBDiagonalMirrorTileEntity__mirrorType_bottomLeft_to_topRight]
 							entityType:SMBGameBoardTile__entityType_beamInteractions
 			  to_gameBoardTilePosition:
@@ -318,12 +339,6 @@
 			  to_gameBoardTilePosition:
 	 [[SMBGameBoardTilePosition alloc] init_with_column:[gameBoard gameBoardTiles_numberOfColumns] - 3
 													row:1]];
-
-	[gameBoard gameBoardTileEntity_add:[[SMBDiagonalMirrorTileEntity alloc] init_with_mirrorType:SMBDiagonalMirrorTileEntity__mirrorType_topLeft_to_bottomRight]
-							entityType:SMBGameBoardTile__entityType_beamInteractions
-			  to_gameBoardTilePosition:
-	 [[SMBGameBoardTilePosition alloc] init_with_column:[gameBoard gameBoardTiles_numberOfColumns] - 3
-													row:2]];
 
 	[gameBoard gameBoardTileEntity_add:[[SMBDiagonalMirrorTileEntity alloc] init_with_mirrorType:SMBDiagonalMirrorTileEntity__mirrorType_bottomLeft_to_topRight]
 							entityType:SMBGameBoardTile__entityType_beamInteractions
@@ -350,10 +365,11 @@
 													row:beamCreatorEntity.gameBoardTile.gameBoardTilePosition.row - 2]];
 
 	/* Level exit. */
-	
-//	[gameBoard gameBoardTileEntity_add_levelExit_to_gameBoardTilePosition:
-//	 [[SMBGameBoardTilePosition alloc] init_with_column:floor((double)[gameBoard gameBoardTiles_numberOfColumns] / 2.0f)
-//													row:0]];
+
+	/* A4 */
+	[gameBoard gameBoardTileEntity_add_levelExit_to_gameBoardTilePosition:
+	 [[SMBGameBoardTilePosition alloc] init_with_column:0
+													row:beamCreatorEntity.gameBoardTile.gameBoardTilePosition.row - 5]];
 
 	/* Usable game board tile entities. */
 
