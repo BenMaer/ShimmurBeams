@@ -49,7 +49,6 @@
 
 	[self setEdgesForExtendedLayout:UIRectEdgeNone];
 	[self setAutomaticallyAdjustsScrollViewInsets:NO];
-	[self.navigationItem setLeftItemsSupplementBackButton:YES];
 	
 	[self.view setBackgroundColor:[UIColor whiteColor]];
 
@@ -143,7 +142,6 @@
 
 	CGRect const bounds_inset = UIEdgeInsetsInsetRect(bounds,
 													  gameLevelView_frame_insets);
-//	CGSize const gameLevelView_boundingSize = bounds_inset.size;
 	
 	CGSize const size =
 	[self.gameLevelView sizeThatFits:bounds_inset.size];

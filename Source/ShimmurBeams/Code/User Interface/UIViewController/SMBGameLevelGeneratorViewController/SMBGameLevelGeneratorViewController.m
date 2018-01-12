@@ -88,6 +88,8 @@ static void* kSMBGameLevelGeneratorViewController__KVOContext__gameBoard_forKVO 
 {
 	[super viewDidLoad];
 
+	[self.navigationItem setLeftItemsSupplementBackButton:YES];
+
 	_hintLabel = [UILabel new];
 	[self.hintLabel setFont:[UIFont systemFontOfSize:18.0f]];
 	[self.hintLabel setTextColor:[UIColor darkTextColor]];
@@ -132,7 +134,7 @@ static void* kSMBGameLevelGeneratorViewController__KVOContext__gameBoard_forKVO 
 -(void)gameLevelGenerator_gameLevel_will_update
 {
 	[super gameLevelGenerator_gameLevel_will_update];
-	
+
 	if (self.isViewLoaded)
 	{
 		[self gameLevelGenerator_gameLevel_setKVORegistered:NO];
@@ -142,12 +144,12 @@ static void* kSMBGameLevelGeneratorViewController__KVOContext__gameBoard_forKVO 
 -(void)gameLevelGenerator_gameLevel_did_update
 {
 	[super gameLevelGenerator_gameLevel_did_update];
-	
+
 	if (self.isViewLoaded)
 	{
 		[self gameLevelGenerator_gameLevel_setKVORegistered:YES];
 	}
-	
+
 	[self SMBGameLevelGeneratorViewController_gameBoard_forKVO_update];
 }
 
@@ -197,7 +199,7 @@ static void* kSMBGameLevelGeneratorViewController__KVOContext__gameBoard_forKVO 
 	kRUConditionalReturn(gameLevelGenerator_gameLevel == nil, NO);
 
 	NSMutableDictionary<NSNumber*,NSMutableArray<NSString*>*>* const KVOOptions_to_propertiesToObserve_mapping = [NSMutableDictionary<NSNumber*,NSMutableArray<NSString*>*> dictionary];
-	
+
 	NSMutableArray<NSString*>* const propertiesToObserve_observe_initial = [NSMutableArray<NSString*> array];
 	[propertiesToObserve_observe_initial addObject:[SMBGameLevel_PropertiesForKVO completion]];
 	[KVOOptions_to_propertiesToObserve_mapping setObject:propertiesToObserve_observe_initial forKey:@(NSKeyValueObservingOptionInitial)];
@@ -318,7 +320,6 @@ static void* kSMBGameLevelGeneratorViewController__KVOContext__gameBoard_forKVO 
 {
 	NSMutableArray<UIBarButtonItem*>* const navigationItem_rightBarButtonItems = [NSMutableArray<UIBarButtonItem*> array];
 
-	[navigationItem_rightBarButtonItems ru_addObjectIfNotNil:self.levelSuccessBarButtonItem];
 
 	NSArray<UIBarButtonItem*>* const navigationItem_rightBarButtonItems_generate_super = [super navigationItem_rightBarButtonItems_generate];
 	if (navigationItem_rightBarButtonItems_generate_super)
@@ -326,6 +327,7 @@ static void* kSMBGameLevelGeneratorViewController__KVOContext__gameBoard_forKVO 
 		[navigationItem_rightBarButtonItems addObjectsFromArray:navigationItem_rightBarButtonItems_generate_super];
 	}
 
+	[navigationItem_rightBarButtonItems ru_addObjectIfNotNil:self.levelSuccessBarButtonItem];
 
 	return [NSArray<UIBarButtonItem*> arrayWithArray:navigationItem_rightBarButtonItems];
 }
@@ -432,10 +434,10 @@ static void* kSMBGameLevelGeneratorViewController__KVOContext__gameBoard_forKVO 
 {
 	typeof(self.SMBGameLevelGeneratorViewController_gameBoard_forKVO) const gameBoard_forKVO = self.SMBGameLevelGeneratorViewController_gameBoard_forKVO;
 	kRUConditionalReturn(gameBoard_forKVO == nil, NO);
-	
+
 	NSMutableArray<NSString*>* const propertiesToObserve = [NSMutableArray<NSString*> array];
 	[propertiesToObserve addObject:[SMBGameBoard_PropertiesForKVO currentNumberOfMoves]];
-	
+
 	[propertiesToObserve enumerateObjectsUsingBlock:^(NSString * _Nonnull propertyToObserve, NSUInteger idx, BOOL * _Nonnull stop) {
 		if (registered)
 		{
