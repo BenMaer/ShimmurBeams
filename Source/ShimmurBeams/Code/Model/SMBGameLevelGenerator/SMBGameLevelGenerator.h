@@ -14,13 +14,20 @@
 
 
 
+@class SMBGameLevelMetaData;
+
+
+
+
+
 @interface SMBGameLevelGenerator : NSObject
 
-#pragma mark - name
-@property (nonatomic, readonly, copy, nullable) NSString* name;
+#pragma mark - gameLevelMetaData
+@property (nonatomic, readonly, strong, nullable) SMBGameLevelMetaData* gameLevelMetaData;
 
-#pragma mark - hint
-@property (nonatomic, readonly, copy, nullable) NSString* hint;
+#pragma mark - NSObject
++(nonnull instancetype)new NS_UNAVAILABLE;
+-(nonnull instancetype)init NS_UNAVAILABLE;
 
 #pragma mark - init
 -(nullable instancetype)init_with_generateLevelBlock:(nonnull SMBGameLevelGenerator__generateLevelBlock)generateLevelBlock

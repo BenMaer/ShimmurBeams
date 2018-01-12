@@ -12,6 +12,7 @@
 #import "SMBGameLevel.h"
 #import "SMBGameLevelCompletion.h"
 #import "SMBGameBoard.h"
+#import "SMBGameLevelMetaData.h"
 
 #import <ResplendentUtilities/RUConditionalReturn.h>
 #import <ResplendentUtilities/UIView+RUUtility.h>
@@ -242,7 +243,7 @@ static void* kSMBGameLevelGeneratorViewController__KVOContext__gameBoard_forKVO 
 
 -(void)hintLabel_text_update
 {
-	[self.hintLabel setText:self.gameLevelGenerator.hint];
+	[self.hintLabel setText:self.gameLevelGenerator.gameLevelMetaData.hint];
 }
 
 #pragma mark - gameLevelView
@@ -261,7 +262,7 @@ static void* kSMBGameLevelGeneratorViewController__KVOContext__gameBoard_forKVO 
 
 -(nullable NSString*)navigationItem_title_generate
 {
-	return self.gameLevelGenerator.name;
+	return self.gameLevelGenerator.gameLevelMetaData.name;
 }
 
 #pragma mark - KVO

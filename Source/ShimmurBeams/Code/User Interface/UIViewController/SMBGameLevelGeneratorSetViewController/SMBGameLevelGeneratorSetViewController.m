@@ -12,6 +12,7 @@
 #import "SMBGameLevelGeneratorViewController.h"
 #import "SMBGameLevel.h"
 #import "SMBGameLevelCompletion.h"
+#import "SMBGameLevelMetaData.h"
 
 #import <ResplendentUtilities/RUConditionalReturn.h>
 #import <ResplendentUtilities/RUConstants.h>
@@ -338,7 +339,7 @@
 	SMBGameLevelGenerator* const gameLevelGenerator = [self gameLevelGenerator_at_index:gameLevelGenerator_index];
 	[tableViewCell.textLabel setText:RUStringWithFormat(@"%lu)\t%@",
 														(unsigned long)gameLevelGenerator_index + 1,
-														gameLevelGenerator.name)];
+														gameLevelGenerator.gameLevelMetaData.name)];
 
 	return tableViewCell;
 }

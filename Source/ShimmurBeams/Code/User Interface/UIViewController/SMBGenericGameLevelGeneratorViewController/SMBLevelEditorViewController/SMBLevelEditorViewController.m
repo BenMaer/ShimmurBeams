@@ -8,6 +8,9 @@
 
 #import "SMBLevelEditorViewController.h"
 #import "SMBLevelEditorCreationData.h"
+#import "SMBSavedGameLevelsManager.h"
+#import "SMBSaveGameLevelToDiskOperation.h"
+#import "SMBGameLevelMetaData.h"
 
 #import <ResplendentUtilities/RUConditionalReturn.h>
 #import <ResplendentUtilities/UIView+RUUtility.h>
@@ -22,6 +25,11 @@
 #pragma mark - saveBarButtonItem
 @property (nonatomic, strong, nullable) UIBarButtonItem* saveBarButtonItem;
 -(void)saveBarButtonItem_action_didFire;
+
+#pragma mark - saveCustomLevel
+-(void)saveCustomLevel_attempt;
+-(nullable NSString*)saveCustomLevel_errorMessage_for_name:(nullable NSString*)name;
+-(void)saveCustomLevel_didFail_with_errorMessage:(nullable NSString*)errorMessage;
 
 #pragma mark - textField
 @property (nonatomic, readonly, strong, nullable) UITextField* textField;
@@ -71,7 +79,56 @@
 #pragma mark - saveBarButtonItem
 -(void)saveBarButtonItem_action_didFire
 {
+	[self saveCustomLevel_attempt];
+}
 
+#pragma mark - saveCustomLevel
+-(void)saveCustomLevel_attempt
+{
+	NSString* const name = self.textField.text;
+
+	NSString* const name_errorMessage = [self saveCustomLevel_errorMessage_for_name:name];
+	if (name_errorMessage != nil)
+	{
+		[self saveCustomLevel_didFail_with_errorMessage:name_errorMessage];
+		return;
+	}
+
+	SMBGameLevelMetaData* const gameLevelMetaData =
+	[[SMBGameLevelMetaData alloc] init_with_name:name
+											hint:nil];
+
+	SMBSaveGameLevelToDiskOperation* const saveGameLevelToDiskOperation =
+	[[SMBSaveGameLevelToDiskOperation alloc] init_with_gameLevelMetaData:gameLevelMetaData
+												gameLevel:self.gameLevelGenerator_gameLevel];
+
+	[[SMBSavedGameLevelsManager sharedInstance] saveGameLevel_toDisk_with_operation:saveGameLevelToDiskOperation];
+}
+
+-(nullable NSString*)saveCustomLevel_errorMessage_for_name:(nullable NSString*)name
+{
+	kRUConditionalReturn_ReturnValue((name == nil)
+									 ||
+									 (name.length <= 0), NO, @"You must enter a name.");
+
+	return nil;
+}
+
+-(void)saveCustomLevel_didFail_with_errorMessage:(nullable NSString*)errorMessage
+{
+	NSString* const errorMessage_final = (errorMessage ?: @"There was an issue trying to save the level");
+
+	UIAlertController* const alertController =
+	[UIAlertController alertControllerWithTitle:@"Oops!"
+										message:errorMessage_final
+								 preferredStyle:UIAlertControllerStyleAlert];
+	
+	[alertController addAction:
+	 [UIAlertAction actionWithTitle:@"Okay"
+							  style:UIAlertActionStyleDefault
+							handler:nil]];
+
+	[self.navigationController presentViewController:alertController animated:YES completion:nil];
 }
 
 #pragma mark - textField

@@ -7,6 +7,7 @@
 //
 
 #import "SMBGameLevelGenerator.h"
+#import "SMBGameLevelMetaData.h"
 
 #import <ResplendentUtilities/RUConditionalReturn.h>
 
@@ -18,12 +19,6 @@
 
 #pragma mark - generateLevelBlock
 @property (nonatomic, readonly, strong, nullable) SMBGameLevelGenerator__generateLevelBlock generateLevelBlock;
-
-#pragma mark - name
-@property (nonatomic, copy, nullable) NSString* name;
-
-#pragma mark - hint
-@property (nonatomic, copy, nullable) NSString* hint;
 
 @end
 
@@ -60,8 +55,11 @@
 	if (self = [super init])
 	{
 		_generateLevelBlock = generateLevelBlock;
-		[self setName:name];
-		[self setHint:hint];
+
+		_gameLevelMetaData =
+		[[SMBGameLevelMetaData alloc] init_with_name:name
+												hint:hint];
+		kRUConditionalReturn_ReturnValueNil(self.gameLevelMetaData == nil, YES);
 	}
 
 	return self;
