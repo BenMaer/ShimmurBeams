@@ -652,7 +652,7 @@ typedef NS_ENUM(NSInteger, SMBLevelEditorCreationViewController__tableSection) {
 	kRUConditionalReturn(rows_number.integerValue < 1, NO);
 
 	SMBLevelEditorViewController* const levelEditorViewController = [SMBLevelEditorViewController new];
-	[levelEditorViewController setLevelEditorCreationData:levelEditorCreationData];
+	[levelEditorViewController setGameLevelGenerator:[levelEditorCreationData gameLevelGenerator_generate]];
 
 	[self.navigationController pushViewController:levelEditorViewController animated:YES];
 }

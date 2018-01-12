@@ -12,6 +12,7 @@
 #import "SMBSavedGameLevelsManager.h"
 #import "SMBGenericLabelTableViewCell.h"
 #import "SMBGameLevelMetaData.h"
+#import "SMBLevelEditorViewController.h"
 
 #import <ResplendentUtilities/RUConditionalReturn.h>
 #import <ResplendentUtilities/NSString+RUMacros.h>
@@ -180,6 +181,15 @@ typedef NS_ENUM(NSInteger, SMBSavedGameLevelsListViewController__tableSection) {
 	switch (tableSection)
 	{
 		case SMBSavedGameLevelsListViewController__tableSection_saved:
+		{
+			NSUInteger const savedGameLevel_index = [self savedGameLevel_index_at_indexPathSection:indexPath.section];
+			SMBSavedGameLevel* const savedGameLevel = [self savedGameLevel_at_index:savedGameLevel_index];
+
+			SMBLevelEditorViewController* const levelEditorViewController = [SMBLevelEditorViewController new];
+			[levelEditorViewController setGameLevelGenerator:[savedGameLevel gameLevelGenerator_generate]];
+
+			[self.navigationController pushViewController:levelEditorViewController animated:YES];
+		}
 			break;
 	}
 }

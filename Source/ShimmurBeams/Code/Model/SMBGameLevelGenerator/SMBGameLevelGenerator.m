@@ -47,22 +47,30 @@
 
 #pragma mark - init
 -(nullable instancetype)init_with_generateLevelBlock:(nonnull SMBGameLevelGenerator__generateLevelBlock)generateLevelBlock
+								   gameLevelMetaData:(nonnull SMBGameLevelMetaData*)gameLevelMetaData
+{
+	kRUConditionalReturn_ReturnValueNil(generateLevelBlock == nil, YES);
+	kRUConditionalReturn_ReturnValueNil(gameLevelMetaData == nil, YES);
+	
+	if (self = [super init])
+	{
+		_generateLevelBlock = generateLevelBlock;
+		_gameLevelMetaData = gameLevelMetaData;
+	}
+	
+	return self;
+}
+
+-(nullable instancetype)init_with_generateLevelBlock:(nonnull SMBGameLevelGenerator__generateLevelBlock)generateLevelBlock
 												name:(nonnull NSString*)name
 												hint:(nullable NSString*)hint
 {
 	kRUConditionalReturn_ReturnValueNil(generateLevelBlock == nil, YES);
 
-	if (self = [super init])
-	{
-		_generateLevelBlock = generateLevelBlock;
-
-		_gameLevelMetaData =
-		[[SMBGameLevelMetaData alloc] init_with_name:name
-												hint:hint];
-		kRUConditionalReturn_ReturnValueNil(self.gameLevelMetaData == nil, YES);
-	}
-
-	return self;
+	return
+	[self init_with_generateLevelBlock:generateLevelBlock
+					 gameLevelMetaData:[[SMBGameLevelMetaData alloc] init_with_name:name
+																			   hint:hint]];
 }
 
 -(nullable instancetype)init_with_generateLevelBlock:(nonnull SMBGameLevelGenerator__generateLevelBlock)generateLevelBlock

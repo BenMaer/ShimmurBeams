@@ -8,6 +8,7 @@
 
 #import "SMBSavedGameLevel.h"
 #import "NSURL+SMBSavedLevelsPath.h"
+#import "SMBGameLevelGenerator.h"
 
 #import <ResplendentUtilities/RUConditionalReturn.h>
 #import <ResplendentUtilities/NSMutableArray+RUAddObjectIfNotNil.h>
@@ -24,6 +25,9 @@
 
 #pragma mark - gameLevelMetaData
 -(nullable SMBGameLevelMetaData*)gameLevelMetaData_generate;
+
+#pragma mark - gameLevel
+-(nullable SMBGameLevel*)gameLevel_generate;
 
 @end
 
@@ -83,6 +87,30 @@
 	kRUConditionalReturn_ReturnValueNil(savedLevelPath_metaData == nil, YES);
 
 	return [NSKeyedUnarchiver unarchiveObjectWithFile:[savedLevelPath_metaData path]];
+}
+
+#pragma mark - gameLevel
+-(nullable SMBGameLevel*)gameLevel_generate
+{
+	NSURL* const URL = self.URL;
+	kRUConditionalReturn_ReturnValueNil(URL == nil, YES);
+
+	NSURL* const savedLevelPath_levelData = [URL smb_savedLevelPath_levelData];
+	kRUConditionalReturn_ReturnValueNil(savedLevelPath_levelData == nil, YES);
+
+	return [NSKeyedUnarchiver unarchiveObjectWithFile:[savedLevelPath_levelData path]];
+}
+
+#pragma mark - gameLevelGenerator
+-(nullable SMBGameLevelGenerator*)gameLevelGenerator_generate
+{
+	__weak typeof(self) const self_weak = self;
+	return
+	[[SMBGameLevelGenerator alloc] init_with_generateLevelBlock:
+	 ^SMBGameLevel * _Nonnull{
+		 return [self_weak gameLevel_generate];
+	 }
+											  gameLevelMetaData:self.gameLevelMetaData];
 }
 
 @end

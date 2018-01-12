@@ -31,8 +31,11 @@
 
 #pragma mark - init
 -(nullable instancetype)init_with_generateLevelBlock:(nonnull SMBGameLevelGenerator__generateLevelBlock)generateLevelBlock
+								   gameLevelMetaData:(nonnull SMBGameLevelMetaData*)gameLevelMetaData NS_DESIGNATED_INITIALIZER;
+
+-(nullable instancetype)init_with_generateLevelBlock:(nonnull SMBGameLevelGenerator__generateLevelBlock)generateLevelBlock
 												name:(nonnull NSString*)name
-												hint:(nullable NSString*)hint NS_DESIGNATED_INITIALIZER;
+												hint:(nullable NSString*)hint;
 
 -(nullable instancetype)init_with_generateLevelBlock:(nonnull SMBGameLevelGenerator__generateLevelBlock)generateLevelBlock
 												name:(nonnull NSString*)name;

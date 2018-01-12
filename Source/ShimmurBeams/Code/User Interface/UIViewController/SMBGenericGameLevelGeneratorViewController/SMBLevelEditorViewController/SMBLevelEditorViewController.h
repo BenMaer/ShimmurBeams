@@ -22,7 +22,4 @@
 
 @interface SMBLevelEditorViewController : SMBGenericGameLevelGeneratorViewController
 
-#pragma mark - levelEditorCreationData
-@property (nonatomic, strong, nullable) SMBLevelEditorCreationData* levelEditorCreationData;
-
 @end

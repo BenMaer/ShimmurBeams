@@ -35,10 +35,6 @@
 @property (nonatomic, readonly, strong, nullable) UITextField* textField;
 -(CGRect)textField_frame;
 
-#pragma mark - gameLevelGenerator
--(void)gameLevelGenerator_update;
--(nullable SMBGameLevelGenerator*)gameLevelGenerator_generate;
-
 @end
 
 
@@ -135,30 +131,6 @@
 -(CGRect)textField_frame
 {
 	return self.navigationController.navigationBar.frame;
-}
-
-#pragma mark - levelEditorCreationData
--(void)setLevelEditorCreationData:(nullable SMBLevelEditorCreationData*)levelEditorCreationData
-{
-	kRUConditionalReturn(self.levelEditorCreationData == levelEditorCreationData, NO);
-
-	_levelEditorCreationData = levelEditorCreationData;
-
-	[self gameLevelGenerator_update];
-}
-
-#pragma mark - gameLevelGenerator
--(void)gameLevelGenerator_update
-{
-	[self setGameLevelGenerator:[self gameLevelGenerator_generate]];
-}
-
--(nullable SMBGameLevelGenerator*)gameLevelGenerator_generate
-{
-	SMBLevelEditorCreationData* const levelEditorCreationData = self.levelEditorCreationData;
-	kRUConditionalReturn_ReturnValueNil(levelEditorCreationData == nil, NO);
-
-	return [levelEditorCreationData gameLevelGenerator_generate];
 }
 
 #pragma mark - navigationItem_rightBarButtonItems
