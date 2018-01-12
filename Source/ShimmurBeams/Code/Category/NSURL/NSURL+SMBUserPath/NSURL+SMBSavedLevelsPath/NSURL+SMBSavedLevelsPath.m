@@ -27,6 +27,7 @@
 			relativeToURL:userPath];
 }
 
+#pragma mark - savedLevelPath
 +(nullable instancetype)smb_savedLevelPath_with_levelName:(nonnull NSString*)levelName
 {
 	kRUConditionalReturn_ReturnValueNil(levelName == nil, YES);
@@ -58,6 +59,22 @@
 	[self fileURLWithPath:@"saved levels"
 			  isDirectory:YES
 			relativeToURL:userPath];
+}
+
+-(nullable instancetype)smb_savedLevelPath_metaData
+{
+	return
+	[[self class] fileURLWithPath:@"metaData"
+					  isDirectory:NO
+					relativeToURL:self];
+}
+
+-(nullable instancetype)smb_savedLevelPath_levelData
+{
+	return
+	[[self class] fileURLWithPath:@"levelData"
+					  isDirectory:NO
+					relativeToURL:self];
 }
 
 @end

@@ -8,9 +8,18 @@
 
 #import "SMBSavedGameLevelsListViewController.h"
 #import "SMBLevelEditorCreationViewController.h"
+#import "SMBSavedGameLevel.h"
+#import "SMBSavedGameLevelsManager.h"
+#import "SMBGenericLabelTableViewCell.h"
+#import "SMBGameLevelMetaData.h"
+
+#import <ResplendentUtilities/RUConditionalReturn.h>
+#import <ResplendentUtilities/NSString+RUMacros.h>
 
 #import <RTSMTableSectionManager/RTSMTableSectionManager.h>
 #import <RTSMTableSectionManager/RTSMTableSectionRangeManager.h>
+
+#import <RUTextSize/RUAttributesDictionaryBuilder.h>
 
 
 
@@ -42,6 +51,17 @@ typedef NS_ENUM(NSInteger, SMBSavedGameLevelsListViewController__tableSection) {
 #pragma mark - navigationItem_barButtonItem_createNew
 -(void)navigationItem_barButtonItem_createNew_action_didFire;
 
+#pragma mark - savedGameLevels
+@property (nonatomic, copy, nullable) NSArray<SMBSavedGameLevel*>* savedGameLevels;
+-(void)savedGameLevels_update;
+-(nullable NSArray<SMBSavedGameLevel*>*)savedGameLevels_generate;
+-(nullable SMBSavedGameLevel*)savedGameLevel_at_index:(NSUInteger)savedGameLevel_index;
+-(NSUInteger)savedGameLevel_index_at_indexPathSection:(NSInteger)indexPathSection;
+
+#pragma mark - tableViewCell_GenericLabel
+-(nonnull SMBGenericLabelTableViewCell*)tableViewCell_GenericLabel_with_attributedText:(nonnull NSAttributedString*)attributedText
+																			textInsets:(UIEdgeInsets)textInsets;
+
 @end
 
 
@@ -70,6 +90,13 @@ typedef NS_ENUM(NSInteger, SMBSavedGameLevelsListViewController__tableSection) {
 	[self.tableView setDelegate:self];
 	[self.tableView setSeparatorStyle:UITableViewCellSeparatorStyleNone];
 	[self.view addSubview:self.tableView];
+}
+
+-(void)viewWillAppear:(BOOL)animated
+{
+	[super viewWillAppear:animated];
+
+	[self savedGameLevels_update];
 }
 
 -(void)viewWillLayoutSubviews
@@ -115,6 +142,25 @@ typedef NS_ENUM(NSInteger, SMBSavedGameLevelsListViewController__tableSection) {
 	switch (tableSection)
 	{
 		case SMBSavedGameLevelsListViewController__tableSection_saved:
+		{
+			NSUInteger const savedGameLevel_index = [self savedGameLevel_index_at_indexPathSection:indexPath.section];
+			SMBSavedGameLevel* const savedGameLevel = [self savedGameLevel_at_index:savedGameLevel_index];
+
+			RUAttributesDictionaryBuilder* const attributesDictionaryBuilder = [RUAttributesDictionaryBuilder new];
+			
+			[attributesDictionaryBuilder setFont:[UIFont systemFontOfSize:12.0f]];
+			[attributesDictionaryBuilder setTextColor:[UIColor lightGrayColor]];
+
+			CGFloat const padding_horizontal = 12.0f;
+
+			return [self tableViewCell_GenericLabel_with_attributedText:
+					[[NSAttributedString alloc] initWithString:savedGameLevel.gameLevelMetaData.name
+													attributes:[attributesDictionaryBuilder attributesDictionary_generate]]
+															 textInsets:(UIEdgeInsets){
+																 .left	= padding_horizontal,
+																 .right	= padding_horizontal,
+															 }];
+		}
 			break;
 	}
 	
@@ -154,7 +200,7 @@ typedef NS_ENUM(NSInteger, SMBSavedGameLevelsListViewController__tableSection) {
 		switch (tableSection)
 		{
 			case SMBSavedGameLevelsListViewController__tableSection_saved:
-				return 0;
+				return self.savedGameLevels.count;
 				break;
 		}
 	}
@@ -187,6 +233,68 @@ typedef NS_ENUM(NSInteger, SMBSavedGameLevelsListViewController__tableSection) {
 -(void)navigationItem_barButtonItem_createNew_action_didFire
 {
 	[self levelEditorCreationViewController_push_attempt];
+}
+
+#pragma mark - savedGameLevels
+-(void)setSavedGameLevels:(nullable NSArray<SMBSavedGameLevel*>*)savedGameLevels
+{
+	kRUConditionalReturn((self.savedGameLevels == savedGameLevels)
+						 ||
+						 [self.savedGameLevels isEqual:savedGameLevels], NO);
+
+	_savedGameLevels = (savedGameLevels ? [NSArray<SMBSavedGameLevel*> arrayWithArray:savedGameLevels] : nil);
+
+	[self.tableView reloadData];
+}
+
+-(void)savedGameLevels_update
+{
+	[self setSavedGameLevels:[self savedGameLevels_generate]];
+}
+
+-(nullable NSArray<SMBSavedGameLevel*>*)savedGameLevels_generate
+{
+	return [[SMBSavedGameLevelsManager sharedInstance] savedGameLevels_fetch];
+}
+
+-(nullable SMBSavedGameLevel*)savedGameLevel_at_index:(NSUInteger)savedGameLevel_index
+{
+	NSArray<SMBSavedGameLevel*>* const savedGameLevels = self.savedGameLevels;
+	kRUConditionalReturn_ReturnValueNil(savedGameLevel_index >= savedGameLevels.count, YES);
+
+	return [savedGameLevels objectAtIndex:savedGameLevel_index];
+}
+
+-(NSUInteger)savedGameLevel_index_at_indexPathSection:(NSInteger)indexPathSection
+{
+	NSInteger const tableSection_saved_indexPathSection = [self.tableSectionRangeManager indexPathSectionForSection:SMBSavedGameLevelsListViewController__tableSection_saved];
+	kRUConditionalReturn_ReturnValue(tableSection_saved_indexPathSection > indexPathSection, YES, NSNotFound);
+
+	return indexPathSection - tableSection_saved_indexPathSection;
+}
+
+#pragma mark - tableViewCell_GenericLabel
+-(nonnull SMBGenericLabelTableViewCell*)tableViewCell_GenericLabel_with_attributedText:(nonnull NSAttributedString*)attributedText
+																			textInsets:(UIEdgeInsets)textInsets
+{
+	kRUDefineNSStringConstant(cellDequeIdentifier__SMBGenericLabelTableViewCell);
+	SMBGenericLabelTableViewCell* const tableViewCell_GenericLabel =
+	(
+	 [self.tableView dequeueReusableCellWithIdentifier:cellDequeIdentifier__SMBGenericLabelTableViewCell]
+	 ?:
+	 [[SMBGenericLabelTableViewCell alloc] initWithStyle:UITableViewCellStyleDefault
+										 reuseIdentifier:cellDequeIdentifier__SMBGenericLabelTableViewCell]
+	 );
+	
+	[tableViewCell_GenericLabel setSelectionStyle:UITableViewCellSelectionStyleNone];
+	[tableViewCell_GenericLabel setBackgroundColor:[UIColor clearColor]];
+	[tableViewCell_GenericLabel.contentView setBackgroundColor:[UIColor clearColor]];
+	
+	[tableViewCell_GenericLabel.genericLabel setAttributedText:attributedText];
+	[tableViewCell_GenericLabel.genericLabel setBackgroundColor:[UIColor clearColor]];
+	[tableViewCell_GenericLabel setGenericLabel_frame_insets:textInsets];
+	
+	return tableViewCell_GenericLabel;
 }
 
 @end

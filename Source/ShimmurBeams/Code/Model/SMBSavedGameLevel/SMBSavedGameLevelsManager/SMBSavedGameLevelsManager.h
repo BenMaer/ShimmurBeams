@@ -13,6 +13,7 @@
 
 
 @class SMBSaveGameLevelToDiskOperation;
+@class SMBSavedGameLevel;
 
 
 
@@ -25,5 +26,8 @@
 
 #pragma mark - saveGameLevel
 -(void)saveGameLevel_toDisk_with_operation:(nonnull SMBSaveGameLevelToDiskOperation*)saveGameLevelToDiskOperation;
+
+#pragma mark - savedGameLevels
+-(nullable NSArray<SMBSavedGameLevel*>*)savedGameLevels_fetch;
 
 @end

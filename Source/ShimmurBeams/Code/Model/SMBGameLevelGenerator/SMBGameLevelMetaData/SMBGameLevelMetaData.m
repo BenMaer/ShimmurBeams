@@ -9,6 +9,8 @@
 #import "SMBGameLevelMetaData.h"
 
 #import <ResplendentUtilities/RUConditionalReturn.h>
+#import <ResplendentUtilities/NSMutableArray+RUAddObjectIfNotNil.h>
+#import <ResplendentUtilities/RUConstants.h>
 
 
 
@@ -49,6 +51,16 @@
 #if __has_feature(nullability)
 #pragma clang diagnostic pop
 #endif
+}
+
+-(nonnull NSString*)description
+{
+	NSMutableArray<NSString*>* const description_lines = [NSMutableArray<NSString*> array];
+	[description_lines ru_addObjectIfNotNil:[super description]];
+	[description_lines ru_addObjectIfNotNil:RUStringWithFormat(@"name: %@",self.name)];
+	[description_lines ru_addObjectIfNotNil:RUStringWithFormat(@"hint: %@",self.hint)];
+
+	return [description_lines componentsJoinedByString:@"\n"];
 }
 
 #pragma mark - init
