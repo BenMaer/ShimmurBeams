@@ -29,11 +29,6 @@
 +(nonnull NSString*)hint;
 @end
 
-@implementation SMBGameLevelMetaData_Attributes_For_NSCoding
-+(nonnull NSString*)name{return NSStringFromSelector(_cmd);}
-+(nonnull NSString*)hint{return NSStringFromSelector(_cmd);}
-@end
-
 
 
 
@@ -74,12 +69,11 @@
 #pragma mark - NSCoding
 -(nullable instancetype)initWithCoder:(nonnull NSCoder*)aDecoder
 {
-	if (self = [super init])
+	if (self = [self init_with_name:[aDecoder decodeObjectForKey:[SMBGameLevelMetaData_Attributes_For_NSCoding name]]
+							   hint:[aDecoder decodeObjectForKey:[SMBGameLevelMetaData_Attributes_For_NSCoding hint]]])
 	{
-		[self setName:[aDecoder decodeObjectForKey:[SMBGameLevelMetaData_Attributes_For_NSCoding name]]];
-		[self setHint:[aDecoder decodeObjectForKey:[SMBGameLevelMetaData_Attributes_For_NSCoding hint]]];
 	}
-	
+
 	return self;
 }
 
@@ -91,3 +85,11 @@
 
 @end
 
+
+
+
+
+@implementation SMBGameLevelMetaData_Attributes_For_NSCoding
++(nonnull NSString*)name{return NSStringFromSelector(_cmd);}
++(nonnull NSString*)hint{return NSStringFromSelector(_cmd);}
+@end

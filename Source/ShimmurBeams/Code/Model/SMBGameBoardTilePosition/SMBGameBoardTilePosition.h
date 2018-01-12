@@ -14,7 +14,11 @@
 
 
 
-@interface SMBGameBoardTilePosition : NSObject <SMBMappedDataCollection_MappableObject>
+@interface SMBGameBoardTilePosition : NSObject <SMBMappedDataCollection_MappableObject, NSCoding>
+
+#pragma mark - NSObject
++(nonnull instancetype)new NS_UNAVAILABLE;
+-(nonnull instancetype)init NS_UNAVAILABLE;
 
 #pragma mark - column
 @property (nonatomic, readonly, assign) NSUInteger column;

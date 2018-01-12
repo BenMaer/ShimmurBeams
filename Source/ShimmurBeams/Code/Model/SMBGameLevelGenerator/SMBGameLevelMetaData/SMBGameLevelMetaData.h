@@ -28,7 +28,4 @@
 -(nullable instancetype)init_with_name:(nonnull NSString*)name
 								  hint:(nullable NSString*)hint NS_DESIGNATED_INITIALIZER;
 
-#pragma mark - NSCoding
--(nullable instancetype)initWithCoder:(nonnull NSCoder*)aDecoder NS_DESIGNATED_INITIALIZER;
-
 @end

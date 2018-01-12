@@ -21,7 +21,11 @@
 
 
 
-@interface SMBGameLevel : NSObject
+@interface SMBGameLevel : NSObject <NSCoding>
+
+#pragma mark - NSObject
++(nonnull instancetype)new NS_UNAVAILABLE;
+-(nonnull instancetype)init NS_UNAVAILABLE;
 
 #pragma mark - gameBoard
 @property (nonatomic, readonly, strong, nullable) SMBGameBoard* gameBoard;

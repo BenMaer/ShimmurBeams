@@ -26,13 +26,18 @@
 
 
 
-@interface SMBGameBoardTile : SMBDrawableObject
+@interface SMBGameBoardTile : SMBDrawableObject <NSCoding>
+
+#pragma mark - NSObject
++(nonnull instancetype)new NS_UNAVAILABLE;
+-(nonnull instancetype)init NS_UNAVAILABLE;
 
 #pragma mark - gameBoardTilePosition
 @property (nonatomic, readonly, strong, nullable) SMBGameBoardTilePosition* gameBoardTilePosition;
 
 #pragma mark - gameBoard
-@property (nonatomic, readonly, weak, nullable) SMBGameBoard* gameBoard;
+#warning make this assign instead of weak?
+@property (nonatomic, weak, nullable) SMBGameBoard* gameBoard;
 
 #pragma mark - gameBoardTileEntity_for_beamInteractions
 @property (nonatomic, readonly, strong, nullable) SMBGameBoardTileEntity* gameBoardTileEntity_for_beamInteractions;
@@ -53,8 +58,7 @@
 -(void)gameBoardTileEntities_remove:(nonnull SMBGameBoardTileEntity*)gameBoardTileEntity;
 
 #pragma mark - init
--(nullable instancetype)init_with_gameBoardTilePosition:(nonnull SMBGameBoardTilePosition*)gameBoardTilePosition
-											  gameBoard:(nonnull SMBGameBoard*)gameBoard NS_DESIGNATED_INITIALIZER;
+-(nullable instancetype)init_with_gameBoardTilePosition:(nonnull SMBGameBoardTilePosition*)gameBoardTilePosition NS_DESIGNATED_INITIALIZER;
 
 #pragma mark - gameBoardTile
 -(nullable SMBGameBoardTile*)gameBoardTile_next_with_direction:(SMBGameBoardTile__direction)direction;

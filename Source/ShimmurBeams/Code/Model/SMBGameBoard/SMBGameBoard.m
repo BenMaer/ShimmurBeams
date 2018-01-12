@@ -34,11 +34,16 @@ static void* kSMBGameBoard__KVOContext = &kSMBGameBoard__KVOContext;
 
 @interface SMBGameBoard ()
 
+#pragma mark - init
+-(nullable instancetype)init_with_gameBoardTiles:(nonnull NSArray<NSArray<SMBGameBoardTile*>*>*)gameBoardTiles
+							  leastNumberOfMoves:(NSUInteger)leastNumberOfMoves NS_DESIGNATED_INITIALIZER;
+
 #pragma mark - gameBoardTiles
 /**
  The first array will contain columns, and then the second array will contain each tile in the column. That way first index is x, similar to the standard x,y system.
  */
 @property (nonatomic, copy, nullable) NSArray<NSArray<SMBGameBoardTile*>*>* gameBoardTiles;
+-(void)gameBoardTiles_gameBoard_update_setToSelf:(BOOL)setToSelf;
 -(nullable NSArray<NSArray<SMBGameBoardTile*>*>*)gameBoardTiles_generate_with_numberOfRows:(NSUInteger)numberOfRows
 																		   numberOfColumns:(NSUInteger)numberOfColumns;
 
@@ -63,6 +68,10 @@ static void* kSMBGameBoard__KVOContext = &kSMBGameBoard__KVOContext;
 #pragma mark - currentNumberOfMoves
 @property (nonatomic, assign) NSUInteger currentNumberOfMoves;
 
+@end
+
+@interface SMBGameBoard_Attributes_For_NSCoding : NSObject
++(nonnull NSString*)gameBoardTiles;
 @end
 
 
@@ -101,19 +110,33 @@ static void* kSMBGameBoard__KVOContext = &kSMBGameBoard__KVOContext;
 	kRUConditionalReturn_ReturnValueNil(numberOfRows <= 0, YES);
 	kRUConditionalReturn_ReturnValueNil(leastNumberOfMoves < 0, YES);
 
-	if (self = [super init])
+	if ([self init_with_gameBoardTiles:[self gameBoardTiles_generate_with_numberOfRows:numberOfRows
+																	   numberOfColumns:numberOfColumns]
+					leastNumberOfMoves:leastNumberOfMoves])
 	{
-		[self setGameBoardTiles:[self gameBoardTiles_generate_with_numberOfRows:numberOfRows
-																numberOfColumns:numberOfColumns]];
-
-		_leastNumberOfMoves = leastNumberOfMoves;
+		
 	}
 
 	return self;
 }
 
+-(nullable instancetype)init_with_gameBoardTiles:(nonnull NSArray<NSArray<SMBGameBoardTile*>*>*)gameBoardTiles
+							  leastNumberOfMoves:(NSUInteger)leastNumberOfMoves
+{
+	kRUConditionalReturn_ReturnValueNil(gameBoardTiles == nil, YES);
+	kRUConditionalReturn_ReturnValueNil(leastNumberOfMoves < 0, YES);
+	
+	if (self = [super init])
+	{
+		[self setGameBoardTiles:gameBoardTiles];
+		_leastNumberOfMoves = leastNumberOfMoves;
+	}
+	
+	return self;
+}
+
 #pragma mark - gameBoardTiles
--(void)setGameBoardTiles:(NSArray<NSArray<SMBGameBoardTile *> *> *)gameBoardTiles
+-(void)setGameBoardTiles:(nullable NSArray<NSArray<SMBGameBoardTile*>*>*)gameBoardTiles
 {
 	kRUConditionalReturn((self.gameBoardTiles == gameBoardTiles)
 						 ||
@@ -121,9 +144,20 @@ static void* kSMBGameBoard__KVOContext = &kSMBGameBoard__KVOContext;
 
 	[self gameBoardTiles_setKVORegistered:NO];
 
+	[self gameBoardTiles_gameBoard_update_setToSelf:NO];
+
 	_gameBoardTiles = (gameBoardTiles ? [NSArray<NSArray<SMBGameBoardTile*>*> arrayWithArray:gameBoardTiles] : nil);
 
+	[self gameBoardTiles_gameBoard_update_setToSelf:YES];
+
 	[self gameBoardTiles_setKVORegistered:YES];
+}
+
+-(void)gameBoardTiles_gameBoard_update_setToSelf:(BOOL)setToSelf
+{
+	[self gameBoardTiles_enumerate:^(SMBGameBoardTile * _Nonnull gameBoardTile, NSUInteger column, NSUInteger row, BOOL * _Nonnull stop) {
+		[gameBoardTile setGameBoard:(setToSelf ? self : nil)];
+	}];
 }
 
 -(void)gameBoardTiles_enumerate:(void (^_Nonnull)(SMBGameBoardTile * _Nonnull gameBoardTile, NSUInteger column, NSUInteger row, BOOL * _Nonnull stop))block
@@ -164,7 +198,6 @@ static void* kSMBGameBoard__KVOContext = &kSMBGameBoard__KVOContext;
 			[[SMBGameBoardTile alloc] init_with_gameBoardTilePosition:
 			 [[SMBGameBoardTilePosition alloc] init_with_column:column
 															row:row]
-															gameBoard:self
 			 ];
 
 			[gameBoardTiles_column addObject:gameBoardTile];
@@ -525,6 +558,22 @@ static void* kSMBGameBoard__KVOContext = &kSMBGameBoard__KVOContext;
 	[self setCurrentNumberOfMoves:self.currentNumberOfMoves + 1];
 }
 
+#pragma mark - NSCoding
+-(nullable instancetype)initWithCoder:(nonnull NSCoder*)aDecoder
+{
+	if (self = [self init_with_gameBoardTiles:[aDecoder decodeObjectForKey:[SMBGameBoard_Attributes_For_NSCoding gameBoardTiles]]
+						   leastNumberOfMoves:0])
+	{
+	}
+	
+	return self;
+}
+
+-(void)encodeWithCoder:(nonnull NSCoder*)aCoder
+{
+	[aCoder encodeObject:self.gameBoardTiles forKey:[SMBGameBoard_Attributes_For_NSCoding gameBoardTiles]];
+}
+
 @end
 
 
@@ -539,4 +588,8 @@ static void* kSMBGameBoard__KVOContext = &kSMBGameBoard__KVOContext;
 +(nonnull NSString*)outputPowerReceivers{return NSStringFromSelector(_cmd);}
 +(nonnull NSString*)currentNumberOfMoves{return NSStringFromSelector(_cmd);}
 
+@end
+
+@implementation SMBGameBoard_Attributes_For_NSCoding
++(nonnull NSString*)gameBoardTiles{return NSStringFromSelector(_cmd);}
 @end

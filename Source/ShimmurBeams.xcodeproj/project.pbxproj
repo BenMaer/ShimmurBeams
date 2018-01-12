@@ -112,6 +112,7 @@
 		D7ED70C42008617000AB1BC0 /* SMBSavedGameLevelsManager.m in Sources */ = {isa = PBXBuildFile; fileRef = D7ED70BF2008617000AB1BC0 /* SMBSavedGameLevelsManager.m */; };
 		D7ED70C52008617000AB1BC0 /* SMBSaveGameLevelToDiskOperation.m in Sources */ = {isa = PBXBuildFile; fileRef = D7ED70C22008617000AB1BC0 /* SMBSaveGameLevelToDiskOperation.m */; };
 		D7ED70CA200863E400AB1BC0 /* NSURL+SMBUserPath.m in Sources */ = {isa = PBXBuildFile; fileRef = D7ED70C9200863E400AB1BC0 /* NSURL+SMBUserPath.m */; };
+		D7ED70CE2008836D00AB1BC0 /* NSURL+SMBSavedLevelsPath.m in Sources */ = {isa = PBXBuildFile; fileRef = D7ED70CD2008836D00AB1BC0 /* NSURL+SMBSavedLevelsPath.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -357,6 +358,8 @@
 		D7ED70C22008617000AB1BC0 /* SMBSaveGameLevelToDiskOperation.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SMBSaveGameLevelToDiskOperation.m; sourceTree = "<group>"; };
 		D7ED70C8200863E400AB1BC0 /* NSURL+SMBUserPath.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "NSURL+SMBUserPath.h"; sourceTree = "<group>"; };
 		D7ED70C9200863E400AB1BC0 /* NSURL+SMBUserPath.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = "NSURL+SMBUserPath.m"; sourceTree = "<group>"; };
+		D7ED70CC2008836D00AB1BC0 /* NSURL+SMBSavedLevelsPath.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "NSURL+SMBSavedLevelsPath.h"; sourceTree = "<group>"; };
+		D7ED70CD2008836D00AB1BC0 /* NSURL+SMBSavedLevelsPath.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = "NSURL+SMBSavedLevelsPath.m"; sourceTree = "<group>"; };
 		E8333239A81E9BC86B8B9223 /* Pods-ShimmurBeams.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-ShimmurBeams.release.xcconfig"; path = "Pods/Target Support Files/Pods-ShimmurBeams/Pods-ShimmurBeams.release.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -1775,10 +1778,20 @@
 		D7ED70C7200863D600AB1BC0 /* NSURL+SMBUserPath */ = {
 			isa = PBXGroup;
 			children = (
+				D7ED70CB2008836600AB1BC0 /* NSURL+SMBSavedLevelsPath */,
 				D7ED70C8200863E400AB1BC0 /* NSURL+SMBUserPath.h */,
 				D7ED70C9200863E400AB1BC0 /* NSURL+SMBUserPath.m */,
 			);
 			path = "NSURL+SMBUserPath";
+			sourceTree = "<group>";
+		};
+		D7ED70CB2008836600AB1BC0 /* NSURL+SMBSavedLevelsPath */ = {
+			isa = PBXGroup;
+			children = (
+				D7ED70CC2008836D00AB1BC0 /* NSURL+SMBSavedLevelsPath.h */,
+				D7ED70CD2008836D00AB1BC0 /* NSURL+SMBSavedLevelsPath.m */,
+			);
+			path = "NSURL+SMBSavedLevelsPath";
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -1998,6 +2011,7 @@
 				D761FEA11F3AC2FF0083842A /* SMBGameBoardTilePosition.m in Sources */,
 				D733A4BB1F608F76007A8E6F /* SMBBeamEntityManager.m in Sources */,
 				D7ED70C52008617000AB1BC0 /* SMBSaveGameLevelToDiskOperation.m in Sources */,
+				D7ED70CE2008836D00AB1BC0 /* NSURL+SMBSavedLevelsPath.m in Sources */,
 				D7C8C3ED1F3CE600006D378E /* SMBGameLevelGeneratorSet.m in Sources */,
 				D7D45E382007ED0000A3CA19 /* SMBRemoveEntityFromTileGameBoardMove.m in Sources */,
 				D770EF011F83036B00117FEE /* SMBGenericPowerOutputTileEntity_OutputPowerReceiver.m in Sources */,

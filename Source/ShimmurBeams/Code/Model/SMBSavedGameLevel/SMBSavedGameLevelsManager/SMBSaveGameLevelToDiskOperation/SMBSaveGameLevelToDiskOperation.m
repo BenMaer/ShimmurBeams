@@ -7,8 +7,9 @@
 //
 
 #import "SMBSaveGameLevelToDiskOperation.h"
-#import "NSURL+SMBUserPath.h"
+#import "NSURL+SMBSavedLevelsPath.h"
 #import "SMBGameLevelMetaData.h"
+#import "SMBGameLevel.h"
 
 #import <ResplendentUtilities/RUConditionalReturn.h>
 
@@ -20,11 +21,6 @@
 
 #pragma mark - gameLevel
 @property (nonatomic, readonly, strong, nullable) SMBGameLevel* gameLevel;
-
-//#pragma mark - gameLevelData
-//@property (nonatomic, copy, nullable) NSData* gameLevelData;
-//-(void)gameLevelData_generate_attempt;
-//-(nullable NSData*)gameLevelData_generate;
 
 @end
 
@@ -81,46 +77,40 @@
 						 (name.length == 0),
 						 YES);
 
-	NSURL* const userPath = [NSURL smb_userPath];
-	kRUConditionalReturn(userPath == nil, YES);
-
-	NSURL* const filePath_URL_base =
-	[NSURL fileURLWithPath:@"saved levels" isDirectory:YES relativeToURL:userPath];
-	kRUConditionalReturn(filePath_URL_base == nil, YES);
-
-	NSURL* const filePath_URL =
-	[NSURL fileURLWithPath:name
-			   isDirectory:YES
-			 relativeToURL:filePath_URL_base];
+	NSURL* const filePath_URL = [NSURL smb_savedLevelPath_with_levelName:name];
 	kRUConditionalReturn(filePath_URL == nil, YES);
 
-	NSURL* const gameLevelMetaData_filePath_URL =
-	[NSURL fileURLWithPath:@"metaData"
-			   isDirectory:YES
-			 relativeToURL:filePath_URL_base];
-	kRUConditionalReturn(gameLevelMetaData_filePath_URL == nil, YES);
+	NSError* filePath_URL_createDirectory_error = nil;
+	BOOL const filePath_URL_createDirectory_success =
+	[[NSFileManager defaultManager] createDirectoryAtURL:filePath_URL
+							 withIntermediateDirectories:YES
+											  attributes:nil
+												   error:&filePath_URL_createDirectory_error];
+	kRUConditionalReturn((filePath_URL_createDirectory_success == false)
+						 ||
+						 (filePath_URL_createDirectory_error != nil), YES);
 
-	NSURL* const gameLevel_filePath_URL =
-	[NSURL fileURLWithPath:@"levelData"
-			   isDirectory:YES
-			 relativeToURL:filePath_URL_base];
-	kRUConditionalReturn(gameLevel_filePath_URL == nil, YES);
+	NSMutableDictionary<NSString*,id<NSCoding>>* const filePath_component_to_objectToSave_mapping = [NSMutableDictionary<NSString*,id<NSCoding>> dictionary];
+	[filePath_component_to_objectToSave_mapping setObject:gameLevelMetaData
+												   forKey:@"metaData"];
 
-	
-	NSMutableDictionary<NSURL*,id<NSCoding>>* const filePath_to_objectToSave_mapping = [NSMutableDictionary<NSURL*,id<NSCoding>> dictionary];
-	[filePath_to_objectToSave_mapping setObject:gameLevelMetaData
-										 forKey:gameLevelMetaData_filePath_URL];
+	[filePath_component_to_objectToSave_mapping setObject:gameLevel
+												   forKey:@"levelData"];
 
-	[filePath_to_objectToSave_mapping setObject:gameLevel
-										 forKey:gameLevel_filePath_URL];
+	[filePath_component_to_objectToSave_mapping enumerateKeysAndObjectsUsingBlock:^(NSString * _Nonnull filePath_component, id<NSCoding>  _Nonnull object, BOOL * _Nonnull stop) {
+		NSURL* const object_filePath_URL =
+		[NSURL fileURLWithPath:filePath_component
+				   isDirectory:NO
+				 relativeToURL:filePath_URL];
+		kRUConditionalReturn(object_filePath_URL == nil, YES);
 
-	[filePath_to_objectToSave_mapping enumerateKeysAndObjectsUsingBlock:^(NSURL * _Nonnull filePath_URL, id<NSCoding>  _Nonnull obj, BOOL * _Nonnull stop) {
 		BOOL const success =
-		[NSKeyedArchiver archiveRootObject:obj toFile:filePath_URL.absoluteString];
+		[NSKeyedArchiver archiveRootObject:object
+									toFile:[object_filePath_URL path]];
 
 		if (success == false)
 		{
-			NSAssert(false, @"error saving object %@ to path %@",obj,filePath_URL);
+			NSAssert(false, @"error saving object %@ to path %@", object, filePath_URL);
 			*stop = YES;
 		}
 	}];

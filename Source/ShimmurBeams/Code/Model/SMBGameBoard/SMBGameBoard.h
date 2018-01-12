@@ -29,7 +29,11 @@
 
 
 
-@interface SMBGameBoard : NSObject
+@interface SMBGameBoard : NSObject <NSCoding>
+
+#pragma mark - NSObject
++(nonnull instancetype)new NS_UNAVAILABLE;
+-(nonnull instancetype)init NS_UNAVAILABLE;
 
 #pragma mark - gameLevel
 /**
@@ -48,7 +52,7 @@
  */
 -(nullable instancetype)init_with_numberOfColumns:(NSUInteger)numberOfColumns
 									 numberOfRows:(NSUInteger)numberOfRows
-							   leastNumberOfMoves:(NSUInteger)leastNumberOfMoves NS_DESIGNATED_INITIALIZER;
+							   leastNumberOfMoves:(NSUInteger)leastNumberOfMoves;
 
 #pragma mark - gameBoardTiles
 @property (nonatomic, readonly, copy, nullable) NSArray<NSArray<SMBGameBoardTile*>*>* gameBoardTiles;

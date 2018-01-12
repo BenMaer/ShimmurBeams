@@ -23,6 +23,11 @@
 
 @end
 
+@interface SMBGameLevel_Attributes_For_NSCoding : NSObject
++(nonnull NSString*)gameBoard;
++(nonnull NSString*)gameBoardTileEntitySpawnerManager;
+@end
+
 
 
 
@@ -68,6 +73,22 @@
 	return self;
 }
 
+#pragma mark - NSCoding
+-(nullable instancetype)initWithCoder:(nonnull NSCoder*)aDecoder
+{
+	if (self = [self init_with_gameBoard:[aDecoder decodeObjectForKey:[SMBGameLevel_Attributes_For_NSCoding gameBoard]]
+	   gameBoardTileEntitySpawnerManager:[aDecoder decodeObjectForKey:[SMBGameLevel_Attributes_For_NSCoding gameBoardTileEntitySpawnerManager]]])
+	{
+	}
+	
+	return self;
+}
+
+-(void)encodeWithCoder:(nonnull NSCoder*)aCoder
+{
+	[aCoder encodeObject:self.gameBoard forKey:[SMBGameLevel_Attributes_For_NSCoding gameBoard]];
+}
+
 @end
 
 
@@ -78,4 +99,9 @@
 
 +(nonnull NSString*)completion{return NSStringFromSelector(_cmd);}
 
+@end
+
+@implementation SMBGameLevel_Attributes_For_NSCoding
++(nonnull NSString*)gameBoard{return NSStringFromSelector(_cmd);}
++(nonnull NSString*)gameBoardTileEntitySpawnerManager{return NSStringFromSelector(_cmd);}
 @end

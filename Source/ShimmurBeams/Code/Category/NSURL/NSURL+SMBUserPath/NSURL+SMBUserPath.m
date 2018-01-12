@@ -16,7 +16,13 @@
 
 +(nullable instancetype)smb_userPath
 {
-	return [NSURL fileURLWithPath:@"user" isDirectory:YES];
+	NSArray<NSURL*>* const documentsDirectory_URLS = [[NSFileManager defaultManager] URLsForDirectory:NSDocumentDirectory inDomains:NSUserDomainMask];
+	NSURL* const documentsDirectory_URL = [documentsDirectory_URLS firstObject];
+
+	return
+	[self fileURLWithPath:@"user"
+			  isDirectory:YES
+			relativeToURL:documentsDirectory_URL];
 }
 
 @end

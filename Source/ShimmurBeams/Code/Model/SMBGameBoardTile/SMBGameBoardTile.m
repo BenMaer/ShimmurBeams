@@ -115,6 +115,10 @@ static void* kSMBGameBoardTile__KVOContext_generalBeamEnterToExitDirectionRedire
 
 @end
 
+@interface SMBGameBoardTile_Attributes_For_NSCoding : NSObject
++(nonnull NSString*)gameBoardTilePosition;
+@end
+
 
 
 
@@ -142,8 +146,7 @@ static void* kSMBGameBoardTile__KVOContext_generalBeamEnterToExitDirectionRedire
 #pragma clang diagnostic push
 #pragma GCC diagnostic ignored "-Wnullability-completeness"
 #endif
-	return [self init_with_gameBoardTilePosition:nil
-									   gameBoard:nil];
+	return [self init_with_gameBoardTilePosition:nil];
 #if __has_feature(nullability)
 #pragma clang diagnostic pop
 #endif
@@ -160,15 +163,12 @@ static void* kSMBGameBoardTile__KVOContext_generalBeamEnterToExitDirectionRedire
 
 #pragma mark - init
 -(nullable instancetype)init_with_gameBoardTilePosition:(nonnull SMBGameBoardTilePosition*)gameBoardTilePosition
-											  gameBoard:(nonnull SMBGameBoard*)gameBoard
 {
 	kRUConditionalReturn_ReturnValueNil(gameBoardTilePosition == nil, YES);
-	kRUConditionalReturn_ReturnValueNil(gameBoard == nil, YES);
 
 	if (self = [super init])
 	{
 		_gameBoardTilePosition = gameBoardTilePosition;
-		_gameBoard = gameBoard;
 
 		_gameBoardTileEntities_many_mappedDataCollection = [SMBMutableMappedDataCollection<SMBGameBoardTileEntity*> new];
 		_gameBoardTileEntities_many_powerProviders_mappedDataCollection = [SMBMutableMappedDataCollection<SMBGameBoardTileEntity<SMBGameBoardTileEntity_PowerProvider>*> new];
@@ -857,6 +857,21 @@ static void* kSMBGameBoardTile__KVOContext_generalBeamEnterToExitDirectionRedire
 	[[SMBGameBoardTileBeamEnterToExitDirectionMapping alloc] init_with_beamEnterToExitDirectionMappingDictionary:nil];
 }
 
+#pragma mark - NSCoding
+-(nullable instancetype)initWithCoder:(nonnull NSCoder*)aDecoder
+{
+	if (self = [self init_with_gameBoardTilePosition:[aDecoder decodeObjectForKey:[SMBGameBoardTile_Attributes_For_NSCoding gameBoardTilePosition]]])
+	{
+	}
+	
+	return self;
+}
+
+-(void)encodeWithCoder:(nonnull NSCoder*)aCoder
+{
+	[aCoder encodeObject:self.gameBoardTilePosition forKey:[SMBGameBoardTile_Attributes_For_NSCoding gameBoardTilePosition]];
+}
+
 @end
 
 
@@ -873,4 +888,8 @@ static void* kSMBGameBoardTile__KVOContext_generalBeamEnterToExitDirectionRedire
 +(nonnull NSString*)beamEnterDirections_blocked{return NSStringFromSelector(_cmd);}
 +(nonnull NSString*)beamEnterToExitDirectionMapping{return NSStringFromSelector(_cmd);}
 
+@end
+
+@implementation SMBGameBoardTile_Attributes_For_NSCoding
++(nonnull NSString*)gameBoardTilePosition{return NSStringFromSelector(_cmd);}
 @end

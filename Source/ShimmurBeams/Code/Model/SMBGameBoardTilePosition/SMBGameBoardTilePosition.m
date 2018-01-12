@@ -19,6 +19,15 @@
 
 
 
+@interface SMBGameBoardTilePosition_Attributes_For_NSCoding : NSObject
++(nonnull NSString*)column;
++(nonnull NSString*)row;
+@end
+
+
+
+
+
 @implementation SMBGameBoardTilePosition
 
 #pragma mark - NSObject
@@ -77,4 +86,31 @@
 	return [strings componentsJoinedByString:@"x"];
 }
 
+#pragma mark - NSCoding
+-(nullable instancetype)initWithCoder:(nonnull NSCoder*)aDecoder
+{
+	if (self = [self init_with_column:[kRUNumberOrNil([aDecoder decodeObjectForKey:[SMBGameBoardTilePosition_Attributes_For_NSCoding column]]) unsignedIntegerValue]
+								  row:[kRUNumberOrNil([aDecoder decodeObjectForKey:[SMBGameBoardTilePosition_Attributes_For_NSCoding row]]) unsignedIntegerValue]
+				])
+	{
+	}
+	
+	return self;
+}
+
+-(void)encodeWithCoder:(nonnull NSCoder*)aCoder
+{
+	[aCoder encodeObject:[NSNumber numberWithUnsignedInteger:self.column] forKey:[SMBGameBoardTilePosition_Attributes_For_NSCoding column]];
+	[aCoder encodeObject:[NSNumber numberWithUnsignedInteger:self.row] forKey:[SMBGameBoardTilePosition_Attributes_For_NSCoding row]];
+}
+
+@end
+
+
+
+
+
+@implementation SMBGameBoardTilePosition_Attributes_For_NSCoding
++(nonnull NSString*)column{return NSStringFromSelector(_cmd);}
++(nonnull NSString*)row{return NSStringFromSelector(_cmd);}
 @end
