@@ -13,7 +13,7 @@
 		D71765A41FB3ACF60084E09A /* SMBGameLevel+SMBLevelEditor.m in Sources */ = {isa = PBXBuildFile; fileRef = D71765A31FB3ACF60084E09A /* SMBGameLevel+SMBLevelEditor.m */; };
 		D71765A81FB3AF660084E09A /* SMBGameLevelView_UserSelection.m in Sources */ = {isa = PBXBuildFile; fileRef = D71765A71FB3AF660084E09A /* SMBGameLevelView_UserSelection.m */; };
 		D71765B01FB3DF4F0084E09A /* SMBGameLevelView_UserSelection_GameBoardTile_HighlightData.m in Sources */ = {isa = PBXBuildFile; fileRef = D71765AF1FB3DF4F0084E09A /* SMBGameLevelView_UserSelection_GameBoardTile_HighlightData.m */; };
-		D718DFA32008150E0081594A /* SMBCustomLevelsListViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = D718DFA22008150E0081594A /* SMBCustomLevelsListViewController.m */; };
+		D718DFA32008150E0081594A /* SMBSavedGameLevelsListViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = D718DFA22008150E0081594A /* SMBSavedGameLevelsListViewController.m */; };
 		D718DFAB200828D40081594A /* SMBLevelEditorCreationData.m in Sources */ = {isa = PBXBuildFile; fileRef = D718DFAA200828D40081594A /* SMBLevelEditorCreationData.m */; };
 		D722CE371FB0C68C00DF6136 /* SMBGameBoardTileEntitySpawner.m in Sources */ = {isa = PBXBuildFile; fileRef = D722CE361FB0C68C00DF6136 /* SMBGameBoardTileEntitySpawner.m */; };
 		D722CE401FB0D64300DF6136 /* SMBGameBoardTileEntitySpawnerPickerCollectionViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = D722CE3F1FB0D64300DF6136 /* SMBGameBoardTileEntitySpawnerPickerCollectionViewCell.m */; };
@@ -131,8 +131,8 @@
 		D71765AF1FB3DF4F0084E09A /* SMBGameLevelView_UserSelection_GameBoardTile_HighlightData.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = SMBGameLevelView_UserSelection_GameBoardTile_HighlightData.m; sourceTree = "<group>"; };
 		D71765B11FB4087D0084E09A /* SMBGameBoardTileEntityPickerView__Protocols.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SMBGameBoardTileEntityPickerView__Protocols.h; sourceTree = "<group>"; };
 		D71765B21FB4140A0084E09A /* SMBGameBoardTileEntityPickerView__trashButton_types.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SMBGameBoardTileEntityPickerView__trashButton_types.h; sourceTree = "<group>"; };
-		D718DFA12008150E0081594A /* SMBCustomLevelsListViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SMBCustomLevelsListViewController.h; sourceTree = "<group>"; };
-		D718DFA22008150E0081594A /* SMBCustomLevelsListViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = SMBCustomLevelsListViewController.m; sourceTree = "<group>"; };
+		D718DFA12008150E0081594A /* SMBSavedGameLevelsListViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SMBSavedGameLevelsListViewController.h; sourceTree = "<group>"; };
+		D718DFA22008150E0081594A /* SMBSavedGameLevelsListViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = SMBSavedGameLevelsListViewController.m; sourceTree = "<group>"; };
 		D718DFA9200828D40081594A /* SMBLevelEditorCreationData.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SMBLevelEditorCreationData.h; sourceTree = "<group>"; };
 		D718DFAA200828D40081594A /* SMBLevelEditorCreationData.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = SMBLevelEditorCreationData.m; sourceTree = "<group>"; };
 		D722CE351FB0C68C00DF6136 /* SMBGameBoardTileEntitySpawner.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SMBGameBoardTileEntitySpawner.h; sourceTree = "<group>"; };
@@ -439,13 +439,13 @@
 			path = SMBGameLevelView_UserSelection_GameBoardTile_HighlightData;
 			sourceTree = "<group>";
 		};
-		D718DFA0200815010081594A /* SMBCustomLevelsListViewController */ = {
+		D718DFA0200815010081594A /* SMBSavedGameLevelsListViewController */ = {
 			isa = PBXGroup;
 			children = (
-				D718DFA12008150E0081594A /* SMBCustomLevelsListViewController.h */,
-				D718DFA22008150E0081594A /* SMBCustomLevelsListViewController.m */,
+				D718DFA12008150E0081594A /* SMBSavedGameLevelsListViewController.h */,
+				D718DFA22008150E0081594A /* SMBSavedGameLevelsListViewController.m */,
 			);
-			path = SMBCustomLevelsListViewController;
+			path = SMBSavedGameLevelsListViewController;
 			sourceTree = "<group>";
 		};
 		D718DFA8200828BC0081594A /* SMBLevelEditorCreationData */ = {
@@ -969,7 +969,7 @@
 		D761FE8A1F3AC2FF0083842A /* UIViewController */ = {
 			isa = PBXGroup;
 			children = (
-				D718DFA0200815010081594A /* SMBCustomLevelsListViewController */,
+				D718DFA0200815010081594A /* SMBSavedGameLevelsListViewController */,
 				D7C8C3DD1F3CE24A006D378E /* SMBGameLevelGeneratorSetsViewController */,
 				D7E511BC1F3CEE56008A6042 /* SMBGameLevelGeneratorSetViewController */,
 				D74CB09A2008484000A7C466 /* SMBGenericGameLevelGeneratorViewController */,
@@ -1991,7 +1991,7 @@
 				D74CB0A42008484000A7C466 /* SMBGameLevelGeneratorViewController.m in Sources */,
 				D7951D461F43ADAC00A33AB2 /* SMBForcedBeamRedirectTileEntity.m in Sources */,
 				D78CD0A01F3D6E5800118FB4 /* SMBGameBoardGeneralEntity.m in Sources */,
-				D718DFA32008150E0081594A /* SMBCustomLevelsListViewController.m in Sources */,
+				D718DFA32008150E0081594A /* SMBSavedGameLevelsListViewController.m in Sources */,
 				D7035AFE1F9957300023399B /* SMBGameBoardTileBeamEnterToExitDirectionMapping.m in Sources */,
 				D78B47A61FB1096E004C967B /* SMBGameBoardTileEntitySpawnerManager.m in Sources */,
 				D7ED70CA200863E400AB1BC0 /* NSURL+SMBUserPath.m in Sources */,

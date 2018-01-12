@@ -1,5 +1,5 @@
 //
-//  SMBCustomLevelsListViewController.h
+//  SMBSavedGameLevelsListViewController.h
 //  ShimmurBeams
 //
 //  Created by Benjamin Maer on 1/11/18.
@@ -12,6 +12,6 @@
 
 
 
-@interface SMBCustomLevelsListViewController : UIViewController
+@interface SMBSavedGameLevelsListViewController : UIViewController
 
 @end

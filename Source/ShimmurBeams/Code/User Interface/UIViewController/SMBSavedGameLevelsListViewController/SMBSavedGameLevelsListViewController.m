@@ -1,12 +1,12 @@
 //
-//  SMBCustomLevelsListViewController.m
+//  SMBSavedGameLevelsListViewController.m
 //  ShimmurBeams
 //
 //  Created by Benjamin Maer on 1/11/18.
 //  Copyright © 2018 Shimmur. All rights reserved.
 //
 
-#import "SMBCustomLevelsListViewController.h"
+#import "SMBSavedGameLevelsListViewController.h"
 #import "SMBLevelEditorCreationViewController.h"
 
 #import <RTSMTableSectionManager/RTSMTableSectionManager.h>
@@ -16,18 +16,18 @@
 
 
 
-typedef NS_ENUM(NSInteger, SMBCustomLevelsListViewController__tableSection) {
-	SMBCustomLevelsListViewController__tableSection_saved,
+typedef NS_ENUM(NSInteger, SMBSavedGameLevelsListViewController__tableSection) {
+	SMBSavedGameLevelsListViewController__tableSection_saved,
 
-	SMBCustomLevelsListViewController__tableSection__first	= SMBCustomLevelsListViewController__tableSection_saved,
-	SMBCustomLevelsListViewController__tableSection__last	= SMBCustomLevelsListViewController__tableSection_saved,
+	SMBSavedGameLevelsListViewController__tableSection__first	= SMBSavedGameLevelsListViewController__tableSection_saved,
+	SMBSavedGameLevelsListViewController__tableSection__last	= SMBSavedGameLevelsListViewController__tableSection_saved,
 };
 
 
 
 
 
-@interface SMBCustomLevelsListViewController () <UITableViewDataSource, UITableViewDelegate, RTSMTableSectionRangeManager_SectionLengthDelegate, RTSMTableSectionManager_SectionDelegate>
+@interface SMBSavedGameLevelsListViewController () <UITableViewDataSource, UITableViewDelegate, RTSMTableSectionRangeManager_SectionLengthDelegate, RTSMTableSectionManager_SectionDelegate>
 
 #pragma mark - tableSectionRangeManager
 @property (nonatomic, readonly, strong, nonnull) RTSMTableSectionRangeManager* tableSectionRangeManager;
@@ -48,7 +48,7 @@ typedef NS_ENUM(NSInteger, SMBCustomLevelsListViewController__tableSection) {
 
 
 
-@implementation SMBCustomLevelsListViewController
+@implementation SMBSavedGameLevelsListViewController
 
 #pragma mark - UIViewController
 -(void)viewDidLoad
@@ -86,8 +86,8 @@ typedef NS_ENUM(NSInteger, SMBCustomLevelsListViewController__tableSection) {
 	if (_tableSectionRangeManager == nil)
 	{
 		RTSMTableSectionManager* const tableSectionManager =
-		[[RTSMTableSectionManager alloc] initWithFirstSection:SMBCustomLevelsListViewController__tableSection__first
-												  lastSection:SMBCustomLevelsListViewController__tableSection__last];
+		[[RTSMTableSectionManager alloc] initWithFirstSection:SMBSavedGameLevelsListViewController__tableSection__first
+												  lastSection:SMBSavedGameLevelsListViewController__tableSection__last];
 		[tableSectionManager setSectionDelegate:self];
 		
 		_tableSectionRangeManager = [RTSMTableSectionRangeManager new];
@@ -111,10 +111,10 @@ typedef NS_ENUM(NSInteger, SMBCustomLevelsListViewController__tableSection) {
 
 -(nonnull UITableViewCell*)tableView:(nonnull UITableView*)tableView cellForRowAtIndexPath:(nonnull NSIndexPath*)indexPath
 {
-	SMBCustomLevelsListViewController__tableSection const tableSection = [self.tableSectionRangeManager sectionForIndexPathSection:indexPath.section];
+	SMBSavedGameLevelsListViewController__tableSection const tableSection = [self.tableSectionRangeManager sectionForIndexPathSection:indexPath.section];
 	switch (tableSection)
 	{
-		case SMBCustomLevelsListViewController__tableSection_saved:
+		case SMBSavedGameLevelsListViewController__tableSection_saved:
 			break;
 	}
 	
@@ -130,10 +130,10 @@ typedef NS_ENUM(NSInteger, SMBCustomLevelsListViewController__tableSection) {
 
 -(void)tableView:(nonnull UITableView*)tableView didSelectRowAtIndexPath:(nonnull NSIndexPath*)indexPath
 {
-	SMBCustomLevelsListViewController__tableSection const tableSection = [self.tableSectionRangeManager sectionForIndexPathSection:indexPath.section];
+	SMBSavedGameLevelsListViewController__tableSection const tableSection = [self.tableSectionRangeManager sectionForIndexPathSection:indexPath.section];
 	switch (tableSection)
 	{
-		case SMBCustomLevelsListViewController__tableSection_saved:
+		case SMBSavedGameLevelsListViewController__tableSection_saved:
 			break;
 	}
 }
@@ -150,10 +150,10 @@ typedef NS_ENUM(NSInteger, SMBCustomLevelsListViewController__tableSection) {
 {
 	if (tableSectionRangeManager == self.tableSectionRangeManager)
 	{
-		SMBCustomLevelsListViewController__tableSection const tableSection = (SMBCustomLevelsListViewController__tableSection)section;
+		SMBSavedGameLevelsListViewController__tableSection const tableSection = (SMBSavedGameLevelsListViewController__tableSection)section;
 		switch (tableSection)
 		{
-			case SMBCustomLevelsListViewController__tableSection_saved:
+			case SMBSavedGameLevelsListViewController__tableSection_saved:
 				return 0;
 				break;
 		}
