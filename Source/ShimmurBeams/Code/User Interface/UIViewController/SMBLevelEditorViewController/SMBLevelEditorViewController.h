@@ -6,6 +6,8 @@
 //  Copyright © 2018 Shimmur. All rights reserved.
 //
 
+#import "SMBGenericGameLevelGeneratorViewController.h"
+
 #import <UIKit/UIKit.h>
 
 
@@ -18,7 +20,7 @@
 
 
 
-@interface SMBLevelEditorViewController : UIViewController
+@interface SMBLevelEditorViewController : SMBGenericGameLevelGeneratorViewController
 
 #pragma mark - levelEditorCreationData
 @property (nonatomic, strong, nullable) SMBLevelEditorCreationData* levelEditorCreationData;

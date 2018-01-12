@@ -32,9 +32,6 @@ static void* kSMBGameLevelGeneratorViewController__KVOContext__gameBoard_forKVO 
 @interface SMBGameLevelGeneratorViewController ()
 
 #pragma mark - gameLevelGenerator_gameLevel
-@property (nonatomic, strong, nullable) SMBGameLevel* gameLevelGenerator_gameLevel;
--(void)gameLevelGenerator_gameLevel_update;
--(nullable SMBGameLevel*)gameLevelGenerator_gameLevel_generate;
 -(void)gameLevelGenerator_gameLevel_didComplete;
 -(void)gameLevelGenerator_gameLevel_didComplete_check;
 -(void)gameLevelGenerator_gameLevel_setKVORegistered:(BOOL)registered;
@@ -45,28 +42,16 @@ static void* kSMBGameLevelGeneratorViewController__KVOContext__gameBoard_forKVO 
 -(void)hintLabel_text_update;
 
 #pragma mark - gameLevelView
-@property (nonatomic, readonly, strong, nullable) SMBGameLevelView* gameLevelView;
--(CGRect)gameLevelView_frame;
--(void)gameLevelView_level_update;
+-(UIEdgeInsets)gameLevelView_frame_insets_generate;
 
 #pragma mark - navigationItem_title
 -(void)navigationItem_title_update;
 -(nullable NSString*)navigationItem_title_generate;
 
-#pragma mark - navigationItem_rightBarButtonItems
--(void)navigationItem_rightBarButtonItems_update;
--(nullable NSArray<UIBarButtonItem*>*)navigationItem_rightBarButtonItems_generate;
-
-#pragma mark - navigationItem_resetButton
--(void)navigationItem_resetButton_action_didFire;
-
 #pragma mark - levelSuccessBarButtonItem
 @property (nonatomic, strong, nullable) UIBarButtonItem* levelSuccessBarButtonItem;
 -(void)levelSuccessBarButtonItem_update;
 -(nullable UIBarButtonItem*)levelSuccessBarButtonItem_generate;
-
-#pragma mark - resetBarButtonItem
-@property (nonatomic, readonly, strong, nullable) UIBarButtonItem* resetBarButtonItem;
 
 #pragma mark - leastMovesBarButtonItem
 @property (nonatomic, strong, nullable) UIBarButtonItem* leastMovesBarButtonItem;
@@ -103,12 +88,6 @@ static void* kSMBGameLevelGeneratorViewController__KVOContext__gameBoard_forKVO 
 {
 	[super viewDidLoad];
 
-	[self setEdgesForExtendedLayout:UIRectEdgeNone];
-	[self setAutomaticallyAdjustsScrollViewInsets:NO];
-	[self.navigationItem setLeftItemsSupplementBackButton:YES];
-
-	[self.view setBackgroundColor:[UIColor whiteColor]];
-
 	_hintLabel = [UILabel new];
 	[self.hintLabel setFont:[UIFont systemFontOfSize:18.0f]];
 	[self.hintLabel setTextColor:[UIColor darkTextColor]];
@@ -117,19 +96,7 @@ static void* kSMBGameLevelGeneratorViewController__KVOContext__gameBoard_forKVO 
 	[self.view addSubview:self.hintLabel];
 	[self hintLabel_text_update];
 
-	_gameLevelView = [SMBGameLevelView new];
-	[self.view addSubview:self.gameLevelView];
-	[self gameLevelView_level_update];
-
 	[self navigationItem_title_update];
-
-	_resetBarButtonItem =
-	[[UIBarButtonItem alloc] initWithTitle:@"Reset"
-									 style:UIBarButtonItemStylePlain
-									target:self
-									action:@selector(navigationItem_resetButton_action_didFire)];
-
-	[self navigationItem_rightBarButtonItems_update];
 
 	_leastMovesBarButtonItem_label = [UILabel new];
 	[self.leastMovesBarButtonItem_label setFont:[UIFont systemFontOfSize:8.0f]];
@@ -146,53 +113,42 @@ static void* kSMBGameLevelGeneratorViewController__KVOContext__gameBoard_forKVO 
 
 	[self.hintLabel setFrame:[self hintLabel_frame]];
 
-	[self.gameLevelView setFrame:[self gameLevelView_frame]];
+	[self setGameLevelView_frame_insets:[self gameLevelView_frame_insets_generate]];
 }
 
 #pragma mark - gameLevelGenerator
 -(void)setGameLevelGenerator:(nullable SMBGameLevelGenerator*)gameLevelGenerator
 {
-	kRUConditionalReturn(self.gameLevelGenerator == gameLevelGenerator, NO);
+	SMBGameLevelGenerator* const gameLevelGenerator_old = self.gameLevelGenerator;
+	[super setGameLevelGenerator:gameLevelGenerator];
 
-	_gameLevelGenerator = gameLevelGenerator;
+	kRUConditionalReturn(gameLevelGenerator_old == gameLevelGenerator, NO);
 
 	[self hintLabel_text_update];
 	[self navigationItem_title_update];
-	[self gameLevelGenerator_gameLevel_update];
 }
 
 #pragma mark - gameLevelGenerator_gameLevel
--(void)setGameLevelGenerator_gameLevel:(nullable SMBGameLevel*)gameLevelGenerator_gameLevel
+-(void)gameLevelGenerator_gameLevel_will_update
 {
-	kRUConditionalReturn(self.gameLevelGenerator_gameLevel == gameLevelGenerator_gameLevel, NO)
-
+	[super gameLevelGenerator_gameLevel_will_update];
+	
 	if (self.isViewLoaded)
 	{
 		[self gameLevelGenerator_gameLevel_setKVORegistered:NO];
 	}
+}
 
-	_gameLevelGenerator_gameLevel = gameLevelGenerator_gameLevel;
-
+-(void)gameLevelGenerator_gameLevel_did_update
+{
+	[super gameLevelGenerator_gameLevel_did_update];
+	
 	if (self.isViewLoaded)
 	{
 		[self gameLevelGenerator_gameLevel_setKVORegistered:YES];
 	}
-
+	
 	[self SMBGameLevelGeneratorViewController_gameBoard_forKVO_update];
-	[self gameLevelView_level_update];
-}
-
--(void)gameLevelGenerator_gameLevel_update
-{
-	[self setGameLevelGenerator_gameLevel:[self gameLevelGenerator_gameLevel_generate]];
-}
-
--(nullable SMBGameLevel*)gameLevelGenerator_gameLevel_generate
-{
-	SMBGameLevelGenerator* const gameLevelGenerator = self.gameLevelGenerator;
-	kRUConditionalReturn_ReturnValueNil(gameLevelGenerator == nil, NO);
-
-	return [gameLevelGenerator gameLevel_generate];
 }
 
 -(void)gameLevelGenerator_gameLevel_didComplete
@@ -265,14 +221,6 @@ static void* kSMBGameLevelGeneratorViewController__KVOContext__gameBoard_forKVO 
 	}];
 }
 
--(void)gameLevelGenerator_gameLevel_regenerate
-{
-	kRUConditionalReturn(self.gameLevelGenerator == nil, YES);
-	kRUConditionalReturn(self.gameLevelGenerator_gameLevel == nil, YES);
-
-	[self gameLevelGenerator_gameLevel_update];
-}
-
 #pragma mark - hintLabel
 -(CGRect)hintLabel_frame
 {
@@ -296,36 +244,11 @@ static void* kSMBGameLevelGeneratorViewController__KVOContext__gameBoard_forKVO 
 }
 
 #pragma mark - gameLevelView
--(CGRect)gameLevelView_frame
+-(UIEdgeInsets)gameLevelView_frame_insets_generate
 {
-	CGFloat const yCoord = CGRectGetMaxY([self hintLabel_frame]);
-	CGSize const gameLevelView_boundingSize =
-	UIEdgeInsetsInsetRect(self.view.bounds,
-						  (UIEdgeInsets){
-							  .top	= yCoord,
-						  }).size;
-
-	CGSize const size = [self.gameLevelView sizeThatFits:gameLevelView_boundingSize];
-
-	return CGRectCeilOrigin((CGRect){
-		.origin.x	= CGRectGetHorizontallyAlignedXCoordForWidthOnWidth(size.width, gameLevelView_boundingSize.width),
-		.origin.y	= yCoord,
-		.size		= size,
-	});
-}
-
--(void)gameLevelView_level_update
-{
-	SMBGameLevelView* const gameLevelView = self.gameLevelView;
-	kRUConditionalReturn(gameLevelView == nil, NO);
-
-	[gameLevelView setGameLevel:self.gameLevelGenerator_gameLevel];
-
-	if ([self isViewLoaded])
-	{
-		[self.view setUserInteractionEnabled:YES];
-		[self.view setNeedsLayout];
-	}
+	return (UIEdgeInsets){
+		.top	= CGRectGetMaxY([self hintLabel_frame]) - CGRectGetMinY(self.view.bounds),
+	};
 }
 
 #pragma mark - navigationItem_title
@@ -391,24 +314,20 @@ static void* kSMBGameLevelGeneratorViewController__KVOContext__gameBoard_forKVO 
 }
 
 #pragma mark - navigationItem_rightBarButtonItems
--(void)navigationItem_rightBarButtonItems_update
-{
-	[self.navigationItem setRightBarButtonItems:[self navigationItem_rightBarButtonItems_generate]];
-}
-
 -(nullable NSArray<UIBarButtonItem*>*)navigationItem_rightBarButtonItems_generate
 {
 	NSMutableArray<UIBarButtonItem*>* const navigationItem_rightBarButtonItems = [NSMutableArray<UIBarButtonItem*> array];
-	[navigationItem_rightBarButtonItems ru_addObjectIfNotNil:self.resetBarButtonItem];
+
 	[navigationItem_rightBarButtonItems ru_addObjectIfNotNil:self.levelSuccessBarButtonItem];
 
-	return [NSArray<UIBarButtonItem*> arrayWithArray:navigationItem_rightBarButtonItems];
-}
+	NSArray<UIBarButtonItem*>* const navigationItem_rightBarButtonItems_generate_super = [super navigationItem_rightBarButtonItems_generate];
+	if (navigationItem_rightBarButtonItems_generate_super)
+	{
+		[navigationItem_rightBarButtonItems addObjectsFromArray:navigationItem_rightBarButtonItems_generate_super];
+	}
 
-#pragma mark - navigationItem_resetButton
--(void)navigationItem_resetButton_action_didFire
-{
-	[self gameLevelGenerator_gameLevel_update];
+
+	return [NSArray<UIBarButtonItem*> arrayWithArray:navigationItem_rightBarButtonItems];
 }
 
 #pragma mark - levelSuccessBarButtonItem

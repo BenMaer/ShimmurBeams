@@ -6,6 +6,7 @@
 //  Copyright © 2017 Shimmur. All rights reserved.
 //
 
+#import "SMBGenericGameLevelGeneratorViewController.h"
 #import "SMBGameLevelGeneratorViewController__Protocols.h"
 
 #import <UIKit/UIKit.h>
@@ -20,13 +21,7 @@
 
 
 
-@interface SMBGameLevelGeneratorViewController : UIViewController
-
-#pragma mark - gameLevelGenerator
-@property (nonatomic, strong, nullable) SMBGameLevelGenerator* gameLevelGenerator;
-
-#pragma mark - gameLevelGenerator_gameLevel
--(void)gameLevelGenerator_gameLevel_regenerate;
+@interface SMBGameLevelGeneratorViewController : SMBGenericGameLevelGeneratorViewController
 
 #pragma mark - gameLevelDidCompleteDelegate
 @property (nonatomic, assign, nullable) id<SMBGameLevelGeneratorViewController_gameLevelDidCompleteDelegate> gameLevelDidCompleteDelegate;

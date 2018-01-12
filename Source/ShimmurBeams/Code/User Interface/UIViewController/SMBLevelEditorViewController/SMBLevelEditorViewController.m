@@ -7,7 +7,9 @@
 //
 
 #import "SMBLevelEditorViewController.h"
-#import "SMBGameLevelView.h"
+#import "SMBLevelEditorCreationData.h"
+
+#import <ResplendentUtilities/RUConditionalReturn.h>
 
 
 
@@ -15,10 +17,9 @@
 
 @interface SMBLevelEditorViewController ()
 
-#pragma mark - gameLevelView
-@property (nonatomic, readonly, strong, nullable) SMBGameLevelView* gameLevelView;
--(CGRect)gameLevelView_frame;
--(void)gameLevelView_level_update;
+#pragma mark - gameLevelGenerator
+-(void)gameLevelGenerator_update;
+-(nullable SMBGameLevelGenerator*)gameLevelGenerator_generate;
 
 @end
 
@@ -28,46 +29,28 @@
 
 @implementation SMBLevelEditorViewController
 
-#pragma mark - UIViewController
--(void)viewDidLoad
+#pragma mark - levelEditorCreationData
+-(void)setLevelEditorCreationData:(nullable SMBLevelEditorCreationData*)levelEditorCreationData
 {
-	[super viewDidLoad];
-	
-	[self setEdgesForExtendedLayout:UIRectEdgeNone];
-	[self setAutomaticallyAdjustsScrollViewInsets:NO];
-	[self.navigationItem setLeftItemsSupplementBackButton:YES];
-	
-	[self.view setBackgroundColor:[UIColor whiteColor]];
-	
-	_gameLevelView = [SMBGameLevelView new];
-	[self.view addSubview:self.gameLevelView];
-	[self gameLevelView_level_update];
+	kRUConditionalReturn(self.levelEditorCreationData == levelEditorCreationData, NO);
+
+	_levelEditorCreationData = levelEditorCreationData;
+
+	[self gameLevelGenerator_update];
 }
 
--(void)viewWillLayoutSubviews
+#pragma mark - gameLevelGenerator
+-(void)gameLevelGenerator_update
 {
-	[super viewWillLayoutSubviews];
-
-	[self.gameLevelView setFrame:[self gameLevelView_frame]];
+	[self setGameLevelGenerator:[self gameLevelGenerator_generate]];
 }
 
-//#pragma mark - gameLevelView
-//-(CGRect)gameLevelView_frame
-//{
-//	CGFloat const yCoord = CGRectGetMaxY([self hintLabel_frame]);
-//	CGSize const gameLevelView_boundingSize =
-//	UIEdgeInsetsInsetRect(self.view.bounds,
-//						  (UIEdgeInsets){
-//							  .top	= yCoord,
-//						  }).size;
-//	
-//	CGSize const size = [self.gameLevelView sizeThatFits:gameLevelView_boundingSize];
-//	
-//	return CGRectCeilOrigin((CGRect){
-//		.origin.x	= CGRectGetHorizontallyAlignedXCoordForWidthOnWidth(size.width, gameLevelView_boundingSize.width),
-//		.origin.y	= yCoord,
-//		.size		= size,
-//	});
-//}
+-(nullable SMBGameLevelGenerator*)gameLevelGenerator_generate
+{
+	SMBLevelEditorCreationData* const levelEditorCreationData = self.levelEditorCreationData;
+	kRUConditionalReturn_ReturnValueNil(levelEditorCreationData == nil, NO);
+
+	return [levelEditorCreationData gameLevelGenerator_generate];
+}
 
 @end
