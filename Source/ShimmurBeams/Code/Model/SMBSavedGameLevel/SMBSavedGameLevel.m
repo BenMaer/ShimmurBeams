@@ -9,6 +9,7 @@
 #import "SMBSavedGameLevel.h"
 #import "NSURL+SMBSavedLevelsPath.h"
 #import "SMBGameLevelGenerator.h"
+#import "SMBKeyArchiverManager.h"
 
 #import <ResplendentUtilities/RUConditionalReturn.h>
 #import <ResplendentUtilities/NSMutableArray+RUAddObjectIfNotNil.h>
@@ -86,6 +87,7 @@
 	NSURL* const savedLevelPath_metaData = [URL smb_savedLevelPath_metaData];
 	kRUConditionalReturn_ReturnValueNil(savedLevelPath_metaData == nil, YES);
 
+	
 	return [NSKeyedUnarchiver unarchiveObjectWithFile:[savedLevelPath_metaData path]];
 }
 
@@ -98,7 +100,7 @@
 	NSURL* const savedLevelPath_levelData = [URL smb_savedLevelPath_levelData];
 	kRUConditionalReturn_ReturnValueNil(savedLevelPath_levelData == nil, YES);
 
-	return [NSKeyedUnarchiver unarchiveObjectWithFile:[savedLevelPath_levelData path]];
+	return [[SMBKeyArchiverManager sharedInstance] unarchiveObject_withFile_atPath:[savedLevelPath_levelData path]];
 }
 
 #pragma mark - gameLevelGenerator

@@ -107,6 +107,8 @@
 		D7E511BB1F3CEC40008A6042 /* SMBGameLevelGeneratorSet+SMBUserSets.m in Sources */ = {isa = PBXBuildFile; fileRef = D7E511BA1F3CEC40008A6042 /* SMBGameLevelGeneratorSet+SMBUserSets.m */; };
 		D7E511BF1F3CEE67008A6042 /* SMBGameLevelGeneratorSetViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = D7E511BE1F3CEE67008A6042 /* SMBGameLevelGeneratorSetViewController.m */; };
 		D7E511CD1F3D4CFA008A6042 /* SMBGameBoardTileEntity+SMBBeamBlocker.m in Sources */ = {isa = PBXBuildFile; fileRef = D7E511CC1F3D4CFA008A6042 /* SMBGameBoardTileEntity+SMBBeamBlocker.m */; };
+		D7E51C1C200954E5002EA712 /* SMBKeyArchiverManager.m in Sources */ = {isa = PBXBuildFile; fileRef = D7E51C1B200954E5002EA712 /* SMBKeyArchiverManager.m */; };
+		D7E51C2820095FF8002EA712 /* SMBKeyUnarchiverStore.m in Sources */ = {isa = PBXBuildFile; fileRef = D7E51C2720095FF8002EA712 /* SMBKeyUnarchiverStore.m */; };
 		D7E56A741F6979E000E2DCB3 /* NSNumber+SMBRandomNumbers.m in Sources */ = {isa = PBXBuildFile; fileRef = D7E56A731F6979E000E2DCB3 /* NSNumber+SMBRandomNumbers.m */; };
 		D7ED70C32008617000AB1BC0 /* SMBSavedGameLevel.m in Sources */ = {isa = PBXBuildFile; fileRef = D7ED70BC2008617000AB1BC0 /* SMBSavedGameLevel.m */; };
 		D7ED70C42008617000AB1BC0 /* SMBSavedGameLevelsManager.m in Sources */ = {isa = PBXBuildFile; fileRef = D7ED70BF2008617000AB1BC0 /* SMBSavedGameLevelsManager.m */; };
@@ -348,6 +350,10 @@
 		D7E511C21F3D2B31008A6042 /* SMBGameBoardTile__direction_offsets.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SMBGameBoardTile__direction_offsets.h; sourceTree = "<group>"; };
 		D7E511CB1F3D4CFA008A6042 /* SMBGameBoardTileEntity+SMBBeamBlocker.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "SMBGameBoardTileEntity+SMBBeamBlocker.h"; sourceTree = "<group>"; };
 		D7E511CC1F3D4CFA008A6042 /* SMBGameBoardTileEntity+SMBBeamBlocker.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "SMBGameBoardTileEntity+SMBBeamBlocker.m"; sourceTree = "<group>"; };
+		D7E51C1A200954E5002EA712 /* SMBKeyArchiverManager.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SMBKeyArchiverManager.h; sourceTree = "<group>"; };
+		D7E51C1B200954E5002EA712 /* SMBKeyArchiverManager.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = SMBKeyArchiverManager.m; sourceTree = "<group>"; };
+		D7E51C2620095FF8002EA712 /* SMBKeyUnarchiverStore.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SMBKeyUnarchiverStore.h; sourceTree = "<group>"; };
+		D7E51C2720095FF8002EA712 /* SMBKeyUnarchiverStore.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = SMBKeyUnarchiverStore.m; sourceTree = "<group>"; };
 		D7E56A721F6979E000E2DCB3 /* NSNumber+SMBRandomNumbers.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSNumber+SMBRandomNumbers.h"; sourceTree = "<group>"; };
 		D7E56A731F6979E000E2DCB3 /* NSNumber+SMBRandomNumbers.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSNumber+SMBRandomNumbers.m"; sourceTree = "<group>"; };
 		D7ED70BB2008617000AB1BC0 /* SMBSavedGameLevel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SMBSavedGameLevel.h; sourceTree = "<group>"; };
@@ -787,6 +793,7 @@
 		D761FE461F3AC2FF0083842A /* Model */ = {
 			isa = PBXGroup;
 			children = (
+				D7E51C182009527E002EA712 /* Data Archiving */,
 				D761FE471F3AC2FF0083842A /* DataCollection */,
 				D78CD07A1F3D6DB200118FB4 /* SMBDrawableObject */,
 				D761FE4F1F3AC2FF0083842A /* SMBGameBoard */,
@@ -1721,6 +1728,33 @@
 			path = "SMBGameBoardTileEntity+SMBBeamBlocker";
 			sourceTree = "<group>";
 		};
+		D7E51C182009527E002EA712 /* Data Archiving */ = {
+			isa = PBXGroup;
+			children = (
+				D7E51C19200954D7002EA712 /* SMBKeyArchiverManager */,
+			);
+			path = "Data Archiving";
+			sourceTree = "<group>";
+		};
+		D7E51C19200954D7002EA712 /* SMBKeyArchiverManager */ = {
+			isa = PBXGroup;
+			children = (
+				D7E51C1A200954E5002EA712 /* SMBKeyArchiverManager.h */,
+				D7E51C1B200954E5002EA712 /* SMBKeyArchiverManager.m */,
+				D7E51C2520095FE3002EA712 /* SMBKeyUnarchiverStore */,
+			);
+			path = SMBKeyArchiverManager;
+			sourceTree = "<group>";
+		};
+		D7E51C2520095FE3002EA712 /* SMBKeyUnarchiverStore */ = {
+			isa = PBXGroup;
+			children = (
+				D7E51C2620095FF8002EA712 /* SMBKeyUnarchiverStore.h */,
+				D7E51C2720095FF8002EA712 /* SMBKeyUnarchiverStore.m */,
+			);
+			path = SMBKeyUnarchiverStore;
+			sourceTree = "<group>";
+		};
 		D7E56A701F6979AD00E2DCB3 /* NSNumber */ = {
 			isa = PBXGroup;
 			children = (
@@ -1922,6 +1956,7 @@
 				D761FE971F3AC2FF0083842A /* SMBGameBoard.m in Sources */,
 				D733A4A71F5A211F007A8E6F /* SMBPowerSwitchTileEntity.m in Sources */,
 				D71765B01FB3DF4F0084E09A /* SMBGameLevelView_UserSelection_GameBoardTile_HighlightData.m in Sources */,
+				D7E51C2820095FF8002EA712 /* SMBKeyUnarchiverStore.m in Sources */,
 				D7DAF3A31F33D66400233C39 /* main.m in Sources */,
 				D73CF9901F54B376002A70EB /* SMBGameLevel+SMBPowerButtonsAndDoors.m in Sources */,
 				D7ED70C42008617000AB1BC0 /* SMBSavedGameLevelsManager.m in Sources */,
@@ -2017,6 +2052,7 @@
 				D770EF011F83036B00117FEE /* SMBGenericPowerOutputTileEntity_OutputPowerReceiver.m in Sources */,
 				D78B47AA1FB254C9004C967B /* SMBWeakPointerObject.m in Sources */,
 				D722CE401FB0D64300DF6136 /* SMBGameBoardTileEntitySpawnerPickerCollectionViewCell.m in Sources */,
+				D7E51C1C200954E5002EA712 /* SMBKeyArchiverManager.m in Sources */,
 				D7E511BF1F3CEE67008A6042 /* SMBGameLevelGeneratorSetViewController.m in Sources */,
 				D761FEA01F3AC2FF0083842A /* SMBGameBoardTile.m in Sources */,
 				D733A4C31F632041007A8E6F /* SMBGameLevel+SMBUnitTestLevels.m in Sources */,

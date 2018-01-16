@@ -22,7 +22,7 @@
 
 
 
-@interface SMBGameBoardGeneralEntity : SMBDrawableObject <SMBMappedDataCollection_MappableObject>
+@interface SMBGameBoardGeneralEntity : SMBDrawableObject <SMBMappedDataCollection_MappableObject, NSCoding>
 
 #pragma mark - uniqueId
 @property (nonatomic, readonly, copy, nonnull) NSString* uniqueId;

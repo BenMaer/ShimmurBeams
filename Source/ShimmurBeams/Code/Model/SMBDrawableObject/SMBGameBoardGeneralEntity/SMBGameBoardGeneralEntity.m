@@ -15,10 +15,14 @@
 
 
 
+@interface SMBGameBoardGeneralEntity_Attributes_For_NSCoding : NSObject
++(nonnull NSString*)uniqueId;
+@end
+
 @implementation SMBGameBoardGeneralEntity
 
 #pragma mark - NSObject
--(instancetype)init
+-(nullable instancetype)init
 {
 	if (self = [super init])
 	{
@@ -26,6 +30,12 @@
 	}
 	
 	return self;
+}
+
+#pragma mark - NSObject
+-(nullable instancetype)init_with_uniqueId:(nonnull NSString*)uniqueId
+{
+	
 }
 
 #pragma mark - uniqueId
@@ -52,4 +62,27 @@
 	return self.uniqueId;
 }
 
+#pragma mark - NSCoding
+-(nullable instancetype)initWithCoder:(nonnull NSCoder*)aDecoder
+{
+	if (self = [self init_with_gameBoardTilePosition:[aDecoder decodeObjectForKey:[SMBGameBoardTile_Attributes_For_NSCoding gameBoardTilePosition]]])
+	{
+	}
+	
+	return self;
+}
+
+-(void)encodeWithCoder:(nonnull NSCoder*)aCoder
+{
+	[aCoder encodeObject:self.gameBoardTilePosition forKey:[SMBGameBoardTile_Attributes_For_NSCoding gameBoardTilePosition]];
+}
+
+@end
+
+
+
+
+
+@implementation SMBGameBoardGeneralEntity_Attributes_For_NSCoding
++(nonnull NSString*)uniqueId{return NSStringFromSelector(_cmd);}
 @end
